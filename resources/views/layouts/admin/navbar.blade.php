@@ -1,39 +1,42 @@
-<!-- Barra de navegação superior -->
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <!-- Navbar Brand -->
-    <a class="navbar-brand ps-3" href="{{ asset('/') }}">INFOSI RH</a>
-    <!-- Sidebar Toggle -->
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" title="Recolher/Expandir Menu">
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Botão de alternar tema (ícone) -->
-    <button id="themeToggleNav" class="theme-toggle ms-auto me-3" title="Alternar Tema">
-      <i class="fas fa-sun"></i>
-    </button>
-
-    <!-- Menu do usuário (logout e outros) -->
-    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-           role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="fas fa-user fa-fw"></i>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" href="#!">Settings</a></li>
-          <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-          <li><hr class="dropdown-divider" /></li>
-          <li>
-            <!-- Link para Logout sendo referenciado pelo Auth do Laravel-Sactum -->
-            <a class="dropdown-item" href="#"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-               Sair
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"> <!-- Dark como na imagem Duralux -->
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ route('dashboard') }}">INFOSI RH</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto">
+              
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-plus"></i></a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
             </form>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
+            <ul class="navbar-nav ms-3">
+               
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                        <li><a class="dropdown-item" href="#">Notificação 1</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user-circle"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="{{ route('profile') }}">Meu Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sair</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
