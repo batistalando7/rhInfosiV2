@@ -1,6 +1,7 @@
 @include('layouts.admin.head')
 
 <body>
+    
     @include('layouts.admin.navbar')
     @include('layouts.admin.sidebar')
 
@@ -99,9 +100,9 @@
         </div>
     </div>
 
-    <!-- Scripts do Duralux -->
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/js/theme.min.js') }}"></script>
+   <!-- Scripts do Duralux -->
+<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/theme-customizer-init.min.js') }}"></script>
     <script>
         // Toggle do painel de theme
         document.getElementById('themeToggle').addEventListener('click', function() {
