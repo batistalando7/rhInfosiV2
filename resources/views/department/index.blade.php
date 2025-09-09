@@ -16,7 +16,7 @@
       <p class="mb-3  text-muted">Listar funcionários por departamento:</p>
       <form action="{{ route('depart.employeee') }}" method="GET" class="d-inline-flex">
         <div class="input-group w-auto">
-          <select name="department" class="form-select" style="max-width: 250px;" required>
+          <select name="department" class="form-select" style="max-width: 300px;" required>
             <option value="">Selecione o Departamento</option>
             @foreach($data as $d)
               <option value="{{ $d->id }}">{{ $d->title }}</option>

@@ -18,12 +18,17 @@
                     </a>
                     <div class="collapse" id="collapseDept">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('depart') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('depart/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('depart') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('depart/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item has-submenu">
+
+
+
+
+
+                    <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePositions" aria-expanded="false" aria-controls="collapsePositions">
                         <i class="fas fa-briefcase me-2"></i> Cargos <i class="fas fa-chevron-down ms-auto"></i>
                     </a>
@@ -505,13 +510,40 @@
                         </ul>
                     </div>
                 </li>
+
+
+
+
+                <!-- Outros itens mantidos com ícones adicionados -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('profile') }}"><i class="fas fa-user me-2"></i> Meu Perfil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('new-chat.index') }}"><i class="fas fa-comments me-2"></i> Chat</a>
+                </li>
             @endif
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('profile') }}"><i class="fas fa-user me-2"></i> Meu Perfil</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('new-chat.index') }}"><i class="fas fa-comments me-2"></i> Chat</a>
-            </li>
         @endif
     </ul>
 </aside>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var collapseElements = document.querySelectorAll('.collapse');
+        collapseElements.forEach(function (collapse) {
+            var bsCollapse = new bootstrap.Collapse(collapse, { toggle: false });
+            collapse.addEventListener('show.bs.collapse', function () {
+                collapse.closest('.has-submenu').classList.add('show');
+                collapse.previousElementSibling.querySelector('i.ms-auto').style.transform = 'rotate(180deg)';
+                collapseElements.forEach(function (otherCollapse) {
+                    if (otherCollapse !== collapse && otherCollapse.classList.contains('show')) {
+                        otherCollapse.classList.remove('show');
+                        otherCollapse.previousElementSibling.querySelector('i.ms-auto').style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+            collapse.addEventListener('hide.bs.collapse', function () {
+                collapse.closest('.has-submenu').classList.remove('show');
+                collapse.previousElementSibling.querySelector('i.ms-auto').style.transform = 'rotate(0deg)';
+            });
+        });
+    });
+</script>
