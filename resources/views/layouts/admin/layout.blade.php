@@ -8,10 +8,13 @@
         <main class="container-fluid p-4">
             @yield('content')
         </main>
-        @include('layouts.admin.footer')
+         
+    @include('layouts.admin.footer') 
     </div>
 
-    <!-- Botão flutuante de theme (cog girando, como Duralux) -->
+    
+    
+
     <div class="theme-toggler position-fixed bottom-0 start-0 m-3">
         <button id="themeToggle" class="btn btn-primary rounded-circle"><i class="fas fa-cog fa-spin"></i></button>
         <div class="theme-panel d-none bg-white p-3 shadow">
@@ -49,75 +52,35 @@
         </div>
     </div>
 
-    <!-- Modais (mantidos, sem conflitos) -->
-    @if(session('msg'))
-        <div class="modal fade" id="successModal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header bg-success text-white">
-                        <h5>Sucesso</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">{{ session('msg') }}</div>
-                </div>
-            </div>
-        </div>
-        <script>new bootstrap.Modal(document.getElementById('successModal')).show();</script>
-    @endif
-    @if($errors->any())
-        <div class="modal fade" id="errorModal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header bg-danger text-white">
-                        <h5>Erro(s)</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        @foreach($errors->all() as $error)
-                            <p>{{ $error }}</p>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>new bootstrap.Modal(document.getElementById('errorModal')).show();</script>
-    @endif
-    <div class="modal fade" id="deleteModal" tabindex="-1">
-        <div class="modal-dialog">
+    <!-- Modal Dinâmica Única -->
+    <div class="modal fade" id="globalModal" tabindex="-1" aria-labelledby="globalModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5>Confirmar Exclusão</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="globalModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">Tem certeza?</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <a id="confirmDeleteBtn" href="#" class="btn btn-danger">Deletar</a>
-                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer"></div>
             </div>
         </div>
     </div>
 
-    <!-- Scripts do Duralux via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/theme-customizer-init.min.js') }}"></script>
     <script>
-        // Toggle do painel de theme
         document.getElementById('themeToggle').addEventListener('click', function() {
             document.querySelector('.theme-panel').classList.toggle('d-none');
         });
 
-        // Mudar theme (light/dark)
         document.getElementById('skin').addEventListener('change', function(e) {
             document.documentElement.setAttribute('data-theme', e.target.value.toLowerCase());
         });
 
-        // Mudar tipografia
         document.getElementById('typography').addEventListener('change', function(e) {
             document.body.style.fontFamily = e.target.value;
         });
 
-        // APIs mantidas
         const nationalitySelect = document.getElementById('nationality');
         if (nationalitySelect) {
             fetch('/api/countries').then(res => res.json()).then(data => {
@@ -130,7 +93,6 @@
             });
         }
 
-        // Phone code
         const phoneCodeMenu = document.getElementById('phone_code_menu');
         if (phoneCodeMenu) {
             fetch('/api/countries').then(res => res.json()).then(data => {
@@ -152,17 +114,48 @@
             });
         }
 
-        // Delete confirmation
+        // Lógica de Modal Dinâmica
+        function showModal(type, title, message, footer = '') {
+            const modal = new bootstrap.Modal(document.getElementById('globalModal'));
+            const modalHeader = document.querySelector('#globalModal .modal-header');
+            const modalBody = document.querySelector('#globalModal .modal-body');
+            const modalFooter = document.querySelector('#globalModal .modal-footer');
+
+            modalHeader.className = 'modal-header';
+            if (type === 'success') modalHeader.classList.add('bg-success', 'text-white');
+            else if (type === 'error') modalHeader.classList.add('bg-danger', 'text-white');
+            else if (type === 'delete') modalHeader.classList.add('bg-danger', 'text-white');
+
+            document.getElementById('globalModalLabel').textContent = title;
+            modalBody.innerHTML = message;
+            modalFooter.innerHTML = footer;
+
+            modal.show();
+        }
+
+        // Modais de Sucesso e Erro
+        @if(session('msg'))
+            showModal('success', 'Sucesso', '{{ session('msg') }}');
+        @endif
+        @if($errors->any())
+            showModal('error', 'Erro(s)', '@foreach($errors->all() as $error)<p>{{ $error }}</p>@endforeach');
+        @endif
+
+        // Modal de Deleção
         document.addEventListener('click', e => {
             const btn = e.target.closest('.delete-btn');
             if (btn) {
                 e.preventDefault();
-                document.getElementById('confirmDeleteBtn').href = btn.dataset.url;
-                new bootstrap.Modal(document.getElementById('deleteModal')).show();
+                const url = btn.dataset.url;
+                showModal('delete', 'Confirmar Exclusão', 'Tem certeza?', `
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="${url}" class="btn btn-danger">Deletar</a>
+                `);
             }
         });
     </script>
     @yield('scripts')
     @stack('scripts')
+    
 </body>
 </html>

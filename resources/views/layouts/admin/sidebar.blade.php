@@ -1,34 +1,44 @@
 <aside class="sidebar fixed-left">
+    <style>
+        .submenu {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .submenu .nav-link {
+            padding-left: 30px;
+        }
+    </style>
     <div class="sidebar-header">
         <a href="{{ route('dashboard') }}" class="sidebar-brand">INFOSI RH</a>
     </div>
     <ul class="sidebar-nav">
         @if(Auth::check())
             @php $role = Auth::user()->role; @endphp
+
+            <!-- Painel -->
+            <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Painel</li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('frontend.index') }}" target="_blank"><i class="fas fa-globe me-2"></i> SITE</a>
             </li>
+
             @if($role === 'admin')
+                <!-- Estrutura Organizacional -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Estrutura Organizacional</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseDept" aria-expanded="false" aria-controls="collapseDept">
                         <i class="fas fa-columns me-2"></i> Departamentos <i class="fas fa-chevron-down ms-auto"></i>
                     </a>
                     <div class="collapse" id="collapseDept">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('depart') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('depart/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('depart') }}"><i class="fas fa-eye me-2"></i> Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('depart/create') }}"><i class="fas fa-plus me-2"></i> Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
-
-
-
-
-
-                    <li class="nav-item has-submenu">
+                <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePositions" aria-expanded="false" aria-controls="collapsePositions">
                         <i class="fas fa-briefcase me-2"></i> Cargos <i class="fas fa-chevron-down ms-auto"></i>
                     </a>
@@ -83,6 +93,9 @@
                         </ul>
                     </div>
                 </li>
+
+                <!-- Gestão de Pessoas -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Gestão de Pessoas</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEmp" aria-expanded="false" aria-controls="collapseEmp">
                         <i class="fas fa-users me-2"></i> Funcionários <i class="fas fa-chevron-down ms-auto"></i>
@@ -94,6 +107,65 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseIntern" aria-expanded="false" aria-controls="collapseIntern">
+                        <i class="fas fa-user-graduate me-2"></i> Estagiários <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseIntern">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ url('intern') }}">Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('intern/create') }}">Adicionar Novo</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRetirements" aria-expanded="false" aria-controls="collapseRetirements">
+                        <i class="fas fa-user-check me-2"></i> Reforma <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseRetirements">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ url('retirements') }}">Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('retirements/create') }}">Adicionar Novo</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSalaryPayment" aria-expanded="false" aria-controls="collapseSalaryPayment">
+                        <i class="fa-solid fa-money-check-dollar me-2"></i> Salário <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseSalaryPayment">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ route('salaryPayment.index') }}">Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('salaryPayment.create') }}">Adicionar Novo</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseExtras" aria-expanded="false" aria-controls="collapseExtras">
+                        <i class="fas fa-briefcase me-2"></i> Trabalhos Extras <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseExtras">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ route('extras.index') }}">Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('extras.create') }}">Adicionar Novo</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVacationRequest" aria-expanded="false" aria-controls="collapseVacationRequest">
+                        <i class="fas fa-umbrella-beach me-2"></i> Pedido de Férias <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseVacationRequest">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ route('vacationRequest.departmentSummary') }}">Férias por Departamento</a></li>
+                            <li><a class="nav-link" href="{{ url('vacationRequest') }}">Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('vacationRequest/create') }}">Adicionar Novo</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Licenças e Movimentações -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Licenças e Movimentações</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLeaveType" aria-expanded="false" aria-controls="collapseLeaveType">
                         <i class="fas fa-file-contract me-2"></i> Tipos de Licença <i class="fas fa-chevron-down ms-auto"></i>
@@ -138,84 +210,9 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVacationRequest" aria-expanded="false" aria-controls="collapseVacationRequest">
-                        <i class="fas fa-umbrella-beach me-2"></i> Pedido de Férias <i class="fas fa-chevron-down ms-auto"></i>
-                    </a>
-                    <div class="collapse" id="collapseVacationRequest">
-                        <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('vacationRequest.departmentSummary') }}">Férias por Departamento</a></li>
-                            <li><a class="nav-link" href="{{ url('vacationRequest') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('vacationRequest/create') }}">Adicionar Novo</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSalaryPayment" aria-expanded="false" aria-controls="collapseSalaryPayment">
-                        <i class="fa-solid fa-money-check-dollar me-2"></i> Salário <i class="fas fa-chevron-down ms-auto"></i>
-                    </a>
-                    <div class="collapse" id="collapseSalaryPayment">
-                        <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('salaryPayment.index') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('salaryPayment.create') }}">Adicionar Novo</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseExtras" aria-expanded="false" aria-controls="collapseExtras">
-                        <i class="fas fa-briefcase me-2"></i> Trabalhos Extras <i class="fas fa-chevron-down ms-auto"></i>
-                    </a>
-                    <div class="collapse" id="collapseExtras">
-                        <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('extras.index') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('extras.create') }}">Adicionar Novo</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseIntern" aria-expanded="false" aria-controls="collapseIntern">
-                        <i class="fas fa-user-graduate me-2"></i> Estagiários <i class="fas fa-chevron-down ms-auto"></i>
-                    </a>
-                    <div class="collapse" id="collapseIntern">
-                        <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('intern') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('intern/create') }}">Adicionar Novo</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseStatute" aria-expanded="false" aria-controls="collapseStatute">
-                        <i class="fas fa-file-alt me-2"></i> Estatuto <i class="fas fa-chevron-down ms-auto"></i>
-                    </a>
-                    <div class="collapse" id="collapseStatute">
-                        <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('statutes.index') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('statutes.create') }}">Adicionar Novo</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
-                        <i class="fas fa-users-cog me-2"></i> Usuários <i class="fas fa-chevron-down ms-auto"></i>
-                    </a>
-                    <div class="collapse" id="collapseUsers">
-                        <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('admins') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('admins/create') }}">Adicionar Novo</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRetirements" aria-expanded="false" aria-controls="collapseRetirements">
-                        <i class="fas fa-user-check me-2"></i> Reforma <i class="fas fa-chevron-down ms-auto"></i>
-                    </a>
-                    <div class="collapse" id="collapseRetirements">
-                        <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('retirements') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('retirements/create') }}">Adicionar Novo</a></li>
-                        </ul>
-                    </div>
-                </li>
+
+                <!-- Administração e Controle -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Administração e Controle</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAttendance" aria-expanded="false" aria-controls="collapseAttendance">
                         <i class="fas fa-calendar-check me-2"></i> Mapa de Efetividade <i class="fas fa-chevron-down ms-auto"></i>
@@ -225,6 +222,19 @@
                             <li><a class="nav-link" href="{{ route('attendance.index') }}">Ver Registros</a></li>
                             <li><a class="nav-link" href="{{ route('attendance.create') }}">Registrar Presença</a></li>
                             <li><a class="nav-link" href="{{ route('attendance.dashboard') }}">Dashboard de Efetividade</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#deptHeadMenu" aria-expanded="false" aria-controls="deptHeadMenu">
+                        <i class="fas fa-user-tie me-2"></i> Portal do Chefe Dept. <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="deptHeadMenu">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ route('dh.myEmployees') }}">Meus Funcionários</a></li>
+                            <li><a class="nav-link" href="{{ route('dh.pendingVacations') }}">Férias Pendentes</a></li>
+                            <li><a class="nav-link" href="{{ route('dh.pendingLeaves') }}">Licenças Pendentes</a></li>
+                            <li><a class="nav-link" href="{{ route('dh.pendingRetirements') }}">Pedidos de Reforma</a></li>
                         </ul>
                     </div>
                 </li>
@@ -242,19 +252,9 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#deptHeadMenu" aria-expanded="false" aria-controls="deptHeadMenu">
-                        <i class="fas fa-user-tie me-2"></i> Portal do Chefe Dept. <i class="fas fa-chevron-down ms-auto"></i>
-                    </a>
-                    <div class="collapse" id="deptHeadMenu">
-                        <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('dh.myEmployees') }}">Meus Funcionários</a></li>
-                            <li><a class="nav-link" href="{{ route('dh.pendingVacations') }}">Férias Pendentes</a></li>
-                            <li><a class="nav-link" href="{{ route('dh.pendingLeaves') }}">Licenças Pendentes</a></li>
-                            <li><a class="nav-link" href="{{ route('dh.pendingRetirements') }}">Pedidos de Reforma</a></li>
-                        </ul>
-                    </div>
-                </li>
+
+                <!-- Frota e Transporte -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Frota e Transporte</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLicenseCategories" aria-expanded="false" aria-controls="collapseLicenseCategories">
                         <i class="bi bi-card-checklist me-2"></i> Categorias de Carta <i class="fas fa-chevron-down ms-auto"></i>
@@ -299,10 +299,34 @@
                         </ul>
                     </div>
                 </li>
-            @elseif($role === 'director')
+
+                <!-- Geral -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Geral</li>
                 <li class="nav-item has-submenu">
-                    <a class="nav-link" href="{{ route('internEvaluation.index') }}"><i class="fas fa-clipboard-check me-2"></i> Avaliações de Estagiários</a>
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseStatute" aria-expanded="false" aria-controls="collapseStatute">
+                        <i class="fas fa-file-alt me-2"></i> Estatuto <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseStatute">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ route('statutes.index') }}">Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('statutes.create') }}">Adicionar Novo</a></li>
+                        </ul>
+                    </div>
                 </li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
+                        <i class="fas fa-users-cog me-2"></i> Usuários <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseUsers">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ url('admins') }}">Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('admins/create') }}">Adicionar Novo</a></li>
+                        </ul>
+                    </div>
+                </li>
+            @elseif($role === 'director')
+                <!-- Estrutura Organizacional -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Estrutura Organizacional</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseDept" aria-expanded="false" aria-controls="collapseDept">
                         <i class="fas fa-columns me-2"></i> Departamentos <i class="fas fa-chevron-down ms-auto"></i>
@@ -336,6 +360,38 @@
                         </ul>
                     </div>
                 </li>
+
+                <!-- Gestão de Pessoas -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Gestão de Pessoas</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('internEvaluation.index') }}"><i class="fas fa-clipboard-check me-2"></i> Avaliações de Estagiários</a>
+                </li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEmp" aria-expanded="false" aria-controls="collapseEmp">
+                        <i class="fas fa-users me-2"></i> Funcionários <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseEmp">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ url('employeee') }}">Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('employeee/create') }}">Adicionar Novo</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVacationRequest" aria-expanded="false" aria-controls="collapseVacationRequest">
+                        <i class="fas fa-umbrella-beach me-2"></i> Pedido de Férias <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseVacationRequest">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ route('vacationRequest.departmentSummary') }}">Férias por Departamento</a></li>
+                            <li><a class="nav-link" href="{{ url('vacationRequest') }}">Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('vacationRequest/create') }}">Adicionar Novo</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Licenças e Movimentações -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Licenças e Movimentações</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLeaveRequest" aria-expanded="false" aria-controls="collapseLeaveRequest">
                         <i class="fas fa-file-alt me-2"></i> Pedidos de Licença <i class="fas fa-chevron-down ms-auto"></i>
@@ -369,29 +425,9 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVacationRequest" aria-expanded="false" aria-controls="collapseVacationRequest">
-                        <i class="fas fa-umbrella-beach me-2"></i> Pedido de Férias <i class="fas fa-chevron-down ms-auto"></i>
-                    </a>
-                    <div class="collapse" id="collapseVacationRequest">
-                        <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('vacationRequest.departmentSummary') }}">Férias por Departamento</a></li>
-                            <li><a class="nav-link" href="{{ url('vacationRequest') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('vacationRequest/create') }}">Adicionar Novo</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEmp" aria-expanded="false" aria-controls="collapseEmp">
-                        <i class="fas fa-users me-2"></i> Funcionários <i class="fas fa-chevron-down ms-auto"></i>
-                    </a>
-                    <div class="collapse" id="collapseEmp">
-                        <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('employeee') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('employeee/create') }}">Adicionar Novo</a></li>
-                        </ul>
-                    </div>
-                </li>
+
+                <!-- Administração e Controle -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Administração e Controle</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#deptHeadMenu" aria-expanded="false" aria-controls="deptHeadMenu">
                         <i class="fas fa-user-tie me-2"></i> Portal do Chefe Dept. <i class="fas fa-chevron-down ms-auto"></i>
@@ -406,17 +442,8 @@
                     </div>
                 </li>
             @elseif($role === 'department_head')
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLeaveRequest" aria-expanded="false" aria-controls="collapseLeaveRequest">
-                        <i class="fas fa-file-alt me-2"></i> Pedidos de Licença <i class="fas fa-chevron-down ms-auto"></i>
-                    </a>
-                    <div class="collapse" id="collapseLeaveRequest">
-                        <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('leaveRequest') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}">Adicionar Novo</a></li>
-                        </ul>
-                    </div>
-                </li>
+                <!-- Gestão de Pessoas -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Gestão de Pessoas</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVacationRequest" aria-expanded="false" aria-controls="collapseVacationRequest">
                         <i class="fas fa-umbrella-beach me-2"></i> Pedido de Férias <i class="fas fa-chevron-down ms-auto"></i>
@@ -451,6 +478,23 @@
                         </ul>
                     </div>
                 </li>
+
+                <!-- Licenças e Movimentações -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Licenças e Movimentações</li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLeaveRequest" aria-expanded="false" aria-controls="collapseLeaveRequest">
+                        <i class="fas fa-file-alt me-2"></i> Pedidos de Licença <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseLeaveRequest">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ url('leaveRequest') }}">Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}">Adicionar Novo</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Administração e Controle -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Administração e Controle</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#deptHeadMenu" aria-expanded="false" aria-controls="deptHeadMenu">
                         <i class="fas fa-user-tie me-2"></i> Portal do Chefe Dept. <i class="fas fa-chevron-down ms-auto"></i>
@@ -477,17 +521,8 @@
                     </div>
                 </li>
             @elseif($role === 'employee')
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLeaveRequest" aria-expanded="false" aria-controls="collapseLeaveRequest">
-                        <i class="fas fa-file-alt me-2"></i> Pedidos de Licença <i class="fas fa-chevron-down ms-auto"></i>
-                    </a>
-                    <div class="collapse" id="collapseLeaveRequest">
-                        <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('leaveRequest') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}">Adicionar Novo</a></li>
-                        </ul>
-                    </div>
-                </li>
+                <!-- Gestão de Pessoas -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Gestão de Pessoas</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVacationRequest" aria-expanded="false" aria-controls="collapseVacationRequest">
                         <i class="fas fa-umbrella-beach me-2"></i> Pedido de Férias <i class="fas fa-chevron-down ms-auto"></i>
@@ -511,10 +546,22 @@
                     </div>
                 </li>
 
+                <!-- Licenças e Movimentações -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Licenças e Movimentações</li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLeaveRequest" aria-expanded="false" aria-controls="collapseLeaveRequest">
+                        <i class="fas fa-file-alt me-2"></i> Pedidos de Licença <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseLeaveRequest">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ url('leaveRequest') }}">Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}">Adicionar Novo</a></li>
+                        </ul>
+                    </div>
+                </li>
 
-
-
-                <!-- Outros itens mantidos com ícones adicionados -->
+                <!-- Geral -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Geral</li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('profile') }}"><i class="fas fa-user me-2"></i> Meu Perfil</a>
                 </li>

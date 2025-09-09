@@ -5,16 +5,15 @@
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="bi bi-pencil-square me-2"></i>Editar Funcionário</span>
-    <a href="{{ route("employeee.index") }}" class="btn btn-outline-light btn-sm" title="Ver Todos">
+    <a href="{{ route('employeee.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todos">
       <i class="bi bi-card-list"></i>
     </a>
   </div>
   <div class="card-body">
-    <form method="POST" action="{{ route("employeee.update", $data->id) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('employeee.update', $data->id) }}" enctype="multipart/form-data">
       @csrf
       @method("PUT")
 
-      <!-- Depart., Cargo, Especialidade, Tipo, Categoria, Curso, Nível Acadêmico, Gênero -->
       <div class="row g-3">
         <div class="col-md-3">
           <div class="form-floating">
@@ -81,7 +80,6 @@
             <label for="employeeCategoryId">Categoria do Funcionário</label>
           </div>
         </div>
-        <!-- Novos campos para Habilitações Literárias -->
         <div class="col-md-3">
           <div class="form-floating">
             <select name="courseId" id="courseId" class="form-select">
@@ -97,7 +95,7 @@
         </div>
         <div class="col-md-3">
           <div class="form-floating">
-            <input type="text" name="academicLevel" id="academicLevel" class="form-control" placeholder="Nível Acadêmico" value="{{ old("academicLevel", $data->academicLevel) }}">
+            <input type="text" name="academicLevel" id="academicLevel" class="form-control" placeholder="Nível Acadêmico" value="{{ old('academicLevel', $data->academicLevel) }}">
             <label for="academicLevel">Nível Acadêmico</label>
           </div>
         </div>
@@ -113,27 +111,25 @@
         </div>
       </div>
 
-      <!-- Nome e Email -->
       <div class="row g-3 mt-3">
         <div class="col-md-6">
           <div class="form-floating">
-            <input type="text" name="fullName" id="fullName" class="form-control" placeholder="Nome Completo" value="{{ old("fullName", $data->fullName) }}">
+            <input type="text" name="fullName" id="fullName" class="form-control" placeholder="Nome Completo" value="{{ old('fullName', $data->fullName) }}">
             <label for="fullName">Nome Completo</label>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-floating">
-            <input type="text" name="email" id="email" class="form-control" placeholder="Email (ex: nome.sobrenome)" value="{{ old("email", str_replace("@infosi.gov.ao", "", $data->email)) }}">
+            <input type="text" name="email" id="email" class="form-control" placeholder="Email (ex: nome.sobrenome)" value="{{ old('email', str_replace('@infosi.gov.ao', '', $data->email)) }}">
             <label for="email">Email (nome.sobrenome)</label>
           </div>
         </div>
       </div>
 
-      <!-- Endereço e Telefone -->
       <div class="row g-3 mt-3">
         <div class="col-md-6">
           <div class="form-floating">
-            <input type="text" name="address" id="address" class="form-control" placeholder="Endereço" value="{{ old("address", $data->address) }}">
+            <input type="text" name="address" id="address" class="form-control" placeholder="Endereço" value="{{ old('address', $data->address) }}">
             <label for="address">Endereço</label>
           </div>
         </div>
@@ -143,17 +139,16 @@
               Selecione o Código
             </button>
             <ul class="dropdown-menu" id="phone_code_menu" style="max-height: 30em; overflow-y: auto;"></ul>
-            <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Telefone" maxlength="16" value="{{ old("mobile", $data->mobile) }}">
-            <input type="hidden" name="phoneCode" id="phoneCode" value="{{ old("phoneCode", $data->phone_code) }}">
+            <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Telefone" maxlength="16" value="{{ old('mobile', $data->mobile) }}">
+            <input type="hidden" name="phoneCode" id="phoneCode" value="{{ old('phoneCode', $data->phone_code) }}">
           </div>
         </div>
       </div>
 
-      <!-- BI, Upload BI e Nascimento -->
-       <div class="row g-0 mt-3">
+      <div class="row g-0 mt-3">
         <div class="col-md-3 pe-0">
           <div class="form-floating">
-            <input type="text" name="bi" id="bi" class="form-control" placeholder="Bilhete de Identidade" value="{{ old("bi", $data->bi) }}">
+            <input type="text" name="bi" id="bi" class="form-control" placeholder="Bilhete de Identidade" value="{{ old('bi', $data->bi) }}">
             <label for="bi">Bilhete de Identidade</label>
           </div>
         </div>
@@ -163,21 +158,20 @@
             <label for="biPhoto">Cópia do BI (PDF/Foto)</label>
           </div>
           @if($data->biPhoto)
-            <small class="text-success">Arquivo atual: <a href="{{ asset("frontend/images/biPhotos/".$data->biPhoto) }}" target="_blank">{{ $data->biPhoto }}</a></small>
+            <small class="text-success">Arquivo atual: <a href="{{ asset('frontend/images/biPhotos/' . $data->biPhoto) }}" target="_blank">{{ $data->biPhoto }}</a></small>
           @endif
         </div>
         <div class="col-md-6 ps-3">
           <div class="form-floating">
             <input type="date" name="birth_date" id="birth_date" class="form-control"
-                   value="{{ old("birth_date", $data->birth_date) }}"
-                   max="{{ date("Y-m-d") }}"
-                   min="{{ \Carbon\Carbon::now()->subYears(120)->format("Y-m-d") }}">
+                   value="{{ old('birth_date', $data->birth_date) }}"
+                   max="{{ date('Y-m-d') }}"
+                   min="{{ \Carbon\Carbon::now()->subYears(120)->format('Y-m-d') }}">
             <label for="birth_date">Data de Nascimento</label>
           </div>
         </div>
       </div>
 
-      <!-- Nacionalidade, IBAN -->
       <div class="row g-3 mt-3">
         <div class="col-md-6">
           <div class="form-floating">
@@ -195,7 +189,7 @@
               id="iban"
               class="form-control"
               placeholder="IBAN"
-              value="AO06{{ old("iban") ? substr(old("iban"), 4) : substr($data->iban, 4) }}"
+              value="AO06{{ old('iban') ? substr(old('iban'), 4) : substr($data->iban, 4) }}"
               maxlength="25"
               pattern="AO06[0-9]{21}"
               title="O IBAN deve começar por AO06 seguido de 21 dígitos."
@@ -205,7 +199,6 @@
         </div>
       </div>
 
-      <!-- Foto -->
       <div class="row g-3 mt-3">
         <div class="col-md-6 offset-md-3">
           <div class="form-floating">
@@ -213,7 +206,7 @@
             <label for="photo">Fotografia</label>
           </div>
           @if($data->photo)
-            <small class="text-success">Foto atual: <img src="{{ asset("frontend/images/departments/".$data->photo) }}" style="width:50px;height:50px;" class="rounded-circle"></small>
+            <small class="text-success">Foto atual: <img src="{{ asset('frontend/images/departments/' . $data->photo) }}" style="width:50px;height:50px;" class="rounded-circle"></small>
           @endif
         </div>
       </div>

@@ -5,17 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'INFOSI RH - Dashboard')</title>
-    <!-- jQuery CDN (necessário para theme-customizer-init.min.js) -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
-    <!-- Bootstrap CSS local (se existir, senão CDN) -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Tema principal do Duralux (você tem isso) -->
     <link href="{{ asset('assets/css/theme.min.css') }}" rel="stylesheet">
-    <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" crossorigin="anonymous">
-    <!-- Google Fonts para Inter (como no Duralux) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Estilos custom para sidebar, navbar, footer e temas -->
     <style>
         body { font-family: 'Inter', sans-serif; }
         [data-theme="dark"] {
@@ -66,7 +60,7 @@
             transform: rotate(180deg);
         }
         .submenu {
-            background-color: #ffffff; /* Fundo branco para submenus */
+            background-color: #ffffff;
             padding-left: 20px;
         }
         .submenu .nav-link {
@@ -79,19 +73,18 @@
         .content-wrapper {
             margin-left: 250px;
             padding: 20px;
-            min-height: calc(100vh - 60px); /* Ajuste para footer fixo */
+            min-height: calc(100vh - 60px);
             transition: margin-left 0.3s ease;
         }
-        /* Navbar */
         .navbar {
             background-color: var(--navbar-bg);
             border-bottom: 1px solid #e9ecef;
         }
         .navbar-dark .navbar-brand, .navbar-dark .nav-link {
-            color: #007bff; /* Azul para links */
+            color: #007bff;
         }
         .navbar-dark .nav-link:hover {
-            color: #0056b3; /* Azul escuro ao hover */
+            color: #0056b3;
         }
         .navbar-dark .btn-outline-light {
             color: #007bff;
@@ -101,14 +94,14 @@
             background-color: #007bff;
             color: #ffffff;
         }
-        /* Footer */
         .footer {
             background-color: var(--footer-bg);
             color: #ffffff;
             padding: 10px 0;
             width: 100%;
-            position: sticky;
+            position: relative;
             bottom: 0;
+            clear: both;
         }
         .footer a {
             color: #007bff;
@@ -117,7 +110,6 @@
         .footer a:hover {
             color: #0056b3;
         }
-        /* Responsivo para mobile */
         @media (max-width: 768px) {
             .sidebar { width: 100%; transform: translateX(-100%); }
             .sidebar.show { transform: translateX(0); }
