@@ -1,11 +1,10 @@
 @include('layouts.admin.head')
 
 <body>
-    
     @include('layouts.admin.navbar')
     @include('layouts.admin.sidebar')
 
-    <div class="content-wrapper"> <!-- Margem para sidebar -->
+    <div class="content-wrapper">
         <main class="container-fluid p-4">
             @yield('content')
         </main>
@@ -43,7 +42,6 @@
                 <select id="typography" class="form-select">
                     <option>Inter</option>
                     <option>Roboto</option>
-                    <!-- Adicione mais do Duralux -->
                 </select>
             </div>
             <button class="btn btn-secondary">Reset</button>
@@ -100,9 +98,9 @@
         </div>
     </div>
 
-   <!-- Scripts do Duralux -->
-<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/js/theme-customizer-init.min.js') }}"></script>
+    <!-- Scripts do Duralux via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/js/theme-customizer-init.min.js') }}"></script>
     <script>
         // Toggle do painel de theme
         document.getElementById('themeToggle').addEventListener('click', function() {
