@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Employeee;
 use App\Models\Secondment;
+use App\Models\Intern;
+use App\Models\Department;
+use App\Models\EmployeeType;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,10 +16,10 @@ class DashboardController extends Controller
     public function index()
     {
         // Total de funcionários (ativos + reformados)
-        $totalEmployees   = Employeee::whereIn('employmentStatus', ['active', 'retired'])->count();
+        $totalEmployees = Employeee::whereIn('employmentStatus', ['active', 'retired'])->count();
 
         // Só ativos
-        $activeEmployees  = Employeee::where('employmentStatus', 'active')->count();
+        $activeEmployees = Employeee::where('employmentStatus', 'active')->count();
 
         // Só reformados
         $retiredEmployees = Employeee::where('employmentStatus', 'retired')->count();
@@ -27,33 +31,51 @@ class DashboardController extends Controller
             ->distinct('employeeId')
             ->count('employeeId');
 
-        // Contratações por mês (para gráficos)
-        $hiredPerMonth = Employeee::select(
-                DB::raw('MONTH(created_at) as month'),
-                DB::raw('COUNT(*) as count')
-            )
-            ->groupBy(DB::raw('MONTH(created_at)'))
-            ->orderBy('month')
+        // Total de estagiários
+        $totalInterns = Intern::count();
+
+        // Funcionários efetivos e contratados
+        $permanentType = EmployeeType::where('name', 'Efetivo')->first();
+        $contractType = EmployeeType::where('name', 'Contratado')->first();
+
+        $permanentEmployees = $permanentType
+            ? Employeee::where('employmentStatus', 'active')
+                ->where('employeeTypeId', $permanentType->id)
+                ->count()
+            : 0;
+        $contractEmployees = $contractType
+            ? Employeee::where('employmentStatus', 'active')
+                ->where('employeeTypeId', $contractType->id)
+                ->count()
+            : 0;
+
+        // Funcionários por departamento
+        $departmentsData = Department::withCount('employeee')
+            ->get()
+            ->map(function($department) {
+                return [
+                    'name' => $department->name,
+                    'count' => $department->employeee_count
+                ];
+            });
+
+        // Chefes de departamento
+        $admins = Admin::where('role', 'department_head')
+            ->with('employee.department')
             ->get();
 
-        $months    = [
-            1 => 'Janeiro',   2 => 'Fevereiro', 3 => 'Março',
-            4 => 'Abril',     5 => 'Maio',      6 => 'Junho',
-            7 => 'Julho',     8 => 'Agosto',    9 => 'Setembro',
-            10 => 'Outubro', 11 => 'Novembro', 12 => 'Dezembro'
-        ];
-
-        $hiredData = array_fill_keys(array_values($months), 0);
-        foreach ($hiredPerMonth as $data) {
-            $hiredData[$months[$data->month]] = $data->count;
-        }
+        $departmentHeads = $admins->map->employee;
 
         return view('dashboard.index', compact(
             'totalEmployees',
             'activeEmployees',
             'retiredEmployees',
             'highlightedEmployees',
-            'hiredData'
+            'totalInterns',
+            'permanentEmployees',
+            'contractEmployees',
+            'departmentsData',
+            'departmentHeads'
         ));
     }
 }
