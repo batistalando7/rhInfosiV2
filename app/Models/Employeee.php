@@ -75,6 +75,11 @@ class Employeee extends Authenticatable implements CanResetPasswordContract
         return $this->hasOne(Retirement::class, "employeeId");
     }
 
+    public function secondments()
+    {
+        return $this->hasMany(Secondment::class, 'employeeId');
+    }
+
     public function admin()
     {
         return $this->hasOne(Admin::class, "employeeId");

@@ -15,11 +15,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Total de funcionários (ativos + reformados)
+        // Total de funcionários (ativos + reformados, sem estagiários)
         $totalEmployees = Employeee::whereIn('employmentStatus', ['active', 'retired'])->count();
 
-        // Só ativos
-        $activeEmployees = Employeee::where('employmentStatus', 'active')->count();
+        // Ativos: Exclui os destacados
+        $activeEmployees = Employeee::where('employmentStatus', 'active')
+            ->whereDoesntHave('secondments')
+            ->count();
 
         // Só reformados
         $retiredEmployees = Employeee::where('employmentStatus', 'retired')->count();
@@ -31,20 +33,22 @@ class DashboardController extends Controller
             ->distinct('employeeId')
             ->count('employeeId');
 
-        // Total de estagiários
+        // Total de estagiários (separado)
         $totalInterns = Intern::count();
 
-        // Funcionários efetivos e contratados
+        // Funcionários efetivos e contratados (apenas nos ativos não destacados)
         $permanentType = EmployeeType::where('name', 'Efetivo')->first();
         $contractType = EmployeeType::where('name', 'Contratado')->first();
 
         $permanentEmployees = $permanentType
             ? Employeee::where('employmentStatus', 'active')
+                ->whereDoesntHave('secondments')
                 ->where('employeeTypeId', $permanentType->id)
                 ->count()
             : 0;
         $contractEmployees = $contractType
             ? Employeee::where('employmentStatus', 'active')
+                ->whereDoesntHave('secondments')
                 ->where('employeeTypeId', $contractType->id)
                 ->count()
             : 0;
