@@ -26,7 +26,7 @@ class DashboardController extends Controller
         // Só reformados
         $retiredEmployees = Employeee::where('employmentStatus', 'retired')->count();
 
-        // Destacados: apenas funcionários que ainda estão 'active'
+        // Destacados: Apenas funcionários que ainda estão 'active'
         $highlightedEmployees = Secondment::whereHas('employee', function($q) {
                 $q->where('employmentStatus', 'active');
             })
@@ -58,7 +58,7 @@ class DashboardController extends Controller
             ->get()
             ->map(function($department) {
                 return [
-                    'name' => $department->name,
+                    'title' => $department->title,  // Alinhado com o campo usado no DepartmentController
                     'count' => $department->employeee_count
                 ];
             });

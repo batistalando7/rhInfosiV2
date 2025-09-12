@@ -229,7 +229,7 @@
                                                 </a>
                                             </div>
                                         </td>
-                                        <td>{{ $head->department->name ?? 'Sem Departamento' }}</td>
+                                        <td>{{ $head->department->title ?? 'Sem Departamento' }}</td>
                                         <td>{{ $head->department->employeee->count() }}</td>
                                     </tr>
                                     @endforeach
@@ -244,8 +244,7 @@
                             <li><a href="javascript:void(0);">2</a></li>
                             <li><a href="javascript:void(0);"><i class="bi bi-dot"></i></a></li>
                             <li><a href="javascript:void(0);">8</a></li>
-                            <li><a href="javascript:void(0);">9</a></li>
-                            <li><a href="javascript:void(0);"><i class="bi bi-arrow-right"></i></a></li>
+                            <li><a href("javascript:void(0);"><i class="bi bi-arrow-right"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -327,118 +326,116 @@
 
 @section('scripts')
 @if(Auth::user()->role === 'admin' || Auth::user()->role === 'director')
-<script src="{{ asset('public/assets/vendors/js/vendors.min.js') }}"></script>
-<script src="{{ asset('public/assets/vendors/js/apexcharts.min.js') }}"></script>
-<script src="{{ asset('public/assets/vendors/js/circle-progress.min.js') }}"></script>
-<script src="{{ asset('public/assets/js/common-init.min.js') }}"></script>
-<script src="{{ asset('public/assets/js/dashboard-init.min.js') }}"></script>
-<script src="{{ asset('public/assets/js/theme-customizer-init.min.js') }}"></script>
-<script src="https://unpkg.com/feather-icons"></script> <!-- Para os ícones Feather -->
+<script src="{{ asset('assets/vendors/js/vendors.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/js/apexcharts.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/js/circle-progress.min.js') }}"></script> <!-- Usando arquivo local -->
+<script src="{{ asset('assets/js/common-init.min.js') }}"></script>
+<!-- <script src="{{ asset('assets/js/dashboard-init.min.js') }}"></script> --> <!-- Temporariamente removido -->
+<script src="{{ asset('assets/js/theme-customizer-init.min.js') }}"></script>
+<script src="https://unpkg.com/feather-icons"></script>
 
+<!-- Fallback para CircleProgress se o local falhar -->
 <script>
+let circleProgressLoaded = false;
+function loadCircleProgress() {
+    return new Promise((resolve, reject) => {
+        if (typeof CircleProgress !== 'undefined') {
+            circleProgressLoaded = true;
+            console.log('CircleProgress já carregado (local)');
+            resolve();
+        } else {
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/circle-progress@1.0.0/dist/circle-progress.min.js'; // Fallback CDN alternativo
+            script.onload = () => {
+                circleProgressLoaded = true;
+                console.log('CircleProgress carregado via CDN alternativo');
+                resolve();
+            };
+            script.onerror = () => reject(new Error('Falha ao carregar CircleProgress via CDN'));
+            document.head.appendChild(script);
+        }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function() {
-    // Inicializar Feather Icons
-    feather.replace();
+    try {
+        // Inicializar Feather Icons
+        feather.replace();
 
-    // Dados dos cards
-    var totalEmployees = {{ $totalEmployees }};
-    var activeEmployees = {{ $activeEmployees }};
-    var highlightedEmployees = {{ $highlightedEmployees }};
-    var retiredEmployees = {{ $retiredEmployees }};
-    var totalInterns = {{ $totalInterns }};
-    var permanentEmployees = {{ $permanentEmployees }};
-    var contractEmployees = {{ $contractEmployees }};
-    var departmentsData = @json($departmentsData);
+        // Dados dos cards
+        var totalEmployees = {{ $totalEmployees }};
+        var activeEmployees = {{ $activeEmployees }};
+        var highlightedEmployees = {{ $highlightedEmployees }};
+        var retiredEmployees = {{ $retiredEmployees }};
+        var totalInterns = {{ $totalInterns }};
+        var permanentEmployees = {{ $permanentEmployees }};
+        var contractEmployees = {{ $contractEmployees }};
+        var departmentsData = @json($departmentsData ?? []);
 
-    // Debug básico para verificar dados
-    console.log('Dados:', { totalEmployees, activeEmployees, highlightedEmployees, retiredEmployees, totalInterns, permanentEmployees, contractEmployees, departmentsData });
+        // Debug detalhado dos dados
+        console.log('Dados completos de departmentsData:', departmentsData);
 
-    // Gráficos de Círculo
-    new CircleProgress('.employee-progress-permanent', {
-        value: {{ $activeEmployees > 0 ? round(($permanentEmployees / $activeEmployees) * 100) / 100 : 0 }},
-        size: 80,
-        fill: { color: '#007bff' }
-    });
-    new CircleProgress('.employee-progress-contract', {
-        value: {{ $activeEmployees > 0 ? round(($contractEmployees / $activeEmployees) * 100) / 100 : 0 }},
-        size: 80,
-        fill: { color: '#28a745' }
-    });
-
-    // Gráfico de Funcionários por Status (com check para dados vazios)
-    if (permanentEmployees + contractEmployees > 0) {
-        var statusOptions = {
-            chart: {
-                type: 'bar',
-                height: 350
-            },
-            series: [{
-                name: 'Funcionários',
-                data: [permanentEmployees, contractEmployees]
-            }],
-            xaxis: {
-                categories: ['Efetivos', 'Contratados']
-            },
-            colors: ['#007bff', '#28a745'],
-            plotOptions: {
-                bar: {
-                    horizontal: false,
-                    columnWidth: '45%'
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            tooltip: {
-                y: {
-                    formatter: function(val) {
-                        return val + " funcionários";
-                    }
-                }
+        // Carregar CircleProgress e inicializar gráficos de círculo
+        loadCircleProgress().then(() => {
+            if (circleProgressLoaded) {
+                new CircleProgress('.employee-progress-permanent', {
+                    value: {{ $activeEmployees > 0 ? round(($permanentEmployees / $activeEmployees) * 100) / 100 : 0 }},
+                    size: 80,
+                    fill: { color: '#007bff' }
+                });
+                new CircleProgress('.employee-progress-contract', {
+                    value: {{ $activeEmployees > 0 ? round(($contractEmployees / $activeEmployees) * 100) / 100 : 0 }},
+                    size: 80,
+                    fill: { color: '#28a745' }
+                });
+                console.log('Gráficos de círculo inicializados');
+            } else {
+                console.error('CircleProgress não carregou corretamente');
             }
-        };
-        var statusChart = new ApexCharts(document.querySelector("#employeesByStatusChart"), statusOptions);
-        statusChart.render();
-    } else {
-        document.querySelector("#employeesByStatusChart").innerHTML = '<p class="text-center text-muted">Nenhum dado disponível</p>';
-    }
+        }).catch(error => console.error('Erro ao carregar CircleProgress:', error));
 
-    // Gráfico de Funcionários por Departamento (com check para dados vazios)
-    if (departmentsData.length > 0) {
-        var departmentOptions = {
-            chart: {
-                type: 'bar',
-                height: 350
-            },
-            series: [{
-                name: 'Funcionários',
-                data: departmentsData.map(d => d.count)
-            }],
-            xaxis: {
-                categories: departmentsData.map(d => d.name)
-            },
-            colors: ['#007bff'],
-            plotOptions: {
-                bar: {
-                    horizontal: false,
-                    columnWidth: '45%'
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            tooltip: {
-                y: {
-                    formatter: function(val) {
-                        return val + " funcionários";
-                    }
-                }
-            }
-        };
-        var departmentChart = new ApexCharts(document.querySelector("#employeesByDepartmentChart"), departmentOptions);
-        departmentChart.render();
-    } else {
-        document.querySelector("#employeesByDepartmentChart").innerHTML = '<p class="text-center text-muted">Nenhum dado disponível</p>';
+        // Gráfico de Funcionários por Status
+        if (permanentEmployees + contractEmployees > 0) {
+            var statusOptions = {
+                chart: { type: 'bar', height: 350 },
+                series: [{ name: 'Funcionários', data: [permanentEmployees, contractEmployees] }],
+                xaxis: { categories: ['Efetivos', 'Contratados'] },
+                colors: ['#007bff', '#28a745'],
+                plotOptions: { bar: { horizontal: false, columnWidth: '45%' } },
+                dataLabels: { enabled: false },
+                tooltip: { y: { formatter: val => val + " funcionários" } }
+            };
+            var statusChart = new ApexCharts(document.querySelector("#employeesByStatusChart"), statusOptions);
+            statusChart.render().then(() => console.log('Gráfico por Status renderizado')).catch(error => console.error('Erro no Gráfico por Status:', error));
+        } else {
+            document.querySelector("#employeesByStatusChart").innerHTML = '<p class="text-center text-muted">Nenhum dado disponível</p>';
+        }
+
+        // Gráfico de Funcionários por Departamento (Donut Moderno)
+        if (Array.isArray(departmentsData) && departmentsData.length > 0) {
+            var departmentOptions = {
+                chart: { type: 'donut', height: 350, animations: { enabled: true, easing: 'easeinout', speed: 800 } },
+                series: departmentsData.map(d => d.count || 0),
+                labels: departmentsData.map(d => d.title || 'Sem Título'),
+                colors: ['#00bcd4', '#ff9800', '#9c27b0', '#3f51b5', '#f44336'], // Gradientes tecnológicos
+                fill: { type: 'gradient', gradient: { shade: 'dark', type: 'horizontal', shadeIntensity: 0.5, gradientToColors: ['#e0f7fa', '#ffe0b2', '#d1c4e9', '#c5cae9', '#ef9a9a'] } },
+                stroke: { width: 0 },
+                dataLabels: { enabled: true, style: { colors: ['#fff'] }, formatter: val => val + "%" },
+                legend: { position: 'bottom', horizontalAlign: 'center', fontSize: '14px', fontFamily: 'Helvetica, Arial, sans-serif' },
+                responsive: [{
+                    breakpoint: 480,
+                    options: { chart: { width: 200 }, legend: { position: 'bottom' } }
+                }],
+                tooltip: { y: { formatter: val => val + " funcionários" } }
+            };
+            var departmentChart = new ApexCharts(document.querySelector("#employeesByDepartmentChart"), departmentOptions);
+            departmentChart.render().then(() => console.log('Gráfico por Departamento renderizado')).catch(error => console.error('Erro no Gráfico por Departamento:', error));
+        } else {
+            document.querySelector("#employeesByDepartmentChart").innerHTML = '<p class="text-center text-muted">Nenhum dado disponível para departamentos</p>';
+            console.log('Nenhum dado disponível para o gráfico de departamentos');
+        }
+    } catch (e) {
+        console.error('Erro no JS do Dashboard:', e);
     }
 });
 </script>

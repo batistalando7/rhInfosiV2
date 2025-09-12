@@ -32,7 +32,9 @@
             </li>
 
             @if($role === 'admin')
+
                 <!-- Estrutura Organizacional -->
+                
                 <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Estrutura Organizacional</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseDept" aria-expanded="false" aria-controls="collapseDept">
@@ -51,7 +53,7 @@
                     </a>
                     <div class="collapse" id="collapsePositions">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('positions') }}">Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('positions') }}"> <i class="fas fa-eye me-2"></i>Ver Todos</a></li>
                             <li><a class="nav-link" href="{{ url('positions/create') }}">Adicionar Novo</a></li>
                         </ul>
                     </div>

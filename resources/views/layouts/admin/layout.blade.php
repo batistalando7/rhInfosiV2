@@ -101,7 +101,7 @@
                         const li = document.createElement('li');
                         const a = document.createElement('a');
                         a.classList.add('dropdown-item');
-                        a.textContent = `${country.name} (${country.phone})`;
+                        a.textContent = `${country.name} (+${country.phone})`;
                         a.addEventListener('click', e => {
                             e.preventDefault();
                             document.getElementById('selected_code').textContent = country.phone;

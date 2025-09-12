@@ -39,14 +39,7 @@
           <th>Ação</th>
         </tr>
       </thead>
-      <tfoot>
-        <tr>
-          <th>ID</th>
-          <th>Título</th>
-          <th>Descrição</th>
-          <th>Ação</th>
-        </tr>
-      </tfoot>
+     
       <tbody>
         @if ($data)
           @foreach($data as $d)
