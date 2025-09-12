@@ -51,8 +51,8 @@
                     </a>
                     <div class="collapse" id="collapsePositions">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('positions') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('positions/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('positions') }}"><i class="fas fa-eye me-2"></i> Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('positions/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -62,8 +62,8 @@
                     </a>
                     <div class="collapse" id="collapseSpecialties">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('specialties') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('specialties/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('specialties') }}"><i class="fas fa-eye me-2"></i> Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('specialties/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -73,8 +73,8 @@
                     </a>
                     <div class="collapse" id="collapseEmployeeType">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('employeeType') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('employeeType/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('employeeType') }}"><i class="fas fa-eye me-2"></i> Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('employeeType/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -84,8 +84,8 @@
                     </a>
                     <div class="collapse" id="collapseEmployeeCategories">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('employeeCategory.index') }}">Ver Todas</a></li>
-                            <li><a class="nav-link" href="{{ route('employeeCategory.create') }}">Adicionar Nova</a></li>
+                            <li><a class="nav-link" href="{{ route('employeeCategory.index') }}"><i class="fas fa-eye me-2"></i>Ver Todas</a></li>
+                            <li><a class="nav-link" href="{{ route('employeeCategory.create') }}"><i class="fas fa-plus me-2"></i>Adicionar Nova</a></li>
                         </ul>
                     </div>
                 </li>
@@ -95,8 +95,8 @@
                     </a>
                     <div class="collapse" id="collapseCourses">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('course.index') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('course.create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ route('course.index') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('course.create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -109,8 +109,8 @@
                     </a>
                     <div class="collapse" id="collapseEmp">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('employeee') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('employeee/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('employeee') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('employeee/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -120,8 +120,8 @@
                     </a>
                     <div class="collapse" id="collapseIntern">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('intern') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('intern/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('intern') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('intern/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -131,8 +131,8 @@
                     </a>
                     <div class="collapse" id="collapseRetirements">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('retirements') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('retirements/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('retirements') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('retirements/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -142,8 +142,8 @@
                     </a>
                     <div class="collapse" id="collapseSalaryPayment">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('salaryPayment.index') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('salaryPayment.create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ route('salaryPayment.index') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('salaryPayment.create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -153,8 +153,8 @@
                     </a>
                     <div class="collapse" id="collapseExtras">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('extras.index') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('extras.create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ route('extras.index') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('extras.create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -165,8 +165,8 @@
                     <div class="collapse" id="collapseVacationRequest">
                         <ul class="submenu">
                             <li><a class="nav-link" href="{{ route('vacationRequest.departmentSummary') }}">Férias por Departamento</a></li>
-                            <li><a class="nav-link" href="{{ url('vacationRequest') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('vacationRequest/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('vacationRequest') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('vacationRequest/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -179,8 +179,8 @@
                     </a>
                     <div class="collapse" id="collapseLeaveType">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('leaveType') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('leaveType/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('leaveType') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('leaveType/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -190,8 +190,8 @@
                     </a>
                     <div class="collapse" id="collapseLeaveRequest">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('leaveRequest') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('leaveRequest') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -201,8 +201,8 @@
                     </a>
                     <div class="collapse" id="collapseMobility">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('mobility') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('mobility/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('mobility') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('mobility/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -212,8 +212,8 @@
                     </a>
                     <div class="collapse" id="collapseSecondment">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('secondment') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('secondment/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('secondment') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('secondment/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -279,8 +279,8 @@
                     </a>
                     <div class="collapse" id="collapseVehicles">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('vehicles.index') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('vehicles.create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ route('vehicles.index') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('vehicles.create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -290,8 +290,8 @@
                     </a>
                     <div class="collapse" id="collapseDrivers">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('drivers.index') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('drivers.create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ route('drivers.index') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('drivers.create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -301,8 +301,8 @@
                     </a>
                     <div class="collapse" id="collapseMaintenance">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('maintenance.index') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('maintenance.create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ route('maintenance.index') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('maintenance.create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -315,8 +315,8 @@
                     </a>
                     <div class="collapse" id="collapseStatute">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('statutes.index') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('statutes.create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ route('statutes.index') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('statutes.create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -326,8 +326,8 @@
                     </a>
                     <div class="collapse" id="collapseUsers">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('admins') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('admins/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('admins') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('admins/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -340,8 +340,8 @@
                     </a>
                     <div class="collapse" id="collapseDept">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('depart') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('depart/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('depart') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('depart/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -351,8 +351,8 @@
                     </a>
                     <div class="collapse" id="collapsePositions">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('positions') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('positions/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('positions') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('positions/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -362,8 +362,8 @@
                     </a>
                     <div class="collapse" id="collapseSpecialties">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('specialties') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('specialties/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('specialties') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('specialties/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -379,8 +379,8 @@
                     </a>
                     <div class="collapse" id="collapseEmp">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('employeee') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('employeee/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('employeee') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('employeee/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -391,8 +391,8 @@
                     <div class="collapse" id="collapseVacationRequest">
                         <ul class="submenu">
                             <li><a class="nav-link" href="{{ route('vacationRequest.departmentSummary') }}">Férias por Departamento</a></li>
-                            <li><a class="nav-link" href="{{ url('vacationRequest') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('vacationRequest/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('vacationRequest') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('vacationRequest/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -405,8 +405,8 @@
                     </a>
                     <div class="collapse" id="collapseLeaveRequest">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('leaveRequest') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('leaveRequest') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -416,8 +416,8 @@
                     </a>
                     <div class="collapse" id="collapseMobility">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('mobility') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('mobility/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('mobility') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('mobility/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -427,8 +427,8 @@
                     </a>
                     <div class="collapse" id="collapseSecondment">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('secondment') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('secondment/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('secondment') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('secondment/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -458,8 +458,8 @@
                     <div class="collapse" id="collapseVacationRequest">
                         <ul class="submenu">
                             <li><a class="nav-link" href="{{ route('vacationRequest.departmentSummary') }}">Férias por Departamento</a></li>
-                            <li><a class="nav-link" href="{{ url('vacationRequest') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('vacationRequest/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('vacationRequest') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('vacationRequest/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -469,8 +469,8 @@
                     </a>
                     <div class="collapse" id="collapseEmpEval">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('employeeEvaluations.index') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('employeeEvaluations.create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ route('employeeEvaluations.index') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('employeeEvaluations.create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -480,8 +480,8 @@
                     </a>
                     <div class="collapse" id="collapseInternEvaluation">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('internEvaluation.index') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('internEvaluation.create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ route('internEvaluation.index') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('internEvaluation.create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -494,8 +494,8 @@
                     </a>
                     <div class="collapse" id="collapseLeaveRequest">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('leaveRequest') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('leaveRequest') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -536,8 +536,8 @@
                     </a>
                     <div class="collapse" id="collapseVacationRequest">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('vacationRequest') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('vacationRequest/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('vacationRequest') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('vacationRequest/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -547,8 +547,8 @@
                     </a>
                     <div class="collapse" id="collapseRetirements">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('retirements') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('retirements/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('retirements') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('retirements/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
@@ -561,8 +561,8 @@
                     </a>
                     <div class="collapse" id="collapseLeaveRequest">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('leaveRequest') }}">Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}">Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ url('leaveRequest') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>

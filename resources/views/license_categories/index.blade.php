@@ -4,10 +4,10 @@
 
 <div class="card mb-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-tags me-2"></i>Categorias de Carta</span>
+    <span><i class="fas fa-tags me-2"></i>Categorias de Carta</span>
     <div>
       <a href="{{ route('licenseCategories.create') }}" class="btn btn-outline-light btn-sm">
-        <i class="bi bi-plus-circle"></i> Nova
+        <i class="fas fa-plus-circle"></i> Nova
       </a>
     </div>
   </div>
@@ -37,12 +37,12 @@
                 <td>
                   <a href="{{ route('licenseCategories.edit', $licenseCategory->id) }}"
                      class="btn btn-info btn-sm" title="Editar">
-                    <i class="bi bi-pencil"></i>
+                    <i class="fas fa-pencil"></i>
                   </a>
                   <a href="#"
                      data-url="{{ route('licenseCategories.delete', $licenseCategory->id) }}"
                      class="btn btn-danger btn-sm delete-btn" title="Apagar">
-                    <i class="bi bi-trash"></i>
+                    <i class="fas fa-trash"></i>
                   </a>
                 </td>
               </tr>

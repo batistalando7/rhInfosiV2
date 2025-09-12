@@ -6,16 +6,16 @@
     <span><i class="fas fa-umbrella-beach me-2"></i>Lista de Pedidos de Férias</span>
     <div>
       <a href="{{ route('vacationRequest.pdfAll') }}" class="btn btn-outline-light btn-sm" target="_blank">
-        <i class="bi bi-file-earmark-pdf"></i> Baixar PDF (Todos)
+        <i class="fas fa-file-earmark-pdf"></i> Baixar PDF (Todos)
       </a>
       @if(request()->filled('startDate')||request()->filled('endDate')||(request()->filled('status')&&request('status')!=='Todos'))
       <a href="{{ route('vacationRequest.pdfAll') }}?{{ http_build_query(request()->only(['startDate','endDate','status'])) }}"
          class="btn btn-outline-light btn-sm" target="_blank">
-        <i class="bi bi-file-earmark-pdf"></i> Baixar PDF (Filtrados)
+        <i class="fas fa-file-earmark-pdf"></i> Baixar PDF (Filtrados)
       </a>
       @endif
       <a href="{{ route('vacationRequest.create') }}" class="btn btn-outline-light btn-sm">
-        <i class="bi bi-plus-circle"></i> Novo Pedido
+        <i class="fas fa-plus-circle"></i> Novo Pedido
       </a>
     </div>
   </div>
@@ -43,7 +43,7 @@
       </div>
       <div class="col-md-3 d-flex align-items-end">
         <button type="submit" class="btn btn-primary w-100">
-          <i class="bi bi-filter"></i> Filtrar
+          <i class="fas fa-filter"></i> Filtrar
         </button>
       </div>
     </form>

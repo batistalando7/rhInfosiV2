@@ -4,9 +4,9 @@
 
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-pencil-square me-2"></i>Editar Tipo de Funcionário</span>
+    <span><i class="fas fa-pencil-square me-2"></i>Editar Tipo de Funcionário</span>
     <a href="{{ route('employeeType.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todos">
-      <i class="bi bi-card-list"></i>
+      <i class="fas fa-card-list"></i>
     </a>
   </div>
   <div class="card-body">
@@ -28,7 +28,7 @@
        
           <div class="text-center">
             <button type="submit" class="btn btn-primary">
-              <i class="bi bi-check-circle"></i> Atualizar
+              <i class="fas fa-check-circle"></i> Atualizar
             </button>
           </div>
         </form>

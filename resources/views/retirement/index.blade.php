@@ -8,19 +8,19 @@
     <div>
       <!-- PDF de todos -->
       <a href="{{ route('retirements.pdf') }}" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">
-        <i class="bi bi-file-earmark-pdf"></i> Baixar PDF (Todos)
+        <i class="fas fa-file-earmark-pdf"></i> Baixar PDF (Todos)
       </a>
 
        <!-- PDF filtrado -->
     @if(request()->filled('startDate') || request()->filled('endDate') || (request()->filled('status') && request('status')!=='Todos'))
     <a href="{{ route('retirements.pdf') }}?{{ http_build_query(request()->only(['startDate','endDate','status'])) }}"
        class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">
-      <i class="bi bi-file-earmark-pdf"></i> Baixar PDF (Filtrados)
+      <i class="fas fa-file-earmark-pdf"></i> Baixar PDF (Filtrados)
     </a>
     @endif
 
       <a href="{{ route('retirements.create') }}" class="btn btn-outline-light btn-sm">
-        <i class="bi bi-plus-circle"></i> Novo Pedido
+        <i class="fas fa-plus-circle"></i> Novo Pedido
       </a>
     </div>
   </div>
@@ -57,7 +57,7 @@
       </div>
       <div class="col-md-3 d-flex align-items-end">
         <button type="submit" class="btn btn-primary w-100">
-          <i class="bi bi-filter"></i> Filtrar
+          <i class="fas fa-filter"></i> Filtrar
         </button>
       </div>
     </form>
@@ -100,10 +100,10 @@
                 <td>{{ $retirement->created_at->format('d/m/Y H:i') }}</td>
                 <td>
                   <a href="{{ route('retirements.show', $retirement->id) }}" class="btn btn-warning btn-sm">
-                    <i class="bi bi-eye"></i>
+                    <i class="fas fa-eye"></i>
                   </a>
                   <a href="{{ route('retirements.edit', $retirement->id) }}" class="btn btn-info btn-sm">
-                    <i class="bi bi-pencil"></i>
+                    <i class="fas fa-pencil"></i>
                   </a>
                   <form
                     action="{{ route('retirements.destroy', $retirement->id) }}"
@@ -112,7 +112,7 @@
                   >
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                   </form>
                 </td>
               </tr>

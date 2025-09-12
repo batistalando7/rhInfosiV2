@@ -4,9 +4,9 @@
 
 <div class="card mb-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-building me-2"></i>Lista de Departamentos</span>
+    <span><i class="fas fa-building me-2"></i>Lista de Departamentos</span>
     <a href="{{ route('depart.create') }}" class="btn btn-outline-light btn-sm" title="Adicionar Novo"> Novo
-      <i class="bi bi-plus-circle"></i>
+      <i class="fas fa-plus-circle"></i>
     </a>
   </div>
   <div class="card-body">
@@ -23,7 +23,7 @@
             @endforeach
           </select>
           <button type="submit" class="btn btn-primary" title="Pesquisar">
-            <i class="bi bi-search"></i>
+            <i class="fas fa-search"></i>
           </button>
         </div>
       </form>
@@ -39,14 +39,7 @@
           <th>Ação</th>
         </tr>
       </thead>
-      <tfoot>
-        <tr>
-          <th>ID</th>
-          <th>Título</th>
-          <th>Descrição</th>
-          <th>Ação</th>
-        </tr>
-      </tfoot>
+    
       <tbody>
         @if ($data)
           @foreach($data as $d)
@@ -56,13 +49,13 @@
               <td>{{ $d->description ?? '-' }}</td>
               <td>
                 <a href="{{ route('depart.show', $d->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
-                  <i class="bi bi-eye"></i>
+                  <i class="fas fa-eye"></i>
                 </a>
                 <a href="{{ route('depart.edit', $d->id) }}" class="btn btn-info btn-sm" title="Editar">
-                  <i class="bi bi-pencil"></i>
+                  <i class="fas fa-pencil"></i>
                 </a>
                 <a href="#" data-url="{{ url('depart/'.$d->id.'/delete') }}" class="btn btn-danger btn-sm delete-btn" title="Apagar">
-                  <i class="bi bi-trash"></i>
+                  <i class="fas fa-trash"></i>
                 </a>
               </td>
             </tr>

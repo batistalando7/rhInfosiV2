@@ -6,13 +6,13 @@
     <span><i class="fas fa-money-bill-wave me-2"></i>Pagamentos de Salário</span>
     <div>
       <a href="{{ route('salaryPayment.pdfAll') }}" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">
-        <i class="bi bi-file-earmark-pdf"></i> Todos (PDF)
+        <i class="fas fa-file-earmark-pdf"></i> Todos (PDF)
       </a>
       <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#filterArea">
-        <i class="bi bi-funnel"></i> Filtrar
+        <i class="fas fa-funnel"></i> Filtrar
       </button>
       <a href="{{ route('salaryPayment.create') }}" class="btn btn-outline-light btn-sm" title="Novo Pagamento">
-        <i class="bi bi-plus-circle"></i> Novo
+        <i class="fas fa-plus-circle"></i> Novo
       </a>
     </div>
   </div>
@@ -71,16 +71,16 @@
             <td>{{ $p->paymentDate }}</td>
             <td>{{ $p->paymentStatus }}</td>
             <td class="d-flex gap-1">
-              <a href="{{ route('salaryPayment.show',$p->id) }}"   class="btn btn-sm btn-warning" title="Ver Detalhes"><i class="bi bi-eye"></i></a>
-              <a href="{{ route('salaryPayment.edit',$p->id) }}"   class="btn btn-sm btn-info" title="Editar Registro"><i class="bi bi-pencil"></i></a>
+              <a href="{{ route('salaryPayment.show',$p->id) }}"   class="btn btn-sm btn-warning" title="Ver Detalhes"><i class="fas fa-eye"></i></a>
+              <a href="{{ route('salaryPayment.edit',$p->id) }}"   class="btn btn-sm btn-info" title="Editar Registro"><i class="fas fa-pencil"></i></a>
               <a href="{{ route('salaryPayment.pdfByEmployee', ['employeeId'=>$p->employee->id,'year'=>now()->year]) }}"
                  class="btn btn-sm btn-secondary" title="PDF Anual" target="_blank" rel="noopener noreferrer">
-                <i class="bi bi-file-earmark-pdf"></i>
+                <i class="fas fa-file-earmark-pdf"></i>
               </a>
               <form action="{{ route('salaryPayment.destroy',$p->id) }}"
                     method="POST" style="display:inline">
                 @csrf @method('DELETE')
-                <button class="btn btn-sm btn-danger" title="Apagar"><i class="bi bi-trash"></i></button>
+                <button class="btn btn-sm btn-danger" title="Apagar"><i class="fas fa-trash"></i></button>
               </form>
             </td>
           </tr>

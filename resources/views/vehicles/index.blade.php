@@ -9,12 +9,12 @@
     <div>
       <a href="{{ route('vehicles.pdfAll', request()->only('startDate','endDate')) }}"
          class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">
-        <i class="bi bi-file-earmark-pdf"></i>
+        <i class="fas fa-file-earmark-pdf"></i>
         Baixar PDF ({{ request()->filled('startDate')||request()->filled('endDate') ? 'Filtrado' : 'Todos' }})
       </a>
       <a href="{{ route('vehicles.create') }}"
          class="btn btn-outline-light btn-sm" title="Adicionar Nova Viatura">
-        <i class="bi bi-plus-circle"></i> Novo
+        <i class="fas fa-plus-circle"></i> Novo
       </a>
     </div>
   </div>
@@ -32,7 +32,7 @@
     <input type="date" name="endDate" class="form-control" value="{{ request('endDate') }}">
   </div>
   <div class="col-md-3 d-flex align-items-end">
-    <button class="btn btn-primary w-100"><i class="bi bi-filter"></i> Filtrar</button>
+    <button class="btn btn-primary w-100"><i class="fas fa-filter"></i> Filtrar</button>
   </div>
 </form>
 
@@ -64,10 +64,10 @@
               @endforeach
             </td>
             <td>
-              <a href="{{ route('vehicles.show',$v->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i></a>
-              <a href="{{ route('vehicles.edit',$v->id) }}" class="btn btn-info btn-sm"><i class="bi bi-pencil"></i></a>
+              <a href="{{ route('vehicles.show',$v->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-eye"></i></a>
+              <a href="{{ route('vehicles.edit',$v->id) }}" class="btn btn-info btn-sm"><i class="fas fa-pencil"></i></a>
               <a href="#" data-url="{{ url('vehicles/'.$v->id.'/delete') }}"
-                 class="btn btn-danger btn-sm delete-btn"><i class="bi bi-trash"></i></a>
+                 class="btn btn-danger btn-sm delete-btn"><i class="fas fa-trash"></i></a>
             </td>
           </tr>
           @endforeach

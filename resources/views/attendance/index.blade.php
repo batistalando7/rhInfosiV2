@@ -6,16 +6,16 @@
     <span><i class="fas fa-list me-2"></i>Registros de Presença</span>
     <div>
       <a href="{{ route('attendance.dashboard') }}" class="btn btn-outline-light btn-sm me-2" title="Mapa de Efetividade">
-        <i class="bi bi-bar-chart-line"></i> Efetividade
+        <i class="fas fa-bar-chart-line"></i> Efetividade
       </a>
       <a href="{{ route('attendance.createBatch') }}" class="btn btn-outline-light btn-sm me-2" title="Registro em Lote">
-        <i class="bi bi-layout-text-window-reverse"></i> Marcação Coletiva
+        <i class="fas fa-layout-text-window-reverse"></i> Marcação Coletiva
       </a>
       <a href="{{ route('attendance.pdfAll') }}" class="btn btn-outline-light btn-sm me-2" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
-        <i class="bi bi-file-earmark-pdf"></i> Baixar PDF
+        <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
       </a>
       <a href="{{ route('attendance.create') }}" class="btn btn-outline-light btn-sm" title="Novo Registro">
-        <i class="bi bi-plus-circle"></i> Novo Registro
+        <i class="fas fa-plus-circle"></i> Novo Registro
       </a>
     </div>
   </div>
