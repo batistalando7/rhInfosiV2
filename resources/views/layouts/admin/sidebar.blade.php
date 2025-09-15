@@ -264,7 +264,7 @@
                 <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Frota e Transporte</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLicenseCategories" aria-expanded="false" aria-controls="collapseLicenseCategories">
-                        <i class="bi bi-card-checklist me-2"></i> Categorias de Carta <i class="fas fa-chevron-down ms-auto"></i>
+                        <i class="fas fa-card-checklist me-2"></i> Categorias de Carta <i class="fas fa-chevron-down ms-auto"></i>
                     </a>
                     <div class="collapse" id="collapseLicenseCategories">
                         <ul class="submenu">

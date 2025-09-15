@@ -6,7 +6,7 @@
   <div class="card-header bg-secondary text-white">
     <span><i class="fas fa-id-badge me-2"></i>Novo Destacamento</span>
     <a href="{{ route('secondment.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
-      <i class="bi bi-arrow-left"></i> Voltar
+      <i class="fas fa-arrow-left"></i> Voltar
     </a>
   </div>
   <div class="card-body">
@@ -21,7 +21,7 @@
         </div>
         <div class="col-md-4">
           <button type="submit" class="btn btn-primary w-100 mt-0">
-            <i class="bi bi-search"></i> Buscar
+            <i class="fas fa-search"></i> Buscar
           </button>
         </div>
       </div>
@@ -81,7 +81,7 @@
           <div class="row">
             <div class="col text-center">
               <button type="submit" class="btn btn-success">
-                <i class="bi bi-check-circle"></i> Salvar Destacamento
+                <i class="fas fa-check-circle"></i> Salvar Destacamento
               </button>
             </div>
           </div>

@@ -6,7 +6,7 @@
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-truck me-2"></i>Editar Viatura Nº{{ $vehicle->id }}</span>
     <a href="{{ route('vehicles.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todas">
-      <i class="bi bi-card-list"></i>
+      <i class="fa-solid fa-list"></i>
     </a>
   </div>
   <div class="card-body">
@@ -96,7 +96,7 @@
 
       <div class="d-grid gap-2 col-md-4 mx-auto mt-4">
         <button type="submit" class="btn btn-primary btn-lg">
-          <i class="bi bi-check-circle me-2"></i>Atualizar Viatura
+          <i class="fas fa-check-circle me-2"></i>Atualizar Viatura
         </button>
       </div>
     </form>

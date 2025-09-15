@@ -5,7 +5,7 @@
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <h4 class="mb-0">Registro de Presença - Data: {{ \Carbon\Carbon::parse($recordDate)->format('d/m/Y') }}</h4>
     <a href="{{ route('attendance.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
-      <i class="bi bi-arrow-left"></i> Voltar
+      <i class="fas fa-arrow-left"></i> Voltar
     </a>
   </div>
   <div class="card-body">
@@ -78,7 +78,7 @@
 
       <div class="text-center mt-3">
         <button type="submit" class="btn btn-success" style="width: auto;">
-          <i class="bi bi-check-circle"></i> Salvar Registros
+          <i class="fas fa-check-circle"></i> Salvar Registros
         </button>
       </div>
     </form>

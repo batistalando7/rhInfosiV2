@@ -6,7 +6,7 @@
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-file-alt me-2"></i>Novo Pedido de Licença</span>
     <a href="{{ route('leaveRequest.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
-      <i class="bi bi-arrow-left"></i> Voltar
+      <i class="fas fa-arrow-left"></i> Voltar
     </a>
   </div>
   <div class="card-body">
@@ -21,7 +21,7 @@
         </div>
         <div class="col-md-4">
           <button type="submit" class="btn btn-primary w-100">
-            <i class="bi bi-search"></i> Buscar
+            <i class="fas fa-search"></i> Buscar
           </button>
         </div>
       </div>
@@ -68,7 +68,7 @@
         </div>
   
         <button type="submit" class="btn btn-success w-100">
-          <i class="bi bi-check-circle"></i> Salvar Pedido de Licença
+          <i class="fas fa-check-circle"></i> Salvar Pedido de Licença
         </button>
       </form>
     @endisset

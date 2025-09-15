@@ -7,7 +7,7 @@
       <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
         <span><i class="fas fa-calendar-check me-2"></i>Registrar Presença</span>
         <a href="{{ route('attendance.index') }}" class="btn btn-outline-light btn-sm" title="Ver Registros">
-          <i class="bi bi-list"></i>
+          <i class="fas fa-list"></i>
         </a>
       </div>
       <div class="card-body">
@@ -46,7 +46,7 @@
           <div id="justificationMessage" class="mb-3"></div>
           <div class="text-center">
             <button type="submit" class="btn btn-success" style="width: auto;">
-              <i class="bi bi-check-circle"></i> Registrar
+              <i class="fas fa-check-circle"></i> Registrar
             </button>
           </div>
         </form>

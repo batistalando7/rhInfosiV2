@@ -23,7 +23,7 @@
             <th>Valor Total</th>
             <th>Participantes</th>
             <th>Status</th>
-            <th>Ações</th>
+            <th style="width: 58px;">Ação</th>
           </tr>
         </thead>
         <tbody>

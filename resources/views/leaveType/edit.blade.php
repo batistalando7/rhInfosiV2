@@ -4,7 +4,7 @@
 
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white">
-    <span><i class="bi bi-pencil-square me-2"></i>Editar Tipo de Licença</span>
+    <span><i class="fas fa-pencil-square me-2"></i>Editar Tipo de Licença</span>
   </div>
   <div class="card-body">
     <form method="POST" action="{{ route('leaveType.update', $data->id) }}">
@@ -19,7 +19,7 @@
         <textarea name="description" rows="3" class="form-control">{{ old('description', $data->description) }}</textarea>
       </div>
       <button type="submit" class="btn btn-primary">
-        <i class="bi bi-check-circle me-2"></i>Atualizar Tipo de Licença
+        <i class="fas fa-check-circle me-2"></i>Atualizar Tipo de Licença
       </button>
     </form>
   </div>

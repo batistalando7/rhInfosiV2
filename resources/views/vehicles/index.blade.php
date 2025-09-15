@@ -48,7 +48,7 @@
             <th>Modelo</th>
             <th>Status</th>
             <th>Motorista</th>
-            <th>Acções</th>
+            <th style="width: 58px">Acções</th>
           </tr>
         </thead>
         <tbody>

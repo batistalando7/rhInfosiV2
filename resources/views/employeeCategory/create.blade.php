@@ -4,9 +4,9 @@
 
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-plus-circle me-2"></i>Nova Categoria de Funcionário</span>
+    <span><i class="fas fa-plus-circle me-2"></i>Nova Categoria de Funcionário</span>
     <a href="{{ route("employeeCategory.index") }}" class="btn btn-outline-light btn-sm" title="Ver Todas">
-      <i class="bi bi-card-list"></i>
+      <i class="fas fa-card-list"></i>
     </a>
   </div>
   <div class="card-body">
@@ -28,7 +28,7 @@
       </div>
       <div class="d-grid gap-2 col-6 mx-auto mt-4">
         <button type="submit" class="btn btn-primary btn-lg">
-          <i class="bi bi-check-circle me-2"></i>Cadastrar Categoria
+          <i class="fas fa-check-circle me-2"></i>Cadastrar Categoria
         </button>
       </div>
     </form>

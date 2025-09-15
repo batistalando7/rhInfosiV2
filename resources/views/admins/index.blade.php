@@ -3,9 +3,9 @@
 @section('content')
 <div class="card mb-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-person-lines-fill me-2"></i>Lista de Administradores</span>
+    <span><i class="fas fa-person-lines-fill me-2"></i>Lista de Administradores</span>
     <a href="{{ route('admins.create') }}" class="btn btn-outline-light btn-sm" title="Adicionar Novo">
-      <i class="bi bi-plus-circle"></i>
+      <i class="fas fa-plus-circle"></i>
     </a>
   </div>
   <div class="card-body">
@@ -14,7 +14,7 @@
       <div class="input-group" style="max-width: 400px;">
         <input type="text" name="search" class="form-control" placeholder="Buscar por nome do funcionário" value="{{ request('search') }}">
         <button class="btn btn-primary" type="submit">
-          <i class="bi bi-search"></i> Buscar
+          <i class="fas fa-search"></i> Buscar
         </button>
       </div>
     </form>
@@ -56,21 +56,21 @@
             </td>
             <td>
               <a href="{{ route('admins.show', $admin->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
-                <i class="bi bi-eye"></i>
+                <i class="fas fa-eye"></i>
               </a>
               <a href="{{ route('admins.edit', $admin->id) }}" class="btn btn-info btn-sm" title="Editar">
-                <i class="bi bi-pencil"></i>
+                <i class="fas fa-pencil"></i>
               </a>
               <form action="{{ route('admins.destroy', $admin->id) }}" method="POST" style="display:inline-block;">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger btn-sm" title="Apagar" onclick="return confirm('Tem certeza?')">
-                  <i class="bi bi-trash"></i>
+                  <i class="fas fa-trash"></i>
                 </button>
               </form>
               @if($admin->role == 'employee')
                 <a href="{{ route('admins.contract', $admin->id) }}" class="btn btn-success btn-sm" title="Gerar Contrato">
-                  <i class="bi bi-file-earmark-pdf"></i>
+                  <i class="fas fa-file-earmark-pdf"></i>
                 </a>
               @endif
             </td>

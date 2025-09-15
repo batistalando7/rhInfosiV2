@@ -4,9 +4,9 @@
 
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-person-plus me-2"></i>Novo Estagiário</span>
+    <span><i class="fas fa-person-plus me-2"></i>Novo Estagiário</span>
     <a href="{{ route('intern.index') }}" class="btn btn-outline-light btn-sm" title="Ver todos">
-      <i class="bi bi-card-list"></i>
+      <i class="fas fa-card-list"></i>
     </a>
   </div>
   <div class="card-body">
@@ -176,7 +176,7 @@
       <!-- Botão de envio -->
       <div class="d-grid gap-2 col-6 mx-auto mt-4">
         <button type="submit" class="btn btn-primary btn-lg">
-          <i class="bi bi-check-circle me-2"></i>Cadastrar Estagiário
+          <i class="fas fa-check-circle me-2"></i>Cadastrar Estagiário
         </button>
       </div>
     </form>

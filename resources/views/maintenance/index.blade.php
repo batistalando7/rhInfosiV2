@@ -52,7 +52,7 @@
             <th>Data</th>
             <th>Custo</th>
             <th>Descrição</th>
-            <th>Acções</th>
+            <th style="width: 58px;">Ação</th>
           </tr>
         </thead>
         <tbody>

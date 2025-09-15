@@ -31,7 +31,7 @@
             <th>Especialidade</th>
             <th>Endereço</th>
             <th>Email</th>
-            <th>Ações</th>
+            <th style="width: 58px;">Ação</th>
           </tr>
         </thead>
         <tfoot>
@@ -43,7 +43,7 @@
             <th>Especialidade</th>
             <th>Endereço</th>
             <th>Email</th>
-            <th>Ações</th>
+            <th style="width: 58px;">Ação</th><th>Ações</th>
           </tr>
         </tfoot>
         <tbody>

@@ -14,14 +14,14 @@
   {{-- Cabeçalho com botão de voltar e baixar PDF --}}
   <div class="row mb-4">
     <div class="col-8">
-      <h3><i class="bi bi-eye me-2"></i>Ver Funcionário</h3>
+      <h3><i class="fas fa-eye me-2"></i>Ver Funcionário</h3>
     </div>
     <div class="col-4 text-end">
       <a href="{{ route("employeee.index") }}" class="btn btn-outline-secondary btn-sm me-2">
-        <i class="bi bi-arrow-left"></i> Voltar
+        <i class="fas fa-arrow-left"></i> Voltar
       </a>
       <a href="{{ route("employeee.showPdf", $data->id) }}" class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener noreferrer">
-        <i class="bi bi-download" ></i> Baixar PDF
+        <i class="fas fa-download" ></i> Baixar PDF
       </a>
     </div>
   </div>

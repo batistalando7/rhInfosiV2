@@ -7,7 +7,7 @@
       <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
         <span><i class="fas fa-umbrella-beach me-2"></i>Editar Pedido de Férias</span>
         <a href="{{ route('vacationRequest.index') }}" class="btn btn-outline-light btn-sm">
-          <i class="bi bi-arrow-left"></i> Voltar
+          <i class="fas fa-arrow-left"></i> Voltar
         </a>
       </div>
       <div class="card-body">
@@ -84,7 +84,7 @@
 
           <div class="text-center">
             <button class="btn btn-success">
-              <i class="bi bi-check-circle"></i> Atualizar Pedido
+              <i class="fas fa-check-circle"></i> Atualizar Pedido
             </button>
           </div>
         </form>

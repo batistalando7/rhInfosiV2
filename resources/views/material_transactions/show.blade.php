@@ -4,10 +4,10 @@
 @section('content')
 <div class="card mb-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between">
-    <span><i class="bi bi-card-list me-2"></i> Detalhes da Movimentação</span>
+    <span><i class="fas fa-card-list me-2"></i> Detalhes da Movimentação</span>
     <a href="{{ route('materials.transactions.index',['category'=>$category]) }}"
        class="btn btn-outline-light btn-sm">
-      <i class="bi bi-arrow-left"></i> Voltar
+      <i class="fas fa-arrow-left"></i> Voltar
     </a>
   </div>
   <div class="card-body">

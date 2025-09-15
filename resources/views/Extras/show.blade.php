@@ -6,7 +6,7 @@
     <h4>{{ $job->title }}</h4>
     <div>
       <a href="{{ route('extras.pdfShow', $job->id) }}" class="btn btn-outline-light btn-sm me-2" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
-        <i class="bi bi-file-earmark-pdf"></i> Baixar PDF
+        <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
       </a>
       <a href="{{ route('extras.index') }}" class="btn btn-outline-light btn-sm">Voltar</a>
     </div>

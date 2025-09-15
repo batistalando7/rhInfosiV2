@@ -4,18 +4,18 @@
 
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-calendar-event me-2"></i>Filtrar Estagiários por Data</span>
+    <span><i class="fas fa-calendar-event me-2"></i>Filtrar Estagiários por Data</span>
     <div>
       {{-- Se já existir um filtro aplicado ($startDate e $endDate), exibimos o botão de PDF --}}
       @if(isset($startDate) && isset($endDate))
         <a href="{{ route('intern.filter.pdf', ['start_date' => $startDate, 'end_date' => $endDate]) }}"
            class="btn btn-outline-light btn-sm me-2" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-file-earmark-pdf"></i> Baixar PDF
+          <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
         </a>
       @endif
 
       <a href="{{ route('intern.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
-        <i class="bi bi-arrow-left"></i> Voltar
+        <i class="fas fa-arrow-left"></i> Voltar
       </a>
     </div>
   </div>
@@ -41,7 +41,7 @@
         </div>
         <div class="col-md-4">
           <button type="submit" class="btn btn-primary w-100">
-            <i class="bi bi-search"></i> Filtrar
+            <i class="fas fa-search"></i> Filtrar
           </button>
         </div>
       </div>

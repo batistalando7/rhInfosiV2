@@ -17,7 +17,7 @@
             <th>ID</th>
             <th>Nome</th>
             <th>Descrição</th>
-            <th>Ações</th>
+            <th style="width: 58px;">Ação</th>
           </tr>
         </thead>
         <tbody>

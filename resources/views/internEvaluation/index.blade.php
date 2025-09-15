@@ -25,7 +25,7 @@
             <th>Estagiário</th>
             <th>Status</th>
             <th>Criado em</th>
-            <th>Ações</th>
+            <th style="width: 58px;">Ação</th>
           </tr>
         </thead>
         <tbody>

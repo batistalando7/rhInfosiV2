@@ -5,7 +5,7 @@
 <div class="card mb-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span>
-      <i class="bi bi-building me-2"></i>
+      <i class="fas fa-building me-2"></i>
       Funcionários do Departamento: {{ $department->title }}
     </span>
 
@@ -14,10 +14,10 @@
       <a href="{{ route('depart.employeee.pdf', $department->id) }}" 
          class="btn btn-outline-light btn-sm" 
          title="Baixar PDF" target="_blank" rel="noopener noreferrer">
-        <i class="bi bi-file-earmark-pdf"></i> Baixar PDF
+        <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
       </a>
       <a href="{{ route('depart.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
-        <i class="bi bi-arrow-left"></i> Voltar
+        <i class="fas fa-arrow-left"></i> Voltar
       </a>
     </div>
   </div>
@@ -41,10 +41,10 @@
                 <td>{{ $employeee->email }}</td>
                 <td>
                   <a href="{{ route('employeee.show', $employeee->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
-                    <i class="bi bi-eye"></i>
+                    <i class="fas fa-eye"></i>
                   </a>
                   <a href="{{ route('employeee.edit', $employeee->id) }}" class="btn btn-info btn-sm" title="Editar">
-                    <i class="bi bi-pencil"></i>
+                    <i class="fas fa-pencil"></i>
                   </a>
                 </td>
               </tr>

@@ -4,9 +4,9 @@
 
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-arrow-left-right me-2"></i>Nova Mobilidade</span>
+    <span><i class="fas fa-arrow-left-right me-2"></i>Nova Mobilidade</span>
     <a href="{{ route('mobility.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
-      <i class="bi bi-arrow-left"></i> Voltar
+      <i class="fas fa-arrow-left"></i> Voltar
     </a>
   </div>
   <div class="card-body">
@@ -59,7 +59,7 @@
         </div>
         <div class="text-center">
           <button type="submit" class="btn btn-success" style="width: auto;">
-            <i class="bi bi-check-circle"></i> Salvar Mobilidade
+            <i class="fas fa-check-circle"></i> Salvar Mobilidade
           </button>
         </div>
       </form>

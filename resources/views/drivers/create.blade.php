@@ -4,9 +4,9 @@
 
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-person-plus me-2"></i>Novo Motorista</span>
+    <span><i class="fas fa-person-plus me-2"></i>Novo Motorista</span>
     <a href="{{ route('drivers.index') }}" class="btn btn-outline-light btn-sm">
-      <i class="bi bi-card-list"></i> Ver Todos
+      <i class="fas fa-card-list"></i> Ver Todos
     </a>
   </div>
   <div class="card-body">
@@ -111,7 +111,7 @@
 
       <div class="d-grid gap-2 col-md-4 mx-auto mt-4">
         <button type="submit" class="btn btn-primary btn-lg">
-          <i class="bi bi-check-circle me-2"></i>Salvar Motorista
+          <i class="fas fa-check-circle me-2"></i>Salvar Motorista
         </button>
       </div>
     </form>

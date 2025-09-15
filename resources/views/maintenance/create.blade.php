@@ -4,9 +4,9 @@
 
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-tools me-2"></i>Nova Manutenção</span>
+    <span><i class="fas fa-tools me-2"></i>Nova Manutenção</span>
     <a href="{{ route('maintenance.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todos">
-      <i class="bi bi-card-list"></i>
+      <i class="fas fa-card-list"></i>
     </a>
   </div>
   <div class="card-body">
@@ -107,7 +107,7 @@
       {{-- Botão Salvar --}}
       <div class="d-grid gap-2 col-md-4 mx-auto mt-4">
         <button type="submit" class="btn btn-primary btn-lg">
-          <i class="bi bi-check-circle me-2"></i>Salvar Manutenção
+          <i class="fas fa-check-circle me-2"></i>Salvar Manutenção
         </button>
       </div>
     </form>

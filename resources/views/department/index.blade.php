@@ -29,41 +29,41 @@
       </form>
     </div><br>
 
-
-    <table id="datatablesSimple" class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Título</th>
-          <th>Descrição</th>
-          <th>Ação</th>
-        </tr>
-      </thead>
-    
-      <tbody>
-        @if ($data)
-          @foreach($data as $d)
-            <tr>
-              <td>{{ $d->id }}</td>
-              <td>{{ $d->title }}</td>
-              <td>{{ $d->description ?? '-' }}</td>
-              <td>
-                <a href="{{ route('depart.show', $d->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
-                  <i class="fas fa-eye"></i>
-                </a>
-                <a href="{{ route('depart.edit', $d->id) }}" class="btn btn-info btn-sm" title="Editar">
-                  <i class="fas fa-pencil"></i>
-                </a>
-                <a href="#" data-url="{{ url('depart/'.$d->id.'/delete') }}" class="btn btn-danger btn-sm delete-btn" title="Apagar">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </td>
-            </tr>
-          @endforeach
-        @endif
-      </tbody>
-    </table>
-
+    <div class="table-responsive">
+      <table id="datatablesSimple" class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Descrição</th>
+            <th style="width: 58px;">Ação</th>
+          </tr>
+        </thead>
+      
+        <tbody>
+          @if ($data)
+            @foreach($data as $d)
+              <tr>
+                <td>{{ $d->id }}</td>
+                <td>{{ $d->title }}</td>
+                <td>{{ $d->description ?? '-' }}</td>
+                <td>
+                  <a href="{{ route('depart.show', $d->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
+                    <i class="fas fa-eye"></i>
+                  </a>
+                  <a href="{{ route('depart.edit', $d->id) }}" class="btn btn-info btn-sm" title="Editar">
+                    <i class="fas fa-pencil"></i>
+                  </a>
+                  <a href="#" data-url="{{ url('depart/'.$d->id.'/delete') }}" class="btn btn-danger btn-sm delete-btn" title="Apagar">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            @endforeach
+          @endif
+        </tbody>
+      </table>
+    </div>
     
   </div>
 </div>

@@ -53,7 +53,7 @@
             <th>Sal. Líquido</th>
             <th>Pagamento</th>
             <th>Status</th>
-            <th>Ações</th>
+            <th style="width: 58px">Ações</th>
           </tr>
         </thead>
         <tbody>

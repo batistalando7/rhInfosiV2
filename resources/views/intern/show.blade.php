@@ -4,9 +4,9 @@
 
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-eye me-2"></i>Ver Estagiário</span>
+    <span><i class="fas fa-eye me-2"></i>Ver Estagiário</span>
     <a href="{{ route('intern.index') }}" class="btn btn-outline-light btn-sm" title="View All">
-      <i class="bi bi-card-list"></i>
+      <i class="fas fa-card-list"></i>
     </a>
   </div>
   <div class="card-body">

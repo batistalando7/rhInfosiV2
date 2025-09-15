@@ -18,7 +18,7 @@
           <tr>
             <th>Título</th>
             <th>Data de Criação</th>
-            <th>Ações</th>
+            <th style="width: 58px">Ações</th>
           </tr>
         </thead>
         <tbody>
