@@ -5,8 +5,8 @@
 <div class="card mb-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-plus-circle me-2"></i>Adicionar Cargo</span>
-    <a href="{{ route('positions.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todos"> ver
-      <i class="fas fa-card-list"></i>
+    <a href="{{ route('positions.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todos"> {{-- ver --}}
+      <i class="fa-solid fa-list"></i>
     </a>
   </div>  
   <div class="card-body">

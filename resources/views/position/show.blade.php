@@ -7,7 +7,7 @@
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-eye me-2"></i>Ver Cargo</span>
     <a href="{{ route('positions.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todos">
-      <i class="fas fa-card-list"></i>
+      <i class="fa-solid fa-list"></i>
     </a>
   </div>
   <div class="card-body">

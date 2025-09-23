@@ -34,7 +34,7 @@
             <th style="width: 58px;">Ação</th>
           </tr>
         </thead>
-        <tfoot>
+        {{-- <tfoot>
           <tr>
             <th>ID</th>
             <th>Nome Completo</th>
@@ -45,7 +45,7 @@
             <th>Email</th>
             <th style="width: 58px;">Ação</th><th>Ações</th>
           </tr>
-        </tfoot>
+        </tfoot> --}}
         <tbody>
           @if ($data)
             @foreach($data as $d)

@@ -6,7 +6,7 @@
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-person-plus me-2"></i>Novo Estagiário</span>
     <a href="{{ route('intern.index') }}" class="btn btn-outline-light btn-sm" title="Ver todos">
-      <i class="fas fa-card-list"></i>
+      <i class="fa-solid fa-list"></i>
     </a>
   </div>
   <div class="card-body">
