@@ -7,7 +7,7 @@
     <i class="fas fa-table me-1"></i>
     Atualizar departamento
 
-    <a href="{{ asset('depart') }}" class="float-end btn btn-sm btn-info">Ver todos</a>
+    <a href="{{ asset('depart') }}" class="float-end btn btn-sm btn-info"><i class="fa-solid fa-list"></i></a>
   </div>  
   
 

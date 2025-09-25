@@ -1,12 +1,12 @@
 @extends('layouts.admin.layout')
 @section('title','Trabalhos Extras')
 @section('content')
-<div class="card mb-4 shadow">
+<div class="card mb-4 shadow" style="margin-top: 1.5rem;">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-briefcase me-2"></i>Trabalhos Extras</span>
     <div>
       <a href="{{ route('extras.pdfAll') }}" class="btn btn-outline-light btn-sm me-2" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
-        <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
+        <i class="fas fa-file-pdf"></i> Baixar PDF
       </a>
       <a href="{{ route('extras.create') }}" class="btn btn-outline-light btn-sm">
         <i class="fas fa-plus-circle"></i> Adicionar Novo

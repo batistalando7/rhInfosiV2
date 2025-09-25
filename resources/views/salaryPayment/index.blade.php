@@ -1,15 +1,15 @@
 @extends('layouts.admin.layout')
 @section('title','Pagamentos de Salário')
 @section('content')
-<div class="card mb-4 shadow">
+<div class="card mb-4 shadow" style="margin-top: 1.5rem;">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-money-bill-wave me-2"></i>Pagamentos de Salário</span>
     <div>
       <a href="{{ route('salaryPayment.pdfAll') }}" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">
-        <i class="fas fa-file-earmark-pdf"></i> Todos (PDF)
+        <i class="fas fa-file-pdf"></i> Todos (PDF)
       </a>
       <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#filterArea">
-        <i class="fas fa-funnel"></i> Filtrar
+        <i class="fas fa-calendar-alt"></i> Filtrar
       </button>
       <a href="{{ route('salaryPayment.create') }}" class="btn btn-outline-light btn-sm" title="Novo Pagamento">
         <i class="fas fa-plus-circle"></i> Novo

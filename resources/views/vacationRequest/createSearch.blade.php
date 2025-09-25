@@ -1,7 +1,7 @@
 @extends('layouts.admin.layout')
 @section('title', 'Novo Pedido de Férias - Selecionar Funcionário')
 @section('content')
-<div class="card mb-4 shadow">
+<div class="card mb-4 shadow" style="margin-top: 1.5rem;">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-umbrella-beach me-2"></i>Novo Pedido de Férias</span>
     <a href="{{ route('vacationRequest.index') }}" class="btn btn-outline-light btn-sm">
@@ -14,7 +14,7 @@
         <div class="col-md-8">
           <div class="form-floating">
             <input type="text" name="employeeSearch" id="employeeSearch" class="form-control"
-                   placeholder="ID ou Nome do Funcionário" value="{{ old('employeeSearch') }}">
+                   placeholder="" value="{{ old('employeeSearch') }}">
             <label for="employeeSearch">ID ou Nome do Funcionário</label>
           </div>
           @error('employeeSearch')<small class="text-danger">{{ $message }}</small>@enderror

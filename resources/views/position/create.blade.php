@@ -17,7 +17,7 @@
 
           <div class="mb-3">
             <div class="form-floating">
-              <input type="text" name="name" class="form-control" id="name" placeholder="Nome do Cargo">
+              <input type="text" name="name" class="form-control" id="name" placeholder="">
               <label for="name">Nome do Cargo</label>
             </div>
           </div>
@@ -25,7 +25,7 @@
 
           <div class="mb-3">
             <div class="form-floating">
-              <textarea name="description" class="form-control" id="description" placeholder="Descrição" style="height: 100px;"></textarea>
+              <textarea name="description" class="form-control" id="description" placeholder="" style="height: 100px;"></textarea>
               <label for="description">Descrição (Opcional)</label>
             </div>
           </div>

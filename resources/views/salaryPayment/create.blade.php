@@ -1,7 +1,7 @@
 @extends('layouts.admin.layout')
 @section('title','Adicionar Pagamento de Salário')
 @section('content')
-<div class="row justify-content-center">
+<div class="row justify-content-center" style="margin-top: 1.5rem;">
   <div class="{{ isset($employee) ? 'col-md-5' : 'col-md-8' }}">
     <div class="card mb-4 shadow">
       <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
@@ -18,9 +18,9 @@
               <div class="col-md-8">
                 <div class="form-floating">
                   <input type="text" name="employeeSearch" class="form-control"
-                         placeholder="Pesquisar por ID ou Nome do Funcionário"
+                         placeholder=""
                          value="{{ old('employeeSearch') }}">
-                  <label for="employeeSearch">Nome do Funcionário</label>
+                  <label for="employeeSearch">Pesquisar por ID ou Nome do Funcionário</label>
                 </div>
                 @error('employeeSearch')<div class="text-danger small">{{ $message }}</div>@enderror
               </div>

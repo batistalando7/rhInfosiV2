@@ -34,7 +34,7 @@
 
       <div class="mb-3">
         <div class="form-floating">
-          <input type="text" name="name" class="form-control" id="name" placeholder="Nome do Cargo" value="{{ old('name', $data->name) }}">
+          <input type="text" name="name" class="form-control" id="name" placeholder=""  value="{{ old('name', $data->name) }}">
           <label for="name">Nome do Cargo</label>
         </div>
       </div>
@@ -42,7 +42,7 @@
 
       <div class="mb-3">
         <div class="form-floating">
-          <textarea name="description" class="form-control" id="description" placeholder="Descrição" style="height: 100px;">{{ old('description', $data->description) }}</textarea>
+          <textarea name="description" class="form-control" id="description" placeholder=""  style="height: 100px;">{{ old('description', $data->description) }}</textarea>
           <label for="description">Descrição</label>
         </div>
       </div>

@@ -16,13 +16,13 @@
       <div class="row g-3">
         <div class="col-md-12">
           <div class="form-floating mb-3">
-            <input type="text" name="name" id="name" class="form-control" placeholder="Nome da Categoria" value="{{ old("name", $employeeCategory->name) }}">
+            <input type="text" name="name" id="name" class="form-control" placeholder="" value="{{ old("name", $employeeCategory->name) }}">
             <label for="name">Nome da Categoria</label>
           </div>
         </div>
         <div class="col-md-12">
           <div class="form-floating">
-            <textarea name="description" id="description" class="form-control" placeholder="Descrição da Categoria" style="height: 100px;">{{ old("description", $employeeCategory->description) }}</textarea>
+            <textarea name="description" id="description" class="form-control" placeholder="" style="height: 100px;">{{ old("description", $employeeCategory->description) }}</textarea>
             <label for="description">Descrição da Categoria</label>
           </div>
         </div>
