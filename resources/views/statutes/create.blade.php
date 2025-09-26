@@ -15,16 +15,22 @@
           <form method="POST" action="{{ route('statutes.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
-              <label for="title" class="form-label">Título do Estatuto</label>
-              <input type="text" class="form-control" name="title" id="title" required>
+              <div class="form-floating">
+                <input type="text" class="form-control" placeholder="" name="title" id="title" required>
+                <label for="title">Título do Estatuto</label>
+              </div>
             </div>
             <div class="mb-3">
-              <label for="description" class="form-label">Descrição</label>
-              <textarea class="form-control" name="description" id="description" rows="5" required></textarea>
+              <div class="form-floating">
+                <textarea class="form-control" name="description" placeholder="" style="height: 100px;" id="description" rows="5" required></textarea>
+                <label for="description">Descrição</label>
+              </div>
             </div>
             <div class="mb-3">
-              <label for="document" class="form-label">Documento</label>
-              <input type="file" class="form-control" name="document" id="document">
+              <div class="form-floating">
+                <input type="file" class="form-control" name="document" id="document">
+                <label for="document" style="margin-top: -8px">Documento</label>
+              </div>
             </div>
             <div class="d-grid">
               <button type="submit" class="btn btn-success">

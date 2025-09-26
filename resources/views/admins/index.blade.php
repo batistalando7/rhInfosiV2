@@ -55,10 +55,10 @@
               @endswitch
             </td>
             <td>
-              <a href="{{ route('admins.show', $admin->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
+              <a href="{{ route('admins.show', $admin->id) }}" class="btn btn-warning btn-sm" style="width: 40px" title="Visualizar">
                 <i class="fas fa-eye"></i>
               </a>
-              <a href="{{ route('admins.edit', $admin->id) }}" class="btn btn-info btn-sm" title="Editar">
+              <a href="{{ route('admins.edit', $admin->id) }}" class="btn btn-info btn-sm" style="width: 40px" title="Editar">
                 <i class="fas fa-pencil"></i>
               </a>
               <form action="{{ route('admins.destroy', $admin->id) }}" method="POST" style="display:inline-block;">
