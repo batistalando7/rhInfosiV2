@@ -7,7 +7,7 @@
     <span><i class="fas fa-id-badge me-2"></i>Lista de Destacamentos</span>
     <div>
       <a href="{{ route('secondment.pdfAll') }}" class="btn btn-outline-light btn-sm" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
-        <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
+        <i class="fas fa-file-pdf"></i> Baixar PDF
       </a>
       <a href="{{ route('secondment.create') }}" class="btn btn-outline-light btn-sm" title="Novo Destacamento">
         <i class="fas fa-plus-circle"></i> Novo Destacamento

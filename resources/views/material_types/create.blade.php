@@ -2,7 +2,7 @@
 @section('title','Novo Tipo — '.ucfirst($category))
 
 @section('content')
-<div class="card mb-4 shadow">
+<div class="card mb-4 shadow" style="margin-top: 1.5rem;">
   <div class="card-header bg-secondary text-white">
     <i class="fas fa-tags me-2"></i> Novo Tipo — {{ ucfirst($category) }}
   </div>
@@ -14,13 +14,17 @@
           <input type="hidden" name="category" value="{{ $category }}">
 
           <div class="mb-3">
-            <label class="form-label">Nome do Tipo</label>
-            <input type="text" name="name" class="form-control" required>
+            <div class="form-floating">
+              <input type="text" name="name" placeholder="" class="form-control" required>
+              <label for="name">Nome do Tipo</label>
+            </div>
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Descrição (opcional)</label>
-            <textarea name="description" class="form-control" rows="3"></textarea>
+            <div class="form-floating">
+              <textarea name="description" placeholder="" class="form-control" style="height: 100px;"></textarea>
+              <label for="description" >Descrição (opcional)</label>
+            </div>
           </div>
 
           <div class="text-center">

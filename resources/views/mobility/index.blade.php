@@ -7,7 +7,7 @@
     <span><i class="fas fa-arrow-left-right me-2"></i>Lista de Mobilidades</span>
     <div>
       <a href="{{ route('mobility.pdfAll') }}" class="btn btn-outline-light btn-sm" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
-        <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
+        <i class="fas fa-file-pdf"></i> Baixar PDF
       </a>
       <a href="{{ route('mobility.create') }}" class="btn btn-outline-light btn-sm" title="Nova Mobilidade">
         <i class="fas fa-plus-circle"></i> Nova Mobilidade

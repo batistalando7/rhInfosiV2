@@ -222,13 +222,13 @@
                 <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Administração e Controle</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAttendance" aria-expanded="false" aria-controls="collapseAttendance">
-                        <i class="fas fa-calendar-check me-2"></i> Mapa de Efetividade <i class="fas fa-chevron-down ms-auto"></i>
+                        <i class="fa-solid fa-calendar-check me-2""></i> Mapa de Efetividade <i class="fas fa-chevron-down ms-auto"></i>
                     </a>
                     <div class="collapse" id="collapseAttendance">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('attendance.index') }}">Ver Registros</a></li>
-                            <li><a class="nav-link" href="{{ route('attendance.create') }}">Registrar Presença</a></li>
-                            <li><a class="nav-link" href="{{ route('attendance.dashboard') }}">Dashboard de Efetividade</a></li>
+                            <li><a class="nav-link" href="{{ route('attendance.index') }}"><i class="fas fa-eye me-2"></i>Ver Registros</a></li>
+                            <li><a class="nav-link" href="{{ route('attendance.create') }}"><i class="fas fa-plus me-2"></i>Registrar Presença</a></li>
+                            <li><a class="nav-link" href="{{ route('attendance.dashboard') }}"><i class="fa-solid fa-table-columns me-2"></i>Dashboard de Efetividade</a></li>
                         </ul>
                     </div>
                 </li>
@@ -238,10 +238,10 @@
                     </a>
                     <div class="collapse" id="deptHeadMenu">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('dh.myEmployees') }}">Meus Funcionários</a></li>
-                            <li><a class="nav-link" href="{{ route('dh.pendingVacations') }}">Férias Pendentes</a></li>
-                            <li><a class="nav-link" href="{{ route('dh.pendingLeaves') }}">Licenças Pendentes</a></li>
-                            <li><a class="nav-link" href="{{ route('dh.pendingRetirements') }}">Pedidos de Reforma</a></li>
+                            <li><a class="nav-link" href="{{ route('dh.myEmployees') }}"><i class="fa-solid fa-users me-2"></i>Meus Funcionários</a></li>
+                            <li><a class="nav-link" href="{{ route('dh.pendingVacations') }}"><i class="fas fa-umbrella-beach me-2"></i>Férias Pendentes</a></li>
+                            <li><a class="nav-link" href="{{ route('dh.pendingLeaves') }}"><i class="fas fa-file-alt me-2"></i>Licenças Pendentes</a></li>
+                            <li><a class="nav-link" href="{{ route('dh.pendingRetirements') }}"><i class="fas fa-user-clock me-2"></i>Pedidos de Reforma</a></li>
                         </ul>
                     </div>
                 </li>
@@ -251,11 +251,11 @@
                     </a>
                     <div class="collapse" id="collapseMaterials">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('material-types.index', ['category' => 'infraestrutura']) }}">Tipos de Equipamento</a></li>
-                            <li><a class="nav-link" href="{{ route('materials.create', ['category' => 'infraestrutura']) }}">Novo Equipamento</a></li>
-                            <li><a class="nav-link" href="{{ route('admin.materials.transactions.in') }}">Entrada</a></li>
-                            <li><a class="nav-link" href="{{ route('admin.materials.transactions.out') }}">Saída</a></li>
-                            <li><a class="nav-link" href="{{ route('admin.materials.transactions.index') }}">Histórico</a></li>
+                            <li><a class="nav-link" href="{{ route('material-types.index', ['category' => 'infraestrutura']) }}"><i class="fa-solid fa-hammer me-2"></i>Tipos de Equipamento</a></li>
+                            <li><a class="nav-link" href="{{ route('materials.create', ['category' => 'infraestrutura']) }}"><i class="fas fa-plus me-2"></i>Novo Equipamento</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.materials.transactions.in') }}"><i class="fa-solid fa-circle-arrow-down me-2"></i>Entrada</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.materials.transactions.out') }}"><i class="fa-solid fa-circle-arrow-up me-2"></i>Saída</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.materials.transactions.index') }}"><i class="fas fa-history me-2"></i>Histórico</a></li>
                         </ul>
                     </div>
                 </li>
@@ -264,12 +264,12 @@
                 <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Frota e Transporte</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLicenseCategories" aria-expanded="false" aria-controls="collapseLicenseCategories">
-                        <i class="fas fa-card-checklist me-2"></i> Categorias de Carta <i class="fas fa-chevron-down ms-auto"></i>
+                        <i class="fa-solid fa-list-check me-2"></i> Categorias de Carta <i class="fas fa-chevron-down ms-auto"></i>
                     </a>
                     <div class="collapse" id="collapseLicenseCategories">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('licenseCategories.index') }}">Ver Todas</a></li>
-                            <li><a class="nav-link" href="{{ route('licenseCategories.create') }}">Adicionar Nova</a></li>
+                            <li><a class="nav-link" href="{{ route('licenseCategories.index') }}"><i class="fas fa-eye me-2"></i> Ver Todas</a></li>
+                            <li><a class="nav-link" href="{{ route('licenseCategories.create') }}"><i class="fas fa-plus me-2"></i>Adicionar Nova</a></li>
                         </ul>
                     </div>
                 </li>
@@ -441,10 +441,10 @@
                     </a>
                     <div class="collapse" id="deptHeadMenu">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('dh.myEmployees') }}">Meus Funcionários</a></li>
-                            <li><a class="nav-link" href="{{ route('dh.pendingVacations') }}">Férias Pendentes</a></li>
-                            <li><a class="nav-link" href="{{ route('dh.pendingLeaves') }}">Licenças Pendentes</a></li>
-                            <li><a class="nav-link" href="{{ route('dh.pendingRetirements') }}">Pedidos de Reforma</a></li>
+                            <li><a class="nav-link" href="{{ route('dh.myEmployees') }}"><i class="fa-solid fa-users me-2"></i>Meus Funcionários</a></li>
+                            <li><a class="nav-link" href="{{ route('dh.pendingVacations') }}"><i class="fas fa-umbrella-beach me-2"></i>Férias Pendentes</a></li>
+                            <li><a class="nav-link" href="{{ route('dh.pendingLeaves') }}"><i class="fas fa-file-alt me-2"></i>Licenças Pendentes</a></li>
+                            <li><a class="nav-link" href="{{ route('dh.pendingRetirements') }}"><i class="fas fa-user-clock me-2"></i>Pedidos de Reforma</a></li>
                         </ul>
                     </div>
                 </li>
@@ -521,9 +521,9 @@
                     </a>
                     <div class="collapse" id="collapseAttendance">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('attendance.index') }}">Ver Registros</a></li>
-                            <li><a class="nav-link" href="{{ route('attendance.create') }}">Registrar Presença</a></li>
-                            <li><a class="nav-link" href="{{ route('attendance.dashboard') }}">Dashboard de Efetividade</a></li>
+                            <li><a class="nav-link" href="{{ route('attendance.index') }}"><i class="fas fa-eye me-2"></i> Ver Registros</a></li>
+                            <li><a class="nav-link" href="{{ route('attendance.create') }}"><i class="fas fa-plus me-2"></i>Registrar Presença</a></li>
+                            <li><a class="nav-link" href="{{ route('attendance.dashboard') }}"><i class="fa-solid fa-table-columns me-2"></i>Dashboard de Efetividade</a></li>
                         </ul>
                     </div>
                 </li>

@@ -7,7 +7,7 @@
     <span><i class="fas fa-eye me-2"></i>Tipo — {{ ucfirst($category) }}</span>
     <div>
       <a href="{{ route('material-types.index',['category'=>$category]) }}" class="btn btn-outline-light btn-sm">
-        <i class="fas fa-card-list"></i>
+        <i class="fa-solid fa-list"></i>
       </a>
       <a href="{{ route('material-types.edit',[$type->id,'category'=>$category]) }}" class="btn btn-warning btn-sm">
         <i class="fas fa-pencil"></i>

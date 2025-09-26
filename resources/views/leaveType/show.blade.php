@@ -5,6 +5,9 @@
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white">
     <span><i class="fas fa-eye me-2"></i>Detalhes do Tipo de Licença</span>
+    <a href="{{ route('leaveType.index') }}" class="btn btn-outline-light btn-sm" title="Listagem">
+      <i class="fa-solid fa-list"></i>
+    </a>
   </div>
   <div class="card-body">
     <table class="table table-bordered">
