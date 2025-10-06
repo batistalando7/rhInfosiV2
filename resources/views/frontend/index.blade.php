@@ -407,7 +407,7 @@
     .row > div {
       padding-bottom: 20px; /* Espaço entre os blocos */
     }
-    /* Adiciona espaçamento entre as linhas */
+    /*espaçamento entre as linhas */
     .row .col-lg-4:nth-child(n+4) {
       margin-top: 20px; /* Ajusta o espaçamento entre as linhas */
     }
@@ -425,7 +425,7 @@
       <div class="row">
         <div class="col-lg-12 mt_86 mlr-30 res-991-mt-0">
           <div class="row">
-            <!-- Título "Departamentos" em laranja -->
+            
 
             <!-- 1) Título "Departamentos" centralizado em toda a largura -->
           <div class="col-12 text-center" style="margin-top: 60px; margin-bottom: 10px;">
@@ -458,7 +458,7 @@
                   </div>
                 </div>
               @endforeach
-            </div><!-- /.services-slide -->
+            </div> <!-- /.services-slide -->
           </div>
         </div>
       </div>

@@ -7,6 +7,7 @@ use App\Models\Secondment;
 use App\Models\Intern;
 use App\Models\Department;
 use App\Models\EmployeeType;
+use App\Models\EmployeeCategory;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +34,7 @@ class DashboardController extends Controller
             ->distinct('employeeId')
             ->count('employeeId');
 
-        // Total de estagiários (separado)
+        // Total de estagiários
         $totalInterns = Intern::count();
 
         // Funcionários efetivos e contratados (apenas nos ativos não destacados)
@@ -46,6 +47,7 @@ class DashboardController extends Controller
                 ->where('employeeTypeId', $permanentType->id)
                 ->count()
             : 0;
+
         $contractEmployees = $contractType
             ? Employeee::where('employmentStatus', 'active')
                 ->whereDoesntHave('secondments')
@@ -53,22 +55,30 @@ class DashboardController extends Controller
                 ->count()
             : 0;
 
-        // Funcionários por departamento
-        $departmentsData = Department::withCount('employeee')
+        // Funcionários por categoria (simples, contagem direta)
+        $categoryData = EmployeeCategory::withCount('employees')
             ->get()
-            ->map(function($department) {
+            ->map(function($category) {
+                $count = isset($category->employees_count) ? $category->employees_count : 0;
                 return [
-                    'title' => $department->title,  // Alinhado com o campo usado no DepartmentController
-                    'count' => $department->employeee_count
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'count' => $count
                 ];
-            });
+            })->filter(function ($category) {
+                return $category['count'] > 0; // Filtra categorias sem funcionários
+            })->values();
 
         // Chefes de departamento
         $admins = Admin::where('role', 'department_head')
+            ->whereNotNull('employeeId')
             ->with('employee.department')
             ->get();
 
-        $departmentHeads = $admins->map->employee;
+        $departmentHeads = $admins->map->employee->filter();
+
+        // Passar dados a JS em JSON (valores re-indexados)
+        $categoryDataJson = $categoryData->toJson();
 
         return view('dashboard.index', compact(
             'totalEmployees',
@@ -78,7 +88,8 @@ class DashboardController extends Controller
             'totalInterns',
             'permanentEmployees',
             'contractEmployees',
-            'departmentsData',
+            'categoryData',
+            'categoryDataJson',
             'departmentHeads'
         ));
     }

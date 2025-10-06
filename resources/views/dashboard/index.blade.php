@@ -11,7 +11,7 @@
     <p>Bem-vindo, {{ Auth::user()->employee->fullName ?? Auth::user()->email }}</p>
 
     @if(Auth::user()->role === 'admin' || Auth::user()->role === 'director')
-        <!-- Cards -->
+        <!-- Cards (mantive igual) -->
         <div class="row g-4">
             <!-- Total de Funcionários -->
             <div class="col-xxl-3 col-md-6">
@@ -79,6 +79,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Funcionários Destacados -->
             <div class="col-xxl-3 col-md-6">
                 <div class="card stretch stretch-full">
@@ -112,6 +113,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Funcionários Reformados -->
             <div class="col-xxl-3 col-md-6">
                 <div class="card stretch stretch-full">
@@ -145,6 +147,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Estagiários -->
             <div class="col-xxl-3 col-md-6">
                 <div class="card stretch stretch-full">
@@ -216,23 +219,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($departmentHeads as $head)
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center gap-3">
-                                                <div class="avatar-image">
-                                                    <img src="{{ $head->photo ? asset('frontend/images/departments/' . $head->photo) : asset('public/assets/images/avatar/default.png') }}" alt="{{ $head->fullName }}" class="img-fluid" />
+                                    @forelse($departmentHeads as $head)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="avatar-image">
+                                                        <img src="{{ $head->photo ? asset('frontend/images/departments/' . $head->photo) : asset('public/assets/images/avatar/default.png') }}" alt="{{ $head->fullName ?? 'Sem Nome' }}" class="img-fluid" />
+                                                    </div>
+                                                    <a href="{{ route('employeee.show', $head->id) }}">
+                                                        <span class="d-block">{{ $head->fullName ?? 'Sem Nome' }}</span>
+                                                        <span class="fs-12 d-block fw-normal text-muted">{{ $head->email ?? 'Sem Email' }}</span>
+                                                    </a>
                                                 </div>
-                                                <a href="{{ route('employeee.show', $head->id) }}">
-                                                    <span class="d-block">{{ $head->fullName }}</span>
-                                                    <span class="fs-12 d-block fw-normal text-muted">{{ $head->email }}</span>
-                                                </a>
-                                            </div>
-                                        </td>
-                                        <td>{{ $head->department->title ?? 'Sem Departamento' }}</td>
-                                        <td>{{ $head->department->employeee->count() }}</td>
-                                    </tr>
-                                    @endforeach
+                                            </td>
+                                            <td>{{ $head->department->title ?? 'Sem Departamento' }}</td>
+                                            <td>{{ $head->department->employeee->count() }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="3" class="text-center">Nenhum chefe de departamento encontrado.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -243,17 +250,17 @@
                             <li><a href="javascript:void(0);" class="active">1</a></li>
                             <li><a href="javascript:void(0);">2</a></li>
                             <li><a href="javascript:void(0);"><i class="bi bi-dot"></i></a></li>
-                            <li><a href="javascript:void(0);">8</a></li>
-                            <li><a href("javascript:void(0);"><i class="bi bi-arrow-right"></i></a></li>
+                            <li><a href="javascript:void(0);"><i class="bi bi-arrow-right"></i></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
+
             <!-- Gráficos de Círculo -->
             <div class="col-xxl-4">
                 <div class="card stretch stretch-full">
                     <div class="card-body">
-                        <div class="hstack justify-content-between mb-4 pb-">
+                        <div class="hstack justify-content-between mb-4 pb-0">
                             <div>
                                 <h5 class="mb-1">Distribuição de Funcionários</h5>
                                 <span class="fs-12 text-muted">Percentagem por Tipo de Contrato</span>
@@ -265,10 +272,11 @@
                                 <div class="card-body border border-dashed border-gray-5 rounded-3 position-relative">
                                     <div class="hstack justify-content-between gap-4">
                                         <div>
-                                            <h6 class="fs-14 text-truncate-1-line">Funcionários Efetivos</h6>
+                                            <h6 class="fs-14 text-truncate-1-line">Efetivos</h6>
                                             <div class="fs-12 text-muted"><span class="text-dark fw-medium">Total:</span> {{ $permanentEmployees }}</div>
                                         </div>
-                                        <div class="employee-progress-permanent"></div>
+                                        <!-- elemento vazio que circle-progress vai preencher -->
+                                        <div class="employee-progress-permanent" data-value="{{ $activeEmployees > 0 ? round(($permanentEmployees / $activeEmployees) * 100) / 100 : 0 }}"></div>
                                     </div>
                                     <div class="badge bg-gray-200 text-dark project-mini-card-badge">{{ $activeEmployees > 0 ? round(($permanentEmployees / $activeEmployees) * 100) : 0 }}%</div>
                                 </div>
@@ -277,10 +285,10 @@
                                 <div class="card-body border border-dashed border-gray-5 rounded-3 position-relative">
                                     <div class="hstack justify-content-between gap-4">
                                         <div>
-                                            <h6 class="fs-14 text-truncate-1-line">Funcionários Contratados</h6>
+                                            <h6 class="fs-14 text-truncate-1-line">Contratados</h6>
                                             <div class="fs-12 text-muted"><span class="text-dark fw-medium">Total:</span> {{ $contractEmployees }}</div>
                                         </div>
-                                        <div class="employee-progress-contract"></div>
+                                        <div class="employee-progress-contract" data-value="{{ $activeEmployees > 0 ? round(($contractEmployees / $activeEmployees) * 100) / 100 : 0 }}"></div>
                                     </div>
                                     <div class="badge bg-gray-200 text-dark project-mini-card-badge">{{ $activeEmployees > 0 ? round(($contractEmployees / $activeEmployees) * 100) : 0 }}%</div>
                                 </div>
@@ -291,27 +299,60 @@
             </div>
         </div>
 
-        <!-- Gráficos -->
-        <div class="row g-4">
-            <!-- Gráfico de Funcionários por Status -->
-            <div class="col-xl-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="card-title">Funcionários por Status</h5>
-                    </div>
-                    <div class="card-body">
-                        <div id="employeesByStatusChart"></div>
+        <!-- Funcionários por Categoria (Sales Pipeline Style) -->
+        <div class="col-xxl-12 mt-4">
+            <div class="card stretch stretch-full">
+                <div class="card-header">
+                    <h5 class="card-title">Funcionários por Categoria</h5>
+                    <div class="card-header-action">
+                        <div class="card-header-btn">
+                            <div data-bs-toggle="tooltip" title="Delete">
+                                <a href="javascript:void(0);" class="avatar-text avatar-xs bg-danger" data-bs-toggle="remove"></a>
+                            </div>
+                            <div data-bs-toggle="tooltip" title="Refresh">
+                                <a href="javascript:void(0);" class="avatar-text avatar-xs bg-warning" data-bs-toggle="refresh"></a>
+                            </div>
+                            <div data-bs-toggle="tooltip" title="Maximize/Minimize">
+                                <a href="javascript:void(0);" class="avatar-text avatar-xs bg-success" data-bs-toggle="expand"></a>
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="avatar-text avatar-sm" data-bs-toggle="dropdown" data-bs-offset="25, 25">
+                                <div data-bs-toggle="tooltip" title="Opções">
+                                    <i data-feather="more-vertical"></i>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a href="javascript:void(0);" class="dropdown-item"><i data-feather="at-sign"></i>Novo</a>
+                                <a href="javascript:void(0);" class="dropdown-item"><i data-feather="calendar"></i>Evento</a>
+                                <a href="javascript:void(0);" class="dropdown-item"><i data-feather="bell"></i>Adiado</a>
+                                <a href="javascript:void(0);" class="dropdown-item"><i data-feather="trash-2"></i>Excluído</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void(0);" class="dropdown-item"><i data-feather="settings"></i>Configurações</a>
+                                <a href="javascript:void(0);" class="dropdown-item"><i data-feather="life-buoy"></i>Dicas</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Gráfico de Funcionários por Departamento -->
-            <div class="col-xl-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="card-title">Funcionários por Departamento</h5>
-                    </div>
-                    <div class="card-body">
-                        <div id="employeesByDepartmentChart"></div>
+                <div class="card-body custom-card-action">
+                    <ul class="nav mb-4 gap-4 sales-pipeline-tabs" role="tablist">
+                        @foreach($categoryData as $index => $category)
+                            <li class="nav-item" role="presentation">
+                                <a href="javascript:void(0);" class="nav-link text-start {{ $index === 0 ? 'active' : '' }}" data-bs-toggle="tab" data-bs-target="#categoryTab{{ $index }}" role="tab">
+                                    <span class="fw-semibold text-dark d-block">{{ $category['name'] }}</span>
+                                    <span class="amount fs-18 fw-bold my-1 d-block">{{ $category['count'] }}</span>
+                                    <span class="deals fs-12 text-muted d-block">{{ $category['count'] }} Funcionários</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <div class="tab-content">
+                        @foreach($categoryData as $index => $category)
+                            <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" id="categoryTab{{ $index }}" role="tabpanel">
+                                <!-- container para ApexCharts (obrigatório ser DIV) -->
+                                <div id="categoryChart{{ $index }}" class="apex-chart" style="min-height: 250px;"></div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -326,118 +367,125 @@
 
 @section('scripts')
 @if(Auth::user()->role === 'admin' || Auth::user()->role === 'director')
-<script src="{{ asset('assets/vendors/js/vendors.min.js') }}"></script>
-<script src="{{ asset('assets/vendors/js/apexcharts.min.js') }}"></script>
-<script src="{{ asset('assets/vendors/js/circle-progress.min.js') }}"></script> <!-- Usando arquivo local -->
-<script src="{{ asset('assets/js/common-init.min.js') }}"></script>
-<!-- <script src="{{ asset('assets/js/dashboard-init.min.js') }}"></script> --> <!-- Temporariamente removido -->
-<script src="{{ asset('assets/js/theme-customizer-init.min.js') }}"></script>
-<script src="https://unpkg.com/feather-icons"></script>
+    <!-- [vendors] start -->
+    <script src="{{ asset('assets/vendors/js/vendors.min.js') }}"></script>
+    <!-- vendors.min.js {always must need to be top} -->
+    <script src="{{ asset('assets/vendors/js/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/js/circle-progress.min.js') }}"></script>
+    <!-- [vendors] end -->
 
-<!-- Fallback para CircleProgress se o local falhar -->
-<script>
-let circleProgressLoaded = false;
-function loadCircleProgress() {
-    return new Promise((resolve, reject) => {
-        if (typeof CircleProgress !== 'undefined') {
-            circleProgressLoaded = true;
-            console.log('CircleProgress já carregado (local)');
-            resolve();
-        } else {
-            const script = document.createElement('script');
-            script.src = 'https://unpkg.com/circle-progress@1.0.0/dist/circle-progress.min.js'; // Fallback CDN alternativo
-            script.onload = () => {
-                circleProgressLoaded = true;
-                console.log('CircleProgress carregado via CDN alternativo');
-                resolve();
-            };
-            script.onerror = () => reject(new Error('Falha ao carregar CircleProgress via CDN'));
-            document.head.appendChild(script);
-        }
-    });
-}
+    <!-- [common-init] start -->
+    <script src="{{ asset('assets/js/common-init.min.js') }}"></script>
+    <!-- [common-init] end -->
 
-document.addEventListener("DOMContentLoaded", function() {
-    try {
-        // Inicializar Feather Icons
-        feather.replace();
+    <!-- theme customizer (ok to load early) -->
+    <script src="{{ asset('assets/js/theme-customizer-init.min.js') }}"></script>
 
-        // Dados dos cards
-        var totalEmployees = {{ $totalEmployees }};
-        var activeEmployees = {{ $activeEmployees }};
-        var highlightedEmployees = {{ $highlightedEmployees }};
-        var retiredEmployees = {{ $retiredEmployees }};
-        var totalInterns = {{ $totalInterns }};
-        var permanentEmployees = {{ $permanentEmployees }};
-        var contractEmployees = {{ $contractEmployees }};
-        var departmentsData = @json($departmentsData ?? []);
+    <script src="https://unpkg.com/feather-icons"></script>
 
-        // Debug detalhado dos dados
-        console.log('Dados completos de departmentsData:', departmentsData);
-
-        // Carregar CircleProgress e inicializar gráficos de círculo
-        loadCircleProgress().then(() => {
-            if (circleProgressLoaded) {
-                new CircleProgress('.employee-progress-permanent', {
-                    value: {{ $activeEmployees > 0 ? round(($permanentEmployees / $activeEmployees) * 100) / 100 : 0 }},
-                    size: 80,
-                    fill: { color: '#007bff' }
-                });
-                new CircleProgress('.employee-progress-contract', {
-                    value: {{ $activeEmployees > 0 ? round(($contractEmployees / $activeEmployees) * 100) / 100 : 0 }},
-                    size: 80,
-                    fill: { color: '#28a745' }
-                });
-                console.log('Gráficos de círculo inicializados');
-            } else {
-                console.error('CircleProgress não carregou corretamente');
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Replace feather icons
+            if (typeof feather !== 'undefined' && feather.replace) {
+                feather.replace();
             }
-        }).catch(error => console.error('Erro ao carregar CircleProgress:', error));
 
-        // Gráfico de Funcionários por Status
-        if (permanentEmployees + contractEmployees > 0) {
-            var statusOptions = {
-                chart: { type: 'bar', height: 350 },
-                series: [{ name: 'Funcionários', data: [permanentEmployees, contractEmployees] }],
-                xaxis: { categories: ['Efetivos', 'Contratados'] },
-                colors: ['#007bff', '#28a745'],
-                plotOptions: { bar: { horizontal: false, columnWidth: '45%' } },
-                dataLabels: { enabled: false },
-                tooltip: { y: { formatter: val => val + " funcionários" } }
-            };
-            var statusChart = new ApexCharts(document.querySelector("#employeesByStatusChart"), statusOptions);
-            statusChart.render().then(() => console.log('Gráfico por Status renderizado')).catch(error => console.error('Erro no Gráfico por Status:', error));
-        } else {
-            document.querySelector("#employeesByStatusChart").innerHTML = '<p class="text-center text-muted">Nenhum dado disponível</p>';
-        }
+            // Dados vindos do controller
+            var totalEmployees = {{ $totalEmployees }};
+            var activeEmployees = {{ $activeEmployees }};
+            var highlightedEmployees = {{ $highlightedEmployees }};
+            var retiredEmployees = {{ $retiredEmployees }};
+            var totalInterns = {{ $totalInterns }};
+            var permanentEmployees = {{ $permanentEmployees }};
+            var contractEmployees = {{ $contractEmployees }};
 
-        // Gráfico de Funcionários por Departamento (Donut Moderno)
-        if (Array.isArray(departmentsData) && departmentsData.length > 0) {
-            var departmentOptions = {
-                chart: { type: 'donut', height: 350, animations: { enabled: true, easing: 'easeinout', speed: 800 } },
-                series: departmentsData.map(d => d.count || 0),
-                labels: departmentsData.map(d => d.title || 'Sem Título'),
-                colors: ['#00bcd4', '#ff9800', '#9c27b0', '#3f51b5', '#f44336'], // Gradientes tecnológicos
-                fill: { type: 'gradient', gradient: { shade: 'dark', type: 'horizontal', shadeIntensity: 0.5, gradientToColors: ['#e0f7fa', '#ffe0b2', '#d1c4e9', '#c5cae9', '#ef9a9a'] } },
-                stroke: { width: 0 },
-                dataLabels: { enabled: true, style: { colors: ['#fff'] }, formatter: val => val + "%" },
-                legend: { position: 'bottom', horizontalAlign: 'center', fontSize: '14px', fontFamily: 'Helvetica, Arial, sans-serif' },
-                responsive: [{
-                    breakpoint: 480,
-                    options: { chart: { width: 200 }, legend: { position: 'bottom' } }
-                }],
-                tooltip: { y: { formatter: val => val + " funcionários" } }
-            };
-            var departmentChart = new ApexCharts(document.querySelector("#employeesByDepartmentChart"), departmentOptions);
-            departmentChart.render().then(() => console.log('Gráfico por Departamento renderizado')).catch(error => console.error('Erro no Gráfico por Departamento:', error));
-        } else {
-            document.querySelector("#employeesByDepartmentChart").innerHTML = '<p class="text-center text-muted">Nenhum dado disponível para departamentos</p>';
-            console.log('Nenhum dado disponível para o gráfico de departamentos');
-        }
-    } catch (e) {
-        console.error('Erro no JS do Dashboard:', e);
-    }
-});
-</script>
+            // category data do controller (JSON)
+            var categoryData = {!! $categoryDataJson !!};
+
+            // --- Circle Progress (jQuery plugin style) ---
+            try {
+                if (typeof jQuery !== 'undefined' && typeof jQuery.fn.circleProgress !== 'undefined') {
+                    // Efetivos
+                    var valPerm = parseFloat(document.querySelector('.employee-progress-permanent')?.dataset?.value || 0);
+                    $('.employee-progress-permanent').circleProgress({
+                        value: valPerm,
+                        size: 80,
+                        thickness: 6,
+                        fill: { gradient: ["#007bff"] }
+                    });
+
+                    // Contratados
+                    var valContr = parseFloat(document.querySelector('.employee-progress-contract')?.dataset?.value || 0);
+                    $('.employee-progress-contract').circleProgress({
+                        value: valContr,
+                        size: 80,
+                        thickness: 6,
+                        fill: { gradient: ["#28a745"] }
+                    });
+                } else {
+                    console.warn('circleProgress plugin não encontrado. Verifique se assets/vendors/js/circle-progress.min.js está acessível.');
+                }
+            } catch (err) {
+                console.error('Erro ao inicializar circle-progress:', err);
+            }
+
+            // --- ApexCharts: inicializar os gráficos por categoria ---
+            try {
+                if (typeof ApexCharts === 'undefined') {
+                    console.warn('ApexCharts não encontrado. Verifique assets/vendors/js/apexcharts.min.js');
+                } else {
+                    categoryData.forEach(function(cat, idx) {
+                        var el = document.getElementById('categoryChart' + idx);
+                        if (!el) {
+                            console.error('Elemento #categoryChart' + idx + ' não encontrado. Skipping.');
+                            return;
+                        }
+
+                        var options = {
+                            series: [{
+                                name: 'Funcionários',
+                                data: [cat.count]
+                            }],
+                            chart: {
+                                type: 'bar',
+                                height: 250,
+                                toolbar: { show: false }
+                            },
+                            plotOptions: { bar: { horizontal: false, columnWidth: '60%' } },
+                            dataLabels: { enabled: false },
+                            xaxis: { categories: [cat.name] },
+                            colors: ['#007bff'],
+                            tooltip: { y: { formatter: function (val) { return val + " funcionários"; } } }
+                        };
+
+                        try {
+                            var chart = new ApexCharts(el, options);
+                            chart.render();
+                        } catch (err) {
+                            console.error('Erro ao renderizar chart para', cat.name, err);
+                        }
+                    });
+                }
+            } catch (err) {
+                console.error('Erro geral ao inicializar ApexCharts:', err);
+            }
+
+            // --- Carregar dinamicamente reports-sales-init.min.js após init do dashboard ---
+            try {
+                var script = document.createElement('script');
+                script.src = "{{ asset('assets/js/reports-sales-init.min.js') }}";
+                script.async = false;
+                script.onload = function() {
+                    console.info('reports-sales-init.min.js carregado.');
+                };
+                script.onerror = function() {
+                    console.warn('Falha ao carregar reports-sales-init.min.js. Verifique o caminho em public/assets/js/');
+                };
+                document.body.appendChild(script);
+            } catch (err) {
+                console.error('Erro ao anexar reports-sales-init script:', err);
+            }
+        });
+    </script>
 @endif
 @endsection

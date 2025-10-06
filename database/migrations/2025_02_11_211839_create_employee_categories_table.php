@@ -11,7 +11,7 @@ class CreateEmployeeCategoriesTable extends Migration
         Schema::create("employee_categories", function (Blueprint $table) {
             $table->id();
             $table->string("name")->unique();
-            $table->text("description")->nullable(); // Adicionado o campo description
+            $table->text("description")->nullable();
             $table->timestamps();
         });
     }

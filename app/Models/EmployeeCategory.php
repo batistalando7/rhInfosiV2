@@ -16,8 +16,6 @@ class EmployeeCategory extends Model
 
     public function employees()
     {
-        return $this->hasMany(Employeee::class, 'employee_category_id');
+        return $this->hasMany(Employeee::class, 'employeeCategoryId');  // Corrigido para 'employeeCategoryId' sem underscore
     }
 }
-
-

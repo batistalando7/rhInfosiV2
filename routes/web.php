@@ -81,7 +81,9 @@ Route::get("/contato", [FrontendController::class, "contact"])->name("frontend.c
 Route::middleware(["auth"])->group(function() {
 
     // Rota para o Dashboard (rota renomeada para /dashboard)
-    Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard");
+     Route::get('/dashboard/filter-by-category/{categoryId}/{academicLevel?}', [DashboardController::class, 'filterByCategory'])->name('dashboard.filterByCategory');
+     Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard");
+   
 
       
 
