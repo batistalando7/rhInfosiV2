@@ -21,9 +21,8 @@ class DatabaseSeeder extends Seeder
         Admin::create([
             'employeeId' => null, // ou a ID de algum Employee(funcionario, caso eu queira futuramente vincular a um)
             'email'      => 'admin@infosi.gov.ao',
-            'password'   => Hash::make('admin123'),
+            'password'   => Hash::make('123456'),
             'role'       => 'admin',
         ]);
-
     }
 }

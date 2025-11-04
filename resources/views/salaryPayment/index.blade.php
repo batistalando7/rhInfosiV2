@@ -1,18 +1,18 @@
 @extends('layouts.admin.layout')
 @section('title','Pagamentos de Salário')
 @section('content')
-<div class="card mb-4 shadow">
+<div class="card mb-4 shadow" style="margin-top: 1.5rem;">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-money-bill-wave me-2"></i>Pagamentos de Salário</span>
     <div>
       <a href="{{ route('salaryPayment.pdfAll') }}" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">
-        <i class="bi bi-file-earmark-pdf"></i> Todos (PDF)
+        <i class="fas fa-file-pdf"></i> Todos (PDF)
       </a>
       <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#filterArea">
-        <i class="bi bi-funnel"></i> Filtrar
+        <i class="fas fa-calendar-alt"></i> Filtrar
       </button>
       <a href="{{ route('salaryPayment.create') }}" class="btn btn-outline-light btn-sm" title="Novo Pagamento">
-        <i class="bi bi-plus-circle"></i> Novo
+        <i class="fas fa-plus-circle"></i> Novo
       </a>
     </div>
   </div>
@@ -53,7 +53,7 @@
             <th>Sal. Líquido</th>
             <th>Pagamento</th>
             <th>Status</th>
-            <th>Ações</th>
+            <th style="width: 58px">Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -71,16 +71,16 @@
             <td>{{ $p->paymentDate }}</td>
             <td>{{ $p->paymentStatus }}</td>
             <td class="d-flex gap-1">
-              <a href="{{ route('salaryPayment.show',$p->id) }}"   class="btn btn-sm btn-warning" title="Ver Detalhes"><i class="bi bi-eye"></i></a>
-              <a href="{{ route('salaryPayment.edit',$p->id) }}"   class="btn btn-sm btn-info" title="Editar Registro"><i class="bi bi-pencil"></i></a>
+              <a href="{{ route('salaryPayment.show',$p->id) }}"   class="btn btn-sm btn-warning" title="Ver Detalhes"><i class="fas fa-eye"></i></a>
+              <a href="{{ route('salaryPayment.edit',$p->id) }}"   class="btn btn-sm btn-info" title="Editar Registro"><i class="fas fa-pencil"></i></a>
               <a href="{{ route('salaryPayment.pdfByEmployee', ['employeeId'=>$p->employee->id,'year'=>now()->year]) }}"
                  class="btn btn-sm btn-secondary" title="PDF Anual" target="_blank" rel="noopener noreferrer">
-                <i class="bi bi-file-earmark-pdf"></i>
+                <i class="fas fa-file-earmark-pdf"></i>
               </a>
               <form action="{{ route('salaryPayment.destroy',$p->id) }}"
                     method="POST" style="display:inline">
                 @csrf @method('DELETE')
-                <button class="btn btn-sm btn-danger" title="Apagar"><i class="bi bi-trash"></i></button>
+                <button class="btn btn-sm btn-danger" title="Apagar"><i class="fas fa-trash"></i></button>
               </form>
             </td>
           </tr>

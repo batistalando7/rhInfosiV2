@@ -243,10 +243,10 @@
                     </div>
                     <div class="card-footer">
                         <ul class="list-unstyled d-flex align-items-center gap-2 mb-0 pagination-common-style">
-                            <li><a href="javascript:void(0);"><i class="bi bi-arrow-left"></i></a></li>
+                            <li><a href="javascript:void(0);"><i class="fas fa-arrow-left"></i></a></li>
                             <li><a href="javascript:void(0);" class="active">1</a></li>
                             <li><a href="javascript:void(0);">2</a></li>
-                            <li><a href="javascript:void(0);"><i class="bi bi-dot"></i></a></li>
+                            <li><a href="javascript:void(0);"><i class="fas fa-dot"></i></a></li>
                             <li><a href="javascript:void(0);">8</a></li>
                             <li><a href="javascript:void(0);"><i class="bi bi-arrow-right"></i></a></li>
                         </ul>

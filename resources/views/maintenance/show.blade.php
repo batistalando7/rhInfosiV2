@@ -7,14 +7,14 @@
   {{-- Cabeçalho --}}
   <div class="row mb-4">
     <div class="col-8">
-      <h3><i class="bi bi-tools me-2"></i>Ver Manutenção Nº{{ $maintenance->id }}</h3>
+      <h3><i class="fas fa-tools me-2"></i>Ver Manutenção Nº{{ $maintenance->id }}</h3>
     </div>
     <div class="col-4 text-end">
       <a href="{{ route('maintenance.index') }}" class="btn btn-outline-secondary btn-sm me-2">
-        <i class="bi bi-arrow-left"></i> Voltar
+        <i class="fas fa-arrow-left"></i> Voltar
       </a>
       <a href="{{ route('maintenance.showPdf', $maintenance) }}" class="btn btn-outline-primary btn-sm" target="_blank">
-        <i class="bi bi-download"></i> Baixar PDF
+        <i class="fas fa-download"></i> Baixar PDF
       </a>
     </div>
   </div>

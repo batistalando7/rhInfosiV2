@@ -1,13 +1,13 @@
 @extends('layouts.admin.layout')
 @section('title', 'Detalhes do Pedido de Férias')
 @section('content')
-<div class="row justify-content-center">
+<div class="row justify-content-center" style="margin-top: 1.5rem;">
   <div class="col-md-6">
     <div class="card mb-4 shadow">
       <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
         <span>Detalhes do Pedido de Férias</span>
         <a href="{{ route('vacationRequest.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
-          <i class="bi bi-arrow-left"></i> Voltar
+          <i class="fas fa-arrow-left"></i> Voltar
         </a>
       </div>
       <div class="card-body">

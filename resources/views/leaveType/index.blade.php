@@ -4,9 +4,9 @@
 
 <div class="card mb-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-card-list me-2"></i>Lista de Tipos de Licença</span>
+    <span><i class="fas fa-card-list me-2"></i>Lista de Tipos de Licença</span>
     <a href="{{ route('leaveType.create') }}" class="btn btn-outline-light btn-sm" title="Adicionar Novo"> Adicionar
-      <i class="bi bi-plus-circle"></i>
+      <i class="fas fa-plus-circle"></i>
     </a>
   </div>
   <div class="card-body">
@@ -17,7 +17,7 @@
             <th>ID</th>
             <th>Nome</th>
             <th>Descrição</th>
-            <th>Ações</th>
+            <th style="width: 58px;">Ação</th>
           </tr>
         </thead>
         <tbody>
@@ -28,13 +28,13 @@
             <td>{{ $lt->description ?? '-' }}</td>
             <td>
               <a href="{{ route('leaveType.show', $lt->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
-                <i class="bi bi-eye"></i>
+                <i class="fas fa-eye"></i>
               </a>
               <a href="{{ route('leaveType.edit', $lt->id) }}" class="btn btn-info btn-sm" title="Editar">
-                <i class="bi bi-pencil"></i>
+                <i class="fas fa-pencil"></i>
               </a>
               <a href="#" data-url="{{ url('leaveType/'.$lt->id.'/delete') }}" class="btn btn-danger btn-sm delete-btn" title="Apagar">
-                <i class="bi bi-trash"></i>
+                <i class="fas fa-trash"></i>
               </a>
             </td>
           </tr>

@@ -49,13 +49,13 @@
                 <form action="{{ route('dh.approveVacation', $vr->id) }}" method="POST">
                   @csrf
                   <button type="submit" class="btn btn-success btn-sm">
-                    <i class="bi bi-check-circle"></i> Aprovar
+                    <i class="fas fa-check-circle"></i> Aprovar
                   </button>
                 </form>
                 <form action="{{ route('dh.rejectVacation', $vr->id) }}" method="POST">
                   @csrf
                   <button type="submit" class="btn btn-danger btn-sm">
-                    <i class="bi bi-x-circle"></i> Rejeitar
+                    <i class="fas fa-x-circle"></i> Rejeitar
                   </button>
                 </form>
               </div>

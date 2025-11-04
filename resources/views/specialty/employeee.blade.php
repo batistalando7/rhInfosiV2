@@ -5,17 +5,17 @@
 <div class="card mb-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span>
-      <i class="bi bi-star me-2"></i>
+      <i class="fas fa-star me-2"></i>
       Funcionários com a Especialidade: {{ $specialty->name }}
     </span>
     <div>
       <!-- Botão para gerar PDF para essa especialidade -->
       <a href="{{ route('specialties.pdf', ['specialtyId' => $specialty->id]) }}" 
          class="btn btn-outline-light btn-sm" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
-        <i class="bi bi-file-earmark-pdf"></i> Baixar PDF
+        <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
       </a>
       <a href="{{ route('specialties.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
-        <i class="bi bi-arrow-left"></i> Voltar
+        <i class="fas fa-arrow-left"></i> Voltar
       </a>
     </div>
   </div>

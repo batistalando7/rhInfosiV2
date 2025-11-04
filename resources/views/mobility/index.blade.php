@@ -4,13 +4,13 @@
 
 <div class="card mb-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-arrow-left-right me-2"></i>Lista de Mobilidades</span>
+    <span><i class="fas fa-arrow-left-right me-2"></i>Lista de Mobilidades</span>
     <div>
       <a href="{{ route('mobility.pdfAll') }}" class="btn btn-outline-light btn-sm" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
-        <i class="bi bi-file-earmark-pdf"></i> Baixar PDF
+        <i class="fas fa-file-pdf"></i> Baixar PDF
       </a>
       <a href="{{ route('mobility.create') }}" class="btn btn-outline-light btn-sm" title="Nova Mobilidade">
-        <i class="bi bi-plus-circle"></i> Nova Mobilidade
+        <i class="fas fa-plus-circle"></i> Nova Mobilidade
       </a>
     </div>
   </div>

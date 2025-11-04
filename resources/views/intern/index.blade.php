@@ -4,18 +4,18 @@
 
 <div class="card mb-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-person-lines-fill me-2"></i>Todos os Estagiários</span>
+    <span><i class="fas fa-person-lines-fill me-2"></i>Todos os Estagiários</span>
     <div>
       <a href="{{ route('intern.pdfAll') }}" class="btn btn-outline-light btn-sm" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
-        <i class="bi bi-file-earmark-pdf"></i> Baixar PDF
+        <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
       </a>
   
       <a href="{{ route('intern.filter') }}" class="btn btn-outline-light btn-sm" title="Filtrar por Data">
-        <i class="bi bi-calendar-event"></i> Filtrar
+        <i class="fas fa-calendar-event"></i> Filtrar
       </a>
 
       <a href="{{ route('intern.create') }}" class="btn btn-outline-light btn-sm" title="Adicionar novo Estagiário"> Novo
-        <i class="bi bi-plus-circle"></i>
+        <i class="fas fa-plus-circle"></i>
       </a>
     </div>
   </div>
@@ -31,10 +31,10 @@
             <th>Especialidade</th>
             <th>Endereço</th>
             <th>Email</th>
-            <th>Ações</th>
+            <th style="width: 58px;">Ação</th>
           </tr>
         </thead>
-        <tfoot>
+        {{-- <tfoot>
           <tr>
             <th>ID</th>
             <th>Nome Completo</th>
@@ -43,9 +43,9 @@
             <th>Especialidade</th>
             <th>Endereço</th>
             <th>Email</th>
-            <th>Ações</th>
+            <th style="width: 58px;">Ação</th><th>Ações</th>
           </tr>
-        </tfoot>
+        </tfoot> --}}
         <tbody>
           @if ($data)
             @foreach($data as $d)
@@ -59,13 +59,13 @@
                 <td>{{ $d->email ?? 'Email não definido' }}</td>
                 <td>
                   <a href="{{ route('intern.show', $d->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
-                    <i class="bi bi-eye"></i>
+                    <i class="fas fa-eye"></i>
                   </a>
                   <a href="{{ route('intern.edit', $d->id) }}" class="btn btn-info btn-sm" title="Editar">
-                    <i class="bi bi-pencil"></i>
+                    <i class="fas fa-pencil"></i>
                   </a>
                   <a href="#" data-url="{{ url('intern/'.$d->id.'/delete') }}" class="btn btn-danger btn-sm delete-btn" title="Apagar">
-                    <i class="bi bi-trash"></i>
+                    <i class="fas fa-trash"></i>
                   </a>
                 </td>
               </tr>

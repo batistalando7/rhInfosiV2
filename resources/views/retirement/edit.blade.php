@@ -7,7 +7,7 @@
       <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
         <h4>Editar Pedido de Reforma</h4>
         <a href="{{ route('retirements.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
-          <i class="bi bi-arrow-left"></i> Voltar
+          <i class="fas fa-arrow-left"></i> Voltar
         </a>
       </div>
       <div class="card-body">
@@ -35,7 +35,7 @@
             <textarea name="observations" id="observations" class="form-control">{{ $retirement->observations }}</textarea>
           </div>
           <button type="submit" class="btn btn-success w-100">
-            <i class="bi bi-check-circle"></i> Atualizar Pedido
+            <i class="fas fa-check-circle"></i> Atualizar Pedido
           </button>
         </form>
       </div>

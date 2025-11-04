@@ -4,7 +4,7 @@
 @section('content')
 <div class="card mb-4 shadow">
   <div class="card-header bg-secondary text-white">
-    <i class="bi bi-pencil me-2"></i> Editar Material ({{ ucfirst($category) }})
+    <i class="fas fa-pencil me-2"></i> Editar Material ({{ ucfirst($category) }})
   </div>
   <div class="card-body">
     <form action="{{ route('materials.update',$material->id) }}" method="POST">
@@ -44,7 +44,7 @@
         <textarea name="Notes" class="form-control" rows="3">{{ old('Notes',$material->Notes) }}</textarea>
       </div>
       <div class="text-center">
-        <button class="btn btn-success"><i class="bi bi-check-circle me-1"></i> Atualizar</button>
+        <button class="btn btn-success"><i class="fas fa-check-circle me-1"></i> Atualizar</button>
         <a href="{{ route('materials.index',['category'=>$category]) }}" class="btn btn-secondary ms-2">Cancelar</a>
       </div>
     </form>

@@ -4,7 +4,7 @@
 @section('content')
 <div class="card mb-4 shadow">
   <div class="card-header bg-secondary text-white">
-    <i class="bi bi-plus-circle me-2"></i> Cadastrar Material ({{ ucfirst($category) }})
+    <i class="fas fa-plus-circle me-2"></i> Cadastrar Material ({{ ucfirst($category) }})
   </div>
   <div class="card-body">
     <form action="{{ route('materials.store') }}" method="POST">
@@ -66,7 +66,7 @@
         </div>
       </div>
       <div class="text-center">
-        <button class="btn btn-success"><i class="bi bi-check-circle me-1"></i> Salvar</button>
+        <button class="btn btn-success"><i class="fas fa-check-circle me-1"></i> Salvar</button>
         <a href="{{ route('materials.index',['category'=>$category]) }}" class="btn btn-secondary ms-2">Cancelar</a>
       </div>
     </form>

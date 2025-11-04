@@ -5,15 +5,15 @@
 <div class="card mb-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span>
-      <i class="bi bi-briefcase me-2"></i>
+      <i class="fas fa-briefcase me-2"></i>
       Funcionários com o Cargo: {{ $position->name }}
     </span>
     <div>
       <a href="{{ route('positions.employeee.pdf', ['positionId' => $position->id]) }}" class="btn btn-outline-light btn-sm" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
-        <i class="bi bi-file-earmark-pdf"></i> Baixar PDF
+        <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
       </a>
       <a href="{{ route('positions.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
-        <i class="bi bi-arrow-left"></i> Voltar
+        <i class="fas fa-arrow-left"></i> Voltar
       </a>
     </div>
   </div>

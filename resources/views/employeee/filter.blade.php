@@ -5,7 +5,7 @@
 <div class="card my-4 shadow">
   <!-- Cabeçalho com botões -->
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-calendar-event me-2"></i>Filtrar Funcionários</span>
+    <span><i class="fas fa-calendar-event me-2"></i>Filtrar Funcionários</span>
 
     <div>
       {{-- Se já houver resultados filtrados, para exibir o botão de PDF --}}
@@ -16,12 +16,12 @@
             "employeeTypeId"  => $selectedType ?? null,
         ]) }}"
            class="btn btn-outline-light btn-sm me-2" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-file-earmark-pdf"></i> Baixar PDF
+          <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
         </a>
       @endif
 
       <a href="{{ route("employeee.index") }}" class="btn btn-outline-light btn-sm" title="Voltar">
-        <i class="bi bi-arrow-left"></i> Voltar
+        <i class="fas fa-arrow-left"></i> Voltar
       </a>
     </div>
   </div>
@@ -67,7 +67,7 @@
         <!-- Botão Filtrar -->
         <div class="col-md-3">
           <button type="submit" class="btn btn-primary w-100">
-            <i class="bi bi-search"></i> Filtrar
+            <i class="fas fa-search"></i> Filtrar
           </button>
         </div>
       </div>

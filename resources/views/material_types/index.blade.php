@@ -15,7 +15,7 @@
     @endif
     <table class="table table-striped">
       <thead>
-        <tr><th>Nome</th><th>Descrição</th><th>Ações</th></tr>
+        <tr><th>Nome</th><th>Descrição</th><th style="width: 58px;">Ação</th></tr>
       </thead>
       <tbody>
         @forelse($types as $t)
@@ -24,12 +24,12 @@
             <td>{{ $t->description ?? '—' }}</td>
             <td class="text-center">
               <a href="{{ route('material-types.show',[$t->id,'category'=>$category]) }}"
-                 class="btn btn-sm btn-info"><i class="bi bi-eye"></i></a>
+                 class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>
               <a href="{{ route('material-types.edit',[$t->id,'category'=>$category]) }}"
-                 class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
+                 class="btn btn-sm btn-warning"><i class="fas fa-pencil"></i></a>
               <a href="#"
                  data-url="{{ route('material-types.delete',[$t->id,'category'=>$category]) }}"
-                 class="btn btn-sm btn-danger delete-btn"><i class="bi bi-trash"></i></a>
+                 class="btn btn-sm btn-danger delete-btn"><i class="fas fa-trash"></i></a>
             </td>
           </tr>
         @empty

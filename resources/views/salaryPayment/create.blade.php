@@ -1,13 +1,13 @@
 @extends('layouts.admin.layout')
 @section('title','Adicionar Pagamento de Salário')
 @section('content')
-<div class="row justify-content-center">
+<div class="row justify-content-center" style="margin-top: 1.5rem;">
   <div class="{{ isset($employee) ? 'col-md-5' : 'col-md-8' }}">
     <div class="card mb-4 shadow">
       <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
         <h4>Adicionar Pagamento de Salário</h4>
         <a href="{{ route('salaryPayment.index') }}" class="btn btn-outline-light btn-sm">
-          <i class="bi bi-arrow-left"></i> Voltar
+          <i class="fas fa-arrow-left"></i> Voltar
         </a>
       </div>
       <div class="card-body">
@@ -18,14 +18,14 @@
               <div class="col-md-8">
                 <div class="form-floating">
                   <input type="text" name="employeeSearch" class="form-control"
-                         placeholder="Pesquisar por ID ou Nome do Funcionário"
+                         placeholder=""
                          value="{{ old('employeeSearch') }}">
-                  <label for="employeeSearch">Nome do Funcionário</label>
+                  <label for="employeeSearch">Pesquisar por ID ou Nome do Funcionário</label>
                 </div>
                 @error('employeeSearch')<div class="text-danger small">{{ $message }}</div>@enderror
               </div>
               <div class="col-md-4">
-                <button class="btn btn-primary w-100"><i class="bi bi-search"></i> Buscar</button>
+                <button class="btn btn-primary w-100"><i class="fas fa-search"></i> Buscar</button>
               </div>
             </div>
           </form>
@@ -113,7 +113,7 @@
               <textarea name="paymentComment" id="paymentComment" class="form-control">{{ old('paymentComment') }}</textarea>
             </div>
             <button type="submit" class="btn btn-success w-100">
-              <i class="bi bi-check-circle"></i> Salvar Pagamento
+              <i class="fas fa-check-circle"></i> Salvar Pagamento
             </button>
           </form>
 

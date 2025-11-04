@@ -1,11 +1,11 @@
 @extends('layouts.admin.layout')
 @section('title', 'Novo Pedido de Férias - Selecionar Funcionário')
 @section('content')
-<div class="card mb-4 shadow">
+<div class="card mb-4 shadow" style="margin-top: 1.5rem;">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-umbrella-beach me-2"></i>Novo Pedido de Férias</span>
     <a href="{{ route('vacationRequest.index') }}" class="btn btn-outline-light btn-sm">
-      <i class="bi bi-arrow-left"></i> Voltar
+      <i class="fas fa-arrow-left"></i> Voltar
     </a>
   </div>
   <div class="card-body">
@@ -14,14 +14,14 @@
         <div class="col-md-8">
           <div class="form-floating">
             <input type="text" name="employeeSearch" id="employeeSearch" class="form-control"
-                   placeholder="ID ou Nome do Funcionário" value="{{ old('employeeSearch') }}">
+                   placeholder="" value="{{ old('employeeSearch') }}">
             <label for="employeeSearch">ID ou Nome do Funcionário</label>
           </div>
           @error('employeeSearch')<small class="text-danger">{{ $message }}</small>@enderror
         </div>
         <div class="col-md-4">
           <button type="submit" class="btn btn-primary w-100">
-            <i class="bi bi-search"></i> Buscar
+            <i class="fas fa-search"></i> Buscar
           </button>
         </div>
       </div>
@@ -91,7 +91,7 @@
                  accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xlsx">
         </div>
         <button type="submit" class="btn btn-success w-100">
-          <i class="bi bi-check-circle"></i> Enviar Pedido
+          <i class="fas fa-check-circle"></i> Enviar Pedido
         </button>
       </form>
     @endisset

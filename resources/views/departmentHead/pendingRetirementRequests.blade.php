@@ -6,7 +6,7 @@
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <h4 class="mb-0">Pedidos de Reforma Pendentes</h4>
     <a href="{{ route('dh.myEmployees') }}" class="btn btn-outline-light btn-sm" title="Voltar">
-      <i class="bi bi-arrow-left"></i> Voltar
+      <i class="fas fa-arrow-left"></i> Voltar
     </a>
   </div>
   <div class="card-body">
@@ -27,10 +27,10 @@
       </div>
       <div class="col-md-4 align-self-end">
         <button type="submit" class="btn btn-primary">
-          <i class="bi bi-funnel-fill me-1"></i>Filtrar
+          <i class="fas fa-funnel-fill me-1"></i>Filtrar
         </button>
         <a href="{{ route('dh.pendingRetirements') }}" class="btn btn-secondary">
-          <i class="bi bi-arrow-clockwise me-1"></i>Limpar
+          <i class="fas fa-arrow-clockwise me-1"></i>Limpar
         </a>
       </div>
     </form>
@@ -80,7 +80,7 @@
                     @method('PUT')
                     <input type="hidden" id="hidden-approve-{{ $req->id }}" name="approvalComment">
                     <button type="submit" class="btn btn-success btn-sm">
-                      <i class="bi bi-check-circle"></i> Aprovar
+                      <i class="fas fa-check-circle"></i> Aprovar
                     </button>
                   </form>
                   {{-- Rejeitar --}}
@@ -91,7 +91,7 @@
                     @method('PUT')
                     <input type="hidden" id="hidden-reject-{{ $req->id }}" name="approvalComment">
                     <button type="submit" class="btn btn-danger btn-sm">
-                      <i class="bi bi-x-circle"></i> Rejeitar
+                      <i class="fas fa-x-circle"></i> Rejeitar
                     </button>
                   </form>
                 </div>

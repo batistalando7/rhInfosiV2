@@ -7,7 +7,7 @@
       <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
         <span>Detalhes do Pedido de Licença</span>
         <a href="{{ route('leaveRequest.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
-          <i class="bi bi-arrow-left"></i> Voltar
+          <i class="fas fa-arrow-left"></i> Voltar
         </a>
       </div>
       <div class="card-body">
