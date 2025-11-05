@@ -1,8 +1,6 @@
-<!-- resources/views/drivers/index.blade.php -->
 @extends('layouts.admin.layout')
 @section('title', 'Motoristas')
 @section('content')
-
     <div class="card mb-4 shadow">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <span><i class="fas fa-person-badge-fill me-2"></i>Todos os Motoristas</span>
@@ -17,7 +15,6 @@
                 </a>
             </div>
         </div>
-
         <form method="GET" action="{{ route('drivers.index') }}" class="row g-3 mb-4">
             <div class="col-md-3">
                 <div class="form-floating">
@@ -35,7 +32,6 @@
                 <button class="btn btn-primary w-100"><i class="fas fa-filter"></i> Filtrar</button>
             </div>
         </form>
-
         <div class="card-body">
             @if (session('msg'))
                 <div class="alert alert-success">{{ session('msg') }}</div>
@@ -73,7 +69,7 @@
                                         title="Editar">
                                         <i class="fas fa-pencil"></i>
                                     </a>
-                                    <a href="#" data-url="{{ route('drivers.delete', $d->id) }}"
+                                    <a href="#" data-url="{{ route('drivers.destroy', $d->id) }}"
                                         class="btn btn-danger btn-sm delete-btn" title="Excluir">
                                         <i class="fas fa-trash"></i>
                                     </a>

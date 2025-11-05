@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateLicenseCategoriesTable extends Migration
 {
-    
-     public function up()
+    public function up()
     {
         Schema::create('license_categories', function (Blueprint $table) {
             $table->id();

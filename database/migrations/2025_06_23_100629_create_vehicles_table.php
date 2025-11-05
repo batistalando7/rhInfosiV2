@@ -15,9 +15,11 @@ class CreateVehiclesTable extends Migration
             $table->string('brand', 50);
             $table->integer('yearManufacture');
             $table->string('color', 30);
-            $table->decimal('loadCapacity', 10, 2);
+            $table->integer('loadCapacity');
             $table->decimal('totalMileage', 12, 2)->default(0);
             $table->date('lastMaintenanceDate')->nullable();
+            $table->integer('currentMileage')->nullable();
+            $table->date('nextMaintenanceDate')->nullable();
             $table->enum('status', ['Available', 'UnderMaintenance', 'Unavailable'])->default('Available');
             $table->text('notes')->nullable();
             $table->timestamps();

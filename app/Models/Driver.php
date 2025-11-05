@@ -20,6 +20,7 @@ class Driver extends Model
     {
         return $this->belongsTo(LicenseCategory::class, 'licenseCategoryId');
     }
+
     public function employee()
     {
         return $this->belongsTo(Employeee::class, 'employeeId');
@@ -32,8 +33,6 @@ class Driver extends Model
             'vehicle_driver',
             'driverId',
             'vehicleId'
-        )
-        ->withPivot('startDate','endDate')
-        ->withTimestamps();
+        )->withPivot('startDate', 'endDate')->withTimestamps();
     }
 }

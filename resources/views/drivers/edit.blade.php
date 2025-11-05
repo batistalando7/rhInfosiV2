@@ -1,7 +1,6 @@
 @extends('layouts.admin.layout')
 @section('title','Editar Motorista')
 @section('content')
-
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-pencil me-2"></i>Editar Motorista Nº{{ $driver->id }}</span>
@@ -12,7 +11,6 @@
   <div class="card-body">
     <form action="{{ route('drivers.update', $driver->id) }}" method="POST">
       @csrf @method('PUT')
-
       <div class="row g-3">
         <div class="col-md-6">
           <div class="form-floating">
@@ -40,7 +38,6 @@
           </div>
         </div>
       </div>
-
       <div class="row g-3 mt-3">
         <div class="col-md-6">
           <div class="form-floating">
@@ -68,7 +65,6 @@
           </div>
         </div>
       </div>
-
       <div class="row g-3 mt-3">
         <div class="col-md-6">
           <div class="form-floating">
@@ -97,7 +93,6 @@
           </div>
         </div>
       </div>
-
       <div class="row g-3 mt-3">
         <div class="col-md-6 offset-md-3">
           <div class="form-floating">
@@ -109,7 +104,6 @@
           </div>
         </div>
       </div>
-
       <div class="d-grid gap-2 col-md-4 mx-auto mt-4">
         <button type="submit" class="btn btn-primary btn-lg">
           <i class="fas fa-check-circle me-2"></i>Atualizar Motorista
@@ -118,5 +112,4 @@
     </form>
   </div>
 </div>
-
 @endsection

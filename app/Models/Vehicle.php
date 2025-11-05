@@ -7,9 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Vehicle extends Model
 {
     protected $fillable = [
-        'plate','model','brand','yearManufacture','color',
-        'loadCapacity','totalMileage','lastMaintenanceDate',
-        'status','notes'
+        'plate',
+        'model',
+        'brand',
+        'yearManufacture',
+        'color',
+        'loadCapacity',
+        'totalMileage',
+        'currentMileage',
+        'lastMaintenanceDate',
+        'nextMaintenanceDate',
+        'status',
+        'notes'
     ];
 
     public function maintenance()
@@ -24,8 +33,6 @@ class Vehicle extends Model
             'vehicle_driver',
             'vehicleId',
             'driverId'
-        )
-        ->withPivot('startDate','endDate')
-        ->withTimestamps();
+        )->withPivot('startDate', 'endDate')->withTimestamps();
     }
 }

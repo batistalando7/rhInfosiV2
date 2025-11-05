@@ -1,10 +1,7 @@
 @extends('layouts.admin.layout')
 @section('title','Ver Motorista')
 @section('content')
-
 <div class="container my-5">
-
-  {{-- Cabeçalho com voltar e PDF --}}
   <div class="row mb-4">
     <div class="col-8">
       <h3><i class="fas fa-person-badge-fill me-2"></i>Ver Motorista #{{ $driver->id }}</h3>
@@ -18,8 +15,6 @@
       </a>
     </div>
   </div>
-
-  {{-- Informações Pessoais e Profissionais --}}
   <div class="row mb-5 align-items-start">
     <div class="col-md-6">
       <div class="card shadow-sm mb-3">
@@ -38,7 +33,7 @@
               <tr><th class="ps-0">Nº da Carta</th>
                   <td>{{ $driver->licenseNumber }}</td></tr>
               <tr><th class="ps-0">Categoria</th>
-                  <td>{{ $driver->licenseCategory }}</td></tr>
+                  <td>{{ $driver->licenseCategory->name ?? '-' }}</td></tr>
               <tr><th class="ps-0">Validade</th>
                   <td>{{ \Carbon\Carbon::parse($driver->licenseExpiry)->format('d/m/Y') }}</td></tr>
               <tr><th class="ps-0">Status</th>
@@ -48,8 +43,6 @@
         </div>
       </div>
     </div>
-
-    {{-- Viaturas atribuídas --}}
     <div class="col-md-6">
       <div class="card shadow-sm">
         <div class="card-header bg-secondary text-white">
@@ -65,7 +58,5 @@
       </div>
     </div>
   </div>
-
 </div>
-
 @endsection

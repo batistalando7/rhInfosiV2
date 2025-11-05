@@ -16,13 +16,8 @@ class CreateVehicleDriversTable extends Migration
             $table->date('endDate')->nullable();
             $table->timestamps();
 
-            $table->foreign('vehicleId')
-                  ->references('id')->on('vehicles')
-                  ->onDelete('cascade');
-
-            $table->foreign('driverId')
-                  ->references('id')->on('drivers')
-                  ->onDelete('cascade');
+            $table->foreign('vehicleId')->references('id')->on('vehicles')->onDelete('cascade');
+            $table->foreign('driverId')->references('id')->on('drivers')->onDelete('cascade');
         });
     }
 

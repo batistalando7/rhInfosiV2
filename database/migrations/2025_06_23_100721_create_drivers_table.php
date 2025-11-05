@@ -11,15 +11,16 @@ class CreateDriversTable extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employeeId')->nullable();
-            $table->string('fullName')->nullable();
+            $table->string('fullName', 100)->nullable();
             $table->string('bi', 16)->nullable()->unique();
-            $table->string('licenseNumber', 20)->nullable()->unique();
-             $table->unsignedBigInteger('licenseCategoryId');
+            $table->string('licenseNumber', 50)->unique();
+            $table->unsignedBigInteger('licenseCategoryId');
             $table->date('licenseExpiry');
-            $table->enum('status', ['Active','Inactive'])->default('Active');
+            $table->enum('status', ['Active', 'Inactive'])->default('Active');
             $table->timestamps();
 
             $table->foreign('employeeId')->references('id')->on('employeees')->onDelete('set null');
+            $table->foreign('licenseCategoryId')->references('id')->on('license_categories');
         });
     }
 

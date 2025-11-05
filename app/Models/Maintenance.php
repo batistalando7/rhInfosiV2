@@ -11,11 +11,27 @@ class Maintenance extends Model
     protected $fillable = [
         'vehicleId',
         'type',
+        'subType',
         'maintenanceDate',
-        'cost', 
+        'mileage',
+        'cost',
+        'description',
+        'piecesReplaced',
+        'services',
+        'nextMaintenanceDate',
+        'nextMileage',
+        'responsibleName',
+        'responsiblePhone',
+        'responsibleEmail',
+        'observations',
         'invoice_pre',
-         'invoice_post',
-         'description'
+        'invoice_post'
+    ];
+
+    protected $casts = [
+        'services' => 'array',
+        'maintenanceDate' => 'date',
+        'nextMaintenanceDate' => 'date',
     ];
 
     public function vehicle()

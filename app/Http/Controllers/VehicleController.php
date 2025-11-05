@@ -9,143 +9,117 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class VehicleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $vehicles = Vehicle::with('drivers')->orderByDesc('id')->get();
+        $query = Vehicle::with('drivers', 'maintenance');
+        if ($request->filled('startDate')) {
+            $query->whereDate('created_at', '>=', $request->startDate);
+        }
+        if ($request->filled('endDate')) {
+            $query->whereDate('created_at', '<=', $request->endDate);
+        }
+        $vehicles = $query->orderByDesc('id')->get();
         return view('vehicles.index', compact('vehicles'));
     }
 
     public function create()
     {
-        $drivers = Driver::where('status','Active')->get();
+        $drivers = Driver::where('status', 'Active')->get();
         return view('vehicles.create', compact('drivers'));
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
-            'plate'           => 'required|string|unique:vehicles,plate',
-            'model'           => 'required|string',
-            'brand'           => 'required|string',
-            'yearManufacture' => 'required|integer',
-            'color'           => 'required|string',
-            'loadCapacity'    => 'required|numeric',
-            'status'          => 'required|in:Available,UnderMaintenance,Unavailable',
-            'notes'           => 'nullable|string',
-            'driverId'        => 'nullable|exists:drivers,id',
-            'startDate'       => 'nullable|date',
+            'plate' => 'required|string|max:12|unique:vehicles',
+            'brand' => 'required|string|max:50',
+            'model' => 'required|string|max:50',
+            'yearManufacture' => 'required|integer|min:1900|max:' . date('Y'),
+            'color' => 'required|string|max:30',
+            'loadCapacity' => 'required|integer|min:1',
+            'status' => 'required|in:Available,UnderMaintenance,Unavailable',
+            'driverId' => 'nullable|exists:drivers,id',
+            'notes' => 'nullable|string',
         ]);
 
         $vehicle = Vehicle::create($data);
 
-        if (!empty($data['driverId'])) {
-            $start = $data['startDate'] ?? now()->toDateString();
-            $vehicle->drivers()->attach($data['driverId'], [
-                'startDate' => $start,
-            ]);
+        if ($request->filled('driverId')) {
+            $vehicle->drivers()->attach($request->driverId, ['startDate' => now()]);
         }
 
-        return redirect()->route('vehicles.index')
-                         ->with('msg','Viatura cadastrada com sucesso.');
+        return redirect()->route('vehicles.index')->with('msg', 'Viatura cadastrada com sucesso.');
     }
 
     public function show(Vehicle $vehicle)
     {
-        $vehicle->load('drivers','maintenance');
+        $vehicle->load('drivers', 'maintenance');
         return view('vehicles.show', compact('vehicle'));
     }
 
     public function edit(Vehicle $vehicle)
     {
-        $drivers = Driver::where('status','Active')->get();
-        return view('vehicles.edit', compact('vehicle','drivers'));
+        $drivers = Driver::where('status', 'Active')->get();
+        return view('vehicles.edit', compact('vehicle', 'drivers'));
     }
 
     public function update(Request $request, Vehicle $vehicle)
     {
         $data = $request->validate([
-            'plate'           => "required|string|unique:vehicles,plate,{$vehicle->id}",
-            'model'           => 'required|string',
-            'brand'           => 'required|string',
-            'yearManufacture' => 'required|integer',
-            'color'           => 'required|string',
-            'loadCapacity'    => 'required|numeric',
-            'status'          => 'required|in:Available,UnderMaintenance,Unavailable',
-            'notes'           => 'nullable|string',
-            'driverId'        => 'nullable|exists:drivers,id',
-            'startDate'       => 'nullable|date',
-            'endDate'         => 'nullable|date|after_or_equal:startDate',
+            'plate' => 'required|string|max:12|unique:vehicles,plate,' . $vehicle->id,
+            'brand' => 'required|string|max:50',
+            'model' => 'required|string|max:50',
+            'yearManufacture' => 'required|integer|min:1900|max:' . date('Y'),
+            'color' => 'required|string|max:30',
+            'loadCapacity' => 'required|integer|min:1',
+            'status' => 'required|in:Available,UnderMaintenance,Unavailable',
+            'driverId' => 'nullable|exists:drivers,id',
+            'notes' => 'nullable|string',
         ]);
 
         $vehicle->update($data);
 
-        if (!empty($data['driverId'])) {
-            $vehicle->drivers()
-                    ->wherePivotNull('endDate')
-                    ->updateExistingPivot(
-                        $vehicle->drivers->pluck('id')->toArray(),
-                        ['endDate' => now()->toDateString()]
-                    );
-           
-            $start = $data['startDate'] ?? now()->toDateString();
-            $vehicle->drivers()->attach($data['driverId'], ['startDate' => $start]);
+        if ($request->filled('driverId') && $request->driverId != $vehicle->driverId) {
+            // Lógica para trocar driver se necessário
+            $vehicle->drivers()->detach();
+            $vehicle->drivers()->attach($request->driverId, ['startDate' => now()]);
         }
 
-        return redirect()->route('vehicles.edit',$vehicle)
-                         ->with('msg','Viatura atualizada.');
+        return redirect()->route('vehicles.edit', $vehicle)->with('msg', 'Viatura atualizada com sucesso.');
     }
 
-    public function exportFilteredPDF(Request $request)
+    public function destroy(Vehicle $vehicle)
     {
-        $query = Vehicle::query();
+        $vehicle->drivers()->detach();
+        $vehicle->delete();
+        return redirect()->route('vehicles.index')->with('msg', 'Viatura excluída com sucesso.');
+    }
+
+    // PDFs (similar a outros; adicione filtros se quiser)
+    public function pdfAll(Request $request)
+    {
+        $query = Vehicle::with('drivers', 'maintenance');
         if ($request->filled('startDate')) {
-            $query->whereDate('created_at','>=',$request->startDate);
+            $query->whereDate('created_at', '>=', $request->startDate);
         }
         if ($request->filled('endDate')) {
-            $query->whereDate('created_at','<=',$request->endDate);
+            $query->whereDate('created_at', '<=', $request->endDate);
         }
         $filtered = $query->orderByDesc('id')->get();
 
-        $pdf = PDF::loadView('vehicles.vehicles_pdf', compact('filtered'))
-                  ->setPaper('a4','portrait');
-
-        return $pdf->download('Viaturas_Filtradas.pdf');
-    }
-
-    public function pdfAll(Request $request)
-    {
-        $query = Vehicle::query();
-        if ($request->filled('startDate')) {
-            $query->whereDate('created_at','>=',$request->startDate);
-        }
-        if ($request->filled('endDate')) {
-            $query->whereDate('created_at','<=',$request->endDate);
-        }
-        $all = $query->orderByDesc('id')->get();
-
         $filename = 'Viaturas' . (
-            ($request->filled('startDate')||$request->filled('endDate')) ? '_Filtradas' : ''
+            $request->filled('startDate') || $request->filled('endDate')
+            ? '_Filtradas' : ''
         ) . '.pdf';
 
-        $pdf = PDF::loadView('vehicles.vehicles_pdf', ['filtered' => $all])
-                  ->setPaper('a4','portrait');
-
+        $pdf = PDF::loadView('vehicles.vehicles_pdf', compact('filtered'))->setPaper('a4', 'portrait');
         return $pdf->stream($filename);
     }
 
     public function showPdf(Vehicle $vehicle)
     {
-        $vehicle->load('drivers','maintenance');
-        $pdf = PDF::loadView('vehicles.vehicle_pdf_individual', compact('vehicle'))
-                  ->setPaper('a4','portrait');
-
+        $vehicle->load('drivers', 'maintenance');
+        $pdf = PDF::loadView('vehicles.vehicle_pdf_individual', compact('vehicle'))->setPaper('a4', 'portrait');
         return $pdf->stream("Viatura_{$vehicle->id}.pdf");
-    }
-
-    public function destroy(Vehicle $vehicle)
-    {
-        $vehicle->delete();
-        return redirect()->route('vehicles.index')
-                         ->with('msg','Viatura excluída com sucesso.');
     }
 }
