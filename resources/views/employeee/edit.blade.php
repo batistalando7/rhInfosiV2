@@ -1,6 +1,6 @@
-@extends("layouts.admin.layout")
+@extends("layouts.admin.layout") 
 @section("title", "Editar Funcionário")
-@section("content")
+@section("content") 
 
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">

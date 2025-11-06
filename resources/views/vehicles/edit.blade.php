@@ -14,25 +14,25 @@
             <div class="row g-3">
                 <div class="col-md-3">
                     <div class="form-floating">
-                        <input type="text" name="plate" id="plate" class="form-control" maxlength="12" placeholder="Matrícula" value="{{ old('plate', $vehicle->plate) }}" required>
+                        <input type="text" name="plate" id="plate" class="form-control" maxlength="12" placeholder="" value="{{ old('plate', $vehicle->plate) }}" required>
                         <label for="plate">Matrícula</label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-floating">
-                        <input type="text" name="brand" id="brand" class="form-control" placeholder="Marca" value="{{ old('brand', $vehicle->brand) }}" required>
+                        <input type="text" name="brand" id="brand" class="form-control" placeholder="" value="{{ old('brand', $vehicle->brand) }}" required>
                         <label for="brand">Marca</label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-floating">
-                        <input type="text" name="model" id="model" class="form-control" placeholder="Modelo" value="{{ old('model', $vehicle->model) }}" required>
+                        <input type="text" name="model" id="model" class="form-control" placeholder="" value="{{ old('model', $vehicle->model) }}" required>
                         <label for="model">Modelo</label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-floating">
-                        <input type="number" name="yearManufacture" id="yearManufacture" class="form-control" placeholder="Ano" value="{{ old('yearManufacture', $vehicle->yearManufacture) }}" required min="1900" max="{{ date('Y') }}">
+                        <input type="number" name="yearManufacture" id="yearManufacture" class="form-control" placeholder="" value="{{ old('yearManufacture', $vehicle->yearManufacture) }}" required min="1900" max="{{ date('Y') }}">
                         <label for="yearManufacture">Ano</label>
                     </div>
                 </div>
@@ -40,13 +40,13 @@
             <div class="row g-3 mt-3">
                 <div class="col-md-4">
                     <div class="form-floating">
-                        <input type="text" name="color" id="color" class="form-control" placeholder="Cor" value="{{ old('color', $vehicle->color) }}" required>
+                        <input type="text" name="color" id="color" class="form-control" placeholder="" value="{{ old('color', $vehicle->color) }}" required>
                         <label for="color">Cor</label>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-floating">
-                        <input type="number" name="loadCapacity" id="loadCapacity" class="form-control" placeholder="Total de Lugares" value="{{ old('loadCapacity', $vehicle->loadCapacity) }}" required min="1">
+                        <input type="number" name="loadCapacity" id="loadCapacity" class="form-control" placeholder="" value="{{ old('loadCapacity', $vehicle->loadCapacity) }}" required min="1">
                         <label for="loadCapacity">Total de Lugares</label>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="col-md-8">
                     <div class="form-floating">
-                        <textarea name="notes" id="notes" class="form-control" placeholder="Observações" style="height:80px">{{ old('notes', $vehicle->notes) }}</textarea>
+                        <textarea name="notes" id="notes" class="form-control" placeholder="" style="height:80px">{{ old('notes', $vehicle->notes) }}</textarea>
                         <label for="notes">Observações</label>
                     </div>
                 </div>

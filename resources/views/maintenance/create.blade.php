@@ -11,6 +11,8 @@
     <div class="card-body">
         <form action="{{ route('maintenance.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+
+            <!-- Viatura -->
             <h5 class="mb-3">Informações da Viatura</h5>
             <div class="row g-3 mb-3">
                 <div class="col-md-12">
@@ -18,7 +20,11 @@
                         <select name="vehicleId" id="vehicleId" class="form-select" required onchange="loadVehicleDetails(this.value)">
                             <option value="">Selecione a Viatura</option>
                             @foreach ($vehicles as $v)
-                                <option value="{{ $v->id }}" data-brand="{{ $v->brand }}" data-model="{{ $v->model }}" data-year="{{ $v->yearManufacture }}" data-plate="{{ $v->plate }}">
+                                <option value="{{ $v->id }}"
+                                    data-brand="{{ $v->brand }}"
+                                    data-model="{{ $v->model }}"
+                                    data-year="{{ $v->yearManufacture }}"
+                                    data-plate="{{ $v->plate }}">
                                     {{ $v->plate }} - {{ $v->brand }} {{ $v->model }}
                                 </option>
                             @endforeach
@@ -33,6 +39,8 @@
                 <div class="col-md-3"><strong>Ano:</strong> <span id="year"></span></div>
                 <div class="col-md-3"><strong>Placa:</strong> <span id="plate"></span></div>
             </div>
+
+            <!-- Tipo de Manutenção -->
             <h5 class="mb-3">Tipo de Manutenção</h5>
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
@@ -48,11 +56,13 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
-                        <input type="text" name="subType" id="subType" class="form-control" placeholder="Ex: troca_oleo" value="{{ old('subType') }}">
+                        <input type="text" name="subType" class="form-control" value="{{ old('subType') }}" placeholder="Ex: troca_oleo">
                         <label for="subType">Subtipo Específico</label>
                     </div>
                 </div>
             </div>
+
+            <!-- Serviços -->
             <div id="subtypesSection" style="display:none;">
                 <h6>Selecione Serviços Realizados:</h6>
                 <div class="row g-2">
@@ -67,10 +77,10 @@
                             <input type="checkbox" class="form-check-input services" name="services[troca_filtro_oleo]" value="troca_filtro_oleo" onchange="toggleServiceDetails('troca_filtro_oleo', this.checked)"> Troca Filtro Óleo
                         </div>
                         <div class="col-md-3 form-check">
-                            <input type="checkbox" class="form-check-input services" name="services[verificação_pneus]" value="verificacao_pneus"> Verificação Pneus
+                            <input type="checkbox" class="form-check-input services" name="services[verificacao_pneus]" value="verificacao_pneus"> Verificação Pneus
                         </div>
                         <div class="col-md-3 form-check">
-                            <input type="checkbox" class="form-check-input services" name="services[verificação_líquidos]" value="verificação_liquidos"> Verificação Líquidos
+                            <input type="checkbox" class="form-check-input services" name="services[verificacao_liquidos]" value="verificacao_liquidos"> Verificação Líquidos
                         </div>
                     </div>
                     <div id="corrective" style="display:none;">
@@ -105,150 +115,172 @@
                         <input type="checkbox" class="form-check-input" name="services[outros]" value="outros" onchange="toggleOtherServices(this.checked)"> Outros
                     </div>
                 </div>
+
                 <div id="serviceDetails" class="mt-3"></div>
+
                 <div id="otherServices" class="mt-3" style="display:none;">
                     <div class="form-floating">
-                        <textarea name="services[outros_details]" class="form-control" placeholder="Descreva outros serviços" style="height: 80px"></textarea>
+                        <textarea name="services[outros_details]" class="form-control" style="height: 80px"></textarea>
                         <label>Outros Detalhes</label>
                     </div>
                 </div>
             </div>
+
+            <!-- Dados da Manutenção -->
             <div class="row g-3 mt-3">
                 <div class="col-md-3">
                     <div class="form-floating">
                         <input type="date" name="maintenanceDate" class="form-control" value="{{ old('maintenanceDate') }}" required max="{{ date('Y-m-d') }}">
-                        <label for="maintenanceDate">Data da Manutenção</label>
+                        <label>Data da Manutenção</label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-floating">
-                        <input type="number" name="mileage" id="mileage" class="form-control" value="{{ old('mileage') }}" required min="0" step="0.01">
-                        <label for="mileage">Quilometragem Atual (km)</label>
+                        <input type="number" name="mileage" class="form-control" value="{{ old('mileage') }}" required min="0" step="0.01">
+                        <label>Quilometragem Atual (km)</label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-floating">
-                        <input type="number" name="cost" id="cost" class="form-control" value="{{ old('cost') }}" required min="0" step="0.01">
-                        <label for="cost">Custo (Kwanza - Kz)</label>
+                        <input type="number" name="cost" class="form-control" value="{{ old('cost') }}" required min="0" step="0.01">
+                        <label>Custo (Kz)</label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-floating">
                         <input type="date" name="nextMaintenanceDate" class="form-control" value="{{ old('nextMaintenanceDate') }}">
-                        <label for="nextMaintenanceDate">Próxima Data de Manutenção</label>
+                        <label>Próxima Data</label>
                     </div>
                 </div>
             </div>
+
             <div class="row g-3 mt-2">
                 <div class="col-md-6">
                     <div class="form-floating">
                         <input type="number" name="nextMileage" class="form-control" value="{{ old('nextMileage') }}" min="0" step="0.01">
-                        <label for="nextMileage">Próxima Quilometragem (km)</label>
+                        <label>Próxima Quilometragem (km)</label>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
                         <textarea name="description" class="form-control" style="height: 80px">{{ old('description') }}</textarea>
-                        <label for="description">Descrição da Manutenção</label>
+                        <label>Descrição</label>
                     </div>
                 </div>
             </div>
+
             <div class="row g-3 mt-2">
                 <div class="col-md-12">
                     <div class="form-floating">
                         <textarea name="piecesReplaced" class="form-control" style="height: 60px">{{ old('piecesReplaced') }}</textarea>
-                        <label for="piecesReplaced">Peças Substituídas</label>
+                        <label>Peças Substituídas</label>
                     </div>
                 </div>
             </div>
-            <h5 class="mb-3 mt-4">Responsável pela Manutenção</h5>
+
+            <!-- Responsável -->
+            <h5 class="mb-3 mt-4">Responsável</h5>
             <div class="row g-3 mb-3">
                 <div class="col-md-4">
                     <div class="form-floating">
                         <input type="text" name="responsibleName" class="form-control" value="{{ old('responsibleName') }}" required maxlength="100">
-                        <label for="responsibleName">Nome</label>
+                        <label>Nome</label>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-floating">
                         <input type="tel" name="responsiblePhone" class="form-control" value="{{ old('responsiblePhone') }}" maxlength="20">
-                        <label for="responsiblePhone">Telefone</label>
+                        <label>Telefone</label>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-floating">
                         <input type="email" name="responsibleEmail" class="form-control" value="{{ old('responsibleEmail') }}">
-                        <label for="responsibleEmail">Email</label>
+                        <label>Email</label>
                     </div>
                 </div>
             </div>
+
             <div class="row g-3 mt-3">
                 <div class="col-md-6">
                     <div class="form-floating">
                         <textarea name="observations" class="form-control" style="height: 80px">{{ old('observations') }}</textarea>
-                        <label for="observations">Observações Adicionais</label>
+                        <label>Observações</label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-floating">
                         <input type="file" name="invoice_pre" class="form-control" accept=".pdf,.jpg,.png">
-                        <label for="invoice_pre">Fatura Prévia</label>
+                        <label>Fatura Prévia</label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-floating">
                         <input type="file" name="invoice_post" class="form-control" accept=".pdf,.jpg,.png">
-                        <label for="invoice_post">Fatura Concluída</label>
+                        <label>Fatura Concluída</label>
                     </div>
                 </div>
             </div>
+
             <div class="d-grid gap-2 col-md-4 mx-auto mt-4">
                 <button type="submit" class="btn btn-primary btn-lg">
-                    <i class="fas fa-check-circle me-2"></i>Atualizar Manutenção
+                    <i class="fas fa-save me-2"></i>Salvar
                 </button>
             </div>
         </form>
     </div>
 </div>
+
 <script>
-function loadVehicleDetails(vehicleId) {
-    const select = document.getElementById('vehicleId');
-    const option = select.options[select.selectedIndex];
-    if (vehicleId) {
-        document.getElementById('brand').textContent = option.dataset.brand;
-        document.getElementById('model').textContent = option.dataset.model;
-        document.getElementById('year').textContent = option.dataset.year;
-        document.getElementById('plate').textContent = option.dataset.plate;
+function loadVehicleDetails(id) {
+    const opt = document.querySelector(`#vehicleId option[value="${id}"]`);
+    if (opt) {
+        document.getElementById('brand').textContent = opt.dataset.brand;
+        document.getElementById('model').textContent = opt.dataset.model;
+        document.getElementById('year').textContent = opt.dataset.year;
+        document.getElementById('plate').textContent = opt.dataset.plate;
         document.getElementById('vehicleDetails').style.display = 'flex';
     } else {
         document.getElementById('vehicleDetails').style.display = 'none';
     }
 }
+
 function toggleSubtypes(type) {
     document.getElementById('subtypesSection').style.display = 'block';
     ['preventive', 'corrective', 'repair'].forEach(id => document.getElementById(id).style.display = 'none');
-    if (type === 'Preventive') document.getElementById('preventive').style.display = 'block';
-    else if (type === 'Corrective') document.getElementById('corrective').style.display = 'block';
-    else if (type === 'Repair') document.getElementById('repair').style.display = 'block';
+    if (type) document.getElementById(type.toLowerCase()).style.display = 'block';
 }
+
 function toggleServiceDetails(service, checked) {
-    const detailsDiv = document.getElementById('serviceDetails');
-    let html = '';
-    if (checked) {
+    const container = document.getElementById('serviceDetails');
+    const existing = document.getElementById(`detail-${service}`);
+    if (checked && !existing) {
+        let html = '';
         if (service === 'troca_oleo') {
-            html = '<div class="row g-3 mt-2"><div class="col-md-6"><input type="text" name="services[troca_oleo][tipo]" placeholder="Tipo de Óleo" class="form-control"></div><div class="col-md-6"><input type="text" name="services[troca_oleo][quantidade]" placeholder="Quantidade" class="form-control"></div></div>';
-        } else if (service === 'troca_filtro_ar') {
-            html = '<div class="mt-2"><input type="text" name="services[troca_filtro_ar][tipo]" placeholder="Tipo de Filtro" class="form-control"></div>';
-        } else if (service === 'troca_filtro_oleo') {
-            html = '<div class="mt-2"><input type="text" name="services[troca_filtro_oleo][tipo]" placeholder="Tipo de Filtro" class="form-control"></div>';
-        } else if (service === 'troca_pastilhas') {
-            html = '<div class="mt-2"><input type="text" name="services[troca_pastilhas][tipo]" placeholder="Tipo de Pastilhas" class="form-control"></div>';
-        } else if (service === 'troca_discos') {
-            html = '<div class="mt-2"><input type="text" name="services[troca_discos][tipo]" placeholder="Tipo de Discos" class="form-control"></div>';
+            html = `<div class="service-detail-row row g-3 mt-2" id="detail-${service}">
+                <div class="col-md-5"><input type="text" name="services[${service}][tipo]" placeholder="Tipo de Óleo" class="form-control"></div>
+                <div class="col-md-5"><input type="text" name="services[${service}][quantidade]" placeholder="Quantidade" class="form-control"></div>
+                <div class="col-md-2"><button type="button" class="btn btn-sm btn-danger" onclick="removeDetail('${service}')">×</button></div>
+            </div>`;
+        } else {
+            html = `<div class="service-detail-row row g-3 mt-2" id="detail-${service}">
+                <div class="col-md-10"><input type="text" name="services[${service}][tipo]" placeholder="Tipo" class="form-control"></div>
+                <div class="col-md-2"><button type="button" class="btn btn-sm btn-danger" onclick="removeDetail('${service}')">×</button></div>
+            </div>`;
         }
-        detailsDiv.innerHTML += html;
+        container.insertAdjacentHTML('beforeend', html);
+    } else if (!checked && existing) {
+        existing.remove();
     }
 }
+
+function removeDetail(service) {
+    const el = document.getElementById(`detail-${service}`);
+    if (el) el.remove();
+    const checkbox = document.querySelector(`input[name="services[${service}]"]`);
+    if (checkbox) checkbox.checked = false;
+}
+
 function toggleOtherServices(checked) {
     document.getElementById('otherServices').style.display = checked ? 'block' : 'none';
 }
