@@ -5,7 +5,7 @@
 <div class="card mb-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between">
     <span><i class="fas fa-box-seam me-2"></i> Detalhes do Material</span>
-    <a href="{{ route('materials.index',['category'=>$material->Category]) }}" class="btn btn-outline-light btn-sm">
+    <a href="{{ route('materials.index') }}" class="btn btn-outline-light btn-sm">
       <i class="fas fa-arrow-left"></i> Voltar
     </a>
   </div>

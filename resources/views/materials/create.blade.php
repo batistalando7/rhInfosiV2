@@ -1,18 +1,17 @@
 @extends('layouts.admin.layout')
-@section('title','Novo Material — '.ucfirst($category))
+@section('title','Novo Material — Infraestrutura')
 
 @section('content')
 <div class="card mb-4 shadow">
   <div class="card-header bg-secondary text-white">
-    <i class="fas fa-plus-circle me-2"></i> Cadastrar Material ({{ ucfirst($category) }})
+    <i class="fas fa-plus-circle me-2"></i> Cadastrar Material (Infraestrutura)
   </div>
   <div class="card-body">
     <form action="{{ route('materials.store') }}" method="POST">
       @csrf
-      <input type="hidden" name="Category" value="{{ $category }}">
+      <input type="hidden" name="Category" value="infraestrutura">
       <div class="row">
         <div class="col-md-6">
-          <!-- Tipo -->
           <div class="mb-3">
             <label class="form-label">Tipo de Material</label>
             <select name="materialTypeId" class="form-select" required>
@@ -24,7 +23,6 @@
               @endforeach
             </select>
           </div>
-          <!-- demais campos... -->
           <div class="mb-3">
             <label class="form-label">Número de Série</label>
             <input type="text" name="SerialNumber" class="form-control" required value="{{ old('SerialNumber') }}">
@@ -67,7 +65,7 @@
       </div>
       <div class="text-center">
         <button class="btn btn-success"><i class="fas fa-check-circle me-1"></i> Salvar</button>
-        <a href="{{ route('materials.index',['category'=>$category]) }}" class="btn btn-secondary ms-2">Cancelar</a>
+        <a href="{{ route('materials.index') }}" class="btn btn-secondary ms-2">Cancelar</a>
       </div>
     </form>
   </div>

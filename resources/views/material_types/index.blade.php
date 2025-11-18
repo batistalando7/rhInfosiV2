@@ -1,11 +1,11 @@
 @extends('layouts.admin.layout')
-@section('title','Tipos de Material — '.($category?ucfirst($category):'Todos'))
+@section('title','Tipos de Material — Infraestrutura')
 
 @section('content')
 <div class="card mb-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between">
-    <span><i class="fas fa-tags me-2"></i>Tipos — {{ $category?ucfirst($category):'Todos' }}</span>
-    <a href="{{ route('material-types.create',['category'=>$category]) }}" class="btn btn-outline-light btn-sm">
+    <span><i class="fas fa-tags me-2"></i>Tipos — Infraestrutura</span>
+    <a href="{{ route('material-types.create') }}" class="btn btn-outline-light btn-sm">
       <i class="fas fa-plus-circle me-1"></i> Novo Tipo
     </a>
   </div>
@@ -23,13 +23,9 @@
             <td>{{ $t->name }}</td>
             <td>{{ $t->description ?? '—' }}</td>
             <td class="text-center">
-              <a href="{{ route('material-types.show',[$t->id,'category'=>$category]) }}"
-                 class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>
-              <a href="{{ route('material-types.edit',[$t->id,'category'=>$category]) }}"
-                 class="btn btn-sm btn-warning"><i class="fas fa-pencil"></i></a>
-              <a href="#"
-                 data-url="{{ route('material-types.delete',[$t->id,'category'=>$category]) }}"
-                 class="btn btn-sm btn-danger delete-btn"><i class="fas fa-trash"></i></a>
+              <a href="{{ route('material-types.show',$t->id) }}" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>
+              <a href="{{ route('material-types.edit',$t->id) }}" class="btn btn-sm btn-warning"><i class="fas fa-pencil"></i></a>
+              <a href="#" data-url="{{ route('material-types.delete',$t->id) }}" class="btn btn-sm btn-danger delete-btn"><i class="fas fa-trash"></i></a>
             </td>
           </tr>
         @empty

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Material extends Model
 {
     protected $fillable = [
-        'Category',
+        'Category', // Sempre 'infraestrutura'
         'materialTypeId',
         'Name',
         'SerialNumber',
@@ -22,14 +22,10 @@ class Material extends Model
         'Notes',
     ];
 
-
-    //Para editar um material, tivemos que proteger a variavel casts e passar como date.
     protected $casts = [
         'ManufactureDate' => 'date',
         'EntryDate'       => 'date',
     ];
-
-
 
     public function type(): BelongsTo
     {

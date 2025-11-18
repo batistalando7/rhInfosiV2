@@ -21,32 +21,32 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * Register any authentication / authorization services.
      */
-    // app/Providers/AuthServiceProvider.php
+    public function boot()
+    {
+        $this->registerPolicies();
 
-public function boot()
-{
-    $this->registerPolicies();
+        Gate::define('manage-inventory', function ($user) {
+            // 1) Se for um Admin “puro” com papel de super-admin:
+            if ($user instanceof Admin && $user->role === 'admin') {
+                return true;
+            }
 
-    Gate::define('manage-inventory', function ($user) {
-        // 1) Se for um Admin “puro” com papel de super-admin:
-        if ($user instanceof Admin && $user->role === 'admin') {
-            return true;
-        }
+            // 2) Se for Admin ou Employeee vinculado a um empregado, pega o departamento
+            if (method_exists($user, 'employee') && $user->employee) {
+                $deptTitle = $user->employee->department->title ?? null;
+            } else {
+                return false;
+            }
 
-        // 2) Se for Admin ou Employeee vinculado a um empregado, pega o departamento
-        if (method_exists($user, 'employee') && $user->employee) {
-            $deptTitle = $user->employee->department->title ?? null;
-        } else {
-            return false;
-        }
+            // 3) Checa se é chefe de um dos departamentos autorizados
+            return in_array($deptTitle, [
+                'Departamento de Gestão de Infra-Estrutura Tecnológica e Serviços Partilhados',
+                'Departamento de Administração e Serviços Gerais',
+            ], true);
+        });
 
-        // 3) Checa se é chefe de um dos departamentos autorizados
-        return in_array($deptTitle, [
-            'Departamento de Gestão de Infra-Estrutura Tecnológica e Serviços Partilhados',
-            'Departamento de Administração e Serviços Gerais',
-        ], true);
-    });
+        Gate::define('manage-heritage', function ($user) {
+            return $user->role === 'admin';
+        });
+    }
 }
-
-}
-

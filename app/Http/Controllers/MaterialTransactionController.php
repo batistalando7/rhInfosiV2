@@ -15,14 +15,10 @@ class MaterialTransactionController extends Controller
         $this->middleware(['auth', 'can:manage-inventory']);
     }
 
-    public function index(Request $request, $category = null)
+    public function index(Request $request)
     {
-        $categories = Auth::user()->role === 'admin'
-            ? ['infraestrutura', 'servicos_gerais']
-            : [$category];
-
         $query = MaterialTransaction::whereHas('material', fn ($q) =>
-            $q->whereIn('Category', $categories)
+            $q->where('Category', 'infraestrutura') // Só infra
         )->with(['material.type', 'department', 'creator']);
 
         if ($request->filled('startDate')) {
@@ -37,164 +33,116 @@ class MaterialTransactionController extends Controller
 
         $txs = $query->orderByDesc('TransactionDate')->get();
 
-        return view('material_transactions.index', compact('txs', 'category'));
+        return view('material_transactions.index', compact('txs'));
     }
 
-    protected function form($category, $type)
-{
-    // Se for admin, pega category da query string
-    if (Auth::user()->role === 'admin') {
-        $category = request()->get('category');
-    }
-
-    // Decide que materiais buscar
-    if (Auth::user()->role === 'admin') {
-        if ($category) {
-            // só da categoria escolhida
-            $materials = Material::where('Category', $category)
-                                 ->with('type')
-                                 ->get();
-        } else {
-            // sem categoria selecionada, não traz nada
-            $materials = collect();
-        }
-    } else {
-        // para chefes continua a lógica anterior
-        $materials = Material::where('Category', $category)
+    protected function form()
+    {
+        $materials = Material::where('Category', 'infraestrutura')
                              ->with('type')
                              ->get();
+
+        $type = request()->get('type', 'in'); // Default in
+
+        return view('material_transactions.create', compact('materials','type'));
     }
 
-    return view('material_transactions.create', compact('materials','category','type'));
-}
-
-    public function createIn($category = null)
+    public function createIn()
     {
-        return $this->form($category, 'in');
+        return $this->form();
     }
 
-    public function createOut($category = null)
+    public function createOut()
     {
-        return $this->form($category, 'out');
+        return $this->form();
     }
 
-    protected function storeTx(Request $r, $category, $type)
-{
-    $data = $r->validate([
-        'MaterialId'            => 'required|exists:materials,id',
-        'TransactionDate'       => 'required|date',
-        'Quantity'              => 'required|integer|min:1',
-        'OriginOrDestination'   => 'required|string',
-        'DocumentationPath'     => 'nullable|file|mimes:jpg,png,pdf|max:5120',
-        'Notes'                 => 'nullable|string',
-    ]);
+    protected function storeTx(Request $r, $type)
+    {
+        $data = $r->validate([
+            'MaterialId'            => 'required|exists:materials,id',
+            'TransactionDate'       => 'required|date',
+            'Quantity'              => 'required|integer|min:1',
+            'OriginOrDestination'   => 'required|string',
+            'DocumentationPath'     => 'nullable|file|mimes:jpg,png,pdf|max:5120',
+            'Notes'                 => 'nullable|string',
+        ]);
 
-    $material = Material::findOrFail($data['MaterialId']);
+        $material = Material::findOrFail($data['MaterialId']);
 
-    // Valida se o material pertence à categoria correta se não for admin
-    if (Auth::user()->role !== 'admin' && $material->Category !== $category) {
-        abort(403, 'Você não tem permissão para movimentar este material.');
-    }
+        // Valida categoria
+        if ($material->Category !== 'infraestrutura') {
+            abort(403, 'Você não tem permissão para movimentar este material.');
+        }
 
-    $delta = $type === 'in' ? $data['Quantity'] : -$data['Quantity'];
-    $material->increment('CurrentStock', $delta);
+        $delta = $type === 'in' ? $data['Quantity'] : -$data['Quantity'];
+        $material->increment('CurrentStock', $delta);
 
-    if ($r->hasFile('DocumentationPath')) {
-        $data['DocumentationPath'] = $r->file('DocumentationPath')
-            ->store('material_docs', 'public');
-    }
+        if ($r->hasFile('DocumentationPath')) {
+            $data['DocumentationPath'] = $r->file('DocumentationPath')
+                ->store('material_docs', 'public');
+        }
 
-    // Define os campos de rastreamento dependendo do tipo de usuário
-    if (Auth::user()->role !== 'admin') {
+        // Define campos de rastreamento
         $employee = Auth::user()->employee;
         $data += [
             'TransactionType' => $type,
             'DepartmentId'    => $employee->departmentId,
             'CreatedBy'       => $employee->id,
         ];
-    } else {
-        $data += [
-            'TransactionType' => $type,
-            'DepartmentId'    => null,
-            'CreatedBy'       => null,
-        ];
-    }
 
-    MaterialTransaction::create($data);
+        MaterialTransaction::create($data);
 
-    // Redireciona corretamente conforme o tipo de usuário
-    if (Auth::user()->role === 'admin') {
         return redirect()
-            ->route('admin.materials.transactions.index')
-            ->with('msg', 'Transação registrada com sucesso.');
-    } else {
-        return redirect()
-            ->route('materials.transactions.index', ['category' => $category])
+            ->route('materials.transactions.index')
             ->with('msg', 'Transação registrada com sucesso.');
     }
-}
 
-
-    public function storeIn(Request $r, $category = null)
+    public function storeIn(Request $r)
     {
-        return $this->storeTx($r, $category, 'in');
+        return $this->storeTx($r, 'in');
     }
 
-    public function storeOut(Request $r, $category = null)
+    public function storeOut(Request $r)
     {
-        return $this->storeTx($r, $category, 'out');
+        return $this->storeTx($r, 'out');
     }
 
-    public function reportIn($category = null)
+    public function reportIn()
     {
         $builder = MaterialTransaction::where('TransactionType', 'in')
+            ->whereHas('material', fn ($q) => $q->where('Category', 'infraestrutura'))
             ->with(['material.type', 'department', 'creator']);
-
-        $builder->whereHas('material', fn ($q) =>
-            Auth::user()->role === 'admin'
-                ? $q->whereIn('Category', ['infraestrutura', 'servicos_gerais'])
-                : $q->where('Category', $category)
-        );
 
         $txs = $builder->orderByDesc('TransactionDate')->get();
 
-        return Pdf::loadView('material_transactions.report-in', compact('txs', 'category'))
+        return Pdf::loadView('material_transactions.report-in', compact('txs'))
             ->setPaper('a4', 'landscape')
-            ->stream("Entradas.pdf");
+            ->stream("Entradas-Infra.pdf");
     }
 
-    public function reportOut($category = null)
+    public function reportOut()
     {
         $builder = MaterialTransaction::where('TransactionType', 'out')
+            ->whereHas('material', fn ($q) => $q->where('Category', 'infraestrutura'))
             ->with(['material.type', 'department', 'creator']);
 
-        $builder->whereHas('material', fn ($q) =>
-            Auth::user()->role === 'admin'
-                ? $q->whereIn('Category', ['infraestrutura', 'servicos_gerais'])
-                : $q->where('Category', $category)
-        );
-
         $txs = $builder->orderByDesc('TransactionDate')->get();
 
-        return Pdf::loadView('material_transactions.report-out', compact('txs', 'category'))
+        return Pdf::loadView('material_transactions.report-out', compact('txs'))
             ->setPaper('a4', 'landscape')
-            ->stream("Saidas.pdf");
+            ->stream("Saidas-Infra.pdf");
     }
 
-    public function reportAll($category = null)
+    public function reportAll()
     {
-        $builder = MaterialTransaction::with(['material.type', 'department', 'creator']);
-
-        $builder->whereHas('material', fn ($q) =>
-            Auth::user()->role === 'admin'
-                ? $q->whereIn('Category', ['infraestrutura', 'servicos_gerais'])
-                : $q->where('Category', $category)
-        );
+        $builder = MaterialTransaction::whereHas('material', fn ($q) => $q->where('Category', 'infraestrutura'))
+            ->with(['material.type', 'department', 'creator']);
 
         $txs = $builder->orderByDesc('TransactionDate')->get();
 
-        return Pdf::loadView('material_transactions.report-all', compact('txs', 'category'))
+        return Pdf::loadView('material_transactions.report-all', compact('txs'))
             ->setPaper('a4', 'landscape')
-            ->stream("TodasTransacoes.pdf");
+            ->stream("TodasTransacoes-Infra.pdf");
     }
 }

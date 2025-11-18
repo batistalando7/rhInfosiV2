@@ -15,34 +15,24 @@ class MaterialController extends Controller
 
     public function index(Request $request)
     {
-        $category  = $request->get('category');
-        $query     = Material::with('type');
-        if(auth()->user()->role !== 'admin') {
-            // chefes só veem sua categoria
-            $query->where('Category', $category);
-        } else if ($category) {
-            // admin filtra se passou ?category=
-            $query->where('Category', $category);
-        }
+        $query = Material::with('type'); // Sempre infra, sem filtro de categoria
         $materials = $query->get();
 
-        return view('materials.index', compact('materials','category'));
+        return view('materials.index', compact('materials'));
     }
 
-    public function create(Request $request)
+    public function create()
     {
-        $category = $request->get('category');
-        // só traz tipos daquela categoria
-        $types    = MaterialType::where('category', $category)
-                                ->orderBy('name')->get();
+        $types = MaterialType::where('category', 'infraestrutura')
+                             ->orderBy('name')->get();
 
-        return view('materials.create', compact('category','types'));
+        return view('materials.create', compact('types'));
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
-            'Category'           => 'required|in:infraestrutura,servicos_gerais',
+            'Category'           => 'required|in:infraestrutura', // Só infra
             'materialTypeId'     => 'required|exists:material_types,id',
             'Name'               => 'required|string',
             'SerialNumber'       => 'required|string|unique:materials,SerialNumber',
@@ -58,27 +48,24 @@ class MaterialController extends Controller
         Material::create($data);
 
         return redirect()
-            ->route('materials.index', ['category' => $data['Category']])
+            ->route('materials.index')
             ->with('msg','Material cadastrado com sucesso.');
     }
 
-    public function show($id, Request $request)
+    public function show($id)
     {
         $material = Material::findOrFail($id);
-        $category = $request->get('category', $material->Category);
 
-        return view('materials.show', compact('material','category'));
+        return view('materials.show', compact('material'));
     }
 
-    public function edit($id, Request $request)
+    public function edit($id)
     {
         $material = Material::findOrFail($id);
-        $category = $request->get('category', $material->Category);
-        // tipos só da mesma categoria
-        $types    = MaterialType::where('category', $category)
-                                ->orderBy('name')->get();
+        $types = MaterialType::where('category', 'infraestrutura')
+                             ->orderBy('name')->get();
 
-        return view('materials.edit', compact('material','category','types'));
+        return view('materials.edit', compact('material','types'));
     }
 
     public function update(Request $request, $id)
@@ -96,18 +83,17 @@ class MaterialController extends Controller
         $material->update($data);
 
         return redirect()
-            ->route('materials.index', ['category' => $material->Category])
+            ->route('materials.index')
             ->with('msg','Material atualizado com sucesso.');
     }
 
     public function destroy($id)
     {
         $material = Material::findOrFail($id);
-        $category = $material->Category;
         $material->delete();
 
         return redirect()
-            ->route('materials.index', ['category' => $category])
+            ->route('materials.index')
             ->with('msg','Material removido com sucesso.');
     }
 }

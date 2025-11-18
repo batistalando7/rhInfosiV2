@@ -1,9 +1,9 @@
 @extends('layouts.admin.pdf')
 
-@section('pdfTitle', 'Relatório de Entradas — ' . ucfirst($category))
+@section('pdfTitle', 'Relatório de Entradas — ')
 
 @section('titleSection')
-  <h4>Entradas — {{ ucfirst($category) }}</h4>
+  <h4>Entradas</h4>
   <p style="text-align:center;"><strong>Total de Entradas:</strong> {{ $txs->count() }}</p>
 @endsection
 

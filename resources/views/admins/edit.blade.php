@@ -34,7 +34,7 @@
         <div class="col-md-6">
           <div class="form-floating">
             <input type="text" id="employeeFullName" class="form-control" placeholder="Nome do Funcionário" readonly>
-            <label for="employeeFullName">Nome do Funcionário</label>
+            <label for="employeeFullName"></label>
           </div>
         </div>
       </div>
@@ -62,21 +62,21 @@
         <div class="col-md-6">
           <div class="form-floating">
             <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="{{ $admin->email }}" required>
-            <label for="email">Email</label>
+            <label for="email"></label>
           </div>
         </div>
       </div>
       <div class="row g-3 mt-3">
         <div class="col-md-6">
           <div class="form-floating">
-            <input type="password" name="password" class="form-control" placeholder="Senha">
-            <label for="password">Nova Senha (deixe em branco para não alterar)</label>
+            <input type="password" name="password" class="form-control" placeholder="Nova Senha">
+            <label for="password"></label>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-floating">
             <input type="password" name="password_confirmation" class="form-control" placeholder="Confirme a Senha">
-            <label for="password_confirmation">Confirme a Senha</label>
+            <label for="password_confirmation"></label>
           </div>
         </div>
       </div>

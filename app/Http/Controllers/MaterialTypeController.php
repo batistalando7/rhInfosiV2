@@ -2,83 +2,74 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\MaterialType;
+use Illuminate\Http\Request;
 
 class MaterialTypeController extends Controller
 {
-    public function index(Request $request)
+    public function __construct()
     {
-        $category = $request->get('category');
-        $types = MaterialType::when($category, fn($q) => $q->where('category', $category))
-                             ->orderByDesc('id')
-                             ->get();
-
-        return view('material_types.index', compact('types','category'));
+        $this->middleware(['auth','can:manage-inventory']);
     }
 
-    public function create(Request $request)
+    public function index()
     {
-        $category = $request->get('category');
-        return view('material_types.create', compact('category'));
+        $types = MaterialType::where('category', 'infraestrutura')->get();
+
+        return view('material_types.index', compact('types'));
+    }
+
+    public function create()
+    {
+        return view('material_types.create');
     }
 
     public function store(Request $request)
     {
-        $category = $request->get('category');
-        $request->validate([
+        $data = $request->validate([
             'name'        => 'required|string',
             'description' => 'nullable|string',
+            'category'    => 'required|in:infraestrutura',
         ]);
 
-        MaterialType::create([
-            'category'    => $category,
-            'name'        => $request->name,
-            'description' => $request->description,
-        ]);
+        MaterialType::create($data);
 
-        return redirect()
-            ->route('material-types.index', ['category' => $category])
-            ->with('msg','Tipo de material criado com sucesso em '.ucfirst($category).'!');
+        return redirect()->route('material-types.index')->with('msg', 'Tipo criado.');
     }
 
-    public function show($id, Request $request)
+    public function show($id)
     {
-        $category = $request->get('category');
         $type = MaterialType::findOrFail($id);
-        return view('material_types.show', compact('type','category'));
+
+        return view('material_types.show', compact('type'));
     }
 
-    public function edit($id, Request $request)
+    public function edit($id)
     {
-        $category = $request->get('category');
         $type = MaterialType::findOrFail($id);
-        return view('material_types.edit', compact('type','category'));
+
+        return view('material_types.edit', compact('type'));
     }
 
     public function update(Request $request, $id)
     {
-        $category = $request->get('category');
-        $request->validate([
+        $type = MaterialType::findOrFail($id);
+
+        $data = $request->validate([
             'name'        => 'required|string',
             'description' => 'nullable|string',
         ]);
 
-        $type = MaterialType::findOrFail($id);
-        $type->update($request->only('name','description'));
+        $type->update($data);
 
-        return redirect()
-            ->route('material-types.index', ['category' => $category])
-            ->with('msg','Tipo de material atualizado com sucesso em '.ucfirst($category).'!');
+        return redirect()->route('material-types.index')->with('msg', 'Tipo atualizado.');
     }
 
-    public function destroy($id, Request $request)
+    public function destroy($id)
     {
-        $category = $request->get('category');
-        MaterialType::destroy($id);
+        $type = MaterialType::findOrFail($id);
+        $type->delete();
 
-        return redirect()
-            ->route('material-types.index', ['category' => $category])
-            ->with('msg','Tipo de material removido com sucesso de '.ucfirst($category).'!');
+        return redirect()->route('material-types.index')->with('msg', 'Tipo removido.');
     }
 }

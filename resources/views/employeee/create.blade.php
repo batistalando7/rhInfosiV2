@@ -119,8 +119,8 @@
         </div>
         <div class="col-md-6">
           <div class="form-floating">
-            <input type="text" name="email" id="email" class="form-control" placeholder="" value="{{ old('email') }}">
-            <label for="email">Email</label>
+            <input type="text" name="email" id="email" class="form-control" placeholder="nome.sobrenome apenas" value="{{ old('email') }}">
+            <label for="email"></label>
           </div>
         </div>
       </div>
@@ -151,14 +151,14 @@
       <div class="row g-3 mt-3">
         <div class="col-md-4">
           <div class="form-floating">
-            <input type="text" name="bi" id="bi" class="form-control" placeholder="" value="{{ old('bi') }}">
-            <label for="bi">Bilhete de Identidade</label>
+            <input type="text" name="bi" id="bi" class="form-control" maxlength="16" value="{{ old('bi') }}">
+            <label for="bi">Bilhete de Identidade / Passaporte</label>
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-floating">
             <input type="file" name="biPhoto" id="biPhoto" class="form-control">
-            <label for="biPhoto">Cópia do BI</label>
+            <label for="biPhoto">Cópia do BI / Passaporte</label>
           </div>
         </div>
         <div class="col-md-4">

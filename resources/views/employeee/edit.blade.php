@@ -148,7 +148,7 @@
       <div class="row g-0 mt-3">
         <div class="col-md-3 pe-0">
           <div class="form-floating">
-            <input type="text" name="bi" id="bi" class="form-control" placeholder="" value="{{ old('bi', $data->bi) }}">
+            <input type="text" name="bi" id="bi" class="form-control" maxlength="16" value="{{ old('bi', $data->bi) }}">
             <label for="bi">Bilhete de Identidade</label>
           </div>
         </div>

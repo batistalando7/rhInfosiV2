@@ -2,151 +2,193 @@
 @section('title','Adicionar Pagamento de Salário')
 @section('content')
 <div class="row justify-content-center" style="margin-top: 1.5rem;">
-  <div class="{{ isset($employee) ? 'col-md-5' : 'col-md-8' }}">
+  <div class="col-md-7">
     <div class="card mb-4 shadow">
       <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-        <h4>Adicionar Pagamento de Salário</h4>
+        <h4 class="mb-0">Adicionar Pagamento de Salário</h4>
         <a href="{{ route('salaryPayment.index') }}" class="btn btn-outline-light btn-sm">
           <i class="fas fa-arrow-left"></i> Voltar
         </a>
       </div>
+
       <div class="card-body">
-        @if(!isset($employee))
-          {{-- busca funcionário --}}
-          <form method="GET" action="{{ route('salaryPayment.searchEmployee') }}" class="mb-4">
-            <div class="row g-3">
-              <div class="col-md-8">
-                <div class="form-floating">
-                  <input type="text" name="employeeSearch" class="form-control"
-                         placeholder=""
-                         value="{{ old('employeeSearch') }}">
-                  <label for="employeeSearch">Pesquisar por ID ou Nome do Funcionário</label>
-                </div>
-                @error('employeeSearch')<div class="text-danger small">{{ $message }}</div>@enderror
-              </div>
-              <div class="col-md-4">
-                <button class="btn btn-primary w-100"><i class="fas fa-search"></i> Buscar</button>
-              </div>
-            </div>
-          </form>
-        @else
-          {{-- dados do funcionário --}}
-          <div class="mb-3">
-            <h5>Dados do Funcionário</h5>
-            <p><strong>Nome:</strong> {{ $employee->fullName }}</p>
-            <p><strong>E-mail:</strong> {{ $employee->email }}</p>
-            <p><strong>Departamento:</strong> {{ $employee->department->title ?? '-' }}</p>
-            <p><strong>Tipo de Funcionário:</strong> {{ $employee->employeeType->name ?? '-' }}</p>
-            <p><strong>IBAN:</strong> {{ $employee->iban ?? '-' }}</p>
+        <form id="salaryForm" method="POST" action="{{ route('salaryPayment.store') }}">
+          @csrf
+
+          <!-- CAMPO ÚNICO E PERFEITO -->
+          <div class="mb-4">
+            <label class="form-label">Funcionário <span class="text-danger">*</span></label>
+            <input type="text" 
+                   id="employeeSearch" 
+                   class="form-control" 
+                   placeholder="Digite o nome do funcionário..." 
+                   autocomplete="off">
+            <input type="hidden" name="employeeId" id="employeeId" required>
+            @error('employeeId')
+              <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
           </div>
 
-          <form id="salaryForm" method="POST" action="{{ route('salaryPayment.store') }}">
-            @csrf
-            <input type="hidden" name="employeeId" value="{{ $employee->id }}">
+          <!-- Dados do funcionário -->
+          <div id="employeeInfo" class="row mb-4 p-3 border rounded bg-light d-none">
+            <div class="col-md-6"><strong>Nome:</strong> <span id="empName">-</span></div>
+            <div class="col-md-6"><strong>Departamento:</strong> <span id="empDept">-</span></div>
+            <div class="col-md-6"><strong>E-mail:</strong> <span id="empEmail">-</span></div>
+            <div class="col-md-6"><strong>IBAN:</strong> <span id="empIban">-</span></div>
+          </div>
 
-            {{-- Mês de Competência --}}
-            @php
-              Carbon\Carbon::setLocale('pt_BR');
-              $current = now();
-              $start   = $current->copy()->startOfYear();
-              $end     = $current->copy()->startOfMonth();
-              $months  = [];
-              while($start->lte($end)) {
-                $months[] = $start->copy();
-                $start->addMonth();
-              }
-            @endphp
-            <div class="mb-3">
-              <label for="workMonth" class="form-label">Mês de Competência</label>
-              <select name="workMonth" id="workMonth" class="form-select" required>
-                @foreach($months as $m)
-                  <option value="{{ $m->format('Y-m') }}"
-                    {{ old('workMonth', now()->format('Y-m')) == $m->format('Y-m') ? 'selected' : '' }}>
-                    {{ $m->translatedFormat('F/Y') }}
-                  </option>
-                @endforeach
+          <!-- Mês -->
+          <div class="mb-3">
+            <label class="form-label">Mês de Competência <span class="text-danger">*</span></label>
+            <select name="workMonth" id="workMonth" class="form-select" required>
+              @for($i = 0; $i <= 11; $i++)
+                @php $m = now()->subMonths($i) @endphp
+                <option value="{{ $m->format('Y-m') }}" {{ $m->isCurrentMonth() ? 'selected' : '' }}>
+                  {{ $m->translatedFormat('F Y') }}
+                </option>
+              @endfor
+            </select>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Salário Básico (Kz) <span class="text-danger">*</span></label>
+              <input type="text" name="baseSalary" id="baseSalary" class="form-control currency" value="0,00" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Subsídios (Kz) <span class="text-danger">*</span></label>
+              <input type="text" name="subsidies" id="subsidies" class="form-control currency" value="0,00" required>
+            </div>
+          </div>
+
+          <div class="row g-3 mt-3">
+            <div class="col-md-6">
+              <label class="form-label">IRT (%) <span class="text-danger">*</span></label>
+              <input type="text" name="irtRate" id="irtRate" class="form-control currency" value="0,00" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">INSS (%) <span class="text-danger">*</span></label>
+              <input type="text" name="inssRate" id="inssRate" class="form-control currency" value="0,00" required>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <label class="form-label">Desconto por Faltas (Kz)</label>
+            <input type="text" name="discount" id="discount" class="form-control currency" value="0,00" readonly>
+            <small id="absentInfo" class="form-text text-muted"></small>
+          </div>
+
+          <div class="row g-3 mt-3">
+            <div class="col-md-6">
+              <label class="form-label">Data de Pagamento</label>
+              <input type="date" name="paymentDate" class="form-control" value="{{ now()->format('Y-m-d') }}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Status <span class="text-danger">*</span></label>
+              <select name="paymentStatus" class="form-select" required>
+                <option value="Pending">Pendente</option>
+                <option value="Completed" selected>Concluído</option>
+                <option value="Failed">Falhou</option>
               </select>
             </div>
+          </div>
 
-            {{-- Campos salário e descontos --}}
-            <div class="mb-3">
-              <label for="baseSalary" class="form-label">Salário Básico (Kz)</label>
-              <input type="text" name="baseSalary" id="baseSalary" class="form-control currency"
-                     value="{{ old('baseSalary',0) }}" required>
-            </div>
-            <div class="mb-3">
-              <label for="subsidies" class="form-label">Subsídios (Kz)</label>
-              <input type="text" name="subsidies" id="subsidies" class="form-control currency"
-                     value="{{ old('subsidies',0) }}" required>
-            </div>
-            <div class="mb-3">
-              <label for="irtRate" class="form-label">IRT (%)</label>
-              <input type="text" name="irtRate" id="irtRate" class="form-control currency"
-                     value="{{ old('irtRate',0) }}" required>
-            </div>
-            <div class="mb-3">
-              <label for="inssRate" class="form-label">INSS (%)</label>
-              <input type="text" name="inssRate" id="inssRate" class="form-control currency"
-                     value="{{ old('inssRate',0) }}" required>
-            </div>
-            <div class="mb-3">
-              <label for="paymentDate" class="form-label">Data de Pagamento</label>
-              <input type="date" name="paymentDate" id="paymentDate" class="form-control"
-                     value="{{ old('paymentDate', now()->format('Y-m-d')) }}">
-            </div>
-            <div class="mb-3">
-              <label for="discount" class="form-label">Desconto (Kz)</label>
-              <input type="text" name="discount" id="discount" class="form-control currency"
-                     value="{{ old('discount',0) }}">
-              <small id="absentInfo" class="form-text text-muted"></small>
-            </div>
-            <div class="mb-3">
-              <label for="paymentStatus" class="form-label">Status do Pagamento</label>
-              <select name="paymentStatus" id="paymentStatus" class="form-select" required>
-                <option value="Pending"   {{ old('paymentStatus')=='Pending'   ? 'selected':'' }}>Pendente</option>
-                <option value="Completed" {{ old('paymentStatus')=='Completed' ? 'selected':'' }}>Concluído</option>
-                <option value="Failed"    {{ old('paymentStatus')=='Failed'    ? 'selected':'' }}>Falhou</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="paymentComment" class="form-label">Comentário</label>
-              <textarea name="paymentComment" id="paymentComment" class="form-control">{{ old('paymentComment') }}</textarea>
-            </div>
-            <button type="submit" class="btn btn-success w-100">
+          <div class="mt-3">
+            <label class="form-label">Comentário</label>
+            <textarea name="paymentComment" class="form-control" rows="3"></textarea>
+          </div>
+
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success btn-lg px-5">
               <i class="fas fa-check-circle"></i> Salvar Pagamento
             </button>
-          </form>
-
-          @push('scripts')
-          <script>
-            document.addEventListener('DOMContentLoaded', () => {
-              const baseEl  = document.getElementById('baseSalary');
-              const subsEl  = document.getElementById('subsidies');
-              const monthEl = document.getElementById('workMonth');
-              const discEl  = document.getElementById('discount');
-              const infoEl  = document.getElementById('absentInfo');
-              const empId   = document.querySelector('input[name="employeeId"]').value;
-              const unmask  = v => parseFloat(v.replace(/\./g,'').replace(/,/g,'.'))||0;
-              const mask    = v => v.toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.');
-              function updateDiscount(){
-                const base = unmask(baseEl.value),
-                      subs = unmask(subsEl.value),
-                      wm   = monthEl.value;
-                fetch(`{{ route('salaryPayment.calculateDiscount') }}?employeeId=${empId}`+
-                      `&baseSalary=${base}&subsidies=${subs}&workMonth=${wm}`)
-                  .then(r=>r.json()).then(json=>{
-                    discEl.value       = mask(json.discount);
-                    infoEl.textContent = `Faltas em ${wm}: ${json.absentDays}`;
-                  });
-              }
-              [baseEl,subsEl,monthEl].forEach(el=>el.addEventListener('change',updateDiscount));
-              updateDiscount();
-            });
-          </script>
-          @endpush
-        @endif
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
+
+@push('styles')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+  /* O SEGREDO: essas linhas fazem o Select2 parecer 100% um input normal */
+  .select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    height: 48px;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 46px;
+    padding-left: 12px;
+    color: #495057;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #6c757d;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 46px;
+  }
+  .select2-container--default.select2-container--focus .select2-selection--single {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
+  }
+</style>
+@endpush
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script>
+$(function () {
+  $('#employeeSearch').select2({
+    placeholder: "Digite o nome do funcionário...",
+    allowClear: true,
+    minimumInputLength: 2,
+    ajax: {
+      url: '{{ route("salaryPayment.searchEmployeeAjax") }}',
+      dataType: 'json',
+      delay: 300,
+      data: params => ({ q: params.term }),
+      processResults: data => ({ results: data })
+    },
+    templateResult: item => item.loading ? 'Buscando...' : item.text + ' <small class="text-muted">(' + item.extra + ')</small>',
+    templateSelection: item => item.text || "Digite o nome do funcionário..."
+  });
+
+  $('#employeeSearch').on('select2:select', e => {
+    const d = e.params.data;
+    $('#employeeId').val(d.id);
+    $('#empName').text(d.text);
+    $('#empDept').text(d.extra.replace('Depto: ', ''));
+    $('#employeeInfo').removeClass('d-none');
+    updateDiscount();
+  });
+
+  $('#employeeSearch').on('select2:clear', () => {
+    $('#employeeId').val('');
+    $('#employeeInfo').addClass('d-none');
+  });
+
+  $('.currency').mask('#.##0,00', { reverse: true });
+
+  function updateDiscount() {
+    if (!$('#employeeId').val()) return;
+    const base = parseFloat($('#baseSalary').val().replace(/\./g,'').replace(',','.')) || 0;
+    const subs = parseFloat($('#subsidies').val().replace(/\./g,'').replace(',','.')) || 0;
+    const month = $('#workMonth').val();
+
+    fetch(`{{ route('salaryPayment.calculateDiscount') }}?employeeId=${$('#employeeId').val()}&baseSalary=${base}&subsidies=${subs}&workMonth=${month}`)
+      .then(r => r.json())
+      .then(j => {
+        $('#discount').val(Number(j.discount).toLocaleString('pt-AO', {minimumFractionDigits: 2}));
+        $('#absentInfo').text(`Faltas injustificadas em ${month.replace('-', '/')} : ${j.absentDays} dia(s)`);
+      });
+  }
+
+  $('#baseSalary, #subsidies, #workMonth').on('keyup change', updateDiscount);
+});
+</script>
+@endpush
 @endsection

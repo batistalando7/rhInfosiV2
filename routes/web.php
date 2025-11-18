@@ -36,6 +36,7 @@ use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\LicenseCategoryController;
 use App\Http\Controllers\EmployeeCategoryController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\HeritageController;
 
 
 
@@ -99,6 +100,7 @@ Route::middleware(["auth"])->group(function() {
 */
 
 Route::middleware(["auth","can:manage-inventory"])->group(function () {
+     
      // Tipos de Material
      Route::resource("material-types", MaterialTypeController::class);
      Route::get("material-types/{material_type}/delete", [MaterialTypeController::class, "destroy"])->name("material-types.delete");
@@ -170,6 +172,11 @@ Route::middleware(["auth","can:manage-inventory"])
          ->name("transactions.report-all");
 });
 
+     // ======================MÓDULO DE HERITAGE (PATRIMÔNIO) ======================
+     Route::resource('heritage', HeritageController::class);
+     Route::post('heritage/{heritage}/maintenance', [HeritageController::class, 'storeMaintenance'])->name('heritage.maintenance.store');
+     Route::post('heritage/{heritage}/transfer', [HeritageController::class, 'storeTransfer'])->name('heritage.transfer.store');
+     Route::get('heritage/report', [HeritageController::class, 'report'])->name('heritage.report');
 
     // ====================== Filtros por datas (Funcionários / Estagiários) ======================
     // Funcionários
@@ -261,6 +268,8 @@ Route::resource("employeeEvaluations", EmployeeEvaluationController::class)
 
 
     // ====================== Pagamento de Salário (Salary Payment) ======================
+    Route::get('salaryPayment/search-employee-ajax', [SalaryPaymentController::class, 'searchEmployeeAjax'])
+     ->name('salaryPayment.searchEmployeeAjax');
     Route::get("salaryPayment/pdf-period", [SalaryPaymentController::class,"pdfPeriod"])->name("salaryPayment.pdfPeriod");
     Route::get("salaryPayment/pdf-employee/{employeeId}", [SalaryPaymentController::class,"pdfByEmployee"])->name("salaryPayment.pdfByEmployee");
 

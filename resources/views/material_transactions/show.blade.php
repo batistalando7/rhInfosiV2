@@ -5,7 +5,7 @@
 <div class="card mb-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between">
     <span><i class="fas fa-card-list me-2"></i> Detalhes da Movimentação</span>
-    <a href="{{ route('materials.transactions.index',['category'=>$category]) }}"
+    <a href="{{ route('materials.transactions.index')}}"
        class="btn btn-outline-light btn-sm">
       <i class="fas fa-arrow-left"></i> Voltar
     </a>

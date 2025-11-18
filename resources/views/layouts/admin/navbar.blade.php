@@ -8,9 +8,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-primary" href="#"><i class="fas fa-plus"></i></a>
-                </li>
+                
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

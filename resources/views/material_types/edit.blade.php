@@ -1,17 +1,17 @@
 @extends('layouts.admin.layout')
-@section('title', 'Editar Tipo — ' . ucfirst($category))
+@section('title', 'Editar Tipo — ')
 
 @section('content')
     <div class="card mb-4 shadow">
         <div class="card-header bg-secondary text-white">
-            <i class="fas fa-edit me-2"></i> Editar Tipo — {{ ucfirst($category) }}
+            <i class="fas fa-edit me-2"></i> Editar Tipo
         </div>
         <div class="card-body">
             <div class="row justify-content-center">
                 <div class="col-md-6"> {{-- Reduz e centraliza --}}
-                    <form action="{{ route('material-types.update', [$type->id, 'category' => $category]) }}" method="POST">
+                    <form action="{{ route('material-types.update', [$type->id]) }}" method="POST">
                         @csrf @method('PUT')
-                        <input type="hidden" name="category" value="{{ $category }}">
+                        <input type="hidden">
 
                         <div class="mb-3">
                             <div class="form-floating">
@@ -32,7 +32,7 @@
                             <button class="btn btn-primary">
                                 <i class="fas fa-check me-1"></i> Atualizar
                             </button>
-                            <a href="{{ route('material-types.index', ['category' => $category]) }}"
+                            <a href="{{ route('material-types.index') }}"
                                 class="btn btn-secondary ms-2">
                                 Cancelar
                             </a>

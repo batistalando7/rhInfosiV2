@@ -247,6 +247,7 @@
                         </ul>
                     </div>
                 </li>
+
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMaterials" aria-expanded="false" aria-controls="collapseMaterials">
                         <i class="fas fa-boxes me-2"></i> Materiais / Estoque <i class="fas fa-chevron-down ms-auto"></i>
@@ -258,6 +259,19 @@
                             <li><a class="nav-link" href="{{ route('admin.materials.transactions.in') }}"><i class="fa-solid fa-circle-arrow-down me-2"></i>Entrada</a></li>
                             <li><a class="nav-link" href="{{ route('admin.materials.transactions.out') }}"><i class="fa-solid fa-circle-arrow-up me-2"></i>Saída</a></li>
                             <li><a class="nav-link" href="{{ route('admin.materials.transactions.index') }}"><i class="fas fa-history me-2"></i>Histórico</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseHeritage" aria-expanded="false" aria-controls="collapseHeritage">
+                        <i class="fas fa-building me-2"></i> Patrimônio <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseHeritage">
+                        <ul class="submenu">
+                        <li><a class="nav-link" href="{{ route('heritage.index') }}"><i class="fas fa-list me-2"></i>Lista de Patrimônios</a></li>
+                        <li><a class="nav-link" href="{{ route('heritage.create') }}"><i class="fas fa-plus me-2"></i>Novo Patrimônio</a></li>
+                        <li><a class="nav-link" href="{{ route('heritage.report') }}" target="_blank"><i class="fas fa-file-pdf me-2"></i>Relatório PDF</a></li>
                         </ul>
                     </div>
                 </li>
@@ -568,17 +582,15 @@
                         </ul>
                     </div>
                 </li>
-
-                <!-- Geral -->
-                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Geral</li>
+            @endif
+        @endif
+                
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('profile') }}"><i class="fas fa-user me-2"></i> Meu Perfil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('new-chat.index') }}"><i class="fas fa-comments me-2"></i> Chat</a>
                 </li>
-            @endif
-        @endif
     </ul>
 </aside>
 <script>

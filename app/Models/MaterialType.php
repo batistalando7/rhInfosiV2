@@ -9,7 +9,7 @@ class MaterialType extends Model
 {
     protected $fillable = [
         'name',
-        'category',
+        'category', // Sempre 'infraestrutura'
         'description'];
 
     public function materials(): HasMany
@@ -17,4 +17,3 @@ class MaterialType extends Model
         return $this->hasMany(Material::class, 'materialTypeId');
     }
 }
-

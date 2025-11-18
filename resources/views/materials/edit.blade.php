@@ -1,16 +1,15 @@
 @extends('layouts.admin.layout')
-@section('title','Editar Material — '.ucfirst($category))
+@section('title','Editar Material — Infraestrutura')
 
 @section('content')
 <div class="card mb-4 shadow">
   <div class="card-header bg-secondary text-white">
-    <i class="fas fa-pencil me-2"></i> Editar Material ({{ ucfirst($category) }})
+    <i class="fas fa-pencil me-2"></i> Editar Material (Infraestrutura)
   </div>
   <div class="card-body">
     <form action="{{ route('materials.update',$material->id) }}" method="POST">
       @csrf @method('PUT')
-      <input type="hidden" name="Category" value="{{ $category }}">
-      <!-- Tipo -->
+      <input type="hidden" name="Category" value="infraestrutura">
       <div class="mb-3">
         <label class="form-label">Tipo de Material</label>
         <select name="materialTypeId" class="form-select" required>
@@ -22,7 +21,6 @@
           @endforeach
         </select>
       </div>
-      <!-- demais campos -->
       <div class="mb-3">
         <label class="form-label">Nome</label>
         <input type="text" name="Name" class="form-control" required value="{{ old('Name',$material->Name) }}">
@@ -45,7 +43,7 @@
       </div>
       <div class="text-center">
         <button class="btn btn-success"><i class="fas fa-check-circle me-1"></i> Atualizar</button>
-        <a href="{{ route('materials.index',['category'=>$category]) }}" class="btn btn-secondary ms-2">Cancelar</a>
+        <a href="{{ route('materials.index') }}" class="btn btn-secondary ms-2">Cancelar</a>
       </div>
     </form>
   </div>

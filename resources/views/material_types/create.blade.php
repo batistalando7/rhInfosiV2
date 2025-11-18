@@ -1,17 +1,17 @@
 @extends('layouts.admin.layout')
-@section('title', 'Novo Tipo — ' . ucfirst($category))
+@section('title', 'Novo Tipo — Infraestrutura')
 
 @section('content')
     <div class="card mb-4 shadow" style="margin-top: 1.5rem;">
         <div class="card-header bg-secondary text-white">
-            <i class="fas fa-tags me-2"></i> Novo Tipo — {{ ucfirst($category) }}
+            <i class="fas fa-tags me-2"></i> Novo Tipo — Infraestrutura
         </div>
         <div class="card-body">
             <div class="row justify-content-center">
-                <div class="col-md-6"> {{-- Reduz e centraliza --}}
-                    <form action="{{ route('material-types.store', ['category' => $category]) }}" method="POST">
+                <div class="col-md-6">
+                    <form action="{{ route('material-types.store') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="category" value="{{ $category }}">
+                        <input type="hidden" name="category" value="infraestrutura">
 
                         <div class="mb-3">
                             <div class="form-floating">
@@ -31,7 +31,7 @@
                             <button class="btn btn-success">
                                 <i class="fas fa-save me-1"></i> Salvar
                             </button>
-                            <a href="{{ route('material-types.index', ['category' => $category]) }}"
+                            <a href="{{ route('material-types.index') }}"
                                 class="btn btn-secondary ms-2">
                                 Cancelar
                             </a>

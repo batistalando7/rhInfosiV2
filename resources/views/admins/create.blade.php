@@ -30,13 +30,13 @@
                 </option>
               @endforeach
             </select>
-            <label for="employeeId">Funcionário Vinculado</label>
+            <label for="employeeId"></label>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-floating">
             <input type="text" id="employeeFullName" class="form-control" placeholder="Nome do Funcionário" readonly>
-            <label for="employeeFullName">Nome do Funcionário</label>
+            <label for="employeeFullName"></label>
           </div>
         </div>
       </div>
@@ -59,13 +59,13 @@
               <option value="department_head">Chefe de Departamento</option>
               <option value="employee">Funcionário</option>
             </select>
-            <label for="role">Papel</label>
+            <label for="role"></label>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-floating">
             <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
-            <label for="email">Email</label>
+            <label for="email"></label>
           </div>
         </div>
       </div>
@@ -81,13 +81,13 @@
                   <option value="{{ $dept->id }}">{{ $dept->title }}</option>
                 @endforeach
               </select>
-              <label for="department_id">Departamento</label>
+              <label for="department_id"></label>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-floating">
               <input type="text" name="department_head_name" id="department_head_name" class="form-control" placeholder="Nome do Chefe">
-              <label for="department_head_name">Nome do Chefe de Departamento</label>
+              <label for="department_head_name"></label>
             </div>
           </div>
         </div>
@@ -107,18 +107,18 @@
           <div class="col-md-6">
             <div class="form-floating">
               <select name="directorType" id="directorType" class="form-select">
-                <option value="">Selecione o tipo de Diretor</option>
-                <option value="directorGeneral">Diretor(a) Geral</option>
-                <option value="directorTechnical">Diretor(a) da Área Técnica</option>
-                <option value="directorAdministrative">Diretor(a) Adjunta para Área Administrativa</option>
+                <option value="">Selecione o tipo de Director</option>
+                <option value="directorGeneral">Director(a) Geral</option>
+                <option value="directorTechnical">Director(a) da Área Técnica</option>
+                <option value="directorAdministrative">Director(a) Adjunta para Área Administrativa</option>
               </select>
-              <label for="directorType">Tipo de Diretor</label>
+              <label for="directorType">Tipo de Director</label>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-floating">
               <input type="text" name="directorName" id="directorName" class="form-control" placeholder="Nome do Diretor">
-              <label for="directorName">Nome do Diretor</label>
+              <label for="directorName"></label>
             </div>
           </div>
         </div>
@@ -127,13 +127,13 @@
           <div class="col-md-6">
             <div class="form-floating">
               <textarea name="biography" class="form-control" placeholder="Biografia do Diretor" style="height: 100px;"></textarea>
-              <label for="biography">Biografia</label>
+              <label for="biography"></label>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-floating">
               <input type="url" name="linkedin" class="form-control" placeholder="Link do LinkedIn">
-              <label for="linkedin">LinkedIn</label>
+              <label for="linkedin"></label>
             </div>
           </div>
         </div>
@@ -142,7 +142,7 @@
           <div class="col-md-12">
             <div class="form-floating">
               <input type="file" name="directorPhoto" class="form-control">
-              <label for="directorPhoto">Foto do Diretor</label>
+              <label for="directorPhoto">Foto do Director</label>
             </div>
           </div>
         </div>
@@ -153,13 +153,13 @@
         <div class="col-md-6">
           <div class="form-floating">
             <input type="password" name="password" class="form-control" placeholder="Senha" required>
-            <label for="password">Senha</label>
+            <label for="password"></label>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-floating">
             <input type="password" name="password_confirmation" class="form-control" placeholder="Confirme a Senha" required>
-            <label for="password_confirmation">Confirme a Senha</label>
+            <label for="password_confirmation"></label>
           </div>
         </div>
       </div>

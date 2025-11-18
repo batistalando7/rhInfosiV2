@@ -77,7 +77,7 @@ class EmployeeeController extends Controller
         ],
         'address'            => 'required',
         'mobile'             => 'required',
-        'bi'                 => 'required|unique:employeees',
+        'bi' => 'required|string|max:16|unique:employeees',
         'biPhoto'            => 'nullable|file|mimes:pdf,jpeg,png,jpg',
         'birth_date'         => [
             'required',
@@ -198,7 +198,7 @@ class EmployeeeController extends Controller
         ],
         'address'            => 'required',
         'mobile'             => 'required',
-        'bi'                 => 'required|unique:employeees,bi,'.$id,
+        'bi' => 'required|string|max:16|unique:employeees,bi,'.$id,
         'biPhoto'            => 'nullable|file|mimes:pdf,jpeg,png,jpg',
         'birth_date'         => [
             'required',
