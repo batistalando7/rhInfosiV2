@@ -7,7 +7,7 @@
       <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
         <h4 class="mb-0">Adicionar Pagamento de Salário</h4>
         <a href="{{ route('salaryPayment.index') }}" class="btn btn-outline-light btn-sm">
-          <i class="fas fa-arrow-left"></i> Voltar
+          Voltar
         </a>
       </div>
 
@@ -15,21 +15,25 @@
         <form id="salaryForm" method="POST" action="{{ route('salaryPayment.store') }}">
           @csrf
 
-          <!-- CAMPO ÚNICO E PERFEITO -->
+          <!-- BUSCA DE FUNCIONÁRIO -->
           <div class="mb-4">
             <label class="form-label">Funcionário <span class="text-danger">*</span></label>
-            <input type="text" 
-                   id="employeeSearch" 
-                   class="form-control" 
-                   placeholder="Digite o nome do funcionário..." 
-                   autocomplete="off">
+            <div class="position-relative">
+              <input type="text" 
+                     id="employeeSearch" 
+                     class="form-control" 
+                     placeholder="Digite o nome do funcionário..." 
+                     autocomplete="off">
+              <div id="employeeList" class="list-group position-absolute w-100 mt-1 shadow" 
+                   style="z-index: 1000; max-height: 300px; overflow-y: auto; display: none;"></div>
+            </div>
             <input type="hidden" name="employeeId" id="employeeId" required>
             @error('employeeId')
               <div class="text-danger small mt-1">{{ $message }}</div>
             @enderror
           </div>
 
-          <!-- Dados do funcionário -->
+          <!-- DADOS DO FUNCIONÁRIO -->
           <div id="employeeInfo" class="row mb-4 p-3 border rounded bg-light d-none">
             <div class="col-md-6"><strong>Nome:</strong> <span id="empName">-</span></div>
             <div class="col-md-6"><strong>Departamento:</strong> <span id="empDept">-</span></div>
@@ -72,9 +76,10 @@
             </div>
           </div>
 
+          <!-- DESCONTO AGORA É EDITÁVEL -->
           <div class="mt-3">
             <label class="form-label">Desconto por Faltas (Kz)</label>
-            <input type="text" name="discount" id="discount" class="form-control currency" value="0,00" readonly>
+            <input type="text" name="discount" id="discount" class="form-control currency" value="0,00">
             <small id="absentInfo" class="form-text text-muted"></small>
           </div>
 
@@ -98,96 +103,112 @@
             <textarea name="paymentComment" class="form-control" rows="3"></textarea>
           </div>
 
-          <div class="text-center mt-4">
+          <div class="d-flex justify-content-center mt-4">
             <button type="submit" class="btn btn-success btn-lg px-5">
-              <i class="fas fa-check-circle"></i> Salvar Pagamento
+            Salvar Pagamento
             </button>
           </div>
+
         </form>
       </div>
     </div>
   </div>
 </div>
 
-@push('styles')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<style>
-  /* O SEGREDO: essas linhas fazem o Select2 parecer 100% um input normal */
-  .select2-container--default .select2-selection--single {
-    background-color: #fff;
-    border: 1px solid #ced4da;
-    border-radius: 0.375rem;
-    height: 48px;
-  }
-  .select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 46px;
-    padding-left: 12px;
-    color: #495057;
-  }
-  .select2-container--default .select2-selection--single .select2-selection__placeholder {
-    color: #6c757d;
-  }
-  .select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 46px;
-  }
-  .select2-container--default.select2-container--focus .select2-selection--single {
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
-  }
-</style>
-@endpush
-
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <script>
-$(function () {
-  $('#employeeSearch').select2({
-    placeholder: "Digite o nome do funcionário...",
-    allowClear: true,
-    minimumInputLength: 2,
-    ajax: {
-      url: '{{ route("salaryPayment.searchEmployeeAjax") }}',
-      dataType: 'json',
-      delay: 300,
-      data: params => ({ q: params.term }),
-      processResults: data => ({ results: data })
-    },
-    templateResult: item => item.loading ? 'Buscando...' : item.text + ' <small class="text-muted">(' + item.extra + ')</small>',
-    templateSelection: item => item.text || "Digite o nome do funcionário..."
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.getElementById('employeeSearch');
+  const list = document.getElementById('employeeList');
+  const hiddenId = document.getElementById('employeeId');
+
+  // === BUSCA DE FUNCIONÁRIO (igual antes) ===
+  searchInput.addEventListener('input', async () => {
+    const query = searchInput.value.trim();
+    list.innerHTML = '';
+    list.style.display = 'none';
+    if (query.length < 2) return;
+
+    try {
+      const res = await fetch(`{{ route('salaryPayment.searchEmployeeAjax') }}?q=${encodeURIComponent(query)}`);
+      const employees = await res.json();
+
+      if (employees.length === 0) {
+        list.innerHTML = '<div class="list-group-item text-muted">Nenhum funcionário encontrado</div>';
+        list.style.display = 'block';
+        return;
+      }
+
+      employees.forEach(emp => {
+        const item = document.createElement('a');
+        item.href = '#';
+        item.className = 'list-group-item list-group-item-action';
+        item.innerHTML = `<strong>${emp.text}</strong><br><small class="text-muted">${emp.extra}</small>`;
+        item.onclick = e => {
+          e.preventDefault();
+          selectEmployee(emp);
+        };
+        list.appendChild(item);
+      });
+      list.style.display = 'block';
+    } catch (err) {
+      console.error(err);
+    }
   });
 
-  $('#employeeSearch').on('select2:select', e => {
-    const d = e.params.data;
-    $('#employeeId').val(d.id);
-    $('#empName').text(d.text);
-    $('#empDept').text(d.extra.replace('Depto: ', ''));
-    $('#employeeInfo').removeClass('d-none');
+  function selectEmployee(emp) {
+    hiddenId.value = emp.id;
+    document.getElementById('empName').textContent = emp.text;
+    document.getElementById('empDept').textContent = emp.extra.replace('Depto: ', '');
+    document.getElementById('empEmail').textContent = emp.email || '-';
+    document.getElementById('empIban').textContent = emp.iban || '-';
+    document.getElementById('employeeInfo').classList.remove('d-none');
+    searchInput.value = emp.text;
+    list.style.display = 'none';
     updateDiscount();
+  }
+
+  document.addEventListener('click', e => {
+    if (!searchInput.contains(e.target) && !list.contains(e.target)) {
+      list.style.display = 'none';
+    }
   });
 
-  $('#employeeSearch').on('select2:clear', () => {
-    $('#employeeId').val('');
-    $('#employeeInfo').addClass('d-none');
-  });
-
+  // === MÁSCARA DE MOEDA ===
   $('.currency').mask('#.##0,00', { reverse: true });
 
+  function formatMoney(value) {
+    return Number(value).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  }
+
   function updateDiscount() {
-    if (!$('#employeeId').val()) return;
+    if (!hiddenId.value) return;
+
     const base = parseFloat($('#baseSalary').val().replace(/\./g,'').replace(',','.')) || 0;
     const subs = parseFloat($('#subsidies').val().replace(/\./g,'').replace(',','.')) || 0;
     const month = $('#workMonth').val();
 
-    fetch(`{{ route('salaryPayment.calculateDiscount') }}?employeeId=${$('#employeeId').val()}&baseSalary=${base}&subsidies=${subs}&workMonth=${month}`)
+    fetch(`{{ route('salaryPayment.calculateDiscount') }}?employeeId=${hiddenId.value}&baseSalary=${base}&subsidies=${subs}&workMonth=${month}`)
       .then(r => r.json())
       .then(j => {
-        $('#discount').val(Number(j.discount).toLocaleString('pt-AO', {minimumFractionDigits: 2}));
+        $('#discount').val(formatMoney(j.discount));
         $('#absentInfo').text(`Faltas injustificadas em ${month.replace('-', '/')} : ${j.absentDays} dia(s)`);
       });
   }
 
   $('#baseSalary, #subsidies, #workMonth').on('keyup change', updateDiscount);
+
+  // AQUI ESTÁ A MÁGICA — ANTES DE ENVIAR, LIMPA TUDO!
+  document.getElementById('salaryForm').addEventListener('submit', function(e) {
+    // Remove máscara e converte para número limpo (ex: 12.345,67 → 12345.67)
+    $('.currency').each(function() {
+      let val = this.value;
+      val = val.replace(/\./g, '');        // remove pontos
+      val = val.replace(/,/g, '.');        // vírgula vira ponto
+      this.value = parseFloat(val) || 0;   // deixa só o número
+    });
+  });
 });
 </script>
 @endpush

@@ -1,42 +1,92 @@
 @extends('layouts.admin.layout')
 @section('title','Pagamentos de Salário')
 @section('content')
+
 <div class="card mb-4 shadow" style="margin-top: 1.5rem;">
+
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-money-bill-wave me-2"></i>Pagamentos de Salário</span>
-    <div>
-      <a href="{{ route('salaryPayment.pdfAll') }}" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">
-        <i class="fas fa-file-pdf"></i> Todos (PDF)
+
+    <div class="d-flex gap-2">
+
+      {{-- MESMA LARGURA PARA OS TRÊS BOTÕES --}}
+      <a href="{{ route('salaryPayment.pdfAll') }}"
+         class="btn btn-outline-light btn-sm"
+         style="width:110px;"
+         target="_blank" rel="noopener noreferrer">
+        <i class="fas fa-file-pdf"></i> Todos
       </a>
-      <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#filterArea">
+
+      <button class="btn btn-outline-light btn-sm"
+              style="width:110px;"
+              type="button" data-bs-toggle="collapse" data-bs-target="#filterArea">
         <i class="fas fa-calendar-alt"></i> Filtrar
       </button>
-      <a href="{{ route('salaryPayment.create') }}" class="btn btn-outline-light btn-sm" title="Novo Pagamento">
+
+      
+
+
+      <a href="{{ route('salaryPayment.create') }}"
+         class="btn btn-outline-light btn-sm"
+         style="width:110px;"
+         title="Novo Pagamento">
         <i class="fas fa-plus-circle"></i> Novo
       </a>
+
     </div>
   </div>
-  <div class="collapse" id="filterArea">
-    <div class="card-body border-bottom">
-      <form class="row g-3" method="GET" action="{{ route('salaryPayment.index') }}">
-        <div class="col-md-3">
-          <input type="date" name="startDate" value="{{ $filters['startDate'] ?? '' }}" class="form-control">
-        </div>
-        <div class="col-md-3">
-          <input type="date" name="endDate" value="{{ $filters['endDate'] ?? '' }}" class="form-control">
-        </div>
-        <div class="col-md-2">
-          <button class="btn btn-primary w-100">Aplicar</button>
-        </div>
-        <div class="col-md-2">
-          <a href="{{ route('salaryPayment.pdfPeriod', $filters) }}"
-             class="btn btn-success w-100" target="_blank" rel="noopener noreferrer">
-            PDF Intervalo
-          </a>
-        </div>
+
+    {{-- ÁREA DE FILTRO --}}
+    <div class="collapse" id="filterArea">
+      <div class="card-body border-bottom">
+
+        <form class="row g-3" method="GET" action="{{ route('salaryPayment.index') }}">
+
+          <div class="col-md-3">
+            <input type="date" name="startDate"
+                  value="{{ $filters['startDate'] ?? '' }}"
+                  class="form-control">
+          </div>
+
+          <div class="col-md-3">
+            <input type="date" name="endDate"
+                  value="{{ $filters['endDate'] ?? '' }}"
+                  class="form-control">
+          </div>
+
+          {{-- BOTÃO APLICAR --}}
+          <div class="col-md-2">
+            <button class="btn btn-primary w-100">Aplicar Filtro</button>
+          </div>
+
+          {{-- BOTÃO LIMPAR (RESET DOS FILTROS) --}}
+          <div class="col-md-2">
+            <a href="{{ route('salaryPayment.index') }}" class="btn btn-secondary w-100">
+              Limpar Filtro Aplicado
+            </a>
+          </div>
+
+          {{-- BAIXAR PDF DO INTERVALO FILTRADO --}}
+          <div class="col-md-2">
+            <a href="{{ route('salaryPayment.pdfPeriod', [
+                'startDate' => $filters['startDate'] ?? '',
+                'endDate'   => $filters['endDate']   ?? ''
+            ]) }}"
+            class="btn btn-success w-100"
+            target="_blank" rel="noopener noreferrer">
+              <i class="fas fa-file-pdf"></i> Baixar Intervalo
+            </a>
+          </div>
+
+       
+
+
       </form>
+
     </div>
   </div>
+
+  {{-- TABELA --}}
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-striped table-hover">
@@ -56,6 +106,7 @@
             <th style="width: 58px">Ações</th>
           </tr>
         </thead>
+
         <tbody>
           @foreach($salaryPayments as $p)
           <tr>
@@ -67,27 +118,46 @@
             <td>{{ number_format($p->baseSalary,2,',','.') }}</td>
             <td>{{ number_format($p->subsidies,2,',','.') }}</td>
             <td>{{ number_format($p->discount,2,',','.') }}</td>
+
             <td><strong>{{ number_format($p->salaryAmount,2,',','.') }}</strong></td>
+
             <td>{{ $p->paymentDate }}</td>
             <td>{{ $p->paymentStatus }}</td>
+
+            {{-- AÇÕES — ADICIONADO ÍCONE NO PDF (QUE FALTAVA) --}}
             <td class="d-flex gap-1">
-              <a href="{{ route('salaryPayment.show',$p->id) }}"   class="btn btn-sm btn-warning" title="Ver Detalhes"><i class="fas fa-eye"></i></a>
-              <a href="{{ route('salaryPayment.edit',$p->id) }}"   class="btn btn-sm btn-info" title="Editar Registro"><i class="fas fa-pencil"></i></a>
-              <a href="{{ route('salaryPayment.pdfByEmployee', ['employeeId'=>$p->employee->id,'year'=>now()->year]) }}"
-                 class="btn btn-sm btn-secondary" title="PDF Anual" target="_blank" rel="noopener noreferrer">
-                <i class="fas fa-file-earmark-pdf"></i>
+              <a href="{{ route('salaryPayment.show',$p->id) }}" class="btn btn-sm btn-warning" title="Ver Detalhes">
+                <i class="fas fa-eye"></i>
               </a>
+
+              <a href="{{ route('salaryPayment.edit',$p->id) }}" class="btn btn-sm btn-info" title="Editar Registro">
+                <i class="fas fa-pencil"></i>
+              </a>
+
+              <a href="{{ route('salaryPayment.pdfByEmployee', [
+                 'employeeId'=>$p->employee->id,
+                 'year'=>now()->year
+              ]) }}"
+              class="btn btn-sm btn-secondary" title="PDF Anual" target="_blank">
+                <i class="fas fa-file-pdf"></i>
+              </a>
+
               <form action="{{ route('salaryPayment.destroy',$p->id) }}"
                     method="POST" style="display:inline">
                 @csrf @method('DELETE')
-                <button class="btn btn-sm btn-danger" title="Apagar"><i class="fas fa-trash"></i></button>
+                <button class="btn btn-sm btn-danger" title="Apagar">
+                  <i class="fas fa-trash"></i>
+                </button>
               </form>
             </td>
+
           </tr>
           @endforeach
         </tbody>
       </table>
     </div>
   </div>
+
 </div>
+
 @endsection

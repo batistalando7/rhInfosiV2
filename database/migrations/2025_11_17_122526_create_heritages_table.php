@@ -4,28 +4,39 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHeritagesTable extends Migration
+return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('heritages', function (Blueprint $table) {
             $table->id();
             $table->string('Description');
             $table->string('Type');
-            $table->decimal('Value', 10, 2);
+            $table->decimal('Value', 12, 2);
             $table->date('AcquisitionDate');
             $table->string('Location');
-            $table->unsignedBigInteger('ResponsibleId');
+            $table->unsignedBigInteger('ResponsibleId'); // Aponta para admins.id
             $table->enum('Condition', ['novo', 'usado', 'danificado']);
             $table->text('Observations')->nullable();
+
+            // Dados de quem preencheu o formulário
+            $table->string('FormResponsibleName');
+            $table->string('FormResponsiblePhone')->nullable();
+            $table->string('FormResponsibleEmail');
+            $table->date('FormDate');
+
             $table->timestamps();
 
-            $table->foreign('ResponsibleId')->references('id')->on('users');
+            // CORRETO: aponta para a tabela admins (não users!)
+            $table->foreign('ResponsibleId')
+                  ->references('id')
+                  ->on('admins')
+                  ->onDelete('cascade');
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('heritages');
     }
-}
+};

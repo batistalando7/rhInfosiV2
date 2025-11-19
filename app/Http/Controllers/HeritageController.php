@@ -8,6 +8,7 @@ use App\Models\HeritageTransfer;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class HeritageController extends Controller
 {
@@ -30,7 +31,8 @@ class HeritageController extends Controller
 
     public function create()
     {
-        return view('heritage.create');
+        $user = Auth::user();
+        return view('heritage.create', compact('user'));
     }
 
     public function store(Request $request)
@@ -44,9 +46,13 @@ class HeritageController extends Controller
             'ResponsibleId'     => 'required|exists:users,id',
             'Condition'         => 'required|in:novo,usado,danificado',
             'Observations'      => 'nullable|string',
+            'FormResponsibleName' => 'required|string|max:255',    // Novos
+            'FormResponsiblePhone' => 'nullable|string|max:20',
+            'FormResponsibleEmail' => 'required|email|max:255',
+            'FormDate'          => 'required|date',                // Auto no create
         ]);
 
-        $data['ResponsibleId'] = Auth::id();
+        $data['FormDate'] = $data['FormDate'] ?? Carbon::now(); // Auto se não preenchido
         Heritage::create($data);
 
         return redirect()->route('heritage.index')->with('msg', 'Patrimônio cadastrado com sucesso.');
@@ -62,8 +68,9 @@ class HeritageController extends Controller
     public function edit($id)
     {
         $heritage = Heritage::findOrFail($id);
+        $user = Auth::user(); // Para pré-preencher se editar
 
-        return view('heritage.edit', compact('heritage'));
+        return view('heritage.edit', compact('heritage', 'user'));
     }
 
     public function update(Request $request, $id)
@@ -79,6 +86,10 @@ class HeritageController extends Controller
             'ResponsibleId'     => 'required|exists:users,id',
             'Condition'         => 'required|in:novo,usado,danificado',
             'Observations'      => 'nullable|string',
+            'FormResponsibleName' => 'required|string|max:255',
+            'FormResponsiblePhone' => 'nullable|string|max:20',
+            'FormResponsibleEmail' => 'required|email|max:255',
+            'FormDate'          => 'required|date',
         ]);
 
         $heritage->update($data);
@@ -105,7 +116,7 @@ class HeritageController extends Controller
         Heritage::findOrFail($heritageId);
         HeritageMaintenance::create($data + ['HeritageId' => $heritageId]);
 
-        return redirect()->route('heritage.show', $heritageId)->with('msg', 'Manutenção registrada.');
+        return redirect()->route('heritage.show', $heritageId)->with('msg', 'Manutenção registrada com sucesso.');
     }
 
     public function storeTransfer(Request $request, $heritageId)
@@ -119,15 +130,14 @@ class HeritageController extends Controller
         Heritage::findOrFail($heritageId);
         HeritageTransfer::create($data + ['HeritageId' => $heritageId]);
 
-        return redirect()->route('heritage.show', $heritageId)->with('msg', 'Transferência registrada.');
+        return redirect()->route('heritage.show', $heritageId)->with('msg', 'Transferência registrada com sucesso.');
     }
 
     public function report()
     {
-        $heritages = Heritage::with(['maintenances', 'transfers'])->get();
+        $heritages = Heritage::with(['maintenances', 'transfers', 'responsible'])->get();
 
-        return Pdf::loadView('heritage.report', compact('heritages'))
-            ->setPaper('a4', 'portrait')
-            ->stream("Relatorio-Patrimonio.pdf");
+        $pdf = Pdf::loadView('heritage.report', compact('heritages'));
+        return $pdf->stream('Relatorio-Patrimonio.pdf');
     }
 }

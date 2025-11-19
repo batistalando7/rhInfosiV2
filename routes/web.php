@@ -137,46 +137,51 @@ Route::middleware(["auth","can:manage-inventory"])->group(function () {
 | Transações e relatórios “globais” para ADMIN (sem {category})
 |--------------------------------------------------------------------------
 */
+Route::middleware(["auth","can:manage-inventory"])->group(function () {
+    
+    // Tipos de Material
+    Route::resource("material-types", MaterialTypeController::class);
+    Route::get("material-types/{material_type}/delete", [MaterialTypeController::class, "destroy"])->name("material-types.delete");
+
+    // Materiais (CRUD completo: index, create, store, show, edit, update, destroy)
+    Route::resource("materials", MaterialController::class)
+         ->only(["index","create","store","show","edit","update","destroy"]);
+
+    // Transações e relatórios (SEM {category} – para todos os users)
+    Route::prefix("materials/transactions")->name("materials.transactions.")->group(function () {
+        Route::get("/", [MaterialTransactionController::class, "index"])->name("index");
+        Route::get("/in", [MaterialTransactionController::class, "createIn"])->name("in");
+        Route::post("/in", [MaterialTransactionController::class, "storeIn"])->name("in.store");
+        Route::get("/out", [MaterialTransactionController::class, "createOut"])->name("out");
+        Route::post("/out", [MaterialTransactionController::class, "storeOut"])->name("out.store");
+        Route::get("/report-in", [MaterialTransactionController::class, "reportIn"])->name("report-in");
+        Route::get("/report-out", [MaterialTransactionController::class, "reportOut"])->name("report-out");
+        Route::get("/report-all", [MaterialTransactionController::class, "reportAll"])->name("report-all");
+    });
+});
+
+// Rotas admin para materials (se quiseres manter separadas, mas sem category)
 Route::middleware(["auth","can:manage-inventory"])
      ->prefix("admin/materials")
      ->name("admin.materials.")
      ->group(function() {
-
-    // **ÍNDICE** para admin (listar histórico de todas as categorias)
-    Route::get("/", [MaterialTransactionController::class,"index"])
-         ->name("transactions.index");
-
-     //Criação de novo material (sem categoria)
-      Route::get("create", [MaterialController::class,"create"])->name("materials.create");
-
-    // Formulário de Entrada
-    Route::get("in",        [MaterialTransactionController::class,"createIn"])
-         ->name("transactions.in");
-    // Submit de Entrada
-    Route::post("in",       [MaterialTransactionController::class,"storeIn"])
-         ->name("transactions.in.store");
-
-    // Formulário de Saída
-    Route::get("out",       [MaterialTransactionController::class,"createOut"])
-         ->name("transactions.out");
-    // Submit de Saída
-    Route::post("out",      [MaterialTransactionController::class,"storeOut"])
-         ->name("transactions.out.store");
-
-    // Relatórios gerais
-    Route::get("report-in", [MaterialTransactionController::class,"reportIn"])
-         ->name("transactions.report-in");
-    Route::get("report-out",[MaterialTransactionController::class,"reportOut"])
-         ->name("transactions.report-out");
-    Route::get("report-all",[MaterialTransactionController::class,"reportAll"])
-         ->name("transactions.report-all");
+    Route::get("transactions", [MaterialTransactionController::class, "index"])->name("transactions.index");
+    Route::get("transactions/in", [MaterialTransactionController::class, "createIn"])->name("transactions.in");
+    Route::post("transactions/in", [MaterialTransactionController::class, "storeIn"])->name("transactions.in.store");
+    Route::get("transactions/out", [MaterialTransactionController::class, "createOut"])->name("transactions.out");
+    Route::post("transactions/out", [MaterialTransactionController::class, "storeOut"])->name("transactions.out.store");
+    Route::get("transactions/report-in", [MaterialTransactionController::class, "reportIn"])->name("transactions.report-in");
+    Route::get("transactions/report-out", [MaterialTransactionController::class, "reportOut"])->name("transactions.report-out");
+    Route::get("transactions/report-all", [MaterialTransactionController::class, "reportAll"])->name("transactions.report-all");
 });
 
-     // ======================MÓDULO DE HERITAGE (PATRIMÔNIO) ======================
-     Route::resource('heritage', HeritageController::class);
-     Route::post('heritage/{heritage}/maintenance', [HeritageController::class, 'storeMaintenance'])->name('heritage.maintenance.store');
-     Route::post('heritage/{heritage}/transfer', [HeritageController::class, 'storeTransfer'])->name('heritage.transfer.store');
-     Route::get('heritage/report', [HeritageController::class, 'report'])->name('heritage.report');
+// ======================MÓDULO DE HERITAGE (PATRIMÔNIO) ======================
+Route::middleware(["auth","can:manage-heritage"])->group(function () {
+    Route::resource('heritage', HeritageController::class);
+    Route::post('heritage/{heritage}/maintenance', [HeritageController::class, 'storeMaintenance'])->name('heritage.maintenance.store');
+    Route::post('heritage/{heritage}/transfer', [HeritageController::class, 'storeTransfer'])->name('heritage.transfer.store');
+    Route::get('heritage/report', [HeritageController::class, 'report'])->name('heritage.report');
+});
 
     // ====================== Filtros por datas (Funcionários / Estagiários) ======================
     // Funcionários
