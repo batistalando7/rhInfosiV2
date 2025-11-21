@@ -132,23 +132,22 @@ class HeritageController extends Controller
     }
 
     public function pdfAll()
-        {
-            $heritages = Heritage::with(['responsible', 'maintenances', 'transfers'])->latest()->get();
+{
+    $heritages = Heritage::with(['responsible', 'maintenances', 'transfers'])->latest()->get();
 
-            $pdf = PDF::loadView('heritage.pdf_all', compact('heritages'))
-                ->setPaper('a4', 'portrait');
+    $pdf = PDF::loadView('heritage.pdf_all', compact('heritages')) // ← aqui
+        ->setPaper('a4', 'portrait');
 
-            return $pdf->stream('Relatorio_Completo_Patrimonio_' . now()->format('d-m-Y') . '.pdf');
-        }
+    return $pdf->stream('Relatorio_Completo_Patrimonio_' . now()->format('d-m-Y') . '.pdf');
+}
 
-        public function pdfSingle($id)
-        {
-            $heritage = Heritage::with(['responsible', 'maintenances', 'transfers'])
-                ->findOrFail($id);
+public function pdfSingle($id)
+{
+    $heritage = Heritage::with(['responsible', 'maintenances', 'transfers'])->findOrFail($id);
 
-            $pdf = PDF::loadView('heritage.pdf_single', compact('heritage'))
-                ->setPaper('a4', 'portrait');
+    $pdf = PDF::loadView('heritage.pdf_single', compact('heritage')) // ← este já estava certo
+        ->setPaper('a4', 'portrait');
 
-            return $pdf->stream("Patrimonio_{$heritage->id}_{$heritage->Description}.pdf");
-        }
+    return $pdf->stream("Patrimonio_{$heritage->id}_{$heritage->Description}.pdf");
+}
 }

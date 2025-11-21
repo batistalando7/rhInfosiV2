@@ -178,12 +178,10 @@ Route::middleware(["auth","can:manage-inventory"])
 // ====================== MÓDULO DE HERITAGE (PATRIMÔNIO) ======================
 Route::middleware(['auth', 'can:manage-heritage'])->group(function () {
 
-    // Todas as rotas padrão do resource
-    Route::resource('heritage', HeritageController::class)->except(['report']);
+    
 
     // PDF Completo (todos os patrimônios)
-    Route::get('heritage/report', [HeritageController::class, 'pdfAll'])
-         ->name('heritage.pdfAll');
+   Route::get('heritage/pdf-all', [HeritageController::class, 'pdfAll'])->name('heritage.pdfAll');
 
     // PDF Individual
     Route::get('heritage/{heritage}/pdf', [HeritageController::class, 'pdfSingle'])
@@ -200,7 +198,8 @@ Route::middleware(['auth', 'can:manage-heritage'])->group(function () {
          ->name('heritage.transfer.create');
     Route::post('heritage/{heritage}/transfer', [HeritageController::class, 'storeTransfer'])
          ->name('heritage.transfer.store');
-
+     // Todas as rotas padrão do resource
+    Route::resource('heritage', HeritageController::class)->except(['report']);
     // Exclusão via modal (igual ao employeee)
     Route::delete('heritage/{heritage}/delete', [HeritageController::class, 'destroy'])
          ->name('heritage.delete');
