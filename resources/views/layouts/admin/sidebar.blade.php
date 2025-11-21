@@ -264,14 +264,13 @@
                 </li>
 
                 <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseHeritage" aria-expanded="false" aria-controls="collapseHeritage">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseHeritage">
                         <i class="fas fa-building me-2"></i> Patrimônio <i class="fas fa-chevron-down ms-auto"></i>
                     </a>
                     <div class="collapse" id="collapseHeritage">
                         <ul class="submenu">
-                        <li><a class="nav-link" href="{{ route('heritage.index') }}"><i class="fas fa-list me-2"></i>Lista de Patrimônios</a></li>
-                        <li><a class="nav-link" href="{{ route('heritage.create') }}"><i class="fas fa-plus me-2"></i>Novo Patrimônio</a></li>
-                        <li><a class="nav-link" href="{{ route('heritage.report') }}" target="_blank"><i class="fas fa-file-pdf me-2"></i>Relatório PDF</a></li>
+                            <li><a class="nav-link" href="{{ route('heritage.index') }}"><i class="fas fa-list me-2"></i> Lista de Patrimônios</a></li>
+                            <li><a class="nav-link" href="{{ route('heritage.create') }}"><i class="fas fa-plus me-2"></i> Novo Patrimônio</a></li>
                         </ul>
                     </div>
                 </li>

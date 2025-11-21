@@ -2,89 +2,101 @@
 @section('title', 'Novo Patrimônio')
 
 @section('content')
-<div class="card mb-4">
-  <div class="card-header bg-secondary text-white">
-    <i class="fas fa-plus me-2"></i> Formulário de Controlo de Patrimônio
-  </div>
-  <div class="card-body">
-    <form action="{{ route('heritage.store') }}" method="POST">
-      @csrf
-      <h5>Informações do Patrimônio</h5>
-      <div class="row">
-        <div class="col-md-12 mb-3">
-          <label class="form-label">Descrição do Patrimônio</label>
-          <input type="text" name="Description" class="form-control" required value="{{ old('Description') }}">
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Tipo de Patrimônio (ex: mobiliário, equipamento, veículo, etc.)</label>
-          <input type="text" name="Type" class="form-control" required value="{{ old('Type') }}">
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Valor do Patrimônio</label>
-          <input type="number" name="Value" step="0.01" class="form-control" required value="{{ old('Value') }}">
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Data de Aquisição</label>
-          <input type="date" name="AcquisitionDate" class="form-control" required value="{{ old('AcquisitionDate') }}">
-        </div>
-      </div>
+<div class="card my-4 shadow">
+    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+        <span>Novo Patrimônio</span>
+        <a href="{{ route('heritage.index') }}" class="btn btn-outline-light btn-sm">
+            <i class="fa-solid fa-list"></i>
+        </a>
+    </div>
 
-      <h5>Localização do Patrimônio</h5>
-      <div class="row">
-        <div class="col-md-12 mb-3">
-          <label class="form-label">Localização</label>
-          <input type="text" name="Location" class="form-control" required value="{{ old('Location') }}">
-        </div>
-        <div class="col-md-12 mb-3">
-          <label class="form-label">Responsável</label>
-          <input type="text" name="responsible_name" class="form-control" readonly value="{{ $user->name ?? $user->fullName ?? 'Usuário Logado' }}" style="background-color: #f8f9fa;">
-          <input type="hidden" name="ResponsibleId" value="{{ Auth::id() }}"> <!-- Hidden para salvar ID auto -->
-        </div>
-      </div>
+    <div class="card-body">
+        <form method="POST" action="{{ route('heritage.store') }}">
+            @csrf
 
-      <h5>Estado do Patrimônio</h5>
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Condição (ex: novo, usado, danificado, etc.)</label>
-          <select name="Condition" class="form-select" required>
-            <option value="novo" {{ old('Condition') == 'novo' ? 'selected' : '' }}>Novo</option>
-            <option value="usado" {{ old('Condition') == 'usado' ? 'selected' : '' }}>Usado</option>
-            <option value="danificado" {{ old('Condition') == 'danificado' ? 'selected' : '' }}>Danificado</option>
-          </select>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Observações</label>
-          <textarea name="Observations" class="form-control" rows="3">{{ old('Observations') }}</textarea>
-        </div>
-      </div>
+            <!-- Descrição -->
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <div class="form-floating">
+                        <input type="text" name="Description" id="Description" class="form-control" required 
+                               value="{{ old('Description') }}" placeholder="">
+                        <label for="Description">Descrição do Patrimônio Ex: Mesa de escritório, Cadeira, Impressora...</label>
+                    </div>
+                </div>
 
-      <h5>Responsável pelo Formulário</h5>
-      <div class="row">
-        <div class="col-md-4 mb-3">
-          <label class="form-label">Nome</label>
-          <input type="text" name="FormResponsibleName" class="form-control" required value="{{ old('FormResponsibleName', $user->name ?? $user->fullName ?? '') }}">
-        </div>
-        <div class="col-md-4 mb-3">
-          <label class="form-label">Telefone</label>
-          <input type="text" name="FormResponsiblePhone" class="form-control" value="{{ old('FormResponsiblePhone', $user->phone ?? '') }}">
-        </div>
-        <div class="col-md-4 mb-3">
-          <label class="form-label">Email</label>
-          <input type="email" name="FormResponsibleEmail" class="form-control" required value="{{ old('FormResponsibleEmail', $user->email ?? '') }}">
-        </div>
-      </div>
-      <div class="row mb-4">
-        <div class="col-md-12">
-          <label class="form-label">Data do Formulário</label>
-          <input type="date" name="FormDate" class="form-control" required value="{{ old('FormDate', now()->format('Y-m-d')) }}">
-        </div>
-      </div>
+                <!-- Tipo -->
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <input type="text" name="Type" id="Type" class="form-control" required 
+                               value="{{ old('Type') }}" placeholder="">
+                        <label for="Type">Tipo Ex: Mobiliário, Equip. Informático, Veículo, Eletrodoméstico...</label>
+                    </div>
+                </div>
+            </div>
 
-      <div class="text-center">
-        <button class="btn btn-success">Salvar</button>
-        <a href="{{ route('heritage.index') }}" class="btn btn-secondary ms-2">Cancelar</a>
-      </div>
-    </form>
-  </div>
+            <!-- Valor + Data Aquisição -->
+            <div class="row g-3 mt-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="number" step="0.01" name="Value" id="Value" class="form-control" required 
+                               value="{{ old('Value') }}" placeholder="">
+                        <label for="Value">Valor em Kz</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="date" name="AcquisitionDate" id="AcquisitionDate" class="form-control" required 
+                               value="{{ old('AcquisitionDate') }}">
+                        <label for="AcquisitionDate">Data de Aquisição</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Localização + Condição -->
+            <div class="row g-3 mt-3">
+                <div class="col-md-8">
+                    <div class="form-floating">
+                        <input type="text" name="Location" id="Location" class="form-control" required 
+                               value="{{ old('Location') }}" placeholder=" ">
+                        <label for="Location">Localização Atual</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <select name="Condition" id="Condition" class="form-select" required>
+                            <option value="" disabled selected></option>
+                            <option value="novo" {{ old('Condition') == 'novo' ? 'selected' : '' }}>Novo</option>
+                            <option value="usado" {{ old('Condition') == 'usado' ? 'selected' : '' }}>Usado</option>
+                            <option value="danificado" {{ old('Condition') == 'danificado' ? 'selected' : '' }}>Danificado</option>
+                        </select>
+                        <label for="Condition">Condição</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Observações -->
+            <div class="row g-3 mt-3">
+                <div class="col-12">
+                    <div class="form-floating">
+                        <textarea name="Observations" id="Observations" class="form-control" style="height: 100px" 
+                                  placeholder="">{{ old('Observations') }}</textarea>
+                        <label for="Observations">Observações</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dados ocultos -->
+            <input type="hidden" name="FormResponsibleName" value="{{ auth()->user()->name ?? auth()->user()->fullName ?? 'Sistema' }}">
+            <input type="hidden" name="FormResponsibleEmail" value="{{ auth()->user()->email }}">
+            <input type="hidden" name="FormDate" value="{{ now()->format('Y-m-d') }}">
+
+            <!-- Botão -->
+            <div class="d-grid gap-2 col-6 mx-auto mt-5">
+                <button type="submit" class="btn btn-success btn-lg">
+                    Cadastrar Patrimônio
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 @endsection

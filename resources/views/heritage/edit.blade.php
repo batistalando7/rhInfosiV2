@@ -2,93 +2,97 @@
 @section('title', 'Editar Patrimônio')
 
 @section('content')
-<div class="card mb-4">
-  <div class="card-header bg-secondary text-white">
-    <i class="fas fa-edit me-2"></i> Formulário de Controlo de Patrimônio
-  </div>
-  <div class="card-body">
-    <form action="{{ route('heritage.update', $heritage->id) }}" method="POST">
-      @csrf @method('PUT')
-      <h5>Informações do Patrimônio</h5>
-      <div class="row">
-        <div class="col-md-12 mb-3">
-          <label class="form-label">Descrição do Patrimônio</label>
-          <input type="text" name="Description" class="form-control" required value="{{ old('Description', $heritage->Description) }}">
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Tipo de Patrimônio (ex: mobiliário, equipamento, veículo, etc.)</label>
-          <input type="text" name="Type" class="form-control" required value="{{ old('Type', $heritage->Type) }}">
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Valor do Patrimônio</label>
-          <input type="number" name="Value" step="0.01" class="form-control" required value="{{ old('Value', $heritage->Value) }}">
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Data de Aquisição</label>
-          <input type="date" name="AcquisitionDate" class="form-control" required value="{{ old('AcquisitionDate', $heritage->AcquisitionDate->format('Y-m-d')) }}">
-        </div>
-      </div>
+<div class="card my-4 shadow">
+    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+        <span>Editar Patrimônio #{{ $heritage->id }}</span>
+        <a href="{{ route('heritage.index') }}" class="btn btn-outline-light btn-sm">
+            <i class="fa-solid fa-list"></i>
+        </a>
+    </div>
 
-      <h5>Localização do Patrimônio</h5>
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Localização</label>
-          <input type="text" name="Location" class="form-control" required value="{{ old('Location', $heritage->Location) }}">
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Responsável</label>
-          <select name="ResponsibleId" class="form-select" required>
-            <option value="">-- selecione --</option>
-            @foreach(\App\Models\User::all() as $u)
-              <option value="{{ $u->id }}" {{ old('ResponsibleId', $heritage->ResponsibleId) == $u->id ? 'selected' : '' }}>{{ $u->name }}</option>
-            @endforeach
-          </select>
-        </div>
-      </div>
+    <div class="card-body">
+        <form method="POST" action="{{ route('heritage.update', $heritage) }}">
+            @csrf @method('PUT')
 
-      <h5>Estado do Patrimônio</h5>
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Condição (ex: novo, usado, danificado, etc.)</label>
-          <select name="Condition" class="form-select" required>
-            <option value="novo" {{ old('Condition', $heritage->Condition) == 'novo' ? 'selected' : '' }}>Novo</option>
-            <option value="usado" {{ old('Condition', $heritage->Condition) == 'usado' ? 'selected' : '' }}>Usado</option>
-            <option value="danificado" {{ old('Condition', $heritage->Condition) == 'danificado' ? 'selected' : '' }}>Danificado</option>
-          </select>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Observações</label>
-          <textarea name="Observations" class="form-control" rows="3">{{ old('Observations', $heritage->Observations) }}</textarea>
-        </div>
-      </div>
+            <!-- Descrição + Tipo -->
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <div class="form-floating">
+                        <input type="text" name="Description" id="Description" class="form-control" required
+                               value="{{ old('Description', $heritage->Description) }}"
+                               placeholder="Mesa de escritório, Computador Dell, Impressora HP...">
+                        <label for="Description">Descrição do Patrimônio</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <input type="text" name="Type" id="Type" class="form-control" required
+                               value="{{ old('Type', $heritage->Type) }}"
+                               placeholder="Mobiliário, Equip. Informático, Veículo, Eletrodoméstico...">
+                        <label for="Type">Tipo</label>
+                    </div>
+                </div>
+            </div>
 
-      <h5>Responsável pelo Formulário</h5>
-      <div class="row">
-        <div class="col-md-4 mb-3">
-          <label class="form-label">Nome</label>
-          <input type="text" name="FormResponsibleName" class="form-control" required value="{{ old('FormResponsibleName', $heritage->FormResponsibleName) }}">
-        </div>
-        <div class="col-md-4 mb-3">
-          <label class="form-label">Telefone</label>
-          <input type="text" name="FormResponsiblePhone" class="form-control" value="{{ old('FormResponsiblePhone', $heritage->FormResponsiblePhone) }}">
-        </div>
-        <div class="col-md-4 mb-3">
-          <label class="form-label">Email</label>
-          <input type="email" name="FormResponsibleEmail" class="form-control" required value="{{ old('FormResponsibleEmail', $heritage->FormResponsibleEmail) }}">
-        </div>
-      </div>
-      <div class="row mb-4">
-        <div class="col-md-12">
-          <label class="form-label">Data do Formulário</label>
-          <input type="date" name="FormDate" class="form-control" required value="{{ old('FormDate', $heritage->FormDate ? $heritage->FormDate->format('Y-m-d') : now()->format('Y-m-d')) }}">
-        </div>
-      </div>
+            <!-- Valor + Data de Aquisição -->
+            <div class="row g-3 mt-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="number" step="0.01" name="Value" id="Value" class="form-control" required
+                               value="{{ old('Value', $heritage->Value) }}"
+                               placeholder="0,00">
+                        <label for="Value">Valor em Kz</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="date" name="AcquisitionDate" id="AcquisitionDate" class="form-control" required
+                               value="{{ old('AcquisitionDate', $heritage->AcquisitionDate ? $heritage->AcquisitionDate->format('Y-m-d') : '') }}">
+                        <label for="AcquisitionDate">Data de Aquisição</label>
+                    </div>
+                </div>
+            </div>
 
-      <div class="text-center">
-        <button class="btn btn-success">Atualizar</button>
-        <a href="{{ route('heritage.index') }}" class="btn btn-secondary ms-2">Cancelar</a>
-      </div>
-    </form>
-  </div>
+            <!-- Localização + Condição -->
+            <div class="row g-3 mt-3">
+                <div class="col-md-8">
+                    <div class="form-floating">
+                        <input type="text" name="Location" id="Location" class="form-control" required
+                               value="{{ old('Location', $heritage->Location) }}"
+                               placeholder="Sala 12, Armazém Central, Garagem...">
+                        <label for="Location">Localização Atual</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <select name="Condition" id="Condition" class="form-select" required>
+                            <option value="novo" {{ $heritage->Condition == 'novo' ? 'selected' : '' }}>Novo</option>
+                            <option value="usado" {{ $heritage->Condition == 'usado' ? 'selected' : '' }}>Usado</option>
+                            <option value="danificado" {{ $heritage->Condition == 'danificado' ? 'selected' : '' }}>Danificado</option>
+                        </select>
+                        <label for="Condition">Condição</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Observações -->
+            <div class="row g-3 mt-3">
+                <div class="col-12">
+                    <div class="form-floating">
+                        <textarea name="Observations" id="Observations" class="form-control" style="height: 100px"
+                                  placeholder="Observações adicionais (opcional)">{{ old('Observations', $heritage->Observations) }}</textarea>
+                        <label for="Observations">Observações</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão -->
+            <div class="d-grid gap-2 col-6 mx-auto mt-5">
+                <button type="submit" class="btn btn-success btn-lg">
+                    Atualizar Patrimônio
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 @endsection

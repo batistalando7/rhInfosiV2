@@ -8,27 +8,23 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Heritage extends Model
 {
-    protected $table = 'heritages'; // Plural table
+    protected $table = 'heritages';
 
     protected $fillable = [
-        'Description',
-        'Type',
-        'Value',
-        'AcquisitionDate',
-        'Location',
-        'ResponsibleId',
-        'Condition',
-        'Observations',
+        'Description', 'Type', 'Value', 'AcquisitionDate', 'Location',
+        'ResponsibleId', 'Condition', 'Observations',
+        'FormResponsibleName', 'FormResponsiblePhone', 'FormResponsibleEmail', 'FormDate'
     ];
 
     protected $casts = [
         'AcquisitionDate' => 'date',
+        'FormDate' => 'date',
         'Value' => 'decimal:2',
     ];
 
     public function responsible(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'ResponsibleId');
+        return $this->belongsTo(\App\Models\Admin::class, 'ResponsibleId');
     }
 
     public function maintenances(): HasMany

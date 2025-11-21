@@ -8,7 +8,6 @@ use App\Models\HeritageTransfer;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 
 class HeritageController extends Controller
 {
@@ -17,127 +16,139 @@ class HeritageController extends Controller
         $this->middleware(['auth', 'can:manage-heritage']);
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $query = Heritage::with(['maintenances', 'transfers', 'responsible']);
-        if ($request->filled('search')) {
-            $query->where('Description', 'like', '%' . $request->search . '%')
-                  ->orWhere('Location', 'like', '%' . $request->search . '%');
-        }
-        $heritages = $query->get();
-
+        $heritages = Heritage::with('responsible')->latest()->paginate(15);
         return view('heritage.index', compact('heritages'));
     }
 
     public function create()
     {
-        $user = Auth::user();
-        return view('heritage.create', compact('user'));
+        return view('heritage.create');
     }
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'Description'       => 'required|string|max:255',
-            'Type'              => 'required|string|max:100',
-            'Value'             => 'required|numeric|min:0',
-            'AcquisitionDate'   => 'required|date',
-            'Location'          => 'required|string|max:255',
-            'ResponsibleId'     => 'required|exists:users,id',
-            'Condition'         => 'required|in:novo,usado,danificado',
-            'Observations'      => 'nullable|string',
-            'FormResponsibleName' => 'required|string|max:255',    // Novos
-            'FormResponsiblePhone' => 'nullable|string|max:20',
-            'FormResponsibleEmail' => 'required|email|max:255',
-            'FormDate'          => 'required|date',                // Auto no create
+        $request->validate([
+            'Description'     => 'required|string|max:255',
+            'Type'            => 'required|string|max:100',
+            'Value'           => 'required|numeric|min:0',
+            'AcquisitionDate' => 'required|date',
+            'Location'        => 'required|string|max:255',
+            'Condition'       => 'required|in:novo,usado,danificado',
+            'Observations'    => 'nullable|string',
         ]);
 
-        $data['FormDate'] = $data['FormDate'] ?? Carbon::now(); // Auto se não preenchido
-        Heritage::create($data);
+        Heritage::create([
+            'Description'           => $request->Description,
+            'Type'                  => $request->Type,
+            'Value'                 => $request->Value,
+            'AcquisitionDate'       => $request->AcquisitionDate,
+            'Location'              => $request->Location,
+            'ResponsibleId'         => Auth::id(),
+            'Condition'             => $request->Condition,
+            'Observations'          => $request->Observations,
+            'FormResponsibleName'   => Auth::user()->name ?? Auth::user()->fullName ?? Auth::user()->email,
+            'FormResponsibleEmail'  => Auth::user()->email,
+            'FormResponsiblePhone'  => Auth::user()->phone ?? null,
+            'FormDate'              => now(),
+        ]);
 
-        return redirect()->route('heritage.index')->with('msg', 'Patrimônio cadastrado com sucesso.');
+        return redirect()->route('heritage.index')->with('success', 'Patrimônio cadastrado com sucesso!');
     }
 
-    public function show($id)
+    public function show(Heritage $heritage)
     {
-        $heritage = Heritage::with(['maintenances', 'transfers', 'responsible'])->findOrFail($id);
-
+        $heritage->load(['maintenances', 'transfers', 'responsible']);
         return view('heritage.show', compact('heritage'));
     }
 
-    public function edit($id)
+    public function edit(Heritage $heritage)
     {
-        $heritage = Heritage::findOrFail($id);
-        $user = Auth::user(); // Para pré-preencher se editar
-
-        return view('heritage.edit', compact('heritage', 'user'));
+        return view('heritage.edit', compact('heritage'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Heritage $heritage)
     {
-        $heritage = Heritage::findOrFail($id);
-
-        $data = $request->validate([
-            'Description'       => 'required|string|max:255',
-            'Type'              => 'required|string|max:100',
-            'Value'             => 'required|numeric|min:0',
-            'AcquisitionDate'   => 'required|date',
-            'Location'          => 'required|string|max:255',
-            'ResponsibleId'     => 'required|exists:users,id',
-            'Condition'         => 'required|in:novo,usado,danificado',
-            'Observations'      => 'nullable|string',
-            'FormResponsibleName' => 'required|string|max:255',
-            'FormResponsiblePhone' => 'nullable|string|max:20',
-            'FormResponsibleEmail' => 'required|email|max:255',
-            'FormDate'          => 'required|date',
+        $request->validate([
+            'Description'     => 'required|string|max:255',
+            'Type'            => 'required|string|max:100',
+            'Value'           => 'required|numeric|min:0',
+            'AcquisitionDate' => 'required|date',
+            'Location'        => 'required|string|max:255',
+            'Condition'       => 'required|in:novo,usado,danificado',
+            'Observations'    => 'nullable|string',
         ]);
 
-        $heritage->update($data);
+        $heritage->update($request->only([
+            'Description', 'Type', 'Value', 'AcquisitionDate', 'Location', 'Condition', 'Observations'
+        ]));
 
-        return redirect()->route('heritage.index')->with('msg', 'Patrimônio atualizado com sucesso.');
+        return redirect()->route('heritage.show', $heritage)->with('success', 'Patrimônio atualizado!');
     }
 
-    public function destroy($id)
+    public function destroy(Heritage $heritage)
     {
-        $heritage = Heritage::findOrFail($id);
         $heritage->delete();
-
-        return redirect()->route('heritage.index')->with('msg', 'Patrimônio removido com sucesso.');
+        return redirect()->route('heritage.index')->with('success', 'Patrimônio removido.');
     }
 
-    public function storeMaintenance(Request $request, $heritageId)
+    // === MANUTENÇÃO ===
+    public function createMaintenance(Heritage $heritage)
     {
-        $data = $request->validate([
+        return view('heritage.maintenances.create', compact('heritage'));
+    }
+
+    public function storeMaintenance(Request $request, Heritage $heritage)
+    {
+        $request->validate([
             'MaintenanceDate' => 'required|date',
             'MaintenanceDescription' => 'required|string',
             'MaintenanceResponsible' => 'required|string',
         ]);
 
-        Heritage::findOrFail($heritageId);
-        HeritageMaintenance::create($data + ['HeritageId' => $heritageId]);
+        $heritage->maintenances()->create($request->all());
 
-        return redirect()->route('heritage.show', $heritageId)->with('msg', 'Manutenção registrada com sucesso.');
+        return redirect()->route('heritage.show', $heritage)->with('success', 'Manutenção registrada!');
     }
 
-    public function storeTransfer(Request $request, $heritageId)
+    // === TRANSFERÊNCIA ===
+    public function createTransfer(Heritage $heritage)
     {
-        $data = $request->validate([
+        return view('heritage.transfers.create', compact('heritage'));
+    }
+
+    public function storeTransfer(Request $request, Heritage $heritage)
+    {
+        $request->validate([
             'TransferDate' => 'required|date',
             'TransferReason' => 'required|string',
             'TransferResponsible' => 'required|string',
         ]);
 
-        Heritage::findOrFail($heritageId);
-        HeritageTransfer::create($data + ['HeritageId' => $heritageId]);
+        $heritage->transfers()->create($request->all());
 
-        return redirect()->route('heritage.show', $heritageId)->with('msg', 'Transferência registrada com sucesso.');
+        return redirect()->route('heritage.show', $heritage)->with('success', 'Transferência registrada!');
     }
 
-    public function report()
-    {
-        $heritages = Heritage::with(['maintenances', 'transfers', 'responsible'])->get();
+    public function pdfAll()
+        {
+            $heritages = Heritage::with(['responsible', 'maintenances', 'transfers'])->latest()->get();
 
-        $pdf = Pdf::loadView('heritage.report', compact('heritages'));
-        return $pdf->stream('Relatorio-Patrimonio.pdf');
-    }
+            $pdf = PDF::loadView('heritage.pdf_all', compact('heritages'))
+                ->setPaper('a4', 'portrait');
+
+            return $pdf->stream('Relatorio_Completo_Patrimonio_' . now()->format('d-m-Y') . '.pdf');
+        }
+
+        public function pdfSingle($id)
+        {
+            $heritage = Heritage::with(['responsible', 'maintenances', 'transfers'])
+                ->findOrFail($id);
+
+            $pdf = PDF::loadView('heritage.pdf_single', compact('heritage'))
+                ->setPaper('a4', 'portrait');
+
+            return $pdf->stream("Patrimonio_{$heritage->id}_{$heritage->Description}.pdf");
+        }
 }

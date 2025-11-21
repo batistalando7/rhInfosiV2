@@ -175,13 +175,38 @@ Route::middleware(["auth","can:manage-inventory"])
     Route::get("transactions/report-all", [MaterialTransactionController::class, "reportAll"])->name("transactions.report-all");
 });
 
-// ======================MÓDULO DE HERITAGE (PATRIMÔNIO) ======================
-Route::middleware(["auth","can:manage-heritage"])->group(function () {
-    Route::resource('heritage', HeritageController::class);
-    Route::post('heritage/{heritage}/maintenance', [HeritageController::class, 'storeMaintenance'])->name('heritage.maintenance.store');
-    Route::post('heritage/{heritage}/transfer', [HeritageController::class, 'storeTransfer'])->name('heritage.transfer.store');
-    Route::get('heritage/report', [HeritageController::class, 'report'])->name('heritage.report');
+// ====================== MÓDULO DE HERITAGE (PATRIMÔNIO) ======================
+Route::middleware(['auth', 'can:manage-heritage'])->group(function () {
+
+    // Todas as rotas padrão do resource
+    Route::resource('heritage', HeritageController::class)->except(['report']);
+
+    // PDF Completo (todos os patrimônios)
+    Route::get('heritage/report', [HeritageController::class, 'pdfAll'])
+         ->name('heritage.pdfAll');
+
+    // PDF Individual
+    Route::get('heritage/{heritage}/pdf', [HeritageController::class, 'pdfSingle'])
+         ->name('heritage.pdfSingle');
+
+    // Manutenção
+    Route::get('heritage/{heritage}/maintenance/create', [HeritageController::class, 'createMaintenance'])
+         ->name('heritage.maintenance.create');
+    Route::post('heritage/{heritage}/maintenance', [HeritageController::class, 'storeMaintenance'])
+         ->name('heritage.maintenance.store');
+
+    // Transferência
+    Route::get('heritage/{heritage}/transfer/create', [HeritageController::class, 'createTransfer'])
+         ->name('heritage.transfer.create');
+    Route::post('heritage/{heritage}/transfer', [HeritageController::class, 'storeTransfer'])
+         ->name('heritage.transfer.store');
+
+    // Exclusão via modal (igual ao employeee)
+    Route::delete('heritage/{heritage}/delete', [HeritageController::class, 'destroy'])
+         ->name('heritage.delete');
 });
+
+
 
     // ====================== Filtros por datas (Funcionários / Estagiários) ======================
     // Funcionários
