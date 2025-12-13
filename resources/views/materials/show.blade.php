@@ -1,37 +1,74 @@
 @extends('layouts.admin.layout')
-@section('title','Detalhes do Material')
+@section('title', 'Ver Material')
 
 @section('content')
-<div class="card mb-4 shadow">
-  <div class="card-header bg-secondary text-white d-flex justify-content-between">
-    <span><i class="fas fa-box-seam me-2"></i> Detalhes do Material</span>
-    <a href="{{ route('materials.index') }}" class="btn btn-outline-light btn-sm">
-      <i class="fas fa-arrow-left"></i> Voltar
-    </a>
-  </div>
-  <div class="card-body">
-    <dl class="row">
-      <dt class="col-sm-4">Tipo de Material</dt>
-      <dd class="col-sm-8">{{ $material->type->name }}</dd>
-      <dt class="col-sm-4">Nome</dt>
-      <dd class="col-sm-8">{{ $material->Name }}</dd>
-      <dt class="col-sm-4">Número de Série</dt>
-      <dd class="col-sm-8">{{ $material->SerialNumber }}</dd>
-      <dt class="col-sm-4">Modelo</dt>
-      <dd class="col-sm-8">{{ $material->Model }}</dd>
-      <dt class="col-sm-4">Data de Fabrico</dt>
-      <dd class="col-sm-8">{{ \Carbon\Carbon::parse($material->ManufactureDate)->format('d/m/Y') }}</dd>
-      <dt class="col-sm-4">Fornecedor</dt>
-      <dd class="col-sm-8">{{ $material->SupplierName }}</dd>
-      <dt class="col-sm-4">NIF do Fornecedor</dt>
-      <dd class="col-sm-8">{{ $material->SupplierIdentifier }}</dd>
-      <dt class="col-sm-4">Data de Entrada</dt>
-      <dd class="col-sm-8">{{ \Carbon\Carbon::parse($material->EntryDate)->format('d/m/Y') }}</dd>
-      <dt class="col-sm-4">Qtd. Inicial em Estoque</dt>
-      <dd class="col-sm-8">{{ $material->CurrentStock }}</dd>
-      <dt class="col-sm-4">Observações</dt>
-      <dd class="col-sm-8">{{ $material->Notes ?? '—' }}</dd>
-    </dl>
-  </div>
-</div>
+    <div class="card mb-4 shadow">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-eye me-2"></i> Detalhes do Material: {{ $material->Name }}</span>
+            <div>
+                <a href="{{ route('materials.index') }}" class="btn btn-outline-light btn-sm" title="Voltar à Lista">
+                    <i class="fa-solid fa-list"></i>
+                </a>
+                <a href="{{ route('materials.edit', $material->id) }}" class="btn btn-warning btn-sm" title="Editar">
+                    <i class="fas fa-pencil"></i>
+                </a>
+                <a href="#" data-url="{{ route('materials.destroy', $material->id) }}"
+                    class="btn btn-danger btn-sm delete-btn" title="Remover">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <table class="table table-striped table-bordered mb-3">
+                        <tr>
+                            <th>Nome</th>
+                            <td>{{ $material->Name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tipo</th>
+                            <td>{{ $material->type->name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Número de Série</th>
+                            <td>{{ $material->SerialNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>Modelo</th>
+                            <td>{{ $material->Model }}</td>
+                        </tr>
+                        <tr>
+                            <th>Data de Fabrico</th>
+                            <td>{{ $material->ManufactureDate->format('d/m/Y') }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-striped table-bordered mb-3">
+                        <tr>
+                            <th>Fornecedor</th>
+                            <td>{{ $material->SupplierName }}</td>
+                        </tr>
+                        <tr>
+                            <th>NIF do Fornecedor</th>
+                            <td>{{ $material->SupplierIdentifier }}</td>
+                        </tr>
+                        <tr>
+                            <th>Data de Entrada</th>
+                            <td>{{ $material->EntryDate->format('d/m/Y') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Estoque Atual</th>
+                            <td><span class="badge bg-primary">{{ $material->CurrentStock }}</span></td>
+                        </tr>
+                        <tr>
+                            <th>Observações</th>
+                            <td>{{ $material->Notes ?? '—' }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

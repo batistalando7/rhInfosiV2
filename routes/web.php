@@ -37,6 +37,8 @@ use App\Http\Controllers\LicenseCategoryController;
 use App\Http\Controllers\EmployeeCategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HeritageController;
+use App\Http\Controllers\HeritageTypeController;
+
 
 
 
@@ -86,124 +88,111 @@ Route::middleware(["auth"])->group(function() {
      Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard");
    
 
-      
-
-
     // Rota GET com parâmetro ?status=...
     Route::get("employeee/filter-by-status", [EmployeeeController::class, "filterByStatus"])->name("employeee.filterByStatus");
 
+
+
 /*
 |--------------------------------------------------------------------------
-| Módulo de Materiais / Estoque
+| Módulo de Materiais (Infraestrutura)
 |--------------------------------------------------------------------------
-| Só para quem passa no Gate "manage-inventory".
 */
 
+
+
 Route::middleware(["auth","can:manage-inventory"])->group(function () {
-     
      // Tipos de Material
      Route::resource("material-types", MaterialTypeController::class);
      Route::get("material-types/{material_type}/delete", [MaterialTypeController::class, "destroy"])->name("material-types.delete");
  
-     // Materiais (CRUD completo: index, create, store, show, edit, update, destroy)
-     Route::resource("materials", MaterialController::class)
-          ->only(["index","create","store","show","edit","update","destroy"]);
- 
-     // Transações e relatórios
+     // Transações e relatórios (Sem categoria)
      Route::prefix("materials")->name("materials.")->group(function () {
-         Route::get("{category}/transactions",  [MaterialTransactionController::class,"index"])
+         Route::get("transactions",  [MaterialTransactionController::class,"index"])
               ->name("transactions.index");
-         Route::get("{category}/in",           [MaterialTransactionController::class,"createIn"])
+         Route::get("in",           [MaterialTransactionController::class,"createIn"])
               ->name("transactions.in");
-         Route::post("{category}/in",          [MaterialTransactionController::class,"storeIn"])
+         Route::post("in",          [MaterialTransactionController::class,"storeIn"])
               ->name("transactions.in.store");
-         Route::get("{category}/out",          [MaterialTransactionController::class,"createOut"])
+         Route::get("out",          [MaterialTransactionController::class,"createOut"])
               ->name("transactions.out");
-         Route::post("{category}/out",         [MaterialTransactionController::class,"storeOut"])
+         Route::post("out",         [MaterialTransactionController::class,"storeOut"])
               ->name("transactions.out.store");
  
-         Route::get("{category}/report-in",    [MaterialTransactionController::class,"reportIn"])
+         Route::get("report-in",    [MaterialTransactionController::class,"reportIn"])
               ->name("transactions.report-in");
-         Route::get("{category}/report-out",   [MaterialTransactionController::class,"reportOut"])
+         Route::get("report-out",   [MaterialTransactionController::class,"reportOut"])
               ->name("transactions.report-out");
-         Route::get("{category}/report-all",   [MaterialTransactionController::class,"reportAll"])
+         Route::get("report-all",   [MaterialTransactionController::class,"reportAll"])
               ->name("transactions.report-all");
+              
+         // Rota para PDF Individual (Adicionada)
+         Route::get("{material}/pdf", [MaterialController::class, "showPdf"])->name("showPdf");
      });
+     
+     // Materiais (CRUD completo: index, create, store, show, edit, update, destroy)
+     // DEVE SER A ÚLTIMA ROTA A SER LIDA para evitar conflitos com as rotas acima
+     Route::resource("materials", MaterialController::class)
+          ->only(["index","create","store","show","edit","update","destroy"]);
  });
+
 
 
 /*
 |--------------------------------------------------------------------------
-| Transações e relatórios “globais” para ADMIN (sem {category})
+| Módulo de Património (Heritage)
 |--------------------------------------------------------------------------
 */
+
 Route::middleware(["auth","can:manage-inventory"])->group(function () {
-    
-    // Tipos de Material
-    Route::resource("material-types", MaterialTypeController::class);
-    Route::get("material-types/{material_type}/delete", [MaterialTypeController::class, "destroy"])->name("material-types.delete");
+     // Tipos de Património
+     Route::resource("heritage-types", HeritageTypeController::class);
+     Route::get("heritage-types/{heritage_type}/delete", [HeritageTypeController::class, "destroy"])->name("heritage-types.delete");
+ 
+     // Rotas de Manutenção, Transferência e Relatórios
+     Route::prefix("heritages")->name("heritages.")->group(function () {
+         // Manutenção
+         Route::get("{heritage}/maintenance",           [HeritageController::class,"maintenance"])
+              ->name("maintenance");
+         Route::post("{heritage}/maintenance",          [HeritageController::class,"storeMaintenance"])
+              ->name("storeMaintenance");
+         Route::get("{heritage}/maintenance/{maintenance}/edit", [HeritageController::class,"editMaintenance"])
+              ->name("maintenance.edit");
+         Route::put("{heritage}/maintenance/{maintenance}", [HeritageController::class,"updateMaintenance"])
+              ->name("maintenance.update");
+         Route::delete("{heritage}/maintenance/{maintenance}", [HeritageController::class,"destroyMaintenance"])
+              ->name("maintenance.destroy");
+              
+         // Transferência
+         Route::get("{heritage}/transfer",              [HeritageController::class,"transfer"])
+              ->name("transfer");
+         Route::post("{heritage}/transfer",             [HeritageController::class,"storeTransfer"])
+              ->name("storeTransfer");
+         Route::get("{heritage}/transfer/{transfer}/edit", [HeritageController::class,"editTransfer"])
+              ->name("transfer.edit");
+         Route::put("{heritage}/transfer/{transfer}", [HeritageController::class,"updateTransfer"])
+              ->name("transfer.update");
+         Route::delete("{heritage}/transfer/{transfer}", [HeritageController::class,"destroyTransfer"])
+              ->name("transfer.destroy");
+              
+         // Relatório Geral
+         Route::get("report-all",   [HeritageController::class,"reportAll"])
+              ->name("report-all");
+              
+         // Rota para PDF Individual (Adicionada)
+         Route::get("{heritage}/pdf", [HeritageController::class, "showPdf"])->name("showPdf");
+     });
+     
+     // Património (CRUD completo: index, create, store, show, edit, update, destroy)
+     // DEVE SER A ÚLTIMA ROTA A SER LIDA para evitar conflitos com as rotas acima
+     Route::resource("heritages", HeritageController::class)
+          ->only(["index","create","store","show","edit","update","destroy"]);
+ });
+ 
 
-    // Materiais (CRUD completo: index, create, store, show, edit, update, destroy)
-    Route::resource("materials", MaterialController::class)
-         ->only(["index","create","store","show","edit","update","destroy"]);
 
-    // Transações e relatórios (SEM {category} – para todos os users)
-    Route::prefix("materials/transactions")->name("materials.transactions.")->group(function () {
-        Route::get("/", [MaterialTransactionController::class, "index"])->name("index");
-        Route::get("/in", [MaterialTransactionController::class, "createIn"])->name("in");
-        Route::post("/in", [MaterialTransactionController::class, "storeIn"])->name("in.store");
-        Route::get("/out", [MaterialTransactionController::class, "createOut"])->name("out");
-        Route::post("/out", [MaterialTransactionController::class, "storeOut"])->name("out.store");
-        Route::get("/report-in", [MaterialTransactionController::class, "reportIn"])->name("report-in");
-        Route::get("/report-out", [MaterialTransactionController::class, "reportOut"])->name("report-out");
-        Route::get("/report-all", [MaterialTransactionController::class, "reportAll"])->name("report-all");
-    });
-});
 
-// Rotas admin para materials (se quiseres manter separadas, mas sem category)
-Route::middleware(["auth","can:manage-inventory"])
-     ->prefix("admin/materials")
-     ->name("admin.materials.")
-     ->group(function() {
-    Route::get("transactions", [MaterialTransactionController::class, "index"])->name("transactions.index");
-    Route::get("transactions/in", [MaterialTransactionController::class, "createIn"])->name("transactions.in");
-    Route::post("transactions/in", [MaterialTransactionController::class, "storeIn"])->name("transactions.in.store");
-    Route::get("transactions/out", [MaterialTransactionController::class, "createOut"])->name("transactions.out");
-    Route::post("transactions/out", [MaterialTransactionController::class, "storeOut"])->name("transactions.out.store");
-    Route::get("transactions/report-in", [MaterialTransactionController::class, "reportIn"])->name("transactions.report-in");
-    Route::get("transactions/report-out", [MaterialTransactionController::class, "reportOut"])->name("transactions.report-out");
-    Route::get("transactions/report-all", [MaterialTransactionController::class, "reportAll"])->name("transactions.report-all");
-});
 
-// ====================== MÓDULO DE HERITAGE (PATRIMÔNIO) ======================
-Route::middleware(['auth', 'can:manage-heritage'])->group(function () {
-
-    
-
-    // PDF Completo (todos os patrimônios)
-   Route::get('heritage/pdf-all', [HeritageController::class, 'pdfAll'])->name('heritage.pdfAll');
-
-    // PDF Individual
-    Route::get('heritage/{heritage}/pdf', [HeritageController::class, 'pdfSingle'])
-         ->name('heritage.pdfSingle');
-
-    // Manutenção
-    Route::get('heritage/{heritage}/maintenance/create', [HeritageController::class, 'createMaintenance'])
-         ->name('heritage.maintenance.create');
-    Route::post('heritage/{heritage}/maintenance', [HeritageController::class, 'storeMaintenance'])
-         ->name('heritage.maintenance.store');
-
-    // Transferência
-    Route::get('heritage/{heritage}/transfer/create', [HeritageController::class, 'createTransfer'])
-         ->name('heritage.transfer.create');
-    Route::post('heritage/{heritage}/transfer', [HeritageController::class, 'storeTransfer'])
-         ->name('heritage.transfer.store');
-     // Todas as rotas padrão do resource
-    Route::resource('heritage', HeritageController::class)->except(['report']);
-    // Exclusão via modal (igual ao employeee)
-    Route::delete('heritage/{heritage}/delete', [HeritageController::class, 'destroy'])
-         ->name('heritage.delete');
-});
 
 
 

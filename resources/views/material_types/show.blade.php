@@ -1,19 +1,19 @@
 @extends('layouts.admin.layout')
-@section('title', 'Ver Tipo — ' . ucfirst($category))
+@section('title', 'Ver Tipo de Material')
 
 @section('content')
     <div class="card mb-4 shadow">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-            <span><i class="fas fa-eye me-2"></i>Tipo — {{ ucfirst($category) }}</span>
+            <span><i class="fas fa-eye me-2"></i> Detalhes do Tipo de Material</span>
             <div>
-                <a href="{{ route('material-types.index', ['category' => $category]) }}" class="btn btn-outline-light btn-sm">
+                <a href="{{ route('material-types.index') }}" class="btn btn-outline-light btn-sm" title="Voltar à Lista">
                     <i class="fa-solid fa-list"></i>
                 </a>
-                <a href="{{ route('material-types.edit', [$type->id, 'category' => $category]) }}" class="btn btn-warning btn-sm">
+                <a href="{{ route('material-types.edit', $type->id) }}" class="btn btn-warning btn-sm" title="Editar">
                     <i class="fas fa-pencil"></i>
                 </a>
-                <a href="#" data-url="{{ route('material-types.delete', [$type->id, 'category' => $category]) }}"
-                    class="btn btn-danger btn-sm delete-btn">
+                <a href="#" data-url="{{ route('material-types.destroy', $type->id) }}"
+                    class="btn btn-danger btn-sm delete-btn" title="Remover">
                     <i class="fas fa-trash"></i>
                 </a>
             </div>
@@ -33,7 +33,7 @@
                     <td>{{ $type->created_at->format('d/m/Y') }}</td>
                 </tr>
                 <tr>
-                    <th>Atualizado</th>
+                    <th>Atualizado em</th>
                     <td>{{ $type->updated_at->format('d/m/Y') }}</td>
                 </tr>
             </table>

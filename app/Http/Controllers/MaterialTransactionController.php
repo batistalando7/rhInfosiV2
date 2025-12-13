@@ -4,22 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Material;
 use App\Models\MaterialTransaction;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use PDF; // Assumindo que está a usar um pacote de PDF
 
 class MaterialTransactionController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'can:manage-inventory']);
-    }
-
     public function index(Request $request)
     {
-        $query = MaterialTransaction::whereHas('material', fn ($q) =>
-            $q->where('Category', 'infraestrutura') // Só infra
-        )->with(['material.type', 'department', 'creator']);
+        $query = MaterialTransaction::with('material', 'employee');
 
         if ($request->filled('startDate')) {
             $query->whereDate('TransactionDate', '>=', $request->startDate);
@@ -28,121 +21,132 @@ class MaterialTransactionController extends Controller
             $query->whereDate('TransactionDate', '<=', $request->endDate);
         }
         if ($request->filled('type')) {
-            $query->where('TransactionType', $request->type);
+            $type = $request->type == 'in' ? 'Entrada' : 'Saída';
+            $query->where('TransactionType', $type);
         }
 
-        $txs = $query->orderByDesc('TransactionDate')->get();
+        $txs = $query->orderBy('TransactionDate', 'desc')->get();
 
         return view('material_transactions.index', compact('txs'));
     }
 
-    protected function form()
-    {
-        $materials = Material::where('Category', 'infraestrutura')
-                             ->with('type')
-                             ->get();
-
-        $type = request()->get('type', 'in'); // Default in
-
-        return view('material_transactions.create', compact('materials','type'));
-    }
-
     public function createIn()
     {
-        return $this->form();
+        $materials = Material::with('type')->get();
+        return view('material_transactions.create', ['type' => 'in', 'materials' => $materials]);
+    }
+
+    public function storeIn(Request $request)
+    {
+        $request->validate([
+            'MaterialId' => 'required|exists:materials,id',
+            'Quantity' => 'required|integer|min:1',
+            'TransactionDate' => 'required|date',
+            'OriginOrDestination' => 'required|string|max:255',
+            'DocumentationPath' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'Notes' => 'nullable|string',
+        ]);
+
+        $material = Material::find($request->MaterialId);
+        $material->CurrentStock += $request->Quantity;
+        $material->save();
+
+        $path = null;
+        if ($request->hasFile('DocumentationPath')) {
+            $path = $request->file('DocumentationPath')->store('material_docs', 'public');
+        }
+
+        MaterialTransaction::create([
+    'MaterialId' => $request->MaterialId,
+    'TransactionType' => 'Entrada', // 
+    'Quantity' => $request->Quantity,
+    'TransactionDate' => $request->TransactionDate,
+    'OriginOrDestination' => $request->OriginOrDestination,
+    'DocumentationPath' => $path,
+    'Notes' => $request->Notes,
+    'CreatedBy' => null,
+]);
+
+
+        return redirect()->route('materials.transactions.index')->with('msg', 'Entrada de material registada com sucesso!');
     }
 
     public function createOut()
     {
-        return $this->form();
+        $materials = Material::with('type')->get();
+        return view('material_transactions.create', ['type' => 'out', 'materials' => $materials]);
     }
 
-    protected function storeTx(Request $r, $type)
+    public function storeOut(Request $request)
     {
-        $data = $r->validate([
-            'MaterialId'            => 'required|exists:materials,id',
-            'TransactionDate'       => 'required|date',
-            'Quantity'              => 'required|integer|min:1',
-            'OriginOrDestination'   => 'required|string',
-            'DocumentationPath'     => 'nullable|file|mimes:jpg,png,pdf|max:5120',
-            'Notes'                 => 'nullable|string',
+        $request->validate([
+            'MaterialId' => 'required|exists:materials,id',
+            'Quantity' => 'required|integer|min:1',
+            'TransactionDate' => 'required|date',
+            'OriginOrDestination' => 'required|string|max:255',
+            'DocumentationPath' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'Notes' => 'nullable|string',
         ]);
 
-        $material = Material::findOrFail($data['MaterialId']);
+        $material = Material::find($request->MaterialId);
 
-        // Valida categoria
-        if ($material->Category !== 'infraestrutura') {
-            abort(403, 'Você não tem permissão para movimentar este material.');
+        if ($material->CurrentStock < $request->Quantity) {
+            return back()->withInput()->with('error', 'Estoque insuficiente para esta saída.');
         }
 
-        $delta = $type === 'in' ? $data['Quantity'] : -$data['Quantity'];
-        $material->increment('CurrentStock', $delta);
+        $material->CurrentStock -= $request->Quantity;
+        $material->save();
 
-        if ($r->hasFile('DocumentationPath')) {
-            $data['DocumentationPath'] = $r->file('DocumentationPath')
-                ->store('material_docs', 'public');
+        $path = null;
+        if ($request->hasFile('DocumentationPath')) {
+            $path = $request->file('DocumentationPath')->store('material_docs', 'public');
         }
 
-        // Define campos de rastreamento
-        $employee = Auth::user()->employee;
-        $data += [
-            'TransactionType' => $type,
-            'DepartmentId'    => $employee->departmentId,
-            'CreatedBy'       => $employee->id,
-        ];
+        MaterialTransaction::create([
+    'MaterialId' => $request->MaterialId,
+    'TransactionType' => 'Saída', //
+    'Quantity' => $request->Quantity,
+    'TransactionDate' => $request->TransactionDate,
+    'OriginOrDestination' => $request->OriginOrDestination,
+    'DocumentationPath' => $path,
+    'Notes' => $request->Notes,
+    'CreatedBy' => null, //null é teste quando não tem funcionarios registrados. quando tem é para usar: 'CreatedBy' => auth()->id(),
+]);
 
-        MaterialTransaction::create($data);
 
-        return redirect()
-            ->route('materials.transactions.index')
-            ->with('msg', 'Transação registrada com sucesso.');
-    }
-
-    public function storeIn(Request $r)
-    {
-        return $this->storeTx($r, 'in');
-    }
-
-    public function storeOut(Request $r)
-    {
-        return $this->storeTx($r, 'out');
+        return redirect()->route('materials.transactions.index')->with('msg', 'Saída de material registada com sucesso!');
     }
 
     public function reportIn()
     {
-        $builder = MaterialTransaction::where('TransactionType', 'in')
-            ->whereHas('material', fn ($q) => $q->where('Category', 'infraestrutura'))
-            ->with(['material.type', 'department', 'creator']);
-
-        $txs = $builder->orderByDesc('TransactionDate')->get();
-
-        return Pdf::loadView('material_transactions.report-in', compact('txs'))
-            ->setPaper('a4', 'landscape')
-            ->stream("Entradas-Infra.pdf");
+        $transactions = MaterialTransaction::where('TransactionType', 'Entrada')
+            ->with('material', 'employee')
+            ->orderBy('TransactionDate', 'desc')
+            ->get();
+            
+        // Usar PDF::loadView para garantir que os estilos do layout são aplicados
+        return PDF::loadView('material_transactions.report-in', compact('transactions'))->stream('relatorio_entrada_material.pdf');
     }
 
     public function reportOut()
     {
-        $builder = MaterialTransaction::where('TransactionType', 'out')
-            ->whereHas('material', fn ($q) => $q->where('Category', 'infraestrutura'))
-            ->with(['material.type', 'department', 'creator']);
-
-        $txs = $builder->orderByDesc('TransactionDate')->get();
-
-        return Pdf::loadView('material_transactions.report-out', compact('txs'))
-            ->setPaper('a4', 'landscape')
-            ->stream("Saidas-Infra.pdf");
+        $transactions = MaterialTransaction::where('TransactionType', 'Saída')
+            ->with('material', 'employee')
+            ->orderBy('TransactionDate', 'desc')
+            ->get();
+            
+        // Usar PDF::loadView para garantir que os estilos do layout são aplicados
+        return PDF::loadView('material_transactions.report-out', compact('transactions'))->stream('relatorio_saida_material.pdf');
     }
 
     public function reportAll()
     {
-        $builder = MaterialTransaction::whereHas('material', fn ($q) => $q->where('Category', 'infraestrutura'))
-            ->with(['material.type', 'department', 'creator']);
-
-        $txs = $builder->orderByDesc('TransactionDate')->get();
-
-        return Pdf::loadView('material_transactions.report-all', compact('txs'))
-            ->setPaper('a4', 'landscape')
-            ->stream("TodasTransacoes-Infra.pdf");
+        $transactions = MaterialTransaction::with('material', 'employee')
+            ->orderBy('TransactionDate', 'desc')
+            ->get();
+            
+        // Usar PDF::loadView para garantir que os estilos do layout são aplicados
+        return PDF::loadView('material_transactions.report-all', compact('transactions'))->stream('relatorio_total_material.pdf');
     }
+
 }

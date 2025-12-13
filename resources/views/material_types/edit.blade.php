@@ -1,21 +1,20 @@
 @extends('layouts.admin.layout')
-@section('title', 'Editar Tipo — ')
+@section('title', 'Editar Tipo de Material')
 
 @section('content')
     <div class="card mb-4 shadow">
         <div class="card-header bg-secondary text-white">
-            <i class="fas fa-edit me-2"></i> Editar Tipo
+            <i class="fas fa-edit me-2"></i> Editar Tipo de Material
         </div>
         <div class="card-body">
             <div class="row justify-content-center">
-                <div class="col-md-6"> {{-- Reduz e centraliza --}}
-                    <form action="{{ route('material-types.update', [$type->id]) }}" method="POST">
+                <div class="col-md-6">
+                    <form action="{{ route('material-types.update', $type->id) }}" method="POST">
                         @csrf @method('PUT')
-                        <input type="hidden">
 
                         <div class="mb-3">
                             <div class="form-floating">
-                                <input type="text" name="name" class="form-control"
+                                <input type="text" name="name" id="name" class="form-control" placeholder=""
                                     value="{{ old('name', $type->name) }}" required>
                                 <label for="name">Nome do Tipo</label>
                             </div>
@@ -23,17 +22,17 @@
 
                         <div class="mb-3">
                             <div class="form-floating">
-                                <textarea name="description" class="form-control" rows="3">{{ old('description', $type->description) }}</textarea>
+                                <textarea name="description" id="description" class="form-control" placeholder=""
+                                    style="height: 100px;">{{ old('description', $type->description) }}</textarea>
                                 <label for="description">Descrição (opcional)</label>
                             </div>
                         </div>
 
-                        <div class="text-center">
+                        <div class="text-center mt-4">
                             <button class="btn btn-primary">
                                 <i class="fas fa-check me-1"></i> Atualizar
                             </button>
-                            <a href="{{ route('material-types.index') }}"
-                                class="btn btn-secondary ms-2">
+                            <a href="{{ route('material-types.index') }}" class="btn btn-secondary ms-2">
                                 Cancelar
                             </a>
                         </div>

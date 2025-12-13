@@ -9,13 +9,13 @@ class MaterialTypeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','can:manage-inventory']);
+        $this->middleware(['auth', 'can:manage-inventory']);
     }
 
     public function index()
     {
-        $types = MaterialType::where('category', 'infraestrutura')->get();
-
+        // Não há mais filtro por categoria
+        $types = MaterialType::orderBy('name')->get();
         return view('material_types.index', compact('types'));
     }
 
@@ -27,49 +27,53 @@ class MaterialTypeController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name'        => 'required|string',
+            'name'        => 'required|string|max:255|unique:material_types,name',
             'description' => 'nullable|string',
-            'category'    => 'required|in:infraestrutura',
         ]);
 
         MaterialType::create($data);
 
-        return redirect()->route('material-types.index')->with('msg', 'Tipo criado.');
+        return redirect()
+            ->route('material-types.index')
+            ->with('msg', 'Tipo de Material cadastrado com sucesso.');
     }
 
-    public function show($id)
+    public function show(MaterialType $materialType)
     {
-        $type = MaterialType::findOrFail($id);
-
-        return view('material_types.show', compact('type'));
+        return view('material_types.show', ['type' => $materialType]);
     }
 
-    public function edit($id)
+    public function edit(MaterialType $materialType)
     {
-        $type = MaterialType::findOrFail($id);
-
-        return view('material_types.edit', compact('type'));
+        return view('material_types.edit', ['type' => $materialType]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, MaterialType $materialType)
     {
-        $type = MaterialType::findOrFail($id);
-
         $data = $request->validate([
-            'name'        => 'required|string',
+            'name'        => 'required|string|max:255|unique:material_types,name,' . $materialType->id,
             'description' => 'nullable|string',
         ]);
 
-        $type->update($data);
+        $materialType->update($data);
 
-        return redirect()->route('material-types.index')->with('msg', 'Tipo atualizado.');
+        return redirect()
+            ->route('material-types.index')
+            ->with('msg', 'Tipo de Material atualizado com sucesso.');
     }
 
-    public function destroy($id)
+    public function destroy(MaterialType $materialType)
     {
-        $type = MaterialType::findOrFail($id);
-        $type->delete();
+        if ($materialType->materials()->count() > 0) {
+            return redirect()
+                ->route('material-types.index')
+                ->with('error', 'Não é possível remover. Existem Materiais associados a este tipo.');
+        }
 
-        return redirect()->route('material-types.index')->with('msg', 'Tipo removido.');
+        $materialType->delete();
+
+        return redirect()
+            ->route('material-types.index')
+            ->with('msg', 'Tipo de Material removido com sucesso.');
     }
 }

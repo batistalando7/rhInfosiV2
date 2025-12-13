@@ -1,49 +1,40 @@
 @extends('layouts.admin.pdf')
-
-@section('pdfTitle', 'Relatório de Saídas — ')
-
+@section('pdfTitle', 'Relatório de Saída de Material')
 @section('titleSection')
-  <h4>Saídas</h4>
-  <p style="text-align:center;"><strong>Total de Saídas:</strong> {{ $txs->count() }}</p>
+  <h4>Relatório de Saída de Material</h4>
+  <p style='text-align: center;'>
+    <strong>Total de Saídas:</strong> <ins>{{ $transactions->count() }}</ins>
+  </p>
 @endsection
-
 @section('contentTable')
-  @if($txs->count())
-    <table>
+  @if($transactions->count())
+    <table style='font-size: 10px;'>
       <thead>
         <tr>
-          <th>Material</th>
-          <th>Tipo</th>
-          <th>Qtde</th>
           <th>Data</th>
+          <th>Material</th>
+          <th>Qtd</th>
+          <th>Unidade</th>
           <th>Destino</th>
           <th>Responsável</th>
-          <th>Doc.</th>
-          <th>Obs.</th>
+          <th>Observação</th>
         </tr>
       </thead>
       <tbody>
-        @foreach($txs as $t)
-        <tr>
-          <td>{{ $t->material->Name  }}</td>
-          <td>{{ $t->material->type->name }}</td>
-          <td>{{ $t->Quantity }}</td>
-          <td>{{ \Carbon\Carbon::parse($t->TransactionDate)->format('d/m/Y') }}</td>
-          <td>{{ $t->OriginOrDestination }}</td>
-          <td>{{ $t->creator->fullName ?? 'Admin' }}</td>
-          <td>@if($t->DocumentationPath) Sim @else — @endif</td>
-          <td>{{ $t->Notes }}</td>
-        </tr>
+        @foreach ($transactions as $t)
+          <tr>
+            <td>{{ $t->TransactionDate->format('d/m/Y') }}</td>
+            <td>{{ $t->material->Name }}</td>
+            <td>{{ $t->Quantity }}</td>
+            <td>{{ $t->material->Unit }}</td>
+            <td>{{ $t->OriginOrDestination }}</td>
+            <td>{{ $t->employee->fullName ?? 'N/A' }}</td>
+            <td>{{ $t->Notes }}</td>
+          </tr>
         @endforeach
       </tbody>
     </table>
   @else
-    <p style="text-align:center;">Nenhuma saída registrada.</p>
+    <p style='text-align: center;'>Nenhuma transação de saída encontrada.</p>
   @endif
-
-  <div style="margin-top:40px; display:flex; justify-content:space-between;">
-    <div>___________________________<br>Chefe do Departamento</div>
-    <div>___________________________<br>Fornecedor</div>
-  </div>
 @endsection
-

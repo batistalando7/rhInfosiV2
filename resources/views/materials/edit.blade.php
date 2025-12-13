@@ -1,51 +1,92 @@
 @extends('layouts.admin.layout')
-@section('title','Editar Material — Infraestrutura')
+@section('title', 'Editar Material')
 
 @section('content')
-<div class="card mb-4 shadow">
-  <div class="card-header bg-secondary text-white">
-    <i class="fas fa-pencil me-2"></i> Editar Material (Infraestrutura)
-  </div>
-  <div class="card-body">
-    <form action="{{ route('materials.update',$material->id) }}" method="POST">
-      @csrf @method('PUT')
-      <input type="hidden" name="Category" value="infraestrutura">
-      <div class="mb-3">
-        <label class="form-label">Tipo de Material</label>
-        <select name="materialTypeId" class="form-select" required>
-          <option value="">-- selecione --</option>
-          @foreach($types as $t)
-            <option value="{{ $t->id }}" {{ old('materialTypeId',$material->materialTypeId)==$t->id?'selected':'' }}>
-              {{ $t->name }}
-            </option>
-          @endforeach
-        </select>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Nome</label>
-        <input type="text" name="Name" class="form-control" required value="{{ old('Name',$material->Name) }}">
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Número de Série</label>
-        <input type="text" class="form-control" value="{{ $material->SerialNumber }}" disabled>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Modelo</label>
-        <input type="text" name="Model" class="form-control" required value="{{ old('Model',$material->Model) }}">
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Data de Fabrico</label>
-        <input type="date" name="ManufactureDate" class="form-control" required value="{{ old('ManufactureDate',$material->ManufactureDate->toDateString()) }}">
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Observações</label>
-        <textarea name="Notes" class="form-control" rows="3">{{ old('Notes',$material->Notes) }}</textarea>
-      </div>
-      <div class="text-center">
-        <button class="btn btn-success"><i class="fas fa-check-circle me-1"></i> Atualizar</button>
-        <a href="{{ route('materials.index') }}" class="btn btn-secondary ms-2">Cancelar</a>
-      </div>
-    </form>
-  </div>
-</div>
+    <div class="card mb-4 shadow">
+        <div class="card-header bg-secondary text-white">
+            <i class="fas fa-pencil me-2"></i> Editar Material
+        </div>
+        <div class="card-body">
+            <form action="{{ route('materials.update', $material->id) }}" method="POST">
+                @csrf @method('PUT')
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <select name="materialTypeId" id="materialTypeId" class="form-select" required>
+                                <option value="">-- selecione --</option>
+                                @foreach ($types as $t)
+                                    <option value="{{ $t->id }}"
+                                        {{ old('materialTypeId', $material->materialTypeId) == $t->id ? 'selected' : '' }}>
+                                        {{ $t->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <label for="materialTypeId">Tipo de Material</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <input type="text" name="Name" id="Name" class="form-control" placeholder=""
+                                value="{{ old('Name', $material->Name) }}" required>
+                            <label for="Name">Nome</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <input type="text" name="SerialNumber" id="SerialNumber" class="form-control" placeholder=""
+                                value="{{ old('SerialNumber', $material->SerialNumber) }}" required>
+                            <label for="SerialNumber">Número de Série</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <input type="text" name="Model" id="Model" class="form-control" placeholder=""
+                                value="{{ old('Model', $material->Model) }}" required>
+                            <label for="Model">Modelo</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <input type="date" name="ManufactureDate" id="ManufactureDate" class="form-control"
+                                placeholder=""
+                                value="{{ old('ManufactureDate', $material->ManufactureDate->format('Y-m-d')) }}" required>
+                            <label for="ManufactureDate">Data de Fabrico</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <input type="text" name="SupplierName" id="SupplierName" class="form-control" placeholder=""
+                                value="{{ old('SupplierName', $material->SupplierName) }}" required>
+                            <label for="SupplierName">Fornecedor</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <input type="text" name="SupplierIdentifier" id="SupplierIdentifier" class="form-control"
+                                placeholder="" value="{{ old('SupplierIdentifier', $material->SupplierIdentifier) }}"
+                                required>
+                            <label for="SupplierIdentifier">NIF DO FORNECEDOR</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <input type="date" name="EntryDate" id="EntryDate" class="form-control" placeholder=""
+                                value="{{ old('EntryDate', $material->EntryDate->format('Y-m-d')) }}" required>
+                            <label for="EntryDate">Data de Entrada</label>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <div class="form-floating">
+                            <textarea name="Notes" id="Notes" class="form-control" placeholder="" style="height: 100px;">{{ old('Notes', $material->Notes) }}</textarea>
+                            <label for="Notes">Observações</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary"><i class="fas fa-check-circle me-1"></i> Atualizar</button>
+                    <a href="{{ route('materials.index') }}" class="btn btn-secondary ms-2">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection

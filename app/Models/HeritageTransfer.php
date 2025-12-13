@@ -2,25 +2,28 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class HeritageTransfer extends Model
 {
-    protected $table = 'heritage_transfers';
+    use HasFactory;
 
     protected $fillable = [
         'HeritageId',
         'TransferDate',
-        'TransferReason',
-        'TransferResponsible',
+        'Reason',
+        'ResponsibleName', // Corrigido para campo de texto (Quem Autorizou/Executou)
+        'OriginLocation',
+        'DestinationLocation',
+        'TransferredToName', // Corrigido para campo de texto (Quem Recebeu)
     ];
 
     protected $casts = [
         'TransferDate' => 'date',
     ];
 
-    public function heritage(): BelongsTo
+    public function heritage()
     {
         return $this->belongsTo(Heritage::class, 'HeritageId');
     }

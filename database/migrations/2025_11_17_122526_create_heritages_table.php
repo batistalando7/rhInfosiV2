@@ -6,34 +6,29 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::create('heritages', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('heritageTypeId')->constrained('heritage_types');
             $table->string('Description');
-            $table->string('Type');
-            $table->decimal('Value', 12, 2);
+            $table->decimal('Value', 10, 2); // Valor do Património
             $table->date('AcquisitionDate');
             $table->string('Location');
-            $table->unsignedBigInteger('ResponsibleId');
-            $table->enum('Condition', ['novo', 'usado', 'danificado']);
-            $table->text('Observations')->nullable();
-
-            // Quem preencheu o formulário
-            $table->string('FormResponsibleName');
-            $table->string('FormResponsiblePhone')->nullable();
-            $table->string('FormResponsibleEmail');
-            $table->date('FormDate');
-
+            $table->string('ResponsibleName'); // Corrigido: Campo de texto para o nome do responsável
+            $table->string('Condition'); // Novo, Usado, Danificado, etc.
+            $table->text('Notes')->nullable();
+            $table->string('DocumentationPath')->nullable(); // Novo: Para o documento de aquisição
             $table->timestamps();
-
-            $table->foreign('ResponsibleId')
-                  ->references('id')
-                  ->on('admins')
-                  ->onDelete('cascade');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('heritages');

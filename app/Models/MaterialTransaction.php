@@ -2,39 +2,34 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Employeee;
-use App\Models\Material;
-use App\Models\Department;
 
 class MaterialTransaction extends Model
 {
-    protected $table = 'material_transactions';
+    use HasFactory;
 
     protected $fillable = [
         'MaterialId',
-        'TransactionType',
-        'TransactionDate',
+        'TransactionType', // 'Entrada' ou 'Saída'
         'Quantity',
+        'TransactionDate',
         'OriginOrDestination',
         'DocumentationPath',
         'Notes',
-        'DepartmentId',
-        'CreatedBy',
+        'CreatedBy', // FK para Employeee
     ];
 
-    public function material(): BelongsTo
+    protected $casts = [
+        'TransactionDate' => 'date',
+    ];
+
+    public function material()
     {
         return $this->belongsTo(Material::class, 'MaterialId');
     }
 
-    public function department(): BelongsTo
-    {
-        return $this->belongsTo(Department::class, 'DepartmentId');
-    }
-
-    public function creator(): BelongsTo
+    public function employee()
     {
         return $this->belongsTo(Employeee::class, 'CreatedBy');
     }

@@ -4,30 +4,30 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class FixCreatedbyFkOnMaterialTransactions extends Migration
+return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::table('material_transactions', function (Blueprint $table) {
-            // 1) Remove a constraint antiga que apontava para users.id
-            $table->dropForeign(['CreatedBy']);
-            // 2) Cria a nova constraint apontando para employeees.id
+            // Adiciona a FK CreatedBy
             $table->foreign('CreatedBy')
                   ->references('id')
                   ->on('employeees')
-                  ->onDelete('cascade');
+                  ->onDelete('set null');
+                  
+            // Adiciona a FK DepartmentId
+            $table->foreign('DepartmentId')
+                  ->references('id')
+                  ->on('departments')
+                  ->onDelete('set null');
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::table('material_transactions', function (Blueprint $table) {
-            // Reverte: remove FK para employeees e recria a original para users
             $table->dropForeign(['CreatedBy']);
-            $table->foreign('CreatedBy')
-                  ->references('id')
-                  ->on('users')
-                  ->onDelete('cascade');
+            $table->dropForeign(['DepartmentId']);
         });
     }
-}
+};

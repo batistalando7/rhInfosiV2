@@ -248,32 +248,41 @@
                     </div>
                 </li>
 
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMaterials" aria-expanded="false" aria-controls="collapseMaterials">
-                        <i class="fas fa-boxes me-2"></i> Materiais / Estoque <i class="fas fa-chevron-down ms-auto"></i>
-                    </a>
-                    <div class="collapse" id="collapseMaterials">
-                        <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('material-types.index', ['category' => 'infraestrutura']) }}"><i class="fa-solid fa-hammer me-2"></i>Tipos de Equipamento</a></li>
-                            <li><a class="nav-link" href="{{ route('materials.create', ['category' => 'infraestrutura']) }}"><i class="fas fa-plus me-2"></i>Novo Equipamento</a></li>
-                            <li><a class="nav-link" href="{{ route('admin.materials.transactions.in') }}"><i class="fa-solid fa-circle-arrow-down me-2"></i>Entrada</a></li>
-                            <li><a class="nav-link" href="{{ route('admin.materials.transactions.out') }}"><i class="fa-solid fa-circle-arrow-up me-2"></i>Saída</a></li>
-                            <li><a class="nav-link" href="{{ route('admin.materials.transactions.index') }}"><i class="fas fa-history me-2"></i>Histórico</a></li>
-                        </ul>
-                    </div>
-                </li>
+{{-- Módulo de Infraestrutura (Material) --}}
+<li class="nav-item has-submenu">
+    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMaterial" aria-expanded="false" aria-controls="collapseMaterial">
+        <i class="fas fa-tools me-2"></i> Infraestrutura (Material) <i class="fas fa-chevron-down ms-auto"></i>
+    </a>
+    <div class="collapse" id="collapseMaterial">
+        <ul class="submenu">
+            <li><a class="nav-link" href="{{ route('materials.index') }}"><i class="fas fa-box me-2"></i> Materiais</a></li>
+            <li><a class="nav-link" href="{{ route('material-types.index') }}"><i class="fas fa-tags me-2"></i> Tipos de Material</a></li>
+            {{-- CORREÇÃO: As rotas devem ser materials.transactions.index, materials.transactions.in, etc. --}}
+            <li><a class="nav-link" href="{{ route('materials.transactions.index') }}"><i class="fas fa-history me-2"></i> Histórico</a></li>
+            <li><a class="nav-link" href="{{ route('materials.transactions.in') }}"><i class="fas fa-sign-in-alt me-2"></i> Registrar Entrada</a></li>
+            <li><a class="nav-link" href="{{ route('materials.transactions.out') }}"><i class="fas fa-sign-out-alt me-2"></i> Registrar Saída</a></li>
+        </ul>
+    </div>
+</li>
 
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseHeritage">
-                        <i class="fas fa-building me-2"></i> Patrimônio <i class="fas fa-chevron-down ms-auto"></i>
-                    </a>
-                    <div class="collapse" id="collapseHeritage">
-                        <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('heritage.index') }}"><i class="fas fa-list me-2"></i> Lista de Patrimônios</a></li>
-                            <li><a class="nav-link" href="{{ route('heritage.create') }}"><i class="fas fa-plus me-2"></i> Novo Patrimônio</a></li>
-                        </ul>
-                    </div>
-                </li>
+
+{{-- Módulo de Património (Heritage) --}}
+<li class="nav-item has-submenu">
+    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseHeritage" aria-expanded="false" aria-controls="collapseHeritage">
+        <i class="fas fa-building me-2"></i> Património (Heritage) <i class="fas fa-chevron-down ms-auto"></i>
+    </a>
+    <div class="collapse" id="collapseHeritage">
+        <ul class="submenu">
+            <li><a class="nav-link" href="{{ route('heritages.index') }}"><i class="fas fa-box me-2"></i> Patrimónios</a></li>
+            <li><a class="nav-link" href="{{ route('heritage-types.index') }}"><i class="fas fa-tags me-2"></i> Tipos de Património</a></li>
+            {{-- ROTAS DE TRANSAÇÃO (Histórico, Entrada, Saída) REMOVIDAS --}}
+            <li><a class="nav-link" href="{{ route('heritages.report-all') }}" target="_blank"><i class="fas fa-file-pdf me-2"></i> Relatório Total</a></li>
+        </ul>
+    </div>
+</li>
+
+
+
 
                 <!-- Frota e Transporte -->
                 <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Frota e Transporte</li>

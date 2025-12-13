@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Material extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
-        'Category', // Sempre 'infraestrutura'
         'materialTypeId',
         'Name',
         'SerialNumber',
@@ -24,16 +24,16 @@ class Material extends Model
 
     protected $casts = [
         'ManufactureDate' => 'date',
-        'EntryDate'       => 'date',
+        'EntryDate' => 'date',
     ];
 
-    public function type(): BelongsTo
+    public function type()
     {
         return $this->belongsTo(MaterialType::class, 'materialTypeId');
     }
 
-    public function transactions(): HasMany
+    public function transactions()
     {
-        return $this->hasMany(MaterialTransaction::class, 'MaterialId');
+        return $this->hasMany(MaterialTransaction::class, 'MaterialId')->orderBy('TransactionDate', 'desc');
     }
 }

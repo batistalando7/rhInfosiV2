@@ -10,21 +10,21 @@ class MaterialController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','can:manage-inventory']);
+        $this->middleware(['auth', 'can:manage-inventory']);
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $query = Material::with('type'); // Sempre infra, sem filtro de categoria
-        $materials = $query->get();
+        // Não há mais filtro por categoria
+        $materials = Material::with('type')->get();
 
         return view('materials.index', compact('materials'));
     }
 
     public function create()
     {
-        $types = MaterialType::where('category', 'infraestrutura')
-                             ->orderBy('name')->get();
+        // Traz todos os tipos, pois não há mais categoria
+        $types = MaterialType::orderBy('name')->get();
 
         return view('materials.create', compact('types'));
     }
@@ -32,7 +32,6 @@ class MaterialController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'Category'           => 'required|in:infraestrutura', // Só infra
             'materialTypeId'     => 'required|exists:material_types,id',
             'Name'               => 'required|string',
             'SerialNumber'       => 'required|string|unique:materials,SerialNumber',
@@ -49,7 +48,7 @@ class MaterialController extends Controller
 
         return redirect()
             ->route('materials.index')
-            ->with('msg','Material cadastrado com sucesso.');
+            ->with('msg', 'Material cadastrado com sucesso.');
     }
 
     public function show($id)
@@ -59,13 +58,22 @@ class MaterialController extends Controller
         return view('materials.show', compact('material'));
     }
 
+    public function showPdf(Material $material)
+    {
+        $material->load('type', 'transactions.employee');
+        // Usar PDF::loadView para garantir que os estilos do layout são aplicados
+        return PDF::loadView('materials.show-pdf', compact('material'))->stream('material_' . $material->id . '.pdf');
+    }
+ 
+
+
     public function edit($id)
     {
         $material = Material::findOrFail($id);
-        $types = MaterialType::where('category', 'infraestrutura')
-                             ->orderBy('name')->get();
+        // Traz todos os tipos
+        $types = MaterialType::orderBy('name')->get();
 
-        return view('materials.edit', compact('material','types'));
+        return view('materials.edit', compact('material', 'types'));
     }
 
     public function update(Request $request, $id)
@@ -75,8 +83,12 @@ class MaterialController extends Controller
         $data = $request->validate([
             'materialTypeId'   => 'required|exists:material_types,id',
             'Name'             => 'required|string',
+            'SerialNumber'     => 'required|string|unique:materials,SerialNumber,' . $material->id,
             'Model'            => 'required|string',
             'ManufactureDate'  => 'required|date',
+            'SupplierName'     => 'required|string',
+            'SupplierIdentifier' => 'required|string',
+            'EntryDate'        => 'required|date',
             'Notes'            => 'nullable|string',
         ]);
 
@@ -84,7 +96,7 @@ class MaterialController extends Controller
 
         return redirect()
             ->route('materials.index')
-            ->with('msg','Material atualizado com sucesso.');
+            ->with('msg', 'Material atualizado com sucesso.');
     }
 
     public function destroy($id)
@@ -94,6 +106,6 @@ class MaterialController extends Controller
 
         return redirect()
             ->route('materials.index')
-            ->with('msg','Material removido com sucesso.');
+            ->with('msg', 'Material removido com sucesso.');
     }
 }
