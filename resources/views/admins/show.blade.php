@@ -1,48 +1,88 @@
 @extends('layouts.admin.layout')
-@section('title', 'Visualizar Administrador')
+@section('title', 'Detalhes do Administrador')
 @section('content')
-<div class="card my-4 shadow">
+
+<div class="card mb-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="fas fa-eye me-2"></i>Detalhes do Administrador</span>
-    <a href="{{ route('admins.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
-      <i class="fas fa-arrow-left"></i> Voltar
-    </a>
+    <span><i class="fas fa-eye me-2"></i>Detalhes do Administrador: {{ $admin->email }}</span>
+    <div>
+      <a href="{{ route('admins.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
+        <i class="fa-solid fa-list"></i>
+      </a>
+      <a href="{{ route('admins.edit', $admin->id) }}" class="btn btn-warning btn-sm" title="Editar">
+        <i class="fas fa-pencil"></i>
+      </a>
+
+      <!-- Só mostra o botão de apagar se NÃO for o super-admin (role = admin e sem employeeId) -->
+      @if(!($admin->role === 'admin' && $admin->employeeId === null))
+        <a href="#" data-url="{{ route('admins.destroy', $admin->id) }}" class="btn btn-danger btn-sm delete-btn" title="Apagar">
+          <i class="fas fa-trash"></i>
+        </a>
+      @endif
+    </div>
   </div>
+
   <div class="card-body">
-    <table class="table table-bordered">
-      <tr>
-        <th>ID</th>
-        <td>{{ $admin->id }}</td>
-      </tr>
-      <tr>
-        <th>Email</th>
-        <td>{{ $admin->email }}</td>
-      </tr>
-      <tr>
-        <th>Papel</th>
-        <td>{{ ucfirst($admin->role) }}</td>
-      </tr>
-      <tr>
-        <th>Funcionário Vinculado</th>
-        <td>
-          @if($admin->employee)
-            {{ $admin->employee->fullName }}<br>
-            <small>Email: {{ $admin->employee->email }}</small><br>
-            @if($admin->employee->photo)
-              <img src="{{ asset('frontend/images/departments/' . $admin->employee->photo) }}" alt="{{ $admin->employee->fullName }}" style="max-height: 150px; border-radius: 50%;">
-            @else
-              <img src="{{ asset('frontend/images/default.png') }}" alt="{{ $admin->employee->fullName }}" style="max-height: 150px; border-radius: 50%;">
-            @endif
-          @else
-            Não vinculado
+    <div class="row">
+      <div class="col-md-6">
+        <table class="table table-striped table-bordered mb-3">
+          <tr>
+            <th>ID</th>
+            <td>{{ $admin->id }}</td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td>{{ $admin->email }}</td>
+          </tr>
+          <tr>
+            <th>Papel</th>
+            <td><span class="badge bg-primary">{{ ucfirst(str_replace('_', ' ', $admin->role)) }}</span></td>
+          </tr>
+          <tr>
+            <th>Data de Criação</th>
+            <td>{{ $admin->created_at->format('d/m/Y H:i') }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="col-md-6">
+        <table class="table table-striped table-bordered mb-3">
+          <tr>
+            <th>Funcionário Vinculado</th>
+            <td>
+              @if($admin->employee)
+                <strong>{{ $admin->employee->fullName }}</strong><br>
+                <small>Email: {{ $admin->employee->email }}</small><br><br>
+                <img src="{{ $admin->employee->photo ? asset('frontend/images/departments/'.$admin->employee->photo) : asset('frontend/images/default.png') }}"
+                     alt="{{ $admin->employee->fullName }}"
+                     class="rounded-circle shadow"
+                     style="width: 120px; height: 120px; object-fit: cover;">
+              @else
+                <em>Nenhum funcionário vinculado</em>
+              @endif
+            </td>
+          </tr>
+
+          @if($admin->role === 'director')
+            <tr>
+              <th>Biografia</th>
+              <td>{{ $admin->biography ?? '—' }}</td>
+            </tr>
+            <tr>
+              <th>LinkedIn</th>
+              <td>
+                @if($admin->linkedin)
+                  <a href="{{ $admin->linkedin }}" target="_blank">{{ $admin->linkedin }}</a>
+                @else
+                  —
+                @endif
+              </td>
+            </tr>
           @endif
-        </td>
-      </tr>
-      <tr>
-        <th>Data de Registro</th>
-        <td>{{ $admin->created_at->format('d/m/Y H:i') }}</td>
-      </tr>
-    </table>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
+
 @endsection

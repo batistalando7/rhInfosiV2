@@ -13,29 +13,21 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class AdminAuthController extends Controller
 {
-
     public function __construct()
-        {
-            // Garante que todas as ações exijam autenticação via guard 'admin'
-            $this->middleware('auth:admin');
-        }
+    {
+        $this->middleware('auth:admin');
+    }
 
-
-    // Lista todos os administradores com opção de filtrar por nome do funcionário vinculado
     public function index(Request $request)
     {
         $search = $request->get('search');
 
-        // Inicia a query com carregamento da relação 'employee'
         $query = Admin::with('employee');
-    
 
-        // Se o usuário logado for chefe de departamento ou funcionário, filtra para excluir administradores do tipo "director"
         if (auth()->user()->role === 'department_head' || auth()->user()->role === 'employee') {
             $query->where('role', '<>', 'director');
         }
 
-        // Caso haja o parâmetro de pesquisa, filtra os administradores pela propriedade fullName do empregado vinculado
         if ($search) {
             $query->whereHas('employee', function ($q) use ($search) {
                 $q->where('fullName', 'like', '%' . $search . '%');
@@ -47,7 +39,6 @@ class AdminAuthController extends Controller
         return view('admins.index', compact('admins'));
     }
 
-    // Exibe o formulário para criar um novo administrador
     public function create()
     {
         $employees   = Employeee::whereDoesntHave('admin')->orderBy('fullName')->get();
@@ -56,7 +47,6 @@ class AdminAuthController extends Controller
         return view('admins.create', compact('employees', 'departments'));
     }
 
-    // Armazena o novo administrador
     public function store(Request $request)
     {
         $request->validate([
@@ -74,64 +64,91 @@ class AdminAuthController extends Controller
             'linkedin'              => 'nullable|url',
         ]);
 
-        $data = new Admin();
-        $data->employeeId = $request->employeeId;
-        $data->role       = $request->role;
-        $data->email      = $request->email;
-        $data->password   = Hash::make($request->password);
+        $admin = new Admin();
+        $admin->employeeId = $request->employeeId;
+        $admin->role       = $request->role;
+        $admin->email      = $request->email;
+        $admin->password   = Hash::make($request->password);
 
-        // Lógica para Chefe de Departamento
+        // Buscar o funcionário vinculado
+        $employee = $request->employeeId ? Employeee::find($request->employeeId) : null;
+
+        // Foto padrão: usar a do funcionário se existir
+        $finalPhoto = null;
+        if ($employee && $employee->photo) {
+            $finalPhoto = $employee->photo;
+        }
+
+        // Chefe de Departamento
         if ($request->role === 'department_head') {
-            $data->department_id = $request->department_id;
+            $admin->department_id = $request->department_id;
+
             if ($request->hasFile('photo')) {
                 $photoName = time() . '_' . $request->file('photo')->getClientOriginalName();
                 $request->file('photo')->move(public_path('frontend/images/departments'), $photoName);
-                $data->photo = $photoName;
+                $finalPhoto = $photoName;
             }
         }
 
-        // Lógica para Diretor
+        // Diretor
         if ($request->role === 'director') {
-            $data->directorType = $request->directorType;
+            $admin->directorType = $request->directorType;
 
-            // Nome do diretor
             $directorName = $request->directorName;
-            if (!$directorName && $data->employee) {
-                $directorName = $data->employee->fullName;
+            if (!$directorName && $employee) {
+                $directorName = $employee->fullName;
             }
-            $data->directorName = $directorName;
+            $admin->directorName = $directorName;
 
-            // Foto do diretor
             if ($request->hasFile('directorPhoto')) {
                 $photoName = time() . '_' . $request->file('directorPhoto')->getClientOriginalName();
                 $request->file('directorPhoto')->move(public_path('frontend/images/directors'), $photoName);
-                $data->photo         = $photoName;
-                $data->directorPhoto = $photoName;
+                $finalPhoto = $photoName;
+                $admin->directorPhoto = $photoName;
             }
 
-            // Atribuição da biografia e do linkdin para diretores**
-            $data->biography = $request->biography;
-            $data->linkedin  = $request->linkedin;
+            $admin->biography = $request->biography;
+            $admin->linkedin  = $request->linkedin;
         }
 
-        $data->save();
+        // Atribuir a foto ao admin
+        $admin->photo = $finalPhoto;
 
-        // Ajusta o vínculo de employee(funcionario) para director
-        if ($data->role === 'director' && $data->employeeId) {
-            $employee = Employeee::find($data->employeeId);
-            if ($employee) {
-                $employee->departmentId = null;
-                $employee->save();
+        // *** CÓPIA AUTOMÁTICA DO ARQUIVO FÍSICO PARA A PASTA DO FRONTEND ***
+        if ($finalPhoto && $employee && $employee->photo && in_array($request->role, ['director', 'department_head'])) {
+            $sourcePath = public_path('frontend/images/departments/' . $employee->photo);
+
+            if (file_exists($sourcePath)) {
+                if ($request->role === 'director') {
+                    $destPath = public_path('frontend/images/directors/' . $employee->photo);
+                    $admin->directorPhoto = $employee->photo; // garante que directorPhoto tenha o nome
+                } else { // department_head
+                    $destPath = public_path('frontend/images/departments/' . $employee->photo);
+                }
+
+                // Copia o arquivo físico (sobrescreve se existir)
+                copy($sourcePath, $destPath);
+            }
+        }
+        // *** FIM DA CÓPIA AUTOMÁTICA ***
+
+        $admin->save();
+
+        // Ajustes pós-save
+        if ($admin->role === 'director' && $admin->employeeId) {
+            $emp = Employeee::find($admin->employeeId);
+            if ($emp) {
+                $emp->departmentId = null;
+                $emp->save();
             }
         }
 
-        // Ajusta departamento para department_head(chefe de departamento)
-        if ($data->role === 'department_head' && $data->department_id) {
-            $department = Department::find($data->department_id);
+        if ($admin->role === 'department_head' && $admin->department_id) {
+            $department = Department::find($admin->department_id);
             if ($department) {
-                $headName = $request->department_head_name ?: ($data->employee->fullName ?? null);
+                $headName = $request->department_head_name ?: ($employee ? $employee->fullName : null);
                 $department->department_head_name = $headName;
-                $department->head_photo           = $data->photo;
+                $department->head_photo = $admin->photo;
                 $department->save();
             }
         }
@@ -139,36 +156,37 @@ class AdminAuthController extends Controller
         return redirect()->route('admins.index')->with('msg', 'Administrador criado com sucesso!');
     }
 
-    // Mostra os detalhes do administrador
     public function show($id)
     {
         $admin = Admin::with('employee')->findOrFail($id);
         return view('admins.show', compact('admin'));
     }
 
-    // Exibe o formulário para editar um administrador
     public function edit($id)
     {
-        $admin     = Admin::findOrFail($id);
-        $employees = Employeee::orderBy('fullName')->get();
+        $admin       = Admin::findOrFail($id);
+        $employees   = Employeee::orderBy('fullName')->get();
+        $departments = Department::orderBy('title')->get();
 
-        return view('admins.edit', compact('admin', 'employees'));
+        return view('admins.edit', compact('admin', 'employees', 'departments'));
     }
 
-    // Atualiza os dados do administrador
     public function update(Request $request, $id)
     {
-        
         $request->validate([
-            'employeeId' => 'nullable|exists:employeees,id',
-            'role'       => 'required|in:admin,director,department_head,employee',
-            'email'      => 'required|email|unique:admins,email,' . $id,
-            'password'   => 'nullable|min:6|confirmed',
-            'biography'  => 'nullable|string',
-            'linkedin'   => 'nullable|url',
+            'employeeId'     => 'nullable|exists:employeees,id',
+            'role'           => 'required|in:admin,director,department_head,employee',
+            'email'          => 'required|email|unique:admins,email,' . $id,
+            'password'       => 'nullable|min:6|confirmed',
+            'biography'      => 'nullable|string',
+            'linkedin'       => 'nullable|url',
+            'department_id'  => 'nullable|required_if:role,department_head|exists:departments,id',
         ]);
 
         $admin = Admin::findOrFail($id);
+
+        $oldRole = $admin->role;
+
         $admin->employeeId = $request->employeeId;
         $admin->role       = $request->role;
         $admin->email      = $request->email;
@@ -177,18 +195,27 @@ class AdminAuthController extends Controller
             $admin->password = Hash::make($request->password);
         }
 
-        //Atualiza biography e linkedin se for director, senão nem aparece.
-        if ($admin->role === 'director') {
-            $admin->biography = $request->biography;
-            $admin->linkedin  = $request->linkedin;
-        } else {
+        // Limpar campos específicos ao mudar de role
+        if ($admin->role !== 'director') {
             $admin->biography = null;
             $admin->linkedin  = null;
+            $admin->directorType = null;
+            $admin->directorName = null;
+            $admin->directorPhoto = null;
+        } else {
+            $admin->biography = $request->biography;
+            $admin->linkedin  = $request->linkedin;
+        }
+
+        if ($admin->role !== 'department_head') {
+            $admin->department_id = null;
+        } else {
+            $admin->department_id = $request->department_id;
         }
 
         $admin->save();
 
-        // Ajusta vínculo de employee para director
+        // Ajuste para director
         if ($admin->role === 'director' && $admin->employeeId) {
             $employee = Employeee::find($admin->employeeId);
             if ($employee) {
@@ -200,9 +227,21 @@ class AdminAuthController extends Controller
         return redirect()->route('admins.edit', $id)->with('msg', 'Administrador atualizado com sucesso!');
     }
 
- 
+    public function destroy($id)
+    {
+        $admin = Admin::findOrFail($id);
 
-    // Método de login usando o 'admin'
+        if ($admin->role === 'admin' && $admin->employeeId === null) {
+            return redirect()->route('admins.index')
+                ->withErrors(['msg' => 'Este administrador não pode ser excluído.']);
+        }
+
+        $admin->delete();
+
+        return redirect()->route('admins.index')
+            ->with('msg', 'Administrador removido com sucesso.');
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -217,7 +256,6 @@ class AdminAuthController extends Controller
         return response()->json(['error' => 'Credenciais inválidas'], 401);
     }
 
-    // Método para gerar o contrato do funcionário (PDF) a partir do administrador (esse contrato só aparece para funcionarios(employee)
     public function contractPdf($id)
     {
         $admin = Admin::with('employee.department')->findOrFail($id);
@@ -228,39 +266,4 @@ class AdminAuthController extends Controller
                   ->setPaper('a4', 'portrait');
         return $pdf->stream("Contrato_Admin_{$admin->id}.pdf");
     }
-
-
-
-/*
-       // Elimina o administrador
-       public function desteroy($id)
-       {
-           Admin::destroy($id);
-           return redirect()->route('admins.index')->with('msg', 'Administrador removido com sucesso!');
-       }
-           */
-
-           public function destroy($id)
-           {
-               // Carrega o objeto Admin
-               $admin = Admin::findOrFail($id);
-           
-               // Se for o super-admin seedado (role admin e sem funcionário vinculado)
-               if ($admin->role === 'admin' && $admin->employeeId === null) {
-                   return redirect()->route('admins.index')
-                                    ->withErrors(['msg' => 'Este administrador não pode ser excluído.']);
-               }
-           
-               // Senão, proceda com a remoção
-               $admin->delete();
-           
-               return redirect()->route('admins.index')
-                                ->with('msg', 'Administrador removido com sucesso.');
-           }
-           
-
-
 }
-
-
-

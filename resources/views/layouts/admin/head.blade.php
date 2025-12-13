@@ -59,17 +59,6 @@
         .sidebar .has-submenu.show .nav-link i.ms-auto {
             transform: rotate(180deg);
         }
-        .submenu {
-            background-color: #ffffff;
-            padding-left: 20px;
-        }
-        .submenu .nav-link {
-            padding: 8px 20px;
-            font-size: 0.9rem;
-        }
-        .submenu .nav-link:hover {
-            background-color: rgba(0, 0, 0, 0.1);
-        }
         .content-wrapper {
             margin-left: 250px;
             padding: 20px;
@@ -80,45 +69,20 @@
             background-color: var(--navbar-bg);
             border-bottom: 1px solid #e9ecef;
         }
-        .navbar-dark .navbar-brand, .navbar-dark .nav-link {
-            color: #007bff;
-        }
-        .navbar-dark .nav-link:hover {
-            color: #0056b3;
-        }
-        .navbar-dark .btn-outline-light {
-            color: #007bff;
-            border-color: #007bff;
-        }
-        .navbar-dark .btn-outline-light:hover {
-            background-color: #007bff;
-            color: #ffffff;
-        }
-        .footer {
-            background-color: var(--footer-bg);
-            color: #ffffff;
-            padding: 10px 0;
-            width: 100%;
-            position: relative;
-            bottom: 0;
-            clear: both;
-        }
-        .footer a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .footer a:hover {
-            color: #0056b3;
-        }
-        @media (max-width: 768px) {
-            .sidebar { width: 100%; transform: translateX(-100%); }
-            .sidebar.show { transform: translateX(0); }
-            .content-wrapper { margin-left: 0; }
-        }
-        .form-label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
+
+        /* Mobile: Esconde sidebar e prepara para off-canvas */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                width: 250px;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            .content-wrapper {
+                margin-left: 0 !important;
+            }
         }
     </style>
 </head>

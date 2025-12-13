@@ -69,6 +69,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/theme-customizer-init.min.js') }}"></script>
     <script>
+        // Abre/fecha sidebar em mobile ao clicar no botão hamburger
+        document.querySelector('.navbar-toggler').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('show');
+        });
+
+        // Fecha sidebar se clicar fora dela (em mobile)
+        document.addEventListener('click', function (e) {
+            const sidebar = document.querySelector('.sidebar');
+            const toggler = document.querySelector('.navbar-toggler');
+            if (window.innerWidth < 992 && sidebar.classList.contains('show') && !sidebar.contains(e.target) && !toggler.contains(e.target)) {
+                sidebar.classList.remove('show');
+            }
+        });
+
         document.getElementById('themeToggle').addEventListener('click', function() {
             document.querySelector('.theme-panel').classList.toggle('d-none');
         });

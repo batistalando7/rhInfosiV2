@@ -1,5 +1,6 @@
-<aside class="sidebar fixed-left">
+<aside class="sidebar fixed-left" id="sidebarMenu">
     <style>
+        
         .sidebar-nav {
             list-style-type: none;
             padding-left: 0;
