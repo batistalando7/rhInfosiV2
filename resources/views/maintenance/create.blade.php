@@ -56,8 +56,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
-                        <input type="text" name="subType" class="form-control" value="{{ old('subType') }}" placeholder="Ex: troca_oleo">
-                        <label for="subType">Subtipo Específico</label>
+                        <input type="text" name="subType" class="form-control" value="{{ old('subType') }}" placeholder="">
+                        <label for="subType">Subtipo Ex: Verificação do Óleo </label>
                     </div>
                 </div>
             </div>

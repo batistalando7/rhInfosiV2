@@ -19,7 +19,7 @@
                                     <div class="form-floating">
                                         <input type="text" name="employeeSearch" id="employeeSearch" class="form-control"
                                             placeholder="" value="{{ old('employeeSearch') }}">
-                                        <label for="employeeSearch">ID ou Nome do Funcionário</label>
+                                        <label for="employeeSearch">Nome do Funcionário</label>
                                     </div>
                                     @error('employeeSearch')
                                         <small class="text-danger">{{ $message }}</small>
@@ -80,10 +80,8 @@
                                     <label for="reason">Razão</label>
                                 </div>
                             </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-success" style="width: auto;">
-                                    <i class="fas fa-check-circle"></i> Salvar
-                                </button>
+                            <div class="d-grid gap-2 col-4 mx-auto mt-4">
+                                <button type="submit" class="btn btn-success">Salvar Pedido</button>
                             </div>
                         </form>
                     @endif

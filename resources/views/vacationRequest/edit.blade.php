@@ -82,11 +82,9 @@
             @endif
           </div>
 
-          <div class="text-center">
-            <button class="btn btn-success">
-              <i class="fas fa-check-circle"></i> Atualizar Pedido
-            </button>
-          </div>
+          <div class="d-grid gap-2 col-3 mx-auto mt-4">
+                    <button type="submit" class="btn btn-success">Atualizar Pedido</button>
+        </div>
         </form>
       </div>
     </div>

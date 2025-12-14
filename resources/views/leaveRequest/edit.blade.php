@@ -43,11 +43,9 @@
             <label for="reason" class="form-label">Razão</label>
             <textarea name="reason" id="reason" rows="3" class="form-control">{{ $data->reason }}</textarea>
           </div>
-          <div class="text-center">
-            <button type="submit" class="btn btn-success">
-              <i class="fas fa-check-circle"></i> Atualizar Pedido de Licença
-            </button>
-          </div>
+              <div class="d-grid gap-2 col-4 mx-auto mt-4">
+                <button type="submit" class="btn btn-success">Salvar Pedido</button>
+              </div>
         </form>
       </div>
     </div>

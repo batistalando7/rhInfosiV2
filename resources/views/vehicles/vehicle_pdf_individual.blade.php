@@ -6,7 +6,8 @@
 @section('contentTable')
     <table>
         <tbody>
-            <tr><th>ID</th><td>{{ $vehicle->id }}</td></tr>
+           
+            
             <tr><th>Placa</th><td>{{ $vehicle->plate }}</td></tr>
             <tr><th>Marca</th><td>{{ $vehicle->brand }}</td></tr>
             <tr><th>Modelo</th><td>{{ $vehicle->model }}</td></tr>

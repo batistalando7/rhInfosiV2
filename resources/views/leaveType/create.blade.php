@@ -32,10 +32,8 @@
                             </div>
                         </div>
 
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-check-circle me-2"></i>Salvar Tipo de Licença
-                            </button>
+                        <div class="d-grid gap-2 col-4 mx-auto mt-4">
+                            <button type="submit" class="btn btn-success">Salvar Tipo de Licença</button>
                         </div>
                     </form>
                 </div>

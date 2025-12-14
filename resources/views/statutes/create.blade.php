@@ -11,7 +11,9 @@
                             <i class="fas fa-arrow-left"></i> Voltar
                         </a>
                     </div>
-                    <div class="card-body">
+                   <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
                         <form method="POST" action="{{ route('statutes.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
@@ -34,10 +36,8 @@
                                     <label for="document" style="margin-top: -8px">Documento</label>
                                 </div>
                             </div>
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-success">
-                                    <i class="fas fa-check-circle"></i> Salvar Estatuto
-                                </button>
+                            <div class="d-grid gap-2 col-4 mx-auto mt-4">
+                                <button type="submit" class="btn btn-success"><i class="fas fa-check-circle"></i> Salvar Estatuto</button>
                             </div>
                         </form>
                     </div>

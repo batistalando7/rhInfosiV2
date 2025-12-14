@@ -14,13 +14,13 @@ th, td { padding: 5pt; border: 1px solid #ddd; }
     <table>
         <thead>
             <tr>
-                <th>ID</th><th>Placa</th><th>Marca</th><th>Modelo</th><th>Ano</th><th>Cor</th><th>Capacidade</th><th>Quilometragem</th><th>Status</th><th>Motorista</th>
+             <th>Placa</th><th>Marca</th><th>Modelo</th><th>Ano</th><th>Cor</th><th>Capacidade</th><th>Quilometragem</th><th>Status</th><th>Motorista</th>
             </tr>
         </thead>
         <tbody>
             @foreach($filtered as $v)
             <tr>
-                <td>{{ $v->id }}</td>
+               
                 <td>{{ $v->plate }}</td>
                 <td>{{ $v->brand }}</td>
                 <td>{{ $v->model }}</td>

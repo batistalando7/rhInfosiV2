@@ -60,7 +60,9 @@
                     </thead>
                     <tbody></tbody>
                 </table>
-                <button type="submit" class="btn btn-success">Salvar</button>
+                <div class="d-grid gap-2 col-3 mx-auto mt-4">
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
             </form>
         </div>
     </div>

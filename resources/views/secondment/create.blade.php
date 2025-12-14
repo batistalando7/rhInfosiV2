@@ -10,6 +10,9 @@
             </a>
         </div>
         <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+        
             <!-- Formulário para buscar funcionário por ID ou Nome -->
             <form action="{{ route('secondment.searchEmployee') }}" method="GET" class="mb-4">
                 <div class="row g-3">
@@ -17,7 +20,7 @@
                         <div class="form-floating">
                             <input type="text" name="employeeSearch" id="employeeSearch" class="form-control"
                                 placeholder="" value="{{ old('employeeSearch') }}">
-                            <label for="employeeSearch">ID ou Nome do Funcionário</label>
+                            <label for="employeeSearch">Nome do Funcionário</label>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -91,11 +94,9 @@
 
 
                             <div class="row">
-                                <div class="col text-center">
-                                    <button type="submit" class="btn btn-success">
-                                        <i class="fas fa-check-circle"></i> Salvar Destacamento
-                                    </button>
-                                </div>
+                                <div class="d-grid gap-2 col-4 mx-auto mt-4">
+                                <button type="submit" class="btn btn-success" ><i class="fas fa-check-circle"></i> Salvar Destacamento</button>
+                            </div>
                             </div>
                         </div>
                 </form>

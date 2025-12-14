@@ -26,7 +26,7 @@
     </div>
     
     <h5>Distribuição</h5>
-    <table class="table">
+    <table class="table table-striped table-hover">
       <thead><tr><th>Funcionário</th><th>Ajus. (Kz)</th><th>Recebe (Kz)</th></tr></thead>
       <tbody>
         @foreach($job->employees as $employee)

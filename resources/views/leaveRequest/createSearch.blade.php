@@ -74,9 +74,9 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-success w-100">
-                        <i class="fas fa-check-circle"></i> Salvar Pedido de Licença
-                    </button>
+                            <div class="d-grid gap-2 col-4 mx-auto mt-4">
+                                <button type="submit" class="btn btn-success">Salvar Pedido</button>
+                            </div>
                 </form>
             @endisset
         </div>

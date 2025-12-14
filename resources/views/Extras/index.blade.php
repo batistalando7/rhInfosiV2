@@ -14,9 +14,9 @@
     </div>
   </div>
   <div class="card-body">
-    @if(session('msg'))<div class="alert alert-success">{{ session('msg') }}</div>@endif
+    
     <div class="table-responsive">
-      <table class="table table-striped">
+      <table class="table table-striped table-hover">
         <thead>
           <tr>
             <th>Título</th>

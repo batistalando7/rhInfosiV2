@@ -7,7 +7,7 @@
 @endphp
 
 <div class="card mb-4 mt-4 shadow-lg border-0">
-  <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top">
+  <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center rounded-top">
     <h5 class="mb-0"><i class="fas fa-users me-3"></i>Meus Funcionários</h5>
     <a href="{{ route('dh.pendingVacations') }}" class="btn btn-outline-light btn-sm">
       <i class="fas fa-umbrella-beach me-2"></i>Férias Pendentes
@@ -18,17 +18,17 @@
     <div class="row justify-content-center">
       <div class="col-lg-10 col-xl-9">
 
-        <!-- Informações do Chefe -->
+        <!-- Informações do Chefe (tamanho reduzido) -->
         <div class="alert alert-info border-0 rounded-3 text-center py-3 mb-4 shadow-sm">
-          <i class="fas fa-user-tie fa-2x mb-2 text-primary d-block"></i>
-          <strong class="fs-5">Chefe de Departamento:</strong><br>
-          <span class="fs-4">{{ $departmentHead->fullName ?? 'Não definido' }}</span>
+          <i class="fas fa-user-tie fa-lg mb-2 text-primary d-block"></i>
+          <strong>Chefe de Departamento:</strong><br>
+          <span class="fs-5">{{ $departmentHead->fullName ?? 'Não definido' }}</span>
         </div>
 
         <!-- Tabela de Funcionários -->
         <div class="table-responsive rounded-3 shadow-sm">
           <table class="table table-hover align-middle mb-0">
-            <thead class="bg-primary text-white">
+            <thead class="bg-secondary text-white">
               <tr>
                 <th class="ps-4">Funcionário</th>
                 <th>Posição / Cargo</th>

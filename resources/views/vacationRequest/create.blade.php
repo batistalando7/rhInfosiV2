@@ -90,11 +90,9 @@
                      accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xlsx">
             </div>
 
-            <div class="text-center">
-              <button type="submit" class="btn btn-success">
-                <i class="fas fa-check-circle"></i> Enviar Pedido
-              </button>
-            </div>
+            <div class="d-grid gap-2 col-3 mx-auto mt-4">
+                    <button type="submit" class="btn btn-success">Enviar Pedido</button>
+        </div>
           </form>
         @endif
       </div>

@@ -9,13 +9,13 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th><th>Viatura</th><th>Tipo/Subtipo</th><th>Data</th><th>Quilometragem</th><th>Custo</th><th>Responsável</th><th>Próxima Data de Manutenção</th>
+                    <th>Viatura</th><th>Tipo/Subtipo</th><th>Data</th><th>Quilometragem</th><th>Custo</th><th>Responsável</th><th>Próxima Data de Manutenção</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($filtered as $r)
                     <tr>
-                        <td>{{ $r->id }}</td>
+                    
                         <td>{{ $r->vehicle->plate ?? '-' }}</td>
                         <td>{{ $r->type }} / {{ $r->subType ?? '-' }}</td>
                         <td>{{ \Carbon\Carbon::parse($r->maintenanceDate)->format('d/m/Y') }}</td>

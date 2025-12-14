@@ -19,7 +19,7 @@
                                 <div class="form-floating">
                                     <input type="text" name="employeeSearch" id="employeeSearch" class="form-control"
                                         placeholder="" value="{{ old('employeeSearch') }}">
-                                    <label for="employeeSearch">ID ou Nome do Funcionário</label>
+                                    <label for="employeeSearch">Nome do Funcionário</label>
                                 </div>
                                 @error('employeeSearch')
                                     <small class="text-danger">{{ $message }}</small>

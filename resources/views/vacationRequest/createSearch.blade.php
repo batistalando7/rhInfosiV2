@@ -15,7 +15,7 @@
           <div class="form-floating">
             <input type="text" name="employeeSearch" id="employeeSearch" class="form-control"
                    placeholder="" value="{{ old('employeeSearch') }}">
-            <label for="employeeSearch">ID ou Nome do Funcionário</label>
+            <label for="employeeSearch">Nome do Funcionário</label>
           </div>
           @error('employeeSearch')<small class="text-danger">{{ $message }}</small>@enderror
         </div>
@@ -90,9 +90,9 @@
           <input type="file" name="supportDocument" id="supportDocument" class="form-control"
                  accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xlsx">
         </div>
-        <button type="submit" class="btn btn-success w-100">
-          <i class="fas fa-check-circle"></i> Enviar Pedido
-        </button>
+        <div class="d-grid gap-2 col-3 mx-auto mt-4">
+                    <button type="submit" class="btn btn-success">Enviar Pedido</button>
+        </div>
       </form>
     @endisset
   </div>

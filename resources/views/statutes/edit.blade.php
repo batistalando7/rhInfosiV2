@@ -12,7 +12,9 @@
           </a>
         </div>
         <div class="card-body">
-          <form method="POST" action="{{ route('statutes.update', $statute->id) }}" enctype="multipart/form-data">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                  <form method="POST" action="{{ route('statutes.update', $statute->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -32,10 +34,8 @@
                 </small>
               @endif
             </div>
-            <div class="d-grid">
-              <button type="submit" class="btn btn-success">
-                <i class="fas fa-check-circle"></i> Atualizar Estatuto
-              </button>
+                <div class="d-grid gap-2 col-4 mx-auto mt-4">
+                    <button type="submit" class="btn btn-success"><i class="fas fa-check-circle"></i> Atualizar Estatuto</button>
             </div>
           </form>
         </div>

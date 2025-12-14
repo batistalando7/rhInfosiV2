@@ -56,11 +56,9 @@
                                 <label for="reason">Razão</label>
                             </div>
                         </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-success" style="width: auto;">
-                                <i class="fas fa-check-circle"></i> Enviar Pedido
-                            </button>
-                        </div>
+                        <div class="d-grid gap-2 col-4 mx-auto mt-4">
+                                <button type="submit" class="btn btn-success">Enviar Pedido</button>
+                            </div>
                     </form>
                 </div>
             </div>

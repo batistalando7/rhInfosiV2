@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="card mb-4 mt-4 shadow-lg border-0">
-  <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top">
+  <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center rounded-top">
     <h5 class="mb-0"><i class="fas fa-building me-3"></i>Funcionários do Meu Departamento</h5>
     <a href="{{ route('dh.pendingVacations') }}" class="btn btn-outline-light btn-sm">
       <i class="fas fa-clock me-2"></i>Férias Pendentes
@@ -16,7 +16,7 @@
 
         <div class="table-responsive rounded-3 shadow-sm">
           <table class="table table-hover align-middle mb-0">
-            <thead class="bg-primary text-white">
+            <thead class="bg-secondary text-white">
               <tr>
                 <th class="ps-4">ID</th>
                 <th>Funcionário</th>

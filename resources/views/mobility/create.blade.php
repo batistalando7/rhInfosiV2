@@ -10,6 +10,9 @@
             </a>
         </div>
         <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+        
             <!-- Formulário para buscar o funcionário por ID ou Nome -->
             @if (!isset($employee))
                 <form action="{{ route('mobility.searchEmployee') }}" method="GET" class="mb-4">
@@ -18,7 +21,7 @@
                             <div class="form-floating">
                                 <input type="text" name="employeeSearch" id="employeeSearch" class="form-control"
                                     placeholder="" value="{{ old('employeeSearch') }}">
-                                <label for="employeeSearch">ID ou Nome do Funcionário</label>
+                                <label for="employeeSearch">Nome do Funcionário</label>
                             </div>
                             @error('employeeSearch')
                                 <small class="text-danger">{{ $message }}</small>
@@ -62,11 +65,9 @@
                         <label for="causeOfMobility">Causa da Mobilidade</label>
                       </div>
                     </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-success" style="width: auto;">
-                            <i class="fas fa-check-circle"></i> Salvar Mobilidade
-                        </button>
-                    </div>
+                        <div class="d-grid gap-2 col-4 mx-auto mt-4">
+                                <button type="submit" class="btn btn-success">Salvar Mobilidade</button>
+                        </div>
                 </form>
             @endif
         </div>

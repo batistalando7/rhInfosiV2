@@ -89,7 +89,9 @@
                         @endforeach
                     </tbody>
                 </table>
-                <button type="submit" class="btn btn-success">Atualizar</button>
+                <div class="d-grid gap-2 col-3 mx-auto mt-4">
+                    <button type="submit" class="btn btn-success">Atualizar</button>
+                </div>
             </form>
         </div>
     </div>
