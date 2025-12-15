@@ -151,6 +151,7 @@ class InternController extends Controller
         ]);
     }
 
+
     public function pdfFiltered(Request $request)
     {
         set_time_limit(300);
@@ -160,14 +161,16 @@ class InternController extends Controller
             'end_date'   => 'required|date|after_or_equal:start_date',
         ]);
 
-        $start = Carbon::parse($request->start_date)->startOfDay()->format('d-m-Y');
-        $end   = Carbon::parse($request->end_date)->endOfDay()->format('d-m-Y');
+    
+        $start = Carbon::parse($request->start_date)->startOfDay();
+        $end   = Carbon::parse($request->end_date)->endOfDay();
 
         $filtered = Intern::whereBetween('created_at', [$start, $end])
                           ->orderByDesc('id')
                           ->get();
 
-        $startDate = $request->start_date;
+        // Manter as datas no formato Y-m-d para exibir no título do PDF
+        $startDate = $request->start_date; 
         $endDate   = $request->end_date;
 
         $pdf = PDF::loadView('intern.filtered_pdf', compact('filtered', 'startDate', 'endDate'))
