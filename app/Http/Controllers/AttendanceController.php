@@ -94,6 +94,13 @@ class AttendanceController extends Controller
             $query->where('employeeId', $request->employeeId);
         }
         $records = $query->get();
+
+        if ($request->filled('search')) {
+        $query->whereHas('employee', fn($q) =>
+            $q->where('fullName','LIKE','%'.$request->search.'%')
+        );
+    }
+    
         return view('attendance.index', compact('records'));
     }
 

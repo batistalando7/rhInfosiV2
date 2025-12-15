@@ -21,6 +21,19 @@
   </div>
 
   <div class="card-body">
+    {{-- SEARCH --}}
+    <form method="GET" class="d-flex mb-3" style="max-width:320px">
+      <input type="text"
+            name="search"
+            value="{{ request('search') }}"
+            class="form-control form-control-sm rounded-start"
+            placeholder="Pesquisar funcionário">
+      <button class="btn btn-outline-primary btn-sm rounded-end">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+
+
     <form method="GET" action="{{ route('vacationRequest.index') }}" class="row g-3 mb-4">
       <div class="col-md-3">
         <label for="startDate" class="form-label">Data Início</label>

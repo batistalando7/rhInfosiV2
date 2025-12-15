@@ -27,6 +27,12 @@ class SalaryPaymentController extends Controller
             $query->whereDate('paymentDate', '<=', $request->endDate);
         }
 
+          if ($request->filled('search')) {
+        $query->whereHas('employee', function ($q) use ($request) {
+            $q->where('fullName','LIKE','%'.$request->search.'%');
+        });
+    }
+
         $salaryPayments = $query->orderByDesc('created_at')->get();
         $salaryPayments->each(function ($p) {
             $p->paymentStatus = $this->translateStatus($p->paymentStatus);

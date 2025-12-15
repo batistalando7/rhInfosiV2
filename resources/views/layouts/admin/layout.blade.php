@@ -167,6 +167,51 @@
                 `);
             }
         });
+
+         // Pesquisa dinamica NavBar
+        const navInput = document.getElementById('navbarEmployeeSearch');
+        const navResults = document.getElementById('navbarSearchResults');
+        let navTimeout = null;
+
+        navInput.addEventListener('keyup', function () {
+
+            clearTimeout(navTimeout);
+            const query = this.value;
+
+            if (query.length < 2) {
+                navResults.innerHTML = '';
+                return;
+            }
+
+            navTimeout = setTimeout(() => {
+                fetch(`{{ route('employeee.navbar.search') }}?q=${query}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data.length) {
+                            navResults.innerHTML =
+                                '<div class="list-group-item text-muted">Nenhum funcionário encontrado</div>';
+                            return;
+                        }
+
+                        navResults.innerHTML = data.map(item =>
+                            `<a href="${item.url}"
+                                class="list-group-item list-group-item-action">
+                                <i class="fas fa-user me-2 text-primary"></i>
+                                ${item.text}
+                            </a>`
+                        ).join('');
+                    });
+            }, 300); // debounce
+        });
+
+        // fechar dropdown ao clicar fora
+        document.addEventListener('click', function (e) {
+            if (!navInput.contains(e.target)) {
+                navResults.innerHTML = '';
+            }
+        });
+
+
     </script>
     @yield('scripts')
     @stack('scripts')

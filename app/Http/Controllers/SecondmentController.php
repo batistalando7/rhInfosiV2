@@ -15,17 +15,21 @@ class SecondmentController extends Controller
     /**
      * Lista todos os destacamentos de funcionários ATIVOS.
      */
-    public function index()
-    {
-        $data = Secondment::with('employee')
-            ->whereHas('employee', function($q) {
-                $q->where('employmentStatus', 'active');
-            })
-            ->orderByDesc('id')
-            ->get();
+    public function index(Request $request)
+{
+    $query = Secondment::with('employee');
 
-        return view('secondment.index', compact('data'));
+    if ($request->filled('search')) {
+        $query->whereHas('employee', fn($q) =>
+            $q->where('fullName','LIKE','%'.$request->search.'%')
+        );
     }
+
+    $data = $query->orderBy('created_at','desc')->get();
+
+    return view('secondment.index', compact('data'));
+}
+
 
     /**
      * Exibe formulário de criação de destacamento.

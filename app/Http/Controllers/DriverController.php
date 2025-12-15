@@ -18,8 +18,18 @@ class DriverController extends Controller
         if ($request->filled('endDate')) {
             $query->whereDate('created_at','<=',$request->endDate);
         }
+
+         if ($request->filled('search')) {
+        $query->whereHas('employee', function ($q) use ($request) {
+            $q->where('fullName','LIKE','%'.$request->search.'%');
+        });
+    }
+
+    
         $drivers = $query->orderByDesc('id')->get();
         return view('drivers.index', compact('drivers'));
+        
+        
     }
 
     public function create()

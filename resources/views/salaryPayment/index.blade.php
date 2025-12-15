@@ -9,7 +9,7 @@
 
     <div class="d-flex gap-2">
 
-      {{-- MESMA LARGURA PARA OS TRÊS BOTÕES --}}
+
       <a href="{{ route('salaryPayment.pdfAll') }}"
          class="btn btn-outline-light btn-sm"
          style="width:110px;"
@@ -36,7 +36,7 @@
     </div>
   </div>
 
-    {{-- ÁREA DE FILTRO --}}
+   
     <div class="collapse" id="filterArea">
       <div class="card-body border-bottom">
 
@@ -54,19 +54,19 @@
                   class="form-control">
           </div>
 
-          {{-- BOTÃO APLICAR --}}
+      
           <div class="col-md-2">
             <button class="btn btn-primary w-100">Aplicar Filtro</button>
           </div>
 
-          {{-- BOTÃO LIMPAR (RESET DOS FILTROS) --}}
+        
           <div class="col-md-2">
             <a href="{{ route('salaryPayment.index') }}" class="btn btn-secondary w-100">
               Limpar Filtro Aplicado
             </a>
           </div>
 
-          {{-- BAIXAR PDF DO INTERVALO FILTRADO --}}
+  
           <div class="col-md-2">
             <a href="{{ route('salaryPayment.pdfPeriod', [
                 'startDate' => $filters['startDate'] ?? '',
@@ -86,8 +86,20 @@
     </div>
   </div>
 
-  {{-- TABELA --}}
+
   <div class="card-body">
+
+    <form method="GET" class="d-flex mb-3" style="max-width:320px">
+      <input type="text" name="search"
+            value="{{ request('search') }}"
+            class="form-control form-control-sm rounded-start"
+            placeholder="Pesquisar funcionário">
+      <button class="btn btn-outline-primary btn-sm rounded-end">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+
+
     <div class="table-responsive">
       <table class="table table-striped table-hover">
         <thead>

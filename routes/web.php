@@ -221,6 +221,9 @@ Route::middleware(["auth","can:manage-inventory"])->group(function () {
 
 
     // ====================== Funcionários (Employeee) ======================
+    Route::get('/navbar/employee-search', 
+    [EmployeeeController::class, 'navbarSearch'])->name('employeee.navbar.search');
+
      Route::get("employeee/{id}/pdf", [EmployeeeController::class, "showPdf"])->name("employeee.showPdf");
      Route::get("employeee/pdf", [EmployeeeController::class, "pdfAll"])->name("employeee.pdfAll");
      Route::resource("employeee", EmployeeeController::class);

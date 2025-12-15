@@ -10,10 +10,22 @@
             <ul class="navbar-nav me-auto">
                 
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
+            <form class="d-flex position-relative" onsubmit="return false;">
+                <input type="search"
+                    id="navbarEmployeeSearch"
+                    class="form-control form-control-sm me-2"
+                    placeholder="Pesquisar funcionário..."
+                    autocomplete="off">
+
+                <button class="btn btn-outline-primary btn-sm" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+
+                <div id="navbarSearchResults"
+                    class="list-group position-absolute w-100 shadow"
+                    style="top:100%; z-index:1050;"></div>
             </form>
+
             <ul class="navbar-nav ms-3">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-primary" href="#" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">

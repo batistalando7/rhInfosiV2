@@ -20,6 +20,16 @@
     </div>
   </div>
   <div class="card-body">
+    <form method="GET" class="d-flex mb-3" style="max-width:320px">
+  <input type="text" name="search"
+         value="{{ request('search') }}"
+         class="form-control form-control-sm rounded-start"
+         placeholder="Pesquisar funcionário">
+  <button class="btn btn-outline-primary btn-sm rounded-end">
+    <i class="fas fa-search"></i>
+  </button>
+</form>
+
     <div class="table-responsive">
       <table class="table table-striped table-hover">
         <thead>

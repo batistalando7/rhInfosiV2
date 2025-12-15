@@ -16,6 +16,12 @@ class VacationRequestController extends Controller
     {
         $user  = Auth::user();
         $query = VacationRequest::with('employee');
+        
+        if ($request->filled('search')) {
+        $query->whereHas('employee', function ($q) use ($request) {
+            $q->where('fullName', 'LIKE', '%'.$request->search.'%');
+        });
+    }
 
         if (in_array($user->role, ['employee','intern'])) {
             $query->where('employeeId', $user->employee->id ?? 0);

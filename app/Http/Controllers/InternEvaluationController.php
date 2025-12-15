@@ -14,6 +14,10 @@ class InternEvaluationController extends Controller
         // Lista todas as avaliações de estagiários, carregando também o relacionamento com Intern
         $evaluations = InternEvaluation::with('intern')->orderByDesc('id')->get();
         return view('internEvaluation.index', compact('evaluations'));
+
+          if ($request->filled('search')) {
+                $query->where('fullName','LIKE','%'.$request->search.'%');
+        }
     }
 
     public function create()

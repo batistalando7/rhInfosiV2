@@ -25,6 +25,11 @@ class RetirementController extends Controller
         if ($request->filled('status') && $request->status !== 'Todos') {
             $query->where('status', $request->status);
 
+             if ($request->filled('search')) {
+        $query->whereHas('employee', fn($q) =>
+            $q->where('fullName','LIKE','%'.$request->search.'%')
+         );
+        }
         }
        
 

@@ -52,6 +52,29 @@ class EmployeeeController extends Controller
         return view('employeee.index', ['data' => $data]);
     }
 
+    public function navbarSearch(Request $request)
+    {
+        $query = $request->get('q');
+
+        if (!$query || strlen($query) < 2) {
+            return response()->json([]);
+        }
+
+        $employees = Employeee::select('id','fullName')
+            ->where('fullName', 'LIKE', '%'.$query.'%')
+            ->orderBy('fullName')
+            ->limit(8)
+            ->get();
+
+        return response()->json(
+            $employees->map(fn($e) => [
+                'id'   => $e->id,
+                'text' => $e->fullName,
+                'url'  => route('employeee.show', $e->id),
+            ])
+        );
+    }
+
 
     public function create()
     {
@@ -402,6 +425,8 @@ class EmployeeeController extends Controller
         return $pdf->stream('RelatorioTodosFuncionarios.pdf');
     }
 
+
+    
     public function destroy($id)
     {
         Employeee::destroy($id);

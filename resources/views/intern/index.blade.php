@@ -3,62 +3,71 @@
 @section('content')
 
 <div class="card mb-4 shadow">
+
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-person-lines-fill me-2"></i>Todos os Estagiários</span>
     <div>
-      <a href="{{ route('intern.pdfAll') }}" class="btn btn-outline-light btn-sm" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
-        <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
+      <a href="{{ route('intern.pdfAll') }}" class="btn btn-outline-light btn-sm" target="_blank">
+        <i class="fas fa-file-earmark-pdf"></i> PDF
       </a>
-      <a href="{{ route('intern.filter') }}" class="btn btn-outline-light btn-sm" title="Filtrar por Data">
-        <i class="fas fa-calendar-event"></i> Filtrar
-      </a>
-      <a href="{{ route('intern.create') }}" class="btn btn-outline-light btn-sm" title="Adicionar novo Estagiário"> Novo
-        <i class="fas fa-plus-circle"></i>
+      <a href="{{ route('intern.create') }}" class="btn btn-outline-light btn-sm">
+        Novo <i class="fas fa-plus-circle"></i>
       </a>
     </div>
   </div>
+
   <div class="card-body">
+
+    {{-- SEARCH --}}
+    <form method="GET" class="d-flex mb-3" style="max-width:320px">
+      <input type="text" name="search" value="{{ request('search') }}"
+             class="form-control form-control-sm rounded-start"
+             placeholder="Pesquisar estagiário">
+      <button class="btn btn-outline-primary btn-sm rounded-end">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+
     <div class="table-responsive">
-      <table id="datatablesSimple" class="table table-striped table-hover">
+      <table class="table table-striped table-hover">
         <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nome Completo</th>
-            <th>Departamento</th>
-            <th>Especialidade</th>
-            <th>Endereço</th>
-            <th>Email</th>
-            <th style="width: 58px;">Ação</th>
-          </tr>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Departamento</th>
+          <th>Especialidade</th>
+          <th>Endereço</th>
+          <th>Email</th>
+          <th>Ação</th>
+        </tr>
         </thead>
         <tbody>
-          @if ($data)
-            @foreach($data as $d)
-              <tr>
-                <td>{{ $d->id }}</td>
-                <td>{{ $d->fullName ?? 'Nome não definido' }}</td>
-                <td>{{ $d->department->title ?? 'Departamento não encontrado' }}</td>
-                <td>{{ $d->specialty->name ?? 'Especialidade não encontrada' }}</td>
-                <td>{{ $d->address ?? 'Endereço não definido' }}</td>
-                <td>{{ $d->email ?? 'Email não definido' }}</td>
-                <td>
-                  <a href="{{ route('intern.show', $d->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
-                    <i class="fas fa-eye"></i>
-                  </a>
-                  <a href="{{ route('intern.edit', $d->id) }}" class="btn btn-info btn-sm" title="Editar">
-                    <i class="fas fa-pencil"></i>
-                  </a>
-                  <a href="#" data-url="{{ url('intern/'.$d->id.'/delete') }}" class="btn btn-danger btn-sm delete-btn" title="Apagar">
-                    <i class="fas fa-trash"></i>
-                  </a>
-                </td>
-              </tr>
-            @endforeach
-          @endif
+        @forelse($data as $d)
+          <tr>
+            <td>{{ $d->id }}</td>
+            <td>{{ $d->fullName }}</td>
+            <td>{{ $d->department->title ?? '-' }}</td>
+            <td>{{ $d->specialty->name ?? '-' }}</td>
+            <td>{{ $d->address ?? '-' }}</td>
+            <td>{{ $d->email ?? '-' }}</td>
+            <td>
+              <a href="{{ route('intern.show',$d->id) }}" class="btn btn-warning btn-sm">
+                <i class="fas fa-eye"></i>
+              </a>
+              <a href="{{ route('intern.edit',$d->id) }}" class="btn btn-info btn-sm">
+                <i class="fas fa-pencil"></i>
+              </a>
+            </td>
+          </tr>
+        @empty
+          <tr>
+            <td colspan="7" class="text-center">Nenhum estagiário encontrado.</td>
+          </tr>
+        @endforelse
         </tbody>
       </table>
     </div>
+
   </div>
 </div>
-
 @endsection

@@ -12,13 +12,21 @@ use App\Mail\NewMobilityNotification;
 
 class MobilityController extends Controller
 {
-    public function index()
-    {
-        $data = Mobility::with(['employee', 'oldDepartment', 'newDepartment'])
-                        ->orderByDesc('id')
-                        ->get();
-        return view('mobility.index', compact('data'));
+    public function index(Request $request)
+{
+    $query = Mobility::with(['employee','oldDepartment','newDepartment']);
+
+    if ($request->filled('search')) {
+        $query->whereHas('employee', fn($q) =>
+            $q->where('fullName','LIKE','%'.$request->search.'%')
+        );
     }
+
+    $data = $query->orderBy('created_at','desc')->get();
+
+    return view('mobility.index', compact('data'));
+}
+
 
     public function create()
     {
