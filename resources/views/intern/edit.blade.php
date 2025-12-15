@@ -14,9 +14,9 @@
       @csrf
       @method('put')
 
-      <!-- Linha 1: Departamento, Cargo, Especialidade -->
+      <!-- Linha: Departamento, Especialidade -->
       <div class="row g-3">
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="form-floating">
             <select name="depart" id="depart" class="form-select">
               <option value="" selected>Selecione</option>
@@ -29,20 +29,7 @@
             <label for="depart">Departamento</label>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="form-floating">
-            <select name="positionId" id="positionId" class="form-select">
-              <option value="" selected>Selecione</option>
-              @foreach($positions as $position)
-                <option value="{{ $position->id }}" @if(old('positionId', $data->positionId) == $position->id) selected @endif>
-                  {{ $position->name }}
-                </option>
-              @endforeach
-            </select>
-            <label for="positionId">Cargo</label>
-          </div>
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="form-floating">
             <select name="specialtyId" id="specialtyId" class="form-select">
               <option value="" selected>Selecione</option>
@@ -87,7 +74,6 @@
               Selecione o Código
             </button>
             <ul class="dropdown-menu" id="phone_code_menu" style="max-height: 30em; overflow-y: auto;">
-              <!-- Itens serão preenchidos via JS -->
             </ul>
             <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Telefone" maxlength="16" value="{{ old('mobile', $data->mobile) }}">
             <input type="hidden" name="phone_code" id="phone_code" value="{{ old('phone_code') }}">
@@ -132,14 +118,13 @@
       <!-- Area da Nacionalidade e Genero -->
       <div class="row g-3 mt-3">
         <div class="col-md-6">
-            <div class="form-floating">
-              <select name="nationality" id="nationality" class="form-select">
-                <option value="">Selecione seu país</option>
-                <!-- As opções dos países serão preenchidas via JavaScript -->
-              </select>
-              <label for="nationality">Nacionalidade</label>
-            </div>
+          <div class="form-floating">
+            <select name="nationality" id="nationality" class="form-select">
+              <option value="">Selecione seu país</option>
+            </select>
+            <label for="nationality">Nacionalidade</label>
           </div>
+        </div>
         <div class="col-md-6">
           <div class="form-floating">
             <select name="gender" id="gender" class="form-select">

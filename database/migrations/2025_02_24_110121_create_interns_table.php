@@ -21,7 +21,6 @@ class CreateInternsTable extends Migration
             $table->string('nationality');
             $table->enum('gender', ['Masculino', 'Feminino']);
             $table->string('email')->unique();
-            $table->unsignedBigInteger('positionId');
             $table->unsignedBigInteger('specialtyId');
             $table->date('internshipStart');
             $table->date('internshipEnd');
@@ -29,7 +28,6 @@ class CreateInternsTable extends Migration
             $table->timestamps();
 
             $table->foreign('departmentId')->references('id')->on('departments')->onDelete('cascade');
-            $table->foreign('positionId')->references('id')->on('positions');
             $table->foreign('specialtyId')->references('id')->on('specialties');
         });
     }

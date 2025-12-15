@@ -78,9 +78,11 @@
                                         </button>
                                     </form>
                                     @if ($admin->role == 'employee')
-                                        <a href="{{ route('admins.contract', $admin->id) }}" class="btn btn-success btn-sm"
-                                            title="Gerar Contrato">
-                                            <i class="fas fa-file-earmark-pdf"></i>
+                                        <a href="{{ route('admins.contract', $admin->id) }}" 
+                                        class="btn btn-success btn-sm" 
+                                        style="width: 40px" 
+                                        title="Gerar Contrato">
+                                            <i class="fas fa-file-pdf"></i>
                                         </a>
                                     @endif
                                 </td>

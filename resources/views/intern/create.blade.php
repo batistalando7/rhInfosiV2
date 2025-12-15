@@ -13,9 +13,9 @@
     <form method="POST" action="{{ route('intern.store') }}" enctype="multipart/form-data">
       @csrf
 
-      <!-- Linha: Departamento, Cargo, Especialidade -->
+      <!-- Linha: Departamento, Especialidade -->
       <div class="row g-3">
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="form-floating">
             <select name="depart" id="depart" class="form-select">
               <option value="" selected>Selecione</option>
@@ -26,18 +26,7 @@
             <label for="depart">Departamento</label>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="form-floating">
-            <select name="positionId" id="positionId" class="form-select">
-              <option value="" selected>Selecione</option>
-              @foreach($positions as $position)
-                <option value="{{ $position->id }}">{{ $position->name }}</option>
-              @endforeach
-            </select>
-            <label for="positionId">Cargo</label>
-          </div>
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="form-floating">
             <select name="specialtyId" id="specialtyId" class="form-select">
               <option value="" selected>Selecione</option>
@@ -75,19 +64,13 @@
           </div>
         </div>
         <div class="col-md-6">
-          
           <div class="input-group">
-       
             <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="selected_code" style="height: calc(3.5rem + 5px);">
               Selecione o Código
             </button>
-   
             <ul class="dropdown-menu" id="phone_code_menu" style="max-height: 30em; overflow-y: auto;">
-              <!-- Itens serão inseridos dinamicamente via JS -->
             </ul>
-     
             <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Telefone" maxlength="16" value="{{ old('mobile') }}">
-         
             <input type="hidden" name="phoneCode" id="phoneCode" value="{{ old('phoneCode') }}">
           </div>
         </div>
@@ -133,7 +116,6 @@
           <div class="form-floating">
             <select name="nationality" id="nationality" class="form-select">
               <option value="">Selecione seu país</option>
-              <!-- As opções dos países serão preenchidas via JavaScript -->
             </select>
             <label for="nationality">Nacionalidade</label>
           </div>
@@ -163,7 +145,6 @@
             <input type="date" name="internshipEnd" id="internshipEnd" class="form-control" placeholder="" value="{{ old('internshipEnd') }}">
             <label for="internshipEnd">Fim do Estágio</label>
           </div>
-          
         </div>
         <div class="col-md-4">
           <div class="form-floating">

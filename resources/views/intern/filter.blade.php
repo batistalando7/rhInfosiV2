@@ -6,7 +6,6 @@
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-calendar-event me-2"></i>Filtrar Estagiários por Data</span>
     <div>
-      {{-- Se já existir um filtro aplicado ($startDate e $endDate), exibimos o botão de PDF --}}
       @if(isset($startDate) && isset($endDate))
         <a href="{{ route('intern.filter.pdf', ['start_date' => $startDate, 'end_date' => $endDate]) }}"
            class="btn btn-outline-light btn-sm me-2" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
@@ -20,7 +19,6 @@
     </div>
   </div>
   
-
   <div class="card-body">
 
     <form action="{{ route('intern.filter') }}" method="GET" class="mb-4">
@@ -47,7 +45,6 @@
       </div>
     </form>
 
-    {{-- Se a variável $filtered existir, significa que há resultados do filtro --}}
     @isset($filtered)
       @if($filtered->count() > 0)
         <div class="table-responsive">
@@ -57,7 +54,6 @@
                 <th>ID</th>
                 <th>Nome Completo</th>
                 <th>Departamento</th>
-                <th>Cargo</th>
                 <th>Especialidade</th>
                 <th>Data de Registro</th>
               </tr>
@@ -68,7 +64,6 @@
                   <td>{{ $intern->id }}</td>
                   <td>{{ $intern->fullName }}</td>
                   <td>{{ $intern->department->title ?? '-' }}</td>
-                  <td>{{ $intern->position->name ?? '-' }}</td>
                   <td>{{ $intern->specialty->name ?? '-' }}</td>
                   <td>{{ $intern->created_at->format('d/m/Y H:i') }}</td>
                 </tr>

@@ -21,7 +21,6 @@ class Intern extends Model
         'nationality',
         'gender',
         'email',
-        'positionId',
         'specialtyId',
         'internshipStart',
         'internshipEnd',
@@ -33,14 +32,8 @@ class Intern extends Model
         return $this->belongsTo(Department::class, 'departmentId');
     }
 
-    public function position()
-    {
-        return $this->belongsTo(Position::class, 'positionId');
-    }
-
     public function specialty()
     {
         return $this->belongsTo(Specialty::class, 'specialtyId');
     }
 }
-

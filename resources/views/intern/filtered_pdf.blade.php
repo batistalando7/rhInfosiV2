@@ -18,7 +18,6 @@
           <th>ID</th>
           <th>Nome Completo</th>
           <th>Departamento</th>
-          <th>Cargo</th>
           <th>Especialidade</th>
           <th>Instituição</th> 
           <th>Data de Registro</th>
@@ -30,7 +29,6 @@
             <td>{{ $intern->id }}</td>
             <td>{{ $intern->fullName }}</td>
             <td>{{ $intern->department->title ?? '-' }}</td>
-            <td>{{ $intern->position->name ?? '-' }}</td>
             <td>{{ $intern->specialty->name ?? '-' }}</td>
             <td>{{ $intern->institution ?? '-' }}</td>
             <td>{{ $intern->created_at->format('d/m/Y H:i') }}</td>

@@ -9,11 +9,9 @@
       <a href="{{ route('intern.pdfAll') }}" class="btn btn-outline-light btn-sm" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
         <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
       </a>
-  
       <a href="{{ route('intern.filter') }}" class="btn btn-outline-light btn-sm" title="Filtrar por Data">
         <i class="fas fa-calendar-event"></i> Filtrar
       </a>
-
       <a href="{{ route('intern.create') }}" class="btn btn-outline-light btn-sm" title="Adicionar novo Estagiário"> Novo
         <i class="fas fa-plus-circle"></i>
       </a>
@@ -27,25 +25,12 @@
             <th>ID</th>
             <th>Nome Completo</th>
             <th>Departamento</th>
-            <th>Cargo</th>
             <th>Especialidade</th>
             <th>Endereço</th>
             <th>Email</th>
             <th style="width: 58px;">Ação</th>
           </tr>
         </thead>
-        {{-- <tfoot>
-          <tr>
-            <th>ID</th>
-            <th>Nome Completo</th>
-            <th>Departamento</th>
-            <th>Cargo</th>
-            <th>Especialidade</th>
-            <th>Endereço</th>
-            <th>Email</th>
-            <th style="width: 58px;">Ação</th><th>Ações</th>
-          </tr>
-        </tfoot> --}}
         <tbody>
           @if ($data)
             @foreach($data as $d)
@@ -53,7 +38,6 @@
                 <td>{{ $d->id }}</td>
                 <td>{{ $d->fullName ?? 'Nome não definido' }}</td>
                 <td>{{ $d->department->title ?? 'Departamento não encontrado' }}</td>
-                <td>{{ $d->position->name ?? 'Cargo não encontrado' }}</td>
                 <td>{{ $d->specialty->name ?? 'Especialidade não encontrada' }}</td>
                 <td>{{ $d->address ?? 'Endereço não definido' }}</td>
                 <td>{{ $d->email ?? 'Email não definido' }}</td>

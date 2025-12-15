@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Intern;
 use App\Models\Department;
-use App\Models\Position;
 use App\Models\Specialty;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Carbon\Carbon;
@@ -21,10 +20,9 @@ class InternController extends Controller
     public function create()
     {
         $departments = Department::all();
-        $positions   = Position::all();
         $specialties = Specialty::all();
 
-        return view('intern.create', compact('departments', 'positions', 'specialties'));
+        return view('intern.create', compact('departments', 'specialties'));
     }
 
     public function store(Request $request)
@@ -41,7 +39,6 @@ class InternController extends Controller
             'nationality'      => 'required',
             'gender'           => 'required',
             'email'            => 'required|email|unique:interns',
-            'positionId'       => 'required|exists:positions,id',
             'specialtyId'      => 'required|exists:specialties,id',
             'internshipStart'  => 'required|date|date_format:Y-m-d',
             'internshipEnd'    => 'required|date|date_format:Y-m-d|after_or_equal:internshipStart',
@@ -68,7 +65,6 @@ class InternController extends Controller
         $intern->nationality     = $request->nationality;
         $intern->gender          = $request->gender;
         $intern->email           = $request->email;
-        $intern->positionId      = $request->positionId;
         $intern->specialtyId     = $request->specialtyId;
         $intern->internshipStart = $request->internshipStart;
         $intern->internshipEnd   = $request->internshipEnd;
@@ -88,10 +84,9 @@ class InternController extends Controller
     {
         $data        = Intern::findOrFail($id);
         $departments = Department::orderByDesc('id')->get();
-        $positions   = Position::all();
         $specialties = Specialty::all();
 
-        return view('intern.edit', compact('data', 'departments', 'positions', 'specialties'));
+        return view('intern.edit', compact('data', 'departments', 'specialties'));
     }
 
     public function update(Request $request, $id)
@@ -128,30 +123,24 @@ class InternController extends Controller
         return redirect()->route('intern.edit', $id)->with('msg', 'Estagiário atualizado com sucesso');
     }
 
-    // ========== Filtro por datas ==========
     public function filterByDate(Request $request)
     {
-        // Se não vier start_date e end_date, retornamos a view de filtro vazia
         if (!$request->has('start_date') && !$request->has('end_date')) {
             return view('intern.filter');
         }
 
-        // Validação
         $request->validate([
             'start_date' => 'required|date',
             'end_date'   => 'required|date|after_or_equal:start_date',
         ]);
 
-        // Converter para início e fim do dia
         $start = Carbon::parse($request->start_date)->startOfDay();
         $end   = Carbon::parse($request->end_date)->endOfDay();
 
-        // Buscar estagiários criados entre start e end
         $filtered = Intern::whereBetween('created_at', [$start, $end])
                           ->orderByDesc('id')
                           ->get();
 
-        // Para mostrar no formulário e repassar ao PDF
         $startDate = $request->start_date;
         $endDate   = $request->end_date;
 
@@ -164,7 +153,6 @@ class InternController extends Controller
 
     public function pdfFiltered(Request $request)
     {
-        // Caso o PDF demore, podemos aumentar o tempo de execução
         set_time_limit(300);
 
         $request->validate([
@@ -182,17 +170,15 @@ class InternController extends Controller
         $startDate = $request->start_date;
         $endDate   = $request->end_date;
 
-        // Carrega a view filtered_pdf.blade.php
         $pdf = PDF::loadView('intern.filtered_pdf', compact('filtered', 'startDate', 'endDate'))
                   ->setPaper('a3', 'portrait');
 
         return $pdf->stream("RelatorioInterns_{$startDate}_{$endDate}.pdf");
     }
 
-    // ========== PDF de Todos os Estagiários ==========
     public function pdfAll()
     {
-        $allInterns = Intern::with(['department', 'position', 'specialty'])->get();
+        $allInterns = Intern::with(['department', 'specialty'])->get();
         $pdf = PDF::loadView('intern.intern_pdf', compact('allInterns'))
                   ->setPaper('a3', 'portrait');
 

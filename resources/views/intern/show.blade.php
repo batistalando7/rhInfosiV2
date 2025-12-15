@@ -17,10 +17,6 @@
           <td>{{ $data->department->title ?? $data->departmentId }}</td>
         </tr>
         <tr>
-          <th>Cargo</th>
-          <td>{{ $data->position->name ?? $data->positionId }}</td>
-        </tr>
-        <tr>
           <th>Especialidade</th>
           <td>{{ $data->specialty->name ?? $data->specialtyId }}</td>
         </tr>
