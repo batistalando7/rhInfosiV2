@@ -58,7 +58,7 @@ class MaterialTransactionController extends Controller
 
         MaterialTransaction::create([
     'MaterialId' => $request->MaterialId,
-    'TransactionType' => 'Entrada', // 
+    'TransactionType' => 'in', // 
     'Quantity' => $request->Quantity,
     'TransactionDate' => $request->TransactionDate,
     'OriginOrDestination' => $request->OriginOrDestination,
@@ -104,7 +104,7 @@ class MaterialTransactionController extends Controller
 
         MaterialTransaction::create([
     'MaterialId' => $request->MaterialId,
-    'TransactionType' => 'Saída', //
+    'TransactionType' => 'out', //
     'Quantity' => $request->Quantity,
     'TransactionDate' => $request->TransactionDate,
     'OriginOrDestination' => $request->OriginOrDestination,
