@@ -15,10 +15,7 @@
                 <a href="{{ route('heritages.showPdf', $heritage->id) }}" target="_blank" class="btn btn-info btn-sm" title="PDF">
                     <i class="fas fa-file-pdf"></i>
                 </a>
-                <a href="#" data-url="{{ route('heritages.destroy', $heritage->id) }}"
-                    class="btn btn-danger btn-sm delete-btn" title="Remover">
-                    <i class="fas fa-trash"></i>
-                </a>
+               
             </div>
         </div>
         <div class="card-body">

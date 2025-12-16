@@ -94,7 +94,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center mt-4">
+                     <div class="d-grid gap-2 col-4 mx-auto mt-4">
                     <button class="btn btn-success"><i class="fas fa-check-circle me-1"></i> Salvar Património</button>
                     <a href="{{ route('heritages.index') }}" class="btn btn-secondary ms-2">Cancelar</a>
                 </div>

@@ -39,7 +39,7 @@
                                 <label for="ResponsibleName">Nome do Responsável pela Manutenção</label>
                             </div>
                         </div>
-                        <div class="text-center mt-4">
+                           <div class="d-grid gap-2 col-4 mx-auto mt-4">
                             <button class="btn btn-info text-white"><i class="fas fa-save me-1"></i> Salvar Manutenção</button>
                             <a href="{{ route('heritages.show', $heritage->id) }}" class="btn btn-secondary ms-2">Cancelar</a>
                         </div>

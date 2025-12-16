@@ -34,7 +34,7 @@ class HeritageController extends Controller
             'ResponsibleName' => 'required|string|max:255',
             'Condition' => 'required|in:Novo,Usado,Danificado,Em Manutenção,Avariado',
             'Notes' => 'nullable|string',
-            'DocumentationPath' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048', // Novo: Validação do ficheiro
+            'DocumentationPath' => 'nullable|file|mimes:pdf,jpg,jpeg,png', // Novo: Validação do ficheiro
         ]);
 
         $path = null;

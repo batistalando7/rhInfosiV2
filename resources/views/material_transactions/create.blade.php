@@ -7,6 +7,8 @@
             <i class="fas fa-exchange-alt me-2"></i> {{ $type == 'in' ? 'Entrada de Material' : 'Saída de Material' }}
         </div>
         <div class="card-body">
+            <div class="row justify-content-center">
+            <div class="col-md-12">
             <form method="POST" action="{{ route("materials.transactions.{$type}.store") }}" enctype="multipart/form-data">
                 @csrf
 
@@ -60,7 +62,7 @@
                     </div>
                 </div>
 
-                <div class="text-center mt-4">
+                <div class="d-grid gap-2 col-4 mx-auto mt-4">
                     <button class="btn btn-{{ $type == 'in' ? 'success' : 'danger' }}">
                         <i class="fas fa-check-circle me-1"></i> {{ $type == 'in' ? 'Confirmar Entrada' : 'Confirmar Saída' }}
                     </button>
@@ -68,6 +70,8 @@
                         Cancelar
                     </a>
                 </div>
+                <div class="d-grid gap-2 col-4 mx-auto mt-4">
+                                
             </form>
         </div>
     </div>

@@ -28,7 +28,7 @@
                             </div>
                         </div>
 
-                        <div class="text-center mt-4">
+                             <div class="d-grid gap-2 col-4 mx-auto mt-4">
                             <button class="btn btn-success">
                                 <i class="fas fa-save me-1"></i> Salvar
                             </button>
