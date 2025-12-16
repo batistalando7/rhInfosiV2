@@ -10,7 +10,7 @@
       <form method="GET" action="{{ route('internEvaluation.searchIntern') }}" class="mb-4">
         <div class="row g-3">
           <div class="col-md-10">
-            <input type="text" name="internSearch" class="form-control" placeholder="Pesquisar por ID ou Nome do Estagiário" value="{{ old('internSearch') }}">
+            <input type="text" name="internSearch" class="form-control" placeholder="Pesquisar o Nome do Estagiário" value="{{ old('internSearch') }}">
           </div>
           <div class="col-md-2">
             <button type="submit" class="btn btn-primary w-100">Buscar</button>
