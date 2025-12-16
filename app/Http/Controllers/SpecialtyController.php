@@ -13,7 +13,7 @@ class SpecialtyController extends Controller
     public function index()
     {
         $data           = Specialty::orderByDesc('id')->get();
-        $allSpecialties = Specialty::orderBy('name')->get();
+        $allSpecialties = Specialty::orderByDesc('name')->get();
         return view('specialty.index', compact('data', 'allSpecialties'));
     }
 
