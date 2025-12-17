@@ -17,40 +17,40 @@
 
 <div class="card">
   <div class="card-body chat-body" id="chatMessages">
-    @foreach($messages as $m)
-      @php
-          $mine = ($m->senderId === auth()->id());
+   @foreach($messages as $m)
+  @php
+      $mine = ($m->senderId === auth()->id());
 
-          // Resolver o nome bonito (mesma lógica do evento)
-          $name = 'Usuário';
+      // Resolver o nome bonito (compatível com PHP 7.4)
+      $name = 'Usuário';
 
-          if ($m->senderType === 'admin') {
-              $sender = \App\Models\Admin::find($m->senderId);
-              if ($sender) {
-                  if ($sender->role === 'director' && !empty($sender->directorName)) {
-                      $name = $sender->directorName;
-                  } elseif ($sender->role === 'department_head' && $sender->employee && !empty($sender->employee->fullName)) {
-                      $name = $sender->employee->fullName;
-                  } else {
-                      $name = $sender->email;
-                  }
+      if ($m->senderType === 'admin') {
+          $sender = \App\Models\Admin::find($m->senderId);
+          if ($sender) {
+              if ($sender->role === 'director' && !empty($sender->directorName)) {
+                  $name = $sender->directorName;
+              } elseif ($sender->role === 'department_head' && $sender->employee && !empty($sender->employee->fullName)) {
+                  $name = $sender->employee->fullName;
+              } else {
+                  $name = $sender->email;
               }
-          } elseif ($m->senderType === 'employeee') {
-              $employee = \App\Models\Employeee::find($m->senderId);
-              $name = $employee?->fullName ?? $m->senderEmail ?? 'Usuário';
-          } else {
-              $name = $m->senderEmail ?? 'Usuário';
           }
-      @endphp
+      } elseif ($m->senderType === 'employeee') {
+          $employee = \App\Models\Employeee::find($m->senderId);
+          $name = $employee ? ($employee->fullName ?? $m->senderEmail ?? 'Usuário') : 'Usuário';
+      } else {
+          $name = $m->senderEmail ?? 'Usuário';
+      }
+  @endphp
 
-      <div class="mb-3 d-flex {{ $mine ? 'justify-content-end' : 'justify-content-start' }}">
-        <div class="{{ $mine ? 'bubble-right' : 'bubble-left' }}">
-          <strong>{{ $name }}</strong><br>
-          <span>{{ $m->message }}</span><br>
-          <small class="text-muted">{{ $m->created_at->format('H:i') }}</small>
-        </div>
-      </div>
-    @endforeach
+  <div class="mb-3 d-flex {{ $mine ? 'justify-content-end' : 'justify-content-start' }}">
+    <div class="{{ $mine ? 'bubble-right' : 'bubble-left' }}">
+      <strong>{{ $name }}</strong><br>
+      <span>{{ $m->message }}</span><br>
+      <small class="text-muted">{{ $m->created_at->format('H:i') }}</small>
+    </div>
+  </div>
+@endforeach
   </div>
 
   <div class="card-footer">
