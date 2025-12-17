@@ -24,47 +24,39 @@ class NewChatMessageSent implements ShouldBroadcast
 
     public function broadcastOn()
     {
+        // VOLTA AO ORIGINAL: canal público (funcionava antes)
         return new Channel('chat-group.' . $this->chatMessage->chatGroupId);
     }
 
     public function broadcastWith()
     {
+        // Resolve o nome bonito (o que tu querias)
         $senderName = 'Usuário';
 
         if ($this->chatMessage->senderType === 'admin') {
             $admin = Admin::find($this->chatMessage->senderId);
-
             if ($admin) {
-                // Diretor: usa directorName se existir
                 if ($admin->role === 'director' && !empty($admin->directorName)) {
                     $senderName = $admin->directorName;
-                }
-                // Chefe de departamento: usa o nome do funcionário vinculado
-                elseif ($admin->role === 'department_head' && $admin->employee && !empty($admin->employee->fullName)) {
+                } elseif ($admin->role === 'department_head' && $admin->employee && !empty($admin->employee->fullName)) {
                     $senderName = $admin->employee->fullName;
-                }
-                // Fallback: email
-                else {
+                } else {
                     $senderName = $admin->email;
                 }
             }
-        }
-        elseif ($this->chatMessage->senderType === 'employeee') {
+        } elseif ($this->chatMessage->senderType === 'employeee') {
             $employee = Employeee::find($this->chatMessage->senderId);
             $senderName = $employee?->fullName ?? $this->chatMessage->senderEmail ?? 'Usuário';
+        } else {
+            $senderName = $this->chatMessage->senderEmail ?? 'Usuário';
         }
 
-        $photoUrl = $this->chatMessage->senderType === 'admin'
-            ? asset('images/admin-default.png')
-            : asset('images/employee-default.png');
-
+        // Mantém exatamente os campos que o JS espera
         return [
             'id'          => $this->chatMessage->id,
             'chatGroupId' => $this->chatMessage->chatGroupId,
             'senderId'    => $this->chatMessage->senderId,
-            'senderType'  => $this->chatMessage->senderType,
-            'senderName'  => $senderName,
-            'photoUrl'    => $photoUrl,
+            'senderName'  => $senderName,                    // ← Nome bonito aqui!
             'message'     => $this->chatMessage->message,
             'created_at'  => $this->chatMessage->created_at->toDateTimeString(),
         ];
