@@ -18,25 +18,14 @@ class NewChatController extends Controller
         $user = Auth::user();
         $groups = collect();
 
-        // PARA DIRETORES
         if ($user->role === 'director') {
-            $directorGroup = ChatGroup::firstOrCreate(
-                ['groupType' => 'directorGroup'],
-                ['name' => 'Diretores']
-            );
+            $directorGroup = ChatGroup::firstOrCreate(['groupType' => 'directorGroup'], ['name' => 'Diretores']);
             $groups->push($directorGroup);
 
-            $deptHeadsGroup = ChatGroup::firstOrCreate(
-                ['groupType' => 'departmentHeadsGroup'],
-                ['name' => 'Chefes de Departamento']
-            );
+            $deptHeadsGroup = ChatGroup::firstOrCreate(['groupType' => 'departmentHeadsGroup'], ['name' => 'Chefes de Departamento']);
             $groups->push($deptHeadsGroup);
 
-            // Conversas individuais entre diretores
-            $otherDirectors = Admin::where('role', 'director')
-                ->where('id', '!=', $user->id)
-                ->get();
-
+            $otherDirectors = Admin::where('role', 'director')->where('id', '!=', $user->id)->get();
             foreach ($otherDirectors as $other) {
                 $minID = min($user->id, $other->id);
                 $maxID = max($user->id, $other->id);
@@ -44,9 +33,7 @@ class NewChatController extends Controller
 
                 $directorName1 = !empty($user->directorName) ? $user->directorName : $user->email;
                 $directorName2 = !empty($other->directorName) ? $other->directorName : $other->email;
-                $constructedName = ($user->id == $minID)
-                    ? $directorName1 . ' ↔ ' . $directorName2
-                    : $directorName2 . ' ↔ ' . $directorName1;
+                $constructedName = ($user->id == $minID) ? $directorName1 . ' ↔ ' . $directorName2 : $directorName2 . ' ↔ ' . $directorName1;
 
                 $ind = ChatGroup::firstOrCreate(
                     ['groupType' => 'individual', 'conversation_key' => $conversationKey],
@@ -55,7 +42,6 @@ class NewChatController extends Controller
                 $groups->push($ind);
             }
 
-            // Conversas individuais diretor ↔ chefe de departamento
             $deptHeads = Admin::where('role', 'department_head')->get();
             foreach ($deptHeads as $deptHead) {
                 $minID = min($user->id, $deptHead->id);
@@ -63,12 +49,8 @@ class NewChatController extends Controller
                 $conversationKey = 'individual_' . $minID . '_' . $maxID;
 
                 $directorName = !empty($user->directorName) ? $user->directorName : $user->email;
-                $deptHeadName = ($deptHead->employee && !empty($deptHead->employee->fullName))
-                    ? $deptHead->employee->fullName
-                    : $deptHead->email;
-                $constructedName = ($user->id == $minID)
-                    ? $directorName . ' ↔ ' . $deptHeadName
-                    : $deptHeadName . ' ↔ ' . $directorName;
+                $deptHeadName = ($deptHead->employee && !empty($deptHead->employee->fullName)) ? $deptHead->employee->fullName : $deptHead->email;
+                $constructedName = ($user->id == $minID) ? $directorName . ' ↔ ' . $deptHeadName : $deptHeadName . ' ↔ ' . $directorName;
 
                 $ind = ChatGroup::firstOrCreate(
                     ['groupType' => 'individual', 'conversation_key' => $conversationKey],
@@ -77,20 +59,13 @@ class NewChatController extends Controller
                 $groups->push($ind);
             }
         }
-        // PARA CHEFES DE DEPARTAMENTO
         elseif ($user->role === 'department_head') {
-            $deptHeadsGroup = ChatGroup::firstOrCreate(
-                ['groupType' => 'departmentHeadsGroup'],
-                ['name' => 'Chefes de Departamento']
-            );
+            $deptHeadsGroup = ChatGroup::firstOrCreate(['groupType' => 'departmentHeadsGroup'], ['name' => 'Chefes de Departamento']);
             $groups->push($deptHeadsGroup);
 
             if (!empty($user->department_id)) {
                 $departmentGroup = ChatGroup::firstOrCreate(
-                    [
-                        'groupType'    => 'departmentGroup',
-                        'departmentId' => $user->department_id
-                    ],
+                    ['groupType' => 'departmentGroup', 'departmentId' => $user->department_id],
                     ['name' => 'Departamento ' . $this->getDepartmentTitle($user->department_id)]
                 );
                 $groups->push($departmentGroup);
@@ -100,14 +75,11 @@ class NewChatController extends Controller
                     if ($emp->id != ($user->employee->id ?? 0)) {
                         $conversationKey = "individual_employee_{$emp->id}_{$user->employee->id}";
                         $ind = ChatGroup::firstOrCreate(
+                            ['groupType' => 'individual', 'conversation_key' => $conversationKey],
                             [
-                                'groupType'       => 'individual',
-                                'conversation_key'=> $conversationKey
-                            ],
-                            [
-                                'name'         => $emp->fullName . ' ↔ ' . $user->employee->fullName,
+                                'name' => $emp->fullName . ' ↔ ' . $user->employee->fullName,
                                 'departmentId' => $user->department_id,
-                                'headId'       => $user->employee->id
+                                'headId' => $user->employee->id
                             ]
                         );
                         $groups->push($ind);
@@ -115,7 +87,6 @@ class NewChatController extends Controller
                 }
             }
 
-            // Conversas individuais chefe ↔ diretores
             $directors = Admin::where('role', 'director')->get();
             foreach ($directors as $director) {
                 $minID = min($user->id, $director->id);
@@ -123,12 +94,8 @@ class NewChatController extends Controller
                 $conversationKey = 'individual_' . $minID . '_' . $maxID;
 
                 $directorName = !empty($director->directorName) ? $director->directorName : $director->email;
-                $deptHeadName = ($user->employee && !empty($user->employee->fullName))
-                    ? $user->employee->fullName
-                    : $user->email;
-                $constructedName = ($user->id == $minID)
-                    ? $deptHeadName . ' ↔ ' . $directorName
-                    : $directorName . ' ↔ ' . $deptHeadName;
+                $deptHeadName = ($user->employee && !empty($user->employee->fullName)) ? $user->employee->fullName : $user->email;
+                $constructedName = ($user->id == $minID) ? $deptHeadName . ' ↔ ' . $directorName : $directorName . ' ↔ ' . $deptHeadName;
 
                 $ind = ChatGroup::firstOrCreate(
                     ['groupType' => 'individual', 'conversation_key' => $conversationKey],
@@ -137,33 +104,24 @@ class NewChatController extends Controller
                 $groups->push($ind);
             }
         }
-        // PARA FUNCIONÁRIOS
         elseif ($user->role === 'employee') {
             $emp = Employeee::where('email', $user->email)->first();
             if ($emp && $emp->departmentId) {
                 $departmentGroup = ChatGroup::firstOrCreate(
-                    [
-                        'groupType'    => 'departmentGroup',
-                        'departmentId' => $emp->departmentId
-                    ],
+                    ['groupType' => 'departmentGroup', 'departmentId' => $emp->departmentId],
                     ['name' => 'Departamento ' . ($emp->department->title ?? '')]
                 );
                 $groups->push($departmentGroup);
 
-                $headAdmin = Admin::where('role', 'department_head')
-                                  ->where('department_id', $emp->departmentId)
-                                  ->first();
+                $headAdmin = Admin::where('role', 'department_head')->where('department_id', $emp->departmentId)->first();
                 if ($headAdmin && $headAdmin->employee) {
                     $conversationKey = "individual_employee_{$emp->id}_{$headAdmin->employee->id}";
                     $ind = ChatGroup::firstOrCreate(
+                        ['groupType' => 'individual', 'conversation_key' => $conversationKey],
                         [
-                            'groupType'       => 'individual',
-                            'conversation_key'=> $conversationKey
-                        ],
-                        [
-                            'name'         => $emp->fullName . ' ↔ ' . $headAdmin->employee->fullName,
+                            'name' => $emp->fullName . ' ↔ ' . $headAdmin->employee->fullName,
                             'departmentId' => $emp->departmentId,
-                            'headId'       => $headAdmin->employee->id
+                            'headId' => $headAdmin->employee->id
                         ]
                     );
                     $groups->push($ind);
@@ -178,12 +136,7 @@ class NewChatController extends Controller
         $departmentGroups     = $groups->where('groupType', 'departmentGroup');
         $individuals          = $groups->where('groupType', 'individual');
 
-        return view('new-chat.index', compact(
-            'directorGroup',
-            'departmentHeadsGroup',
-            'departmentGroups',
-            'individuals'
-        ));
+        return view('new-chat.index', compact('directorGroup', 'departmentHeadsGroup', 'departmentGroups', 'individuals'));
     }
 
     public function show($groupId)
@@ -207,16 +160,15 @@ class NewChatController extends Controller
             'chatGroupId' => 'required|exists:chat_groups,id',
             'message'     => 'required|string'
         ]);
-        $user = Auth::user();
 
+        $user = Auth::user();
         $group = ChatGroup::find($request->chatGroupId);
+
         if (!$group || !$this->userCanViewGroup($group)) {
             return response()->json(['status' => 'forbidden'], 403);
         }
 
-        $senderType = in_array($user->role, ['director', 'department_head', 'admin'])
-            ? 'admin'
-            : 'employeee';
+        $senderType = in_array($user->role, ['director', 'department_head', 'admin']) ? 'admin' : 'employeee';
 
         $msg = ChatMessage::create([
             'chatGroupId' => $group->id,
@@ -235,28 +187,20 @@ class NewChatController extends Controller
     {
         $user = Auth::user();
 
-        if ($group->groupType === 'directorGroup') {
-            return $user->role === 'director';
-        }
-
-        if ($group->groupType === 'departmentHeadsGroup') {
-            return $user->role === 'department_head';
-        }
+        if ($group->groupType === 'directorGroup') return $user->role === 'director';
+        if ($group->groupType === 'departmentHeadsGroup') return $user->role === 'department_head';
 
         if ($group->groupType === 'departmentGroup') {
-            if (in_array($user->role, ['department_head', 'admin'])) {
-                return $user->department_id == $group->departmentId;
-            } elseif ($user->role === 'employee') {
+            if (in_array($user->role, ['department_head', 'admin'])) return $user->department_id == $group->departmentId;
+            if ($user->role === 'employee') {
                 $emp = Employeee::where('email', $user->email)->first();
                 return $emp && $emp->departmentId == $group->departmentId;
             }
             return false;
         }
 
-        // Conversas INDIVIDUAIS
         if ($group->groupType === 'individual' && $group->conversation_key) {
-            // Caso 1: individual_X_Y → diretor ↔ diretor ou diretor ↔ department_head
-            if (str_starts_with($group->conversation_key, 'individual_') && str_contains($group->conversation_key, '_') && !str_contains($group->conversation_key, 'employee')) {
+            if (str_starts_with($group->conversation_key, 'individual_') && !str_contains($group->conversation_key, 'employee')) {
                 $parts = explode('_', $group->conversation_key);
                 if (count($parts) === 3) {
                     $id1 = (int)$parts[1];
@@ -265,18 +209,15 @@ class NewChatController extends Controller
                 }
             }
 
-            // Caso 2: individual_employee_X_Y → funcionário ↔ chefe
             if (str_starts_with($group->conversation_key, 'individual_employee_')) {
                 $parts = explode('_', $group->conversation_key);
                 if (count($parts) >= 4) {
-                    $empId  = (int)$parts[2];
+                    $empId = (int)$parts[2];
                     $headId = (int)$parts[3];
-
                     if ($user->role === 'employee') {
                         $currentEmp = Employeee::where('email', $user->email)->first();
                         return $currentEmp && in_array($currentEmp->id, [$empId, $headId]);
                     }
-
                     if ($user->role === 'department_head' && $user->employee) {
                         return in_array($user->employee->id, [$empId, $headId]);
                     }
@@ -284,7 +225,6 @@ class NewChatController extends Controller
             }
         }
 
-        // Fallback pelo nome (segurança extra)
         $userName = $user->directorName ?? ($user->employee->fullName ?? $user->email);
         return str_contains($group->name, $userName);
     }

@@ -99,7 +99,7 @@
 <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.11.0/echo.iife.js"></script>
 <script>
-  Pusher.logToConsole = true; // ← ATIVA LOGS PARA DEBUG (depois da apresentação desativa)
+  Pusher.logToConsole = false; // Muda para true só para debug
 
   window.Echo = new Echo({
     broadcaster: 'pusher',
@@ -114,14 +114,10 @@
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 
-  // Scroll inicial
   scrollToBottom();
 
-  // Listener Pusher — com debug
   window.Echo.channel('chat-group.{{ $group->id }}')
     .listen('NewChatMessageSent', (e) => {
-      console.log('Mensagem recebida via Pusher:', e); // ← Ver no console se chega
-
       const mine = (e.senderId === {{ auth()->id() }});
       const bubbleClass = mine ? 'bubble-right' : 'bubble-left';
       const alignment = mine ? 'justify-content-end' : 'justify-content-start';
@@ -141,7 +137,6 @@
       scrollToBottom();
     });
 
-  // Envio da mensagem
   document.getElementById('chatForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -150,21 +145,17 @@
 
     fetch("{{ route('new-chat.sendMessage') }}", {
       method: 'POST',
-      headers: {
-        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-      },
+      headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
       body: formData
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Resposta do envio:', data);
       if (data.status === 'ok') {
         messageInput.value = '';
         messageInput.focus();
-        // Não precisa scroll aqui — o Pusher vai fazer
       }
     })
-    .catch(err => console.error('Erro:', err));
+    .catch(err => console.error(err));
   });
 </script>
 @endpush
