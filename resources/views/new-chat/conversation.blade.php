@@ -20,8 +20,12 @@
     @foreach($messages as $m)
       @php
           // Define se a mensagem é minha para alinhar a bolha
-          $mine = ($m->senderId === auth()->id());
-          $name = $m->senderEmail;
+          // Usando Auth::id() para garantir que a comparação seja correta
+          $mine = ($m->senderId === Auth::id()); 
+          // O campo senderEmail não existe no modelo ChatMessage, mas sim no relacionamento 'sender'.
+          // Assumindo que o relacionamento 'sender' está carregado e tem um campo 'name' ou 'email'.
+          // Se o relacionamento for com o modelo User/Admin, use $m->sender->name ou $m->sender->email
+          $name = $m->sender->name ?? 'Usuário Desconhecido'; 
       @endphp
 
       <div class="mb-3 d-flex {{ $mine ? 'justify-content-end' : 'justify-content-start' }}">
@@ -103,7 +107,10 @@
   // Recebendo novas mensagens via Pusher
   window.Echo.channel('chat-group.{{ $group->id }}')
     .listen('NewChatMessageSent', (e) => {
-      const mine = (e.senderId === {{ auth()->id() }});
+      // Usando Auth::id() no Blade, mas aqui precisamos do ID do usuário logado no JS
+      // Assumindo que você tem uma variável global com o ID do usuário logado,
+      // ou que o 'e.senderId' é o ID do usuário que enviou a mensagem.
+      const mine = (e.senderId === {{ Auth::id() }}); 
       const bubbleClass = mine ? 'bubble-right' : 'bubble-left';
       const alignment   = mine ? 'justify-content-end' : 'justify-content-start';
       const time = new Date(e.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -125,18 +132,28 @@
   document.getElementById('chatForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(this);
+    // **CORREÇÃO AQUI:** Usando a rota nomeada 'new-chat.sendMessage'
     fetch("{{ route('new-chat.sendMessage') }}", {
       method: 'POST',
       headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
       body: formData
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            // Se a resposta não for OK (ex: 403 Forbidden), exibe o erro
+            return response.json().then(err => { throw new Error(err.message || 'Erro ao enviar mensagem. Acesso negado ou erro de servidor.'); });
+        }
+        return response.json();
+    })
     .then(data => {
       if (data.status === 'ok') {
         this.message.value = '';
       }
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+        console.error(err);
+        alert(err.message); // Alerta o usuário sobre o erro de permissão
+    });
   });
 </script>
 @endpush

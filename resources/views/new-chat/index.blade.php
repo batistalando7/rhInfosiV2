@@ -11,7 +11,8 @@
 <h2 class="mb-4">Novo Chat - Lista de Conversas</h2>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
-  @if($directorGroup->isNotEmpty())
+  {{-- A aba de Diretores só aparece se o usuário for Diretor E o grupo de gestão existir --}}
+  @if(Auth::user()->role === 'director' && $directorGroup->isNotEmpty())
     <li class="nav-item" role="presentation">
       <button class="nav-link active" id="directors-tab" data-bs-toggle="tab" data-bs-target="#tab-directors" type="button" role="tab">
         Diretores
@@ -19,9 +20,10 @@
     </li>
   @endif
 
-  @if($departmentHeadsGroup->isNotEmpty())
+  {{-- A aba de Chefes de Departamento só aparece se o usuário for Chefe E o grupo de gestão existir --}}
+  @if(Auth::user()->role === 'department_head' && $departmentHeadsGroup->isNotEmpty())
     <li class="nav-item" role="presentation">
-      <button class="nav-link {{ $directorGroup->isEmpty() ? 'active' : '' }}" id="dept-heads-tab" data-bs-toggle="tab" data-bs-target="#tab-dept-heads" type="button" role="tab">
+      <button class="nav-link {{ Auth::user()->role !== 'director' ? 'active' : '' }}" id="dept-heads-tab" data-bs-toggle="tab" data-bs-target="#tab-dept-heads" type="button" role="tab">
         Chefes de Departamento
       </button>
     </li>
@@ -45,7 +47,8 @@
 </ul>
 
 <div class="tab-content mt-3">
-  @if($directorGroup->isNotEmpty())
+  {{-- Conteúdo da aba Diretores (Grupo de Gestão para Diretores) --}}
+  @if(Auth::user()->role === 'director' && $directorGroup->isNotEmpty())
     <div class="tab-pane fade show active" id="tab-directors" role="tabpanel" aria-labelledby="directors-tab">
       <ul class="list-group">
         @foreach($directorGroup as $g)
@@ -60,8 +63,9 @@
     </div>
   @endif
 
-  @if($departmentHeadsGroup->isNotEmpty())
-    <div class="tab-pane fade {{ $directorGroup->isEmpty() ? 'show active' : '' }}" id="tab-dept-heads" role="tabpanel" aria-labelledby="dept-heads-tab">
+  {{-- Conteúdo da aba Chefes de Departamento (Grupo de Gestão para Chefes) --}}
+  @if(Auth::user()->role === 'department_head' && $departmentHeadsGroup->isNotEmpty())
+    <div class="tab-pane fade {{ Auth::user()->role !== 'director' ? 'show active' : '' }}" id="tab-dept-heads" role="tabpanel" aria-labelledby="dept-heads-tab">
       <ul class="list-group">
         @foreach($departmentHeadsGroup as $g)
           <li class="list-group-item d-flex justify-content-between align-items-center">
