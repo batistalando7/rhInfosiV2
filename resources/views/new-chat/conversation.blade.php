@@ -1,6 +1,7 @@
 @extends('layouts.admin.chat-layout')
 
 @section('content')
+<!-- Grupo de botões para navegação -->
 <div class="mb-3 d-flex justify-content-between align-items-center">
   <div>
     <a href="{{ route('dashboard') }}" class="btn btn-secondary me-2">
@@ -19,6 +20,8 @@
     @foreach($messages as $m)
       @php
           $mine = ($m->senderId === auth()->id());
+
+          // Resolver o nome bonito (compatível com Laravel 7 / PHP 7.4)
           $name = 'Usuário';
 
           if ($m->senderType === 'admin') {
@@ -99,7 +102,7 @@
 <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.11.0/echo.iife.js"></script>
 <script>
-  Pusher.logToConsole = false; // Muda para true só para debug
+  Pusher.logToConsole = false; // Muda para true se quiseres ver logs no console durante testes
 
   window.Echo = new Echo({
     broadcaster: 'pusher',
@@ -114,19 +117,21 @@
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 
+  // Scroll inicial ao carregar a página
   scrollToBottom();
 
+  // Recebe mensagens em tempo real
   window.Echo.channel('chat-group.{{ $group->id }}')
     .listen('NewChatMessageSent', (e) => {
       const mine = (e.senderId === {{ auth()->id() }});
       const bubbleClass = mine ? 'bubble-right' : 'bubble-left';
-      const alignment = mine ? 'justify-content-end' : 'justify-content-start';
+      const alignment   = mine ? 'justify-content-end' : 'justify-content-start';
       const time = new Date(e.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
       const msgHtml = `
         <div class="mb-3 d-flex ${alignment}">
           <div class="${bubbleClass}">
-            <strong>${e.senderName}</strong><br>
+            <strong>${e.prettyName || e.senderName}</strong><br>
             <span>${e.message}</span><br>
             <small class="text-muted">${time}</small>
           </div>
@@ -137,6 +142,7 @@
       scrollToBottom();
     });
 
+  // Envio da mensagem
   document.getElementById('chatForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -155,7 +161,7 @@
         messageInput.focus();
       }
     })
-    .catch(err => console.error(err));
+    .catch(err => console.error('Erro ao enviar:', err));
   });
 </script>
 @endpush
