@@ -17,47 +17,47 @@
 
 <div class="card">
   <div class="card-body chat-body" id="chatMessages">
-   @foreach($messages as $m)
-  @php
-      $mine = ($m->senderId === auth()->id());
+    @foreach($messages as $m)
+      @php
+          $mine = ($m->senderId === auth()->id());
 
-      // Resolver o nome bonito (compatível com PHP 7.4)
-      $name = 'Usuário';
+          // Resolver o nome bonito (compatível com Laravel 7 / PHP 7.4)
+          $name = 'Usuário';
 
-      if ($m->senderType === 'admin') {
-          $sender = \App\Models\Admin::find($m->senderId);
-          if ($sender) {
-              if ($sender->role === 'director' && !empty($sender->directorName)) {
-                  $name = $sender->directorName;
-              } elseif ($sender->role === 'department_head' && $sender->employee && !empty($sender->employee->fullName)) {
-                  $name = $sender->employee->fullName;
-              } else {
-                  $name = $sender->email;
+          if ($m->senderType === 'admin') {
+              $sender = \App\Models\Admin::find($m->senderId);
+              if ($sender) {
+                  if ($sender->role === 'director' && !empty($sender->directorName)) {
+                      $name = $sender->directorName;
+                  } elseif ($sender->role === 'department_head' && $sender->employee && !empty($sender->employee->fullName)) {
+                      $name = $sender->employee->fullName;
+                  } else {
+                      $name = $sender->email;
+                  }
               }
+          } elseif ($m->senderType === 'employeee') {
+              $employee = \App\Models\Employeee::find($m->senderId);
+              $name = $employee ? ($employee->fullName ?? $m->senderEmail ?? 'Usuário') : 'Usuário';
+          } else {
+              $name = $m->senderEmail ?? 'Usuário';
           }
-      } elseif ($m->senderType === 'employeee') {
-          $employee = \App\Models\Employeee::find($m->senderId);
-          $name = $employee ? ($employee->fullName ?? $m->senderEmail ?? 'Usuário') : 'Usuário';
-      } else {
-          $name = $m->senderEmail ?? 'Usuário';
-      }
-  @endphp
+      @endphp
 
-  <div class="mb-3 d-flex {{ $mine ? 'justify-content-end' : 'justify-content-start' }}">
-    <div class="{{ $mine ? 'bubble-right' : 'bubble-left' }}">
-      <strong>{{ $name }}</strong><br>
-      <span>{{ $m->message }}</span><br>
-      <small class="text-muted">{{ $m->created_at->format('H:i') }}</small>
-    </div>
-  </div>
-@endforeach
+      <div class="mb-3 d-flex {{ $mine ? 'justify-content-end' : 'justify-content-start' }}">
+        <div class="{{ $mine ? 'bubble-right' : 'bubble-left' }}">
+          <strong>{{ $name }}</strong><br>
+          <span>{{ $m->message }}</span><br>
+          <small class="text-muted">{{ $m->created_at->format('H:i') }}</small>
+        </div>
+      </div>
+    @endforeach
   </div>
 
   <div class="card-footer">
     <form id="chatForm" class="d-flex" autocomplete="off">
       @csrf
       <input type="hidden" name="chatGroupId" value="{{ $group->id }}">
-      <input type="text" name="message" class="form-control me-2" placeholder="Digite sua mensagem..." required>
+      <input type="text" name="message" class="form-control me-2" placeholder="Digite sua mensagem..." required autofocus>
       <button type="submit" class="btn btn-success">
         <i class="fa fa-paper-plane"></i> Enviar
       </button>
@@ -100,6 +100,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.11.0/echo.iife.js"></script>
 <script>
   Pusher.logToConsole = false;
+
   window.Echo = new Echo({
     broadcaster: 'pusher',
     key: '{{ env("PUSHER_APP_KEY") }}',
@@ -118,6 +119,7 @@
     setTimeout(scrollToBottom, 200);
   });
 
+  // Recebe mensagens em tempo real via Pusher
   window.Echo.channel('chat-group.{{ $group->id }}')
     .listen('NewChatMessageSent', (e) => {
       const mine = (e.senderId === {{ auth()->id() }});
@@ -138,21 +140,30 @@
       scrollToBottom();
     });
 
+  // Envio da mensagem (limpa o campo após sucesso)
   document.getElementById('chatForm').addEventListener('submit', function(e) {
     e.preventDefault();
+
     const formData = new FormData(this);
+    const messageInput = this.querySelector('input[name="message"]');
+
     fetch("{{ route('new-chat.sendMessage') }}", {
       method: 'POST',
-      headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+      headers: {
+        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+      },
       body: formData
     })
     .then(response => response.json())
     .then(data => {
       if (data.status === 'ok') {
-        this.message.value = '';
+        messageInput.value = '';
+        messageInput.focus();
       }
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+      console.error('Erro ao enviar mensagem:', err);
+    });
   });
 </script>
 @endpush
