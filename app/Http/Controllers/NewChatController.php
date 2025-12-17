@@ -101,6 +101,7 @@ class NewChatController extends Controller
                 // Conversas individuais entre o chefe e os funcionários do departamento
                 $employees = Employeee::where('departmentId', $user->department_id)->get();
                 foreach ($employees as $emp) {
+                    // Evita criar uma conversa do chefe com ele mesmo
                     if ($emp->id != ($user->employee->id ?? 0)) {
                         $conversationKey = "individual_employee_{$emp->id}_{$user->employee->id}";
                         $ind = ChatGroup::firstOrCreate(
@@ -223,6 +224,7 @@ class NewChatController extends Controller
             ? 'admin'
             : 'employeee';
 
+        // Armazena o e-mail fixo do usuário que envia a mensagem
         $msg = ChatMessage::create([
             'chatGroupId' => $group->id,
             'senderId'    => $user->id,
@@ -238,7 +240,6 @@ class NewChatController extends Controller
 
     /**
      * Verifica se o usuário logado tem permissão para acessar o grupo de chat.
-     * CORRIGIDO para suportar todas as conversas individuais criadas
      */
     private function userCanViewGroup(ChatGroup $group): bool
     {
@@ -246,12 +247,12 @@ class NewChatController extends Controller
 
         // Grupo de DIRETORES
         if ($group->groupType === 'directorGroup') {
-            return $user->role === 'director';
+            return ($user->role === 'director');
         }
 
         // Grupo de CHEFES DE DEPARTAMENTO
         if ($group->groupType === 'departmentHeadsGroup') {
-            return $user->role === 'department_head';
+            return ($user->role === 'department_head');
         }
 
         // Grupo de DEPARTAMENTO
@@ -260,47 +261,47 @@ class NewChatController extends Controller
                 return $user->department_id == $group->departmentId;
             } elseif ($user->role === 'employee') {
                 $emp = Employeee::where('email', $user->email)->first();
-                return $emp && $emp->departmentId == $group->departmentId;
+                return ($emp && $emp->departmentId == $group->departmentId);
             }
             return false;
         }
 
-        // Conversas INDIVIDUAIS
-        if ($group->groupType === 'individual' && $group->conversation_key) {
-            // Caso 1: individual_X_Y (diretor ↔ diretor ou diretor ↔ department_head)
-            if (str_starts_with($group->conversation_key, 'individual_') && !str_contains($group->conversation_key, 'individual_employee')) {
+        // Grupo de CONVERSA INDIVIDUAL
+        if ($group->groupType === 'individual') {
+            if (isset($group->conversation_key)) {
+                // Espera o formato: "individual_employee_{empId}_{headId}"
                 $parts = explode('_', $group->conversation_key);
-                if (count($parts) >= 3) {
-                    $id1 = (int)$parts[1];
-                    $id2 = (int)$parts[2];
-                    return in_array($user->id, [$id1, $id2]);
-                }
-            }
+                $empId = isset($parts[2]) ? intval($parts[2]) : null;
+                $headId = isset($parts[3]) ? intval($parts[3]) : null;
 
-            // Caso 2: individual_employee_X_Y (funcionário ↔ chefe de departamento)
-            if (str_starts_with($group->conversation_key, 'individual_employee_')) {
-                $parts = explode('_', $group->conversation_key);
-                if (count($parts) >= 4) {
-                    $empId  = (int)$parts[2];
-                    $headId = (int)$parts[3];
-
-                    if ($user->role === 'employee') {
-                        $currentEmp = Employeee::where('email', $user->email)->first();
-                        return $currentEmp && in_array($currentEmp->id, [$empId, $headId]);
-                    }
-
-                    if ($user->role === 'department_head') {
-                        return !empty($user->employee) && in_array($user->employee->id, [$empId, $headId]);
+                // Se o usuário for funcionário, usamos o ID da tabela employeees
+                if ($user->role === 'employee') {
+                    $currentEmp = Employeee::where('email', $user->email)->first();
+                    if ($currentEmp) {
+                        return in_array($currentEmp->id, [$empId, $headId]);
                     }
                 }
+                // Se for chefe de departamento, utilizamos o id do funcionário vinculado ao admin
+                elseif ($user->role === 'department_head') {
+                    if (!empty($user->employee) && isset($user->employee->id)) {
+                        return in_array($user->employee->id, [$empId, $headId]);
+                    }
+                    return in_array($user->id, [$empId, $headId]);
+                }
+                // Para outros roles, comparamos diretamente com o user->id
+                return in_array($user->id, [$empId, $headId]);
             }
+            // Fallback: busca pelo nome no título do grupo
+            $userName = $user->employee ? $user->employee->fullName : $user->email;
+            return str_contains($group->name, $userName);
         }
 
-        // Fallback seguro (por nome no título) - mantém compatibilidade antiga
-        $userDisplayName = $user->employee->fullName ?? $user->directorName ?? $user->email;
-        return str_contains($group->name, $userDisplayName);
+        return false;
     }
 
+    /**
+     * Retorna o título do departamento para exibição.
+     */
     private function getDepartmentTitle($deptId): string
     {
         $d = Department::find($deptId);

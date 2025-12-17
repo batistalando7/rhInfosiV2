@@ -19,13 +19,28 @@
   <div class="card-body chat-body" id="chatMessages">
     @foreach($messages as $m)
       @php
-          // Define se a mensagem é minha para alinhar a bolha
-          // Usando Auth::id() para garantir que a comparação seja correta
-          $mine = ($m->senderId === Auth::id()); 
-          // O campo senderEmail não existe no modelo ChatMessage, mas sim no relacionamento 'sender'.
-          // Assumindo que o relacionamento 'sender' está carregado e tem um campo 'name' ou 'email'.
-          // Se o relacionamento for com o modelo User/Admin, use $m->sender->name ou $m->sender->email
-          $name = $m->sender->name ?? 'Usuário Desconhecido'; 
+          $mine = ($m->senderId === auth()->id());
+
+          // Resolver o nome bonito (mesma lógica do evento)
+          $name = 'Usuário';
+
+          if ($m->senderType === 'admin') {
+              $sender = \App\Models\Admin::find($m->senderId);
+              if ($sender) {
+                  if ($sender->role === 'director' && !empty($sender->directorName)) {
+                      $name = $sender->directorName;
+                  } elseif ($sender->role === 'department_head' && $sender->employee && !empty($sender->employee->fullName)) {
+                      $name = $sender->employee->fullName;
+                  } else {
+                      $name = $sender->email;
+                  }
+              }
+          } elseif ($m->senderType === 'employeee') {
+              $employee = \App\Models\Employeee::find($m->senderId);
+              $name = $employee?->fullName ?? $m->senderEmail ?? 'Usuário';
+          } else {
+              $name = $m->senderEmail ?? 'Usuário';
+          }
       @endphp
 
       <div class="mb-3 d-flex {{ $mine ? 'justify-content-end' : 'justify-content-start' }}">
@@ -37,6 +52,7 @@
       </div>
     @endforeach
   </div>
+
   <div class="card-footer">
     <form id="chatForm" class="d-flex" autocomplete="off">
       @csrf
@@ -59,7 +75,7 @@
     height: 500px;
     overflow-y: auto;
     background: #f9f9f9;
-    -webkit-overflow-scrolling: touch; /* ADICIONADO para iOS Safari */
+    -webkit-overflow-scrolling: touch;
   }
   .bubble-left, .bubble-right {
     max-width: 60%;
@@ -93,24 +109,18 @@
 
   const chatBox = document.getElementById('chatMessages');
 
-  // Função para forçar scroll ao final
   function scrollToBottom() {
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 
-  // Força o scroll para o fim assim que a página carrega
   document.addEventListener('DOMContentLoaded', () => {
     scrollToBottom();
     setTimeout(scrollToBottom, 200);
   });
 
-  // Recebendo novas mensagens via Pusher
   window.Echo.channel('chat-group.{{ $group->id }}')
     .listen('NewChatMessageSent', (e) => {
-      // Usando Auth::id() no Blade, mas aqui precisamos do ID do usuário logado no JS
-      // Assumindo que você tem uma variável global com o ID do usuário logado,
-      // ou que o 'e.senderId' é o ID do usuário que enviou a mensagem.
-      const mine = (e.senderId === {{ Auth::id() }}); 
+      const mine = (e.senderId === {{ auth()->id() }});
       const bubbleClass = mine ? 'bubble-right' : 'bubble-left';
       const alignment   = mine ? 'justify-content-end' : 'justify-content-start';
       const time = new Date(e.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -128,32 +138,21 @@
       scrollToBottom();
     });
 
-  // Envio de mensagem
   document.getElementById('chatForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(this);
-    // **CORREÇÃO AQUI:** Usando a rota nomeada 'new-chat.sendMessage'
     fetch("{{ route('new-chat.sendMessage') }}", {
       method: 'POST',
       headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
       body: formData
     })
-    .then(response => {
-        if (!response.ok) {
-            // Se a resposta não for OK (ex: 403 Forbidden), exibe o erro
-            return response.json().then(err => { throw new Error(err.message || 'Erro ao enviar mensagem. Acesso negado ou erro de servidor.'); });
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
       if (data.status === 'ok') {
         this.message.value = '';
       }
     })
-    .catch(err => {
-        console.error(err);
-        alert(err.message); // Alerta o usuário sobre o erro de permissão
-    });
+    .catch(err => console.error(err));
   });
 </script>
 @endpush
