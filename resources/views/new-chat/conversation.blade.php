@@ -1,7 +1,6 @@
 @extends('layouts.admin.chat-layout')
 
 @section('content')
-<!-- Grupo de botões para navegação -->
 <div class="mb-3 d-flex justify-content-between align-items-center">
   <div>
     <a href="{{ route('dashboard') }}" class="btn btn-secondary me-2">
@@ -20,8 +19,6 @@
     @foreach($messages as $m)
       @php
           $mine = ($m->senderId === auth()->id());
-
-          // Resolver o nome bonito (compatível com Laravel 7 / PHP 7.4)
           $name = 'Usuário';
 
           if ($m->senderType === 'admin') {
@@ -69,12 +66,13 @@
 @push('styles')
 <style>
   .chat-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     height: 500px;
     overflow-y: auto;
     background: #f9f9f9;
+    padding: 15px;
+    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
     -webkit-overflow-scrolling: touch;
   }
   .bubble-left, .bubble-right {
@@ -87,10 +85,12 @@
   .bubble-left {
     background: #e2e2e2;
     color: #000;
+    align-self: flex-start;
   }
   .bubble-right {
     background: #007bff;
     color: #fff;
+    align-self: flex-end;
   }
 </style>
 @endpush
@@ -99,7 +99,7 @@
 <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.11.0/echo.iife.js"></script>
 <script>
-  Pusher.logToConsole = false;
+  Pusher.logToConsole = true; // ← ATIVA LOGS PARA DEBUG (depois da apresentação desativa)
 
   window.Echo = new Echo({
     broadcaster: 'pusher',
@@ -114,17 +114,17 @@
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    scrollToBottom();
-    setTimeout(scrollToBottom, 200);
-  });
+  // Scroll inicial
+  scrollToBottom();
 
-  // Recebe mensagens em tempo real via Pusher
+  // Listener Pusher — com debug
   window.Echo.channel('chat-group.{{ $group->id }}')
     .listen('NewChatMessageSent', (e) => {
+      console.log('Mensagem recebida via Pusher:', e); // ← Ver no console se chega
+
       const mine = (e.senderId === {{ auth()->id() }});
       const bubbleClass = mine ? 'bubble-right' : 'bubble-left';
-      const alignment   = mine ? 'justify-content-end' : 'justify-content-start';
+      const alignment = mine ? 'justify-content-end' : 'justify-content-start';
       const time = new Date(e.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
       const msgHtml = `
@@ -136,11 +136,12 @@
           </div>
         </div>
       `;
+
       chatBox.insertAdjacentHTML('beforeend', msgHtml);
       scrollToBottom();
     });
 
-  // Envio da mensagem (limpa o campo após sucesso)
+  // Envio da mensagem
   document.getElementById('chatForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -156,14 +157,14 @@
     })
     .then(response => response.json())
     .then(data => {
+      console.log('Resposta do envio:', data);
       if (data.status === 'ok') {
         messageInput.value = '';
         messageInput.focus();
+        // Não precisa scroll aqui — o Pusher vai fazer
       }
     })
-    .catch(err => {
-      console.error('Erro ao enviar mensagem:', err);
-    });
+    .catch(err => console.error('Erro:', err));
   });
 </script>
 @endpush
