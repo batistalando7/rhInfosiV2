@@ -14,7 +14,7 @@
         <!-- Cards -->
         <div class="row g-4">
             <!-- Total de Funcionários -->
-            <div class="col-xxl-3 col-md-6">
+            <div class="col-xxl-3 col-md-4">
                 <div class="card stretch stretch-full">
                     <div class="card-body">
                         <div class="d-flex align-items-start justify-content-between mb-4">
@@ -24,7 +24,7 @@
                                 </div>
                                 <div>
                                     <div class="fs-4 fw-bold text-dark">{{ $totalEmployees }}</div>
-                                    <h3 class="fs-13 fw-semibold text-truncate-1-line">Total de Funcionários</h3>
+                                    <h3 class="fs-13 fw-semibold ">Total de Funcionários</h3>
                                 </div>
                             </div>
                             <a href="{{ route('employeee.index') }}" class="">
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <!-- Funcionários Ativos -->
-            <div class="col-xxl-3 col-md-6">
+            <div class="col-xxl-3 col-md-4">
                 <div class="card stretch stretch-full">
                     <div class="card-body">
                         <div class="d-flex align-items-start justify-content-between mb-4">
@@ -57,7 +57,7 @@
                                 </div>
                                 <div>
                                     <div class="fs-4 fw-bold text-dark">{{ $activeEmployees }}</div>
-                                    <h3 class="fs-13 fw-semibold text-truncate-1-line"> Funcionários Ativos</h3>
+                                    <h3 class="fs-13 fw-semibold "> Funcionários Ativos</h3>
                                 </div>
                             </div>
                             <a href="{{ route('employeee.filterByStatus', ['status' => 'active']) }}" class="">
@@ -80,7 +80,7 @@
                 </div>
             </div>
             <!-- Funcionários Destacados -->
-            <div class="col-xxl-3 col-md-6">
+            <div class="col-xxl-3 col-md-4">
                 <div class="card stretch stretch-full">
                     <div class="card-body">
                         <div class="d-flex align-items-start justify-content-between mb-4">
@@ -90,7 +90,7 @@
                                 </div>
                                 <div>
                                     <div class="fs-4 fw-bold text-dark">{{ $highlightedEmployees }}</div>
-                                    <h3 class="fs-13 fw-semibold text-truncate-1-line">Funcionários Destacados</h3>
+                                    <h3 class="fs-13 fw-semibold ">Funcionários Destacados</h3>
                                 </div>
                             </div>
                             <a href="{{ route('secondment.index') }}" class="">
@@ -123,7 +123,7 @@
                                 </div>
                                 <div>
                                     <div class="fs-4 fw-bold text-dark">{{ $retiredEmployees }}</div>
-                                    <h3 class="fs-13 fw-semibold text-truncate-1-line">Funcionários Reformados</h3>
+                                    <h3 class="fs-13 fw-semibold ">Funcionários Reformados</h3>
                                 </div>
                             </div>
                             <a href="{{ route('retirements.index') }}" class="">
