@@ -53,7 +53,7 @@
           <div class="form-floating">
             <select name="departmentId" class="form-select">
               <option value="" selected>Todos os departamentos</option>
-              @foreach($departaments as $type)
+              @foreach($departments as $type)
               <option value="{{ $type->id }}"
                   {{ (request("departmentId", $selectedDepartment ?? "") == $type->id) ? "selected" : "" }}>
                   {{ $type->title }}
@@ -130,7 +130,7 @@
               <option value="" selected>Todos os Cursos</option>
               @foreach($courses as $type)
                 <option value="{{ $type->id }}"
-                  {{ (request("courseId", $selectedType ?? "") == $type->id) ? "selected" : "" }}>
+                  {{ (request("courseId", $selectedType ?? null) == $type->id) ? "selected" : "" }}>
                   {{ $type->name }}
                 </option>
               @endforeach

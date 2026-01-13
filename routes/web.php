@@ -199,8 +199,8 @@ Route::middleware(["auth"])->group(function () {
 
      // ====================== Filtros por datas (Funcionários / Estagiários) ======================
      // Funcionários
-     Route::get("employeee/filter", [EmployeeeController::class, "filterByDate"])->name("employeee.filter");
-     Route::get("employeee/filter/pdf", [EmployeeeController::class, "pdfFiltered"])->name("employeee.filter.pdf");
+    /*  Route::get("employeee/filter", [EmployeeeController::class, "filterByDate"])->name("employeee.filter");
+     Route::get("employeee/filter/pdf", [EmployeeeController::class, "pdfFiltered"])->name("employeee.filter.pdf"); */
      // Estagiários
      Route::get("intern/filter", [InternController::class, "filterByDate"])->name("intern.filter");
      Route::get("intern/filter/pdf", [InternController::class, "pdfFiltered"])->name("intern.filter.pdf");

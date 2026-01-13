@@ -317,6 +317,9 @@ class EmployeeeController extends Controller
         $endDate   = $request->input('end_date');
         $typeId    = $request->input('employeeTypeId');
         $categoryId = $request->input('employeeCategoryId');
+        $specialityId = $request->input('specialityId');
+        $positionId = $request->input('positionId');
+        $departmentId = $request->input('departmentId');
         $academicLevel = $request->input('academicLevel'); // Adicionado
         $courseId = $request->input('courseId'); // Adicionado
         $query = Employeee::query();
@@ -347,10 +350,24 @@ class EmployeeeController extends Controller
         if ($courseId) { // Adicionado
             $query->where('courseId', $courseId);
         }
+        if ($specialityId) {
+            $query->where('specialityId', $specialityId);
+        }
+
+        if ($positionId) {
+            $query->where('positionId', $positionId);
+        }
+
+        if ($departmentId) {
+            $query->where('departmentId', $departmentId);
+        }
 
         $filtered = $query->orderByDesc('id')->get();
 
         return view('admin.employeee.filter', [
+            'departments' => $departments,
+            'speciality' => $speciality,
+            'position' => $position,
             'employeeTypes' => $employeeTypes,
             'employeeCategories' => $employeeCategories,
             'courses' => $courses, // Adicionado
@@ -361,18 +378,18 @@ class EmployeeeController extends Controller
             'selectedCategory' => $categoryId,
             'selectedAcademicLevel' => $academicLevel, // Adicionado
             'selectedCourse' => $courseId, // Adicionado
-            'selectedEspeciality' => $speciality, // Adicionado
-            'selectedPosition' => $position, // Adicionado
-            'selectedDepartment' => $departments, // Adicionado
+            'selectedSpeciality' => $specialityId,
+            'selectedPosition' => $positionId,
+            'selectedDepartment' => $departmentId,
         ]);
     }
 
-    public function filterByStatus(Request $request)
+    /*     public function filterByStatus(Request $request)
     {
         $status = $request->input('status');
         $data = Employeee::where('employmentStatus', $status)->orderByDesc('id')->get();
         return view('admin.employeee.list.index', ['data' => $data]);
-    }
+    } */
 
     public function pdfFiltered(Request $request)
     {

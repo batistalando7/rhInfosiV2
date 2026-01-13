@@ -21,4 +21,10 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get('/detalhes/{id}', [EmployeeeController::class, 'show'])->name('employeee.show');
         Route::delete('/deletar/{id}', [EmployeeeController::class, 'destroy'])->name('employeee.destroy');
     });
+
+    
 });
+// ====================== Filtros por datas (Funcionários / Estagiários) ======================
+    // Funcionários
+    Route::get("employeee/filter", [EmployeeeController::class, "filterByDate"])->name("employeee.filter");
+    Route::get("employeee/filter/pdf", [EmployeeeController::class, "pdfFiltered"])->name("employeee.filter.pdf");
