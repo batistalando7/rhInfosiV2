@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Employeee;
 use App\Models\Secondment;
 use App\Models\Intern;
@@ -80,7 +81,7 @@ class DashboardController extends Controller
         // Passar dados a JS em JSON (valores re-indexados)
         $categoryDataJson = $categoryData->toJson();
 
-        return view('dashboard.index', compact(
+        return view('admin.dashboard.index', compact(
             'totalEmployees',
             'activeEmployees',
             'retiredEmployees',

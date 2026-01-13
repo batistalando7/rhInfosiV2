@@ -17,7 +17,7 @@
         }
     </style>
     <div class="sidebar-header">
-        <a href="{{ route('dashboard') }}" class="sidebar-brand">INFOSI RH</a>
+        <a href="{{ route('admin.dashboard') }}" class="sidebar-brand">INFOSI RH</a>
     </div>
     <ul class="sidebar-nav">
         @if(Auth::check())
@@ -26,7 +26,7 @@
             <!-- Painel -->
             <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Painel</li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+                <a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('frontend.index') }}" target="_blank"><i class="fas fa-globe me-2"></i> SITE</a>
@@ -112,8 +112,8 @@
                     </a>
                     <div class="collapse" id="collapseEmp">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('employeee') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('employeee/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.employeee.index') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.employeee.create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>

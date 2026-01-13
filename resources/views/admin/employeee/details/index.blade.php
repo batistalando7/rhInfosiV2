@@ -17,7 +17,7 @@
       <h3><i class="fas fa-eye me-2"></i>Ver Funcionário</h3>
     </div>
     <div class="col-4 text-end">
-      <a href="{{ route("employeee.index") }}" style="width: 90px;" class="btn btn-outline-secondary btn-sm me-2">
+      <a href="{{ route("admin.employeee.index") }}" style="width: 90px;" class="btn btn-outline-secondary btn-sm me-2">
         <i class="fas fa-arrow-left"></i> Voltar
       </a>
       <a href="{{ route("employeee.showPdf", $data->id) }}" style="width: 90px;" class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener noreferrer">

@@ -15,7 +15,7 @@
             <a href="{{ route('employeee.filter') }}" class="btn btn-outline-secondary btn-sm">
                 <i class="fas fa-calendar-alt"></i> Filtrar
             </a>
-            <a href="{{ route('employeee.create') }}" class="btn btn-outline-secondary btn-sm">
+            <a href="{{ route('admin.employeee.create') }}" class="btn btn-outline-secondary btn-sm">
                 Novo <i class="fas fa-plus-circle"></i>
             </a>
         </div>
@@ -62,10 +62,10 @@
                     <td>{{ $d->academicLevel ?? '-' }}</td>
                     <td>{{ $d->course->name ?? '-' }}</td>
                     <td>
-                        <a href="{{ route('employeee.show',$d->id) }}" class="btn btn-warning btn-sm">
+                        <a href="{{ route('admin.employeee.show',$d->id) }}" class="btn btn-warning btn-sm">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('employeee.edit',$d->id) }}" class="btn btn-info btn-sm">
+                        <a href="{{ route('admin.employeee.edit',$d->id) }}" class="btn btn-info btn-sm">
                             <i class="fas fa-pencil-alt"></i>
                         </a>
                         <a href="#" data-url="{{ url('employeee/'.$d->id.'/delete') }}"

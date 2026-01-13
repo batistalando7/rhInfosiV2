@@ -27,13 +27,13 @@
                                     <h3 class="fs-13 fw-semibold ">Total de Funcionários</h3>
                                 </div>
                             </div>
-                            <a href="{{ route('employeee.index') }}" class="">
+                            <a href="{{ route('admin.employeee.index') }}" class="">
                                 <i data-feather="more-vertical"></i>
                             </a>
                         </div>
                         <div class="pt-4">
                             <div class="d-flex align-items-center justify-content-between">
-                                <a href="{{ route('employeee.index') }}" class="fs-12 fw-medium text-muted text-truncate-1-line">Ver Detalhes</a>
+                                <a href="{{ route('admin.employeee.index') }}" class="fs-12 fw-medium text-muted text-truncate-1-line">Ver Detalhes</a>
                                 <div class="w-100 text-end">
                                     <span class="fs-12 text-dark">{{ $totalEmployees }}</span>
                                     <span class="fs-11 text-muted">(100%)</span>
@@ -199,7 +199,7 @@
                                     </div>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a href="{{ route('employeee.index') }}" class="dropdown-item"><i data-feather="users"></i>Ver todos</a>
+                                    <a href="{{ route('admin.employeee.index') }}" class="dropdown-item"><i data-feather="users"></i>Ver todos</a>
                                     <a href="javascript:void(0);" class="dropdown-item"><i data-feather="settings"></i>Configurações</a>
                                 </div>
                             </div>
@@ -263,7 +263,7 @@
                                 <h5 class="mb-1">Distribuição de Funcionários</h5>
                                 <span class="fs-12 text-muted">Percentagem por Tipo de Contrato</span>
                             </div>
-                            <a href="{{ route('employeee.index') }}" class="btn btn-light-brand">Ver Todos</a>
+                            <a href="{{ route('admin.employeee.index') }}" class="btn btn-light-brand">Ver Todos</a>
                         </div>
                         <div class="row g-4">
                             <div class="col-md-6">

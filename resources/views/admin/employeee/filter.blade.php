@@ -20,7 +20,7 @@
         </a>
       @endif
 
-      <a href="{{ route("employeee.index") }}" class="btn btn-outline-light btn-sm" title="Voltar">
+      <a href="{{ route("admin.employeee.index") }}" class="btn btn-outline-light btn-sm" title="Voltar">
         <i class="fas fa-arrow-left"></i> Voltar
       </a>
     </div>
@@ -48,11 +48,56 @@
           </div>
         </div>
 
+        <!-- Departamento -->
+        <div class="col-md-3">
+          <div class="form-floating">
+            <select name="departmentId" class="form-select">
+              <option value="" selected>Todos os departamentos</option>
+              @foreach($departaments as $type)
+              <option value="{{ $type->id }}"
+                  {{ (request("departmentId", $selectedDepartment ?? "") == $type->id) ? "selected" : "" }}>
+                  {{ $type->title }}
+                </option>
+                @endforeach
+            </select>
+            <label for="departmentId">Departamento</label>
+          </div>
+        </div>
+        <!-- Cargo -->
+        <div class="col-md-3">
+          <div class="form-floating">
+            <select name="positionId" class="form-select">
+              <option value="" selected>Todos os cargos</option>
+              @foreach($position as $type)
+                <option value="{{ $type->id }}"
+                  {{ (request("positionId", $selectedPosition ?? "") == $type->id) ? "selected" : "" }}>
+                  {{ $type->name }}
+                </option>
+                @endforeach
+            </select>
+            <label for="positionId">Cargo</label>
+          </div>
+        </div>
+        <!-- Especialidade -->
+        <div class="col-md-3">
+          <div class="form-floating">
+            <select name="specialityId" class="form-select">
+              <option value="" selected>Todas as Especialidades</option>
+              @foreach($speciality as $type)
+              <option value="{{ $type->id }}"
+                {{ (request("specialityId", $selectedSpeciality ?? "") == $type->id) ? "selected" : "" }}>
+                  {{ $type->name }}
+                </option>
+                @endforeach
+            </select>
+            <label for="specialityId">Especialidade</label>
+          </div>
+        </div>
         <!-- Tipo de Funcionário -->
         <div class="col-md-3">
           <div class="form-floating">
             <select name="employeeTypeId" class="form-select">
-              <option value="">Todos os Tipos</option>
+              <option value="" selected>Todos os Tipos</option>
               @foreach($employeeTypes as $type)
                 <option value="{{ $type->id }}"
                   {{ (request("employeeTypeId", $selectedType ?? "") == $type->id) ? "selected" : "" }}>
@@ -63,13 +108,43 @@
             <label for="employeeTypeId">Tipo de Funcionário</label>
           </div>
         </div>
-
-        <!-- Botão Filtrar -->
+        <!-- Categoria -->
         <div class="col-md-3">
-          <button type="submit" class="btn btn-primary w-100">
-            <i class="fas fa-search"></i> Filtrar
-          </button>
+          <div class="form-floating">
+            <select name="employeeCategoryId" class="form-select">
+              <option value="" selected>Todas as categorias</option>
+              @foreach($employeeCategories as $type)
+                <option value="{{ $type->id }}"
+                  {{ (request("employeeCategoryId", $selectedType ?? "") == $type->id) ? "selected" : "" }}>
+                  {{ $type->name }}
+                </option>
+              @endforeach
+            </select>
+            <label for="employeeTypeId">Categorias de Funcionários</label>
+          </div>
         </div>
+        <!-- Cursos -->
+        <div class="col-md-3">
+          <div class="form-floating">
+            <select name="courseId" class="form-select">
+              <option value="" selected>Todos os Cursos</option>
+              @foreach($courses as $type)
+                <option value="{{ $type->id }}"
+                  {{ (request("courseId", $selectedType ?? "") == $type->id) ? "selected" : "" }}>
+                  {{ $type->name }}
+                </option>
+              @endforeach
+            </select>
+            <label for="courseId">Cursos</label>
+          </div>
+        </div>
+
+      </div>
+      <!-- Botão Filtrar -->
+      <div class="col-md-3 m-auto mt-3">
+        <button type="submit" class="btn btn-primary w-100">
+          <i class="fas fa-search"></i> Filtrar
+        </button>
       </div>
     </form>
 
