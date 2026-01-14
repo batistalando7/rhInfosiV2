@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Intern;
 use App\Models\Department;
@@ -14,7 +15,7 @@ class InternController extends Controller
     public function index()
     {
         $data = Intern::orderByDesc('id')->get();
-        return view('intern.index', compact('data'));
+        return view('admin.intern.list.index', compact('data'));
     }
 
     public function create()
@@ -22,7 +23,7 @@ class InternController extends Controller
         $departments = Department::all();
         $specialties = Specialty::all();
 
-        return view('intern.create', compact('departments', 'specialties'));
+        return view('admin.intern.create.index', compact('departments', 'specialties'));
     }
 
     public function store(Request $request)
@@ -71,13 +72,13 @@ class InternController extends Controller
         $intern->institution     = $request->institution;
         $intern->save();
 
-        return redirect()->route('intern.create')->with('msg', 'Estagiário cadastrado com sucesso');
+        return redirect()->route('admin.intern.create')->with('msg', 'Estagiário cadastrado com sucesso');
     }
 
     public function show($id)
     {
         $data = Intern::findOrFail($id);
-        return view('intern.show', compact('data'));
+        return view('admin.intern.details.index', compact('data'));
     }
 
     public function edit($id)
@@ -86,7 +87,7 @@ class InternController extends Controller
         $departments = Department::orderByDesc('id')->get();
         $specialties = Specialty::all();
 
-        return view('intern.edit', compact('data', 'departments', 'specialties'));
+        return view('admin.intern.edit.index', compact('data', 'departments', 'specialties'));
     }
 
     public function update(Request $request, $id)
@@ -96,8 +97,8 @@ class InternController extends Controller
             'fullName'         => 'required',
             'address'          => 'required',
             'mobile'           => 'required',
-            'bi'               => 'required|unique:interns,bi,'.$id,
-            'email'            => 'required|email|unique:interns,email,'.$id,
+            'bi'               => 'required|unique:interns,bi,' . $id,
+            'email'            => 'required|email|unique:interns,email,' . $id,
             'nationality'      => 'required',
             'internshipStart'  => 'required|date|date_format:Y-m-d',
             'internshipEnd'    => 'required|date|date_format:Y-m-d|after_or_equal:internshipStart',
@@ -120,13 +121,21 @@ class InternController extends Controller
         $intern->nationality     = $request->nationality;
         $intern->save();
 
-        return redirect()->route('intern.edit', $id)->with('msg', 'Estagiário atualizado com sucesso');
+        return redirect()->route('admin.intern.edit', $id)->with('msg', 'Estagiário atualizado com sucesso');
     }
+
+    public function destroy($id)
+    {
+        Intern::destroy($id);
+        return redirect()->route('admin.intern.list.index');
+    }
+
+    /* ==================== Filtros e relatorios ==================== */
 
     public function filterByDate(Request $request)
     {
         if (!$request->has('start_date') && !$request->has('end_date')) {
-            return view('intern.filter');
+            return view('admin.intern.filter');
         }
 
         $request->validate([
@@ -138,13 +147,13 @@ class InternController extends Controller
         $end   = Carbon::parse($request->end_date)->endOfDay();
 
         $filtered = Intern::whereBetween('created_at', [$start, $end])
-                          ->orderByDesc('id')
-                          ->get();
+            ->orderByDesc('id')
+            ->get();
 
         $startDate = $request->start_date;
         $endDate   = $request->end_date;
 
-        return view('intern.filter', [
+        return view('admin.intern.filter', [
             'filtered'  => $filtered,
             'startDate' => $startDate,
             'endDate'   => $endDate,
@@ -161,20 +170,20 @@ class InternController extends Controller
             'end_date'   => 'required|date|after_or_equal:start_date',
         ]);
 
-    
+
         $start = Carbon::parse($request->start_date)->startOfDay();
         $end   = Carbon::parse($request->end_date)->endOfDay();
 
         $filtered = Intern::whereBetween('created_at', [$start, $end])
-                          ->orderByDesc('id')
-                          ->get();
+            ->orderByDesc('id')
+            ->get();
 
         // Manter as datas no formato Y-m-d para exibir no título do PDF
-        $startDate = $request->start_date; 
+        $startDate = $request->start_date;
         $endDate   = $request->end_date;
 
-        $pdf = PDF::loadView('intern.filtered_pdf', compact('filtered', 'startDate', 'endDate'))
-                  ->setPaper('a3', 'portrait');
+        $pdf = PDF::loadView('pdf.intern.filtered_pdf', compact('filtered', 'startDate', 'endDate'))
+            ->setPaper('a3', 'portrait');
 
         return $pdf->stream("RelatorioInterns_{$startDate}_{$endDate}.pdf");
     }
@@ -182,15 +191,25 @@ class InternController extends Controller
     public function pdfAll()
     {
         $allInterns = Intern::with(['department', 'specialty'])->get();
-        $pdf = PDF::loadView('intern.intern_pdf', compact('allInterns'))
-                  ->setPaper('a3', 'portrait');
+        $pdf = PDF::loadView('pdf.intern.intern_pdf', compact('allInterns'))
+            ->setPaper('a3', 'portrait');
 
         return $pdf->stream('RelatorioTodosEstagiarios.pdf');
     }
 
-    public function destroy($id)
+    //Faz o download da ficha individual em PDF
+
+    public function showPdf($id)
     {
-        Intern::destroy($id);
-        return redirect()->route('intern.index');
+        // Carrega o funcionário e relacionamentos que você precisar exibir
+        $intern = Intern::with(['department', 'specialty']) // Adicionado
+            ->findOrFail($id);
+
+        // Renderiza o Blade 'admin.intern.show_pdf' e gera o PDF
+        $pdf = PDF::loadView('pdf.intern.show_pdf', compact(['intern']))
+            ->setPaper('a4', 'portrait');
+
+        // Força o download com nome de arquivo dinâmico
+        return $pdf->stream("Ficha_Estagiario_{$intern->id}.pdf");
     }
 }

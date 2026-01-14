@@ -123,8 +123,8 @@
                     </a>
                     <div class="collapse" id="collapseIntern">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('intern') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('intern/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.intern.index') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.intern.create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>

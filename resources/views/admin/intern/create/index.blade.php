@@ -5,12 +5,12 @@
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-person-plus me-2"></i>Novo Estagiário</span>
-    <a href="{{ route('intern.index') }}" class="btn btn-outline-light btn-sm" title="Ver todos">
+    <a href="{{ route('admin.intern.index') }}" class="btn btn-outline-light btn-sm" title="Ver todos">
       <i class="fa-solid fa-list"></i>
     </a>
   </div>
   <div class="card-body">
-    <form method="POST" action="{{ route('intern.store') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.intern.store') }}" enctype="multipart/form-data">
       @csrf
 
       <!-- Linha: Departamento, Especialidade -->

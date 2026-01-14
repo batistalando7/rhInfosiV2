@@ -184,7 +184,7 @@
             }
 
             navTimeout = setTimeout(() => {
-                fetch(`{{ route('employeee.navbar.search') }}?q=${query}`)
+                fetch(`{{ route('admin.employeee.navbar.search') }}?q=${query}`)
                     .then(res => res.json())
                     .then(data => {
                         if (!data.length) {

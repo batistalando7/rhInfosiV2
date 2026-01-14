@@ -202,10 +202,10 @@ Route::middleware(["auth"])->group(function () {
     /*  Route::get("employeee/filter", [EmployeeeController::class, "filterByDate"])->name("employeee.filter");
      Route::get("employeee/filter/pdf", [EmployeeeController::class, "pdfFiltered"])->name("employeee.filter.pdf"); */
      // Estagiários
-     Route::get("intern/filter", [InternController::class, "filterByDate"])->name("intern.filter");
+     /* Route::get("intern/filter", [InternController::class, "filterByDate"])->name("intern.filter");
      Route::get("intern/filter/pdf", [InternController::class, "pdfFiltered"])->name("intern.filter.pdf");
 
-
+ */
      // ====================== Rotas Para o Tipo de Funcionário (EmployeeType) ======================
      Route::resource("employeeType", EmployeeTypeController::class);
      Route::get("employeeType/{id}/delete", [EmployeeTypeController::class, "destroy"]);
@@ -222,7 +222,7 @@ Route::middleware(["auth"])->group(function () {
 
 
      // ====================== Funcionários (Employeee) ======================
-     Route::get(
+ /*     Route::get(
           '/navbar/employee-search',
           [EmployeeeController::class, 'navbarSearch']
      )->name('employeee.navbar.search');
@@ -230,7 +230,7 @@ Route::middleware(["auth"])->group(function () {
      Route::get("employeee/{id}/pdf", [EmployeeeController::class, "showPdf"])->name("employeee.showPdf");
      Route::get("employeee/pdf", [EmployeeeController::class, "pdfAll"])->name("employeee.pdfAll");
      /* Route::resource("employeee", EmployeeeController::class); */
-     Route::get("employeee/{id}/delete", [EmployeeeController::class, "destroy"]);
+    /*  Route::get("employeee/{id}/delete", [EmployeeeController::class, "destroy"]); */ 
 
      // Área da Avaliação dos Funcionários
      // routes/web.php
@@ -291,11 +291,11 @@ Route::middleware(["auth"])->group(function () {
      Route::get("specialties/{id}/delete", [SpecialtyController::class, "destroy"]);
 
 
-     // ====================== Estagiários (Intern) ======================
+     /* // ====================== Estagiários (Intern) ======================
      Route::get("intern/pdf", [InternController::class, "pdfAll"])->name("intern.pdfAll");
      Route::resource("intern", InternController::class);
      Route::get("intern/{id}/delete", [InternController::class, "destroy"]);
-
+ */
 
      // ====================== Pagamento de Salário (Salary Payment) ======================
      Route::get('salaryPayment/search-employee-ajax', [SalaryPaymentController::class, 'searchEmployeeAjax'])

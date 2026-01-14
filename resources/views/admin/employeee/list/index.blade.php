@@ -9,10 +9,10 @@
         <h4><i class="fas fa-users me-2"></i>Todos os Funcionários</h4>
 
         <div class="d-flex gap-2">
-            <a href="{{ route('employeee.pdfAll') }}" class="btn btn-outline-secondary btn-sm" target="_blank">
+            <a href="{{ route('admin.employeee.pdfAll') }}" class="btn btn-outline-secondary btn-sm" target="_blank">
                 <i class="fas fa-file-pdf"></i> PDF
             </a>
-            <a href="{{ route('employeee.filter') }}" class="btn btn-outline-secondary btn-sm">
+            <a href="{{ route('admin.employeee.filter') }}" class="btn btn-outline-secondary btn-sm">
                 <i class="fas fa-calendar-alt"></i> Filtrar
             </a>
             <a href="{{ route('admin.employeee.create') }}" class="btn btn-outline-secondary btn-sm">

@@ -10,7 +10,7 @@
     <div>
       {{-- Se já houver resultados filtrados, para exibir o botão de PDF --}}
       @if(isset($filtered) && $filtered->count() > 0)
-        <form action="{{ route('admin.employeee.filter.pdf')}}" method="post">
+        <form action="{{ route('admin.employeee.filter.pdf')}}" target="_blank" method="post">
           @csrf
           <!-- Campos ocultos para manter os filtros -->
           <input type="hidden" name="start_date" value="{{ request('start_date', $start ?? '') }}">
@@ -36,7 +36,7 @@
   
   <div class="card-body">
     {{-- Formulário de Filtro --}}
-    <form action="{{ route("employeee.filter") }}" method="GET" class="mb-4">
+    <form action="{{ route("admin.employeee.filter") }}" method="GET" class="mb-4">
       <div class="row g-3">
         <!-- Data Inicial -->
         <div class="col-md-3">

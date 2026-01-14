@@ -5,9 +5,14 @@
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-eye me-2"></i>Ver Estagiário</span>
-    <a href="{{ route('intern.index') }}" class="btn btn-outline-light btn-sm" title="View All">
-      <i class="fas fa-card-list"></i>
-    </a>
+    <div class="dropdown">
+      <a href="{{ route("admin.intern.index") }}" style="width: 90px;" class="btn btn-outline-light btn-sm me-2">
+        <i class="fas fa-arrow-left"></i> Voltar
+      </a>
+      <a href="{{ route("admin.intern.showPdf", $data->id) }}" style="width: 90px;" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">
+        <i class="fas fa-download" ></i> Baixar PDF
+      </a>
+    </div>
   </div>
   <div class="card-body">
     <div class="table-responsive">

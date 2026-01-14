@@ -20,7 +20,7 @@
       <a href="{{ route("admin.employeee.index") }}" style="width: 90px;" class="btn btn-outline-secondary btn-sm me-2">
         <i class="fas fa-arrow-left"></i> Voltar
       </a>
-      <a href="{{ route("employeee.showPdf", $data->id) }}" style="width: 90px;" class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener noreferrer">
+      <a href="{{ route("admin.employeee.showPdf", $data->id) }}" style="width: 90px;" class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener noreferrer">
         <i class="fas fa-download" ></i> Baixar PDF
       </a>
     </div>

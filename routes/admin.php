@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\EmployeeeController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\InternController;
 
 Route::middleware('auth')->name('admin.')->group(function () {
+
     /* dashboard routes */
     Route::get('/dashboard/filter-by-category/{categoryId}/{academicLevel?}', [DashboardController::class, 'filterByCategory'])->name('dashboard.filterByCategory');
     Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard");
@@ -20,11 +22,30 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::put('/atualizar/{id}', [EmployeeeController::class, 'update'])->name('employeee.update');
         Route::get('/detalhes/{id}', [EmployeeeController::class, 'show'])->name('employeee.show');
         Route::delete('/deletar/{id}', [EmployeeeController::class, 'destroy'])->name('employeee.destroy');
+
+        // filtros
+        Route::get('/navbar/employee-search', [EmployeeeController::class, 'navbarSearch'])->name('employeee.navbar.search');
+        Route::get("employeee/pdf", [EmployeeeController::class, "pdfAll"])->name("employeee.pdfAll");
+        Route::get("employeee/{id}/pdf", [EmployeeeController::class, "showPdf"])->name("employeee.showPdf");
+        Route::get("employeee/filter", [EmployeeeController::class, "filterByDate"])->name("employeee.filter");
         Route::post("employeee/filter/pdf", [EmployeeeController::class, "pdfFiltered"])->name("employeee.filter.pdf");
     });
 
-    
+    // Estagiários (Intern) routes
+    Route::prefix('estagiarios')->group(function () {
+
+        Route::get('/lista', [InternController::class, 'index'])->name('intern.index');
+        Route::get('/criar', [InternController::class, 'create'])->name('intern.create');
+        Route::post('/salvar', [InternController::class, 'store'])->name('intern.store');
+        Route::get('/editar/{id}', [InternController::class, 'edit'])->name('intern.edit');
+        Route::put('/atualizar/{id}', [InternController::class, 'update'])->name('intern.update');
+        Route::get('/detalhes/{id}', [InternController::class, 'show'])->name('intern.show');
+        Route::delete('/deletar/{id}', [InternController::class, 'destroy'])->name('intern.destroy');
+
+        /* filtros */
+        Route::get("estagiarios/{id}/pdf", [InternController::class, "showPdf"])->name("intern.showPdf");
+        Route::get("estagiarios/pdf", [InternController::class, "pdfAll"])->name("intern.pdfAll");
+        Route::get("estagiarios/filtros", [InternController::class, "filterByDate"])->name("intern.filter");
+        Route::get("estagiarios/filtros/pdf", [InternController::class, "pdfFiltered"])->name("intern.filter.pdf");
+    });
 });
-// ====================== Filtros por datas (Funcionários / Estagiários) ======================
-    // Funcionários
-    Route::get("employeee/filter", [EmployeeeController::class, "filterByDate"])->name("employeee.filter");
