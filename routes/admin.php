@@ -20,6 +20,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::put('/atualizar/{id}', [EmployeeeController::class, 'update'])->name('employeee.update');
         Route::get('/detalhes/{id}', [EmployeeeController::class, 'show'])->name('employeee.show');
         Route::delete('/deletar/{id}', [EmployeeeController::class, 'destroy'])->name('employeee.destroy');
+        Route::post("employeee/filter/pdf", [EmployeeeController::class, "pdfFiltered"])->name("employeee.filter.pdf");
     });
 
     
@@ -27,4 +28,3 @@ Route::middleware('auth')->name('admin.')->group(function () {
 // ====================== Filtros por datas (Funcionários / Estagiários) ======================
     // Funcionários
     Route::get("employeee/filter", [EmployeeeController::class, "filterByDate"])->name("employeee.filter");
-    Route::get("employeee/filter/pdf", [EmployeeeController::class, "pdfFiltered"])->name("employeee.filter.pdf");

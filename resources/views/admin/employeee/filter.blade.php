@@ -10,14 +10,22 @@
     <div>
       {{-- Se já houver resultados filtrados, para exibir o botão de PDF --}}
       @if(isset($filtered) && $filtered->count() > 0)
-        <a href="{{ route("employeee.filter.pdf", [
-            "start_date"      => $start ?? null,
-            "end_date"        => $end ?? null,
-            "employeeTypeId"  => $selectedType ?? null,
-        ]) }}"
+        <form action="{{ route('admin.employeee.filter.pdf')}}" method="post">
+          @csrf
+          <!-- Campos ocultos para manter os filtros -->
+          <input type="hidden" name="start_date" value="{{ request('start_date', $start ?? '') }}">
+          <input type="hidden" name="end_date" value="{{ request('end_date', $end ?? '') }}">
+          <input type="hidden" name="departmentId" value="{{ request('departmentId', $selectedDepartment ?? '') }}">
+          <input type="hidden" name="positionId" value="{{ request('positionId', $selectedPosition ?? '') }}">
+          <input type="hidden" name="specialityId" value="{{ request('specialityId', $selectedSpeciality ?? '') }}">
+          <input type="hidden" name="employeeTypeId" value="{{ request('employeeTypeId', $selectedType ?? '') }}">
+          <input type="hidden" name="employeeCategoryId" value="{{ request('employeeCategoryId', $selectedCategory ?? '') }}">
+          <input type="hidden" name="courseId" value="{{ request('courseId', $selectedCourse ?? '') }}">
+          <button
            class="btn btn-outline-light btn-sm me-2" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
           <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
-        </a>
+        </button>
+        </form>
       @endif
 
       <a href="{{ route("admin.employeee.index") }}" class="btn btn-outline-light btn-sm" title="Voltar">

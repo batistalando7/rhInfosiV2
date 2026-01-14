@@ -16,6 +16,7 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Mail\NewEmployeeNotification;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class EmployeeeController extends Controller
 {
@@ -189,8 +190,14 @@ class EmployeeeController extends Controller
         $employee = Employeee::with(['department', 'employeeType', 'position', 'specialty', 'employeeCategory', 'course']) // Adicionado
             ->findOrFail($id);
 
+        // Gera o QR Code com os dados desejados
+        $qrData = route('admin.employeee.show', $employee->id); // ou qualquer link/texto que você quiser
+
+        $qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" . urlencode($qrData);
+
+
         // Renderiza o Blade 'admin.employeee.show_pdf' e gera o PDF
-        $pdf = PDF::loadView('admin.employeee.show_pdf', compact('employee'))
+        $pdf = PDF::loadView('pdf.employeee.show_pdf', compact(['employee', 'qrUrl']))
             ->setPaper('a4', 'portrait');
 
         // Força o download com nome de arquivo dinâmico
@@ -351,7 +358,7 @@ class EmployeeeController extends Controller
             $query->where('courseId', $courseId);
         }
         if ($specialityId) {
-            $query->where('specialityId', $specialityId);
+            $query->where('specialtyId', $specialityId);
         }
 
         if ($positionId) {
@@ -376,7 +383,7 @@ class EmployeeeController extends Controller
             'end'           => $endDate,
             'selectedType'  => $typeId,
             'selectedCategory' => $categoryId,
-            'selectedAcademicLevel' => $academicLevel, // Adicionado
+            /* 'selectedAcademicLevel' => $academicLevel, // Adicionado */
             'selectedCourse' => $courseId, // Adicionado
             'selectedSpeciality' => $specialityId,
             'selectedPosition' => $positionId,
@@ -393,10 +400,21 @@ class EmployeeeController extends Controller
 
     public function pdfFiltered(Request $request)
     {
+        /* $startDate = $request->input('start_date');
+        $endDate   = $request->input('end_date');
+        $typeId    = $request->input('employeeTypeId');
+        $categoryId = $request->input('employeeCategoryId');
+        $academicLevel = $request->input('academicLevel'); // Adicionado
+        $courseId = $request->input('courseId'); // Adicionado
+        $query = Employeee::query(); */
+
         $startDate = $request->input('start_date');
         $endDate   = $request->input('end_date');
         $typeId    = $request->input('employeeTypeId');
         $categoryId = $request->input('employeeCategoryId');
+        $specialityId = $request->input('specialityId');
+        $positionId = $request->input('positionId');
+        $departmentId = $request->input('departmentId');
         $academicLevel = $request->input('academicLevel'); // Adicionado
         $courseId = $request->input('courseId'); // Adicionado
         $query = Employeee::query();
@@ -428,9 +446,21 @@ class EmployeeeController extends Controller
             $query->where('courseId', $courseId);
         }
 
+        if ($specialityId) {
+            $query->where('specialtyId', $specialityId);
+        }
+
+        if ($positionId) {
+            $query->where('positionId', $positionId);
+        }
+
+        if ($departmentId) {
+            $query->where('departmentId', $departmentId);
+        }
+
         $filtered = $query->orderByDesc('id')->get();
 
-        $pdf = PDF::loadView('admin.employeee.filtered_pdf', [
+        $pdf = PDF::loadView('pdf.employeee.filtered_pdf', [
             'filtered'  => $filtered,
             'startDate' => $startDate,
             'endDate'   => $endDate,
@@ -438,6 +468,9 @@ class EmployeeeController extends Controller
             'categoryId' => $categoryId,
             'academicLevel' => $academicLevel, // Adicionado
             'courseId' => $courseId, // Adicionado
+            'specialityId' => $specialityId,
+            'positionId' => $positionId,
+            'departmentId' => $departmentId,
         ])->setPaper('a3', 'landscape');
 
         return $pdf->stream("RelatorioFuncionariosFiltrados.pdf");
@@ -446,9 +479,9 @@ class EmployeeeController extends Controller
     public function pdfAll()
     {
         $allEmployees = Employeee::with(['department', 'position', 'specialty', 'employeeCategory', 'course'])->get();
-        $pdf = PDF::loadView('admin.employeee.employeee_pdf', compact('allEmployees'))
+        $pdf = PDF::loadView('pdf.employeee.employeee_pdf', compact('allEmployees'))
             ->setPaper('a3', 'portrait');
-        return $pdf->stream('RelatorioTodosFuncionarios.pdf');
+        return $pdf->download('RelatorioTodosFuncionarios.pdf');
     }
 
 

@@ -18,7 +18,8 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.5",
-        "lucascudo/laravel-pt-br-localization": "^3.0"
+        "lucascudo/laravel-pt-br-localization": "^3.0",
+        "simplesoftwareio/simple-qrcode": "^4.2"
     },
     "replace": {
         "caouecs/laravel-lang": "*"
