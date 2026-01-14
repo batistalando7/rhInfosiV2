@@ -359,12 +359,12 @@ Route::middleware(["auth"])->group(function () {
      Route::get("extras/{id}/delete", [ExtraJobController::class, "destroy"]);
 
 
-     // ====================== Reforma (Retirement) ======================
+/*      // ====================== Reforma (Retirement) ======================
      Route::get("retirements/searchEmployee", [RetirementController::class, "searchEmployee"])->name("retirements.searchEmployee");
      Route::get("retirements/pdf-filtered", [RetirementController::class, "pdfAll"])->name("retirements.exportFilteredPDF");
      Route::get("retirements/pdf", [RetirementController::class, "pdfAll"])->name("retirements.pdf");
      Route::resource("retirements", RetirementController::class);
-
+ */
 
      // ====================== Mapa de Efetividade (Attendance) ======================
      Route::get("attendance/pdf", [AttendanceController::class, "pdfAll"])->name("attendance.pdfAll");

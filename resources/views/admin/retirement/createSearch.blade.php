@@ -7,13 +7,13 @@
             <div class="card mb-4 shadow">
                 <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
                     <h4>Adicionar Pedido de Reforma</h4>
-                    <a href="{{ route('retirements.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
+                    <a href="{{ route('admin.retirements.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
                         <i class="fas fa-arrow-left"></i> Voltar
                     </a>
                 </div>
                 <div class="card-body">
                     <!-- Formulário de busca para selecionar funcionário -->
-                    <form action="{{ route('retirements.searchEmployee') }}" method="GET" class="mb-3">
+                    <form action="{{ route('admin.retirements.searchEmployee') }}" method="GET" class="mb-3">
                         <div class="row g-2">
                             <div class="col-8">
                                 <div class="form-floating">
@@ -38,7 +38,7 @@
                         <p><strong>E-mail:</strong> {{ $employee->email }}</p>
                         <p><strong>Departamento:</strong> {{ $employee->department->title ?? '-' }}</p>
 
-                        <form method="POST" action="{{ route('retirements.store') }}">
+                        <form method="POST" action="{{ route('admin.retirements.store') }}">
                             @csrf
                             <input type="hidden" name="employeeId" value="{{ $employee->id }}">
                             <div class="mb-3">

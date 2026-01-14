@@ -134,8 +134,8 @@
                     </a>
                     <div class="collapse" id="collapseRetirements">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('retirements') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('retirements/create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.retirements.index') }}"><i class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.retirements.create') }}"><i class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>

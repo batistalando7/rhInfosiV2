@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Retirement;
 use App\Models\Employeee;
@@ -35,7 +36,7 @@ class RetirementController extends Controller
 
         $retirements = $query->orderByDesc('id')->get();
 
-        return view('retirement.index', [
+        return view('admin.retirement.list.index', [
             'retirements' => $retirements,
             'filters'     => [
                 'startDate' => $request->startDate,
@@ -76,10 +77,10 @@ class RetirementController extends Controller
     {
         $user = Auth::user();
         if (in_array($user->role, ['admin', 'director'])) {
-            return view('retirement.createSearch');
+            return view('admin.retirement.createSearch');
         } else {
             $employee = $user->employee;
-            return view('retirement.createEmployee', compact('employee'));
+            return view('admin.retirement.create.index', compact('employee'));
         }
     }
 
@@ -103,7 +104,7 @@ class RetirementController extends Controller
                 ->withInput();
         }
 
-        return view('retirement.createSearch', ['employee' => $employee]);
+        return view('admin.retirement.createSearch', ['employee' => $employee]);
     }
 
     /**
@@ -147,7 +148,7 @@ class RetirementController extends Controller
             }
         }
 
-        return redirect()->route('retirements.index')
+        return redirect()->route('admin.retirements.index')
                          ->with('msg', 'Pedido de reforma registrado com sucesso.');
     }
 
@@ -157,7 +158,7 @@ class RetirementController extends Controller
     public function show($id)
     {
         $retirement = Retirement::with('employee')->findOrFail($id);
-        return view('retirement.show', compact('retirement'));
+        return view('admin.retirement.details.index', compact('retirement'));
     }
 
     /**
@@ -166,7 +167,7 @@ class RetirementController extends Controller
     public function edit($id)
     {
         $retirement = Retirement::findOrFail($id);
-        return view('retirement.edit', compact('retirement'));
+        return view('admin.retirement.edit.index', compact('retirement'));
     }
 
     /**
@@ -194,7 +195,7 @@ class RetirementController extends Controller
             }
         }
 
-        return redirect()->route('retirements.index')
+        return redirect()->route('admin.retirements.index')
                          ->with('msg', 'Pedido de reforma atualizado com sucesso.');
     }
 
@@ -215,7 +216,7 @@ class RetirementController extends Controller
             $employee->save();
         }
 
-        return redirect()->route('retirements.index')
+        return redirect()->route('admin.retirements.index')
                          ->with('msg', 'Pedido de reforma removido com sucesso.');
     }
 
@@ -238,7 +239,7 @@ class RetirementController extends Controller
 
         $allRetirements = $query->orderByDesc('id')->get();
 
-        $pdf = PDF::loadView('retirement.retirement_pdf', compact('allRetirements'))
+        $pdf = PDF::loadView('pdf.retirement.retirement_pdf', compact('allRetirements'))
                   ->setPaper('a4', 'portrait');
 
         $filename = 'RelatorioReformas'

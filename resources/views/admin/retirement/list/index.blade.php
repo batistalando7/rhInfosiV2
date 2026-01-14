@@ -7,19 +7,19 @@
     <span><i class="fas fa-user-check me-2"></i>Lista de Pedidos de Reforma</span>
     <div>
       <!-- PDF de todos -->
-      <a href="{{ route('retirements.pdf') }}" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">
+      <a href="{{ route('admin.retirements.pdf') }}" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">
         <i class="fas fa-file-earmark-pdf"></i> Baixar PDF (Todos)
       </a>
 
        <!-- PDF filtrado -->
     @if(request()->filled('startDate') || request()->filled('endDate') || (request()->filled('status') && request('status')!=='Todos'))
-    <a href="{{ route('retirements.pdf') }}?{{ http_build_query(request()->only(['startDate','endDate','status'])) }}"
+    <a href="{{ route('admin.retirements.pdf') }}?{{ http_build_query(request()->only(['startDate','endDate','status'])) }}"
        class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">
       <i class="fas fa-file-earmark-pdf"></i> Baixar PDF (Filtrados)
     </a>
     @endif
 
-      <a href="{{ route('retirements.create') }}" class="btn btn-outline-light btn-sm">
+      <a href="{{ route('admin.retirements.create') }}" class="btn btn-outline-light btn-sm">
         <i class="fas fa-plus-circle"></i> Novo Pedido
       </a>
     </div>
@@ -38,7 +38,7 @@
 
 
     <!-- Formulário de filtros -->
-    <form method="GET" action="{{ route('retirements.index') }}" class="row g-3 mb-4">
+    <form method="GET" action="{{ route('admin.retirements.index') }}" class="row g-3 mb-4">
       <div class="col-md-3">
         <label class="form-label">Data do Pedido Início</label>
         <input
@@ -110,14 +110,14 @@
                 <td>{{ $retirement->observations ?? '-' }}</td>
                 <td>{{ $retirement->created_at->format('d/m/Y H:i') }}</td>
                 <td>
-                  <a href="{{ route('retirements.show', $retirement->id) }}" class="btn btn-warning btn-sm">
+                  <a href="{{ route('admin.retirements.show', $retirement->id) }}" class="btn btn-warning btn-sm">
                     <i class="fas fa-eye"></i>
                   </a>
-                  <a href="{{ route('retirements.edit', $retirement->id) }}" class="btn btn-info btn-sm">
+                  <a href="{{ route('admin.retirements.edit', $retirement->id) }}" class="btn btn-info btn-sm">
                     <i class="fas fa-pencil"></i>
                   </a>
                   <form
-                    action="{{ route('retirements.destroy', $retirement->id) }}"
+                    action="{{ route('admin.retirements.destroy', $retirement->id) }}"
                     method="POST"
                     style="display:inline-block;"
                   >

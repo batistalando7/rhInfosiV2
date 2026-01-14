@@ -6,12 +6,12 @@
     <div class="card mb-4 shadow">
       <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
         <h4>Editar Pedido de Reforma</h4>
-        <a href="{{ route('retirements.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
+        <a href="{{ route('admin.retirements.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
           <i class="fas fa-arrow-left"></i> Voltar
         </a>
       </div>
       <div class="card-body">
-        <form method="POST" action="{{ route('retirements.update', $retirement->id) }}">
+        <form method="POST" action="{{ route('admin.retirements.update', $retirement->id) }}">
           @csrf
           @method('PUT')
           <div class="mb-3">

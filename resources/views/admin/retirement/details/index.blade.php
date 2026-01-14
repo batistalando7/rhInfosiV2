@@ -4,7 +4,7 @@
 <div class="card mb-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span>Detalhes do Pedido de Reforma</span>
-    <a href="{{ route('retirements.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
+    <a href="{{ route('admin.retirements.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
       <i class="fas fa-arrow-left"></i> Voltar
     </a>
   </div>

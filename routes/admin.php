@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\EmployeeeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InternController;
+use App\Http\Controllers\Admin\RetirementController;
 
 Route::middleware('auth')->name('admin.')->group(function () {
 
@@ -47,5 +48,22 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("estagiarios/pdf", [InternController::class, "pdfAll"])->name("intern.pdfAll");
         Route::get("estagiarios/filtros", [InternController::class, "filterByDate"])->name("intern.filter");
         Route::get("estagiarios/filtros/pdf", [InternController::class, "pdfFiltered"])->name("intern.filter.pdf");
+    });
+
+    // Reforma (Retirement) routes
+    Route::prefix('reformas')->group(function () {
+
+        Route::get('/lista', [RetirementController::class, 'index'])->name('retirements.index');
+        Route::get('/criar', [RetirementController::class, 'create'])->name('retirements.create');
+        Route::post('/salvar', [RetirementController::class, 'store'])->name('retirements.store');
+        Route::get('/editar/{id}', [RetirementController::class, 'edit'])->name('retirements.edit');
+        Route::put('/atualizar/{id}', [RetirementController::class, 'update'])->name('retirements.update');
+        Route::get('/detalhes/{id}', [RetirementController::class, 'show'])->name('retirements.show');
+        Route::delete('/deletar/{id}', [RetirementController::class, 'destroy'])->name('retirements.destroy');
+
+        //filtros
+        Route::get("reformas/searchEmployee", [RetirementController::class, "searchEmployee"])->name("retirements.searchEmployee");
+        Route::get("reformas/pdf-filtered", [RetirementController::class, "pdfAll"])->name("retirements.exportFilteredPDF");
+        Route::get("reformas/pdf", [RetirementController::class, "pdfAll"])->name("retirements.pdf");
     });
 });
