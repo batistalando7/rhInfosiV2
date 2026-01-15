@@ -126,8 +126,8 @@ class InternController extends Controller
 
     public function destroy($id)
     {
-        Intern::destroy($id);
-        return redirect()->route('admin.intern.list.index');
+        Intern::findOrFail($id)->delete();
+        return redirect()->route('admin.intern.index')->with('msg', 'Estagiário deletado com sucesso');
     }
 
     /* ==================== Filtros e relatorios ==================== */
@@ -139,8 +139,8 @@ class InternController extends Controller
         }
 
         $request->validate([
-            'start_date' => 'required|date',
-            'end_date'   => 'required|date|after_or_equal:start_date',
+            'start_date' => 'nullable|date',
+            'end_date'   => 'nullable|date|after_or_equal:start_date',
         ]);
 
         $start = Carbon::parse($request->start_date)->startOfDay();
@@ -166,8 +166,8 @@ class InternController extends Controller
         set_time_limit(300);
 
         $request->validate([
-            'start_date' => 'required|date',
-            'end_date'   => 'required|date|after_or_equal:start_date',
+            'start_date' => 'nullable|date',
+            'end_date'   => 'nullable|date|after_or_equal:start_date',
         ]);
 
 

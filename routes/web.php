@@ -89,10 +89,7 @@ Route::middleware(["auth"])->group(function () {
      Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard");
     */
 
-     // Rota GET com parâmetro ?status=...
-     Route::get("employeee/filter-by-status", [EmployeeeController::class, "filterByStatus"])->name("employeee.filterByStatus");
-
-
+     
 
      /*
 |--------------------------------------------------------------------------

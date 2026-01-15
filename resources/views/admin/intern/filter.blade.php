@@ -6,14 +6,14 @@
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-calendar-event me-2"></i>Filtrar Estagiários por Data</span>
     <div>
-      @if(isset($startDate) && isset($endDate))
-        <a href="{{ route('intern.filter.pdf', ['start_date' => $startDate, 'end_date' => $endDate]) }}"
+      @if(isset($filtered))
+        <a href="{{ route('admin.intern.filter.pdf', ['start_date' => $startDate, 'end_date' => $endDate]) }}"
            class="btn btn-outline-light btn-sm me-2" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
           <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
         </a>
       @endif
 
-      <a href="{{ route('intern.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
+      <a href="{{ route('admin.intern.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
         <i class="fas fa-arrow-left"></i> Voltar
       </a>
     </div>
@@ -21,7 +21,8 @@
   
   <div class="card-body">
 
-    <form action="{{ route('intern.filter') }}" method="GET" class="mb-4">
+    <form action="{{ route('admin.intern.filter') }}" method="GET" class="mb-4">
+      @csrf
       <div class="row g-3">
         <div class="col-md-4">
           <div class="form-floating">

@@ -391,12 +391,12 @@ class EmployeeeController extends Controller
         ]);
     }
 
-    /*     public function filterByStatus(Request $request)
+        public function filterByStatus(Request $request)
     {
         $status = $request->input('status');
         $data = Employeee::where('employmentStatus', $status)->orderByDesc('id')->get();
         return view('admin.employeee.list.index', ['data' => $data]);
-    } */
+    }
 
     public function pdfFiltered(Request $request)
     {

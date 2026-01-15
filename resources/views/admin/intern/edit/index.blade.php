@@ -5,12 +5,12 @@
 <div class="card my-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-pencil-square me-2"></i>Edit Intern</span>
-    <a href="{{ route('intern.index') }}" class="btn btn-outline-light btn-sm" title="View All">
+    <a href="{{ route('admin.intern.index') }}" class="btn btn-outline-light btn-sm" title="View All">
       <i class="fa-solid fa-list"></i>
     </a>
   </div>
   <div class="card-body">
-    <form method="POST" action="{{ route('intern.update', $data->id) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.intern.update', $data->id) }}" enctype="multipart/form-data">
       @csrf
       @method('put')
 
@@ -120,7 +120,7 @@
         <div class="col-md-6">
           <div class="form-floating">
             <select name="nationality" id="nationality" class="form-select">
-              <option value="">Selecione seu país</option>
+              <option value="{{ old('nationality', $data->nationality ?? '') }}">{{ old('nationality', $data->nationality ?? 'Seleciona o país') }}</option>
             </select>
             <label for="nationality">Nacionalidade</label>
           </div>

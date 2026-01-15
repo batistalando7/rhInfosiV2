@@ -60,13 +60,13 @@
                                     <h3 class="fs-13 fw-semibold "> Funcionários Ativos</h3>
                                 </div>
                             </div>
-                            <a href="{{ route('employeee.filterByStatus', ['status' => 'active']) }}" class="">
+                            <a href="{{ route('admin.employeee.filterByStatus', ['status' => 'active']) }}" class="">
                                 <i data-feather="more-vertical"></i>
                             </a>
                         </div>
                         <div class="pt-4">
                             <div class="d-flex align-items-center justify-content-between">
-                                <a href="{{ route('employeee.filterByStatus', ['status' => 'active']) }}" class="fs-12 fw-medium text-muted text-truncate-1-line">Ver Detalhes</a>
+                                <a href="{{ route('admin.employeee.filterByStatus', ['status' => 'active']) }}" class="fs-12 fw-medium text-muted text-truncate-1-line">Ver Detalhes</a>
                                 <div class="w-100 text-end">
                                     <span class="fs-12 text-dark">{{ $activeEmployees }}</span>
                                     <span class="fs-11 text-muted">({{ $totalEmployees > 0 ? round(($activeEmployees / $totalEmployees) * 100) : 0 }}%)</span>
@@ -126,13 +126,13 @@
                                     <h3 class="fs-13 fw-semibold ">Funcionários Reformados</h3>
                                 </div>
                             </div>
-                            <a href="{{ route('retirements.index') }}" class="">
+                            <a href="{{ route('admin.retirements.index') }}" class="">
                                 <i data-feather="more-vertical"></i>
                             </a>
                         </div>
                         <div class="pt-4">
                             <div class="d-flex align-items-center justify-content-between">
-                                <a href="{{ route('retirements.index') }}" class="fs-12 fw-medium text-muted text-truncate-1-line">Ver Detalhes</a>
+                                <a href="{{ route('admin.retirements.index') }}" class="fs-12 fw-medium text-muted text-truncate-1-line">Ver Detalhes</a>
                                 <div class="w-100 text-end">
                                     <span class="fs-12 text-dark">{{ $retiredEmployees }}</span>
                                     <span class="fs-11 text-muted">({{ $totalEmployees > 0 ? round(($retiredEmployees / $totalEmployees) * 100) : 0 }}%)</span>
@@ -159,13 +159,13 @@
                                     <h3 class="fs-13 fw-semibold text-truncate-1-line">Estagiários</h3>
                                 </div>
                             </div>
-                            <a href="{{ route('intern.index') }}" class="">
+                            <a href="{{ route('admin.intern.index') }}" class="">
                                 <i data-feather="more-vertical"></i>
                             </a>
                         </div>
                         <div class="pt-4">
                             <div class="d-flex align-items-center justify-content-between">
-                                <a href="{{ route('intern.index') }}" class="fs-12 fw-medium text-muted text-truncate-1-line">Ver Detalhes</a>
+                                <a href="{{ route('admin.intern.index') }}" class="fs-12 fw-medium text-muted text-truncate-1-line">Ver Detalhes</a>
                                 <div class="w-100 text-end">
                                     <span class="fs-12 text-dark">{{ $totalInterns }}</span>
                                     <span class="fs-11 text-muted">({{ $totalInterns > 0 ? 100 : 0 }}%)</span>

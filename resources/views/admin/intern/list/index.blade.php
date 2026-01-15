@@ -71,6 +71,10 @@
                                     <a href="{{ route('admin.intern.edit', $d->id) }}" class="btn btn-info btn-sm">
                                         <i class="fas fa-pencil"></i>
                                     </a>
+                                    <a href="#" data-url="{{ route('admin.intern.destroy', $d->id) }}"
+                                        class="btn btn-danger btn-sm delete-btn">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @empty

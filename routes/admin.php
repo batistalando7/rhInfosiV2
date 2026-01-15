@@ -25,6 +25,11 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::delete('/deletar/{id}', [EmployeeeController::class, 'destroy'])->name('employeee.destroy');
 
         // filtros
+
+         /* Rota GET com parâmetro ?status=... */
+        Route::get("employeee/filter-by-status", [EmployeeeController::class, "filterByStatus"])->name("employeee.filterByStatus");
+        /* FIm da Rota GET com parâmetro ?status=... */
+        
         Route::get('/navbar/employee-search', [EmployeeeController::class, 'navbarSearch'])->name('employeee.navbar.search');
         Route::get("employeee/pdf", [EmployeeeController::class, "pdfAll"])->name("employeee.pdfAll");
         Route::get("employeee/{id}/pdf", [EmployeeeController::class, "showPdf"])->name("employeee.showPdf");
@@ -41,13 +46,13 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get('/editar/{id}', [InternController::class, 'edit'])->name('intern.edit');
         Route::put('/atualizar/{id}', [InternController::class, 'update'])->name('intern.update');
         Route::get('/detalhes/{id}', [InternController::class, 'show'])->name('intern.show');
-        Route::delete('/deletar/{id}', [InternController::class, 'destroy'])->name('intern.destroy');
+        Route::get('/deletar/{id}', [InternController::class, 'destroy'])->name('intern.destroy');
 
         /* filtros */
         Route::get("estagiarios/{id}/pdf", [InternController::class, "showPdf"])->name("intern.showPdf");
         Route::get("estagiarios/pdf", [InternController::class, "pdfAll"])->name("intern.pdfAll");
         Route::get("estagiarios/filtros", [InternController::class, "filterByDate"])->name("intern.filter");
-        Route::get("estagiarios/filtros/pdf", [InternController::class, "pdfFiltered"])->name("intern.filter.pdf");
+        Route::post("estagiarios/filtros/pdf", [InternController::class, "pdfFiltered"])->name("intern.filter.pdf");
     });
 
     // Reforma (Retirement) routes
