@@ -14,7 +14,7 @@
         <!-- Cards -->
         <div class="row g-4">
             <!-- Total de Funcionários -->
-            <div class="col-xxl-3 col-md-4">
+            <div class="col-xxl-3 col-md-6">
                 <div class="card stretch stretch-full">
                     <div class="card-body">
                         <div class="d-flex align-items-start justify-content-between mb-4">
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <!-- Funcionários Ativos -->
-            <div class="col-xxl-3 col-md-4">
+            <div class="col-xxl-3 col-md-6">
                 <div class="card stretch stretch-full">
                     <div class="card-body">
                         <div class="d-flex align-items-start justify-content-between mb-4">
@@ -80,7 +80,7 @@
                 </div>
             </div>
             <!-- Funcionários Destacados -->
-            <div class="col-xxl-3 col-md-4">
+            <div class="col-xxl-3 col-md-6">
                 <div class="card stretch stretch-full">
                     <div class="card-body">
                         <div class="d-flex align-items-start justify-content-between mb-4">
@@ -145,7 +145,107 @@
                     </div>
                 </div>
             </div>
-            <!-- Estagiários -->
+           
+             <!-- Total de Transferidos -->
+            <div class="col-xxl-3 col-md-6">
+                <div class="card stretch stretch-full">
+                    <div class="card-body">
+                        <div class="d-flex align-items-start justify-content-between mb-4">
+                            <div class="d-flex gap-4 align-items-center">
+                                <div class="avatar-text avatar-lg bg-gray-200">
+                                    <i class="fas fa-exchange-alt me-2 text-primary"></i>
+                                </div>
+                                <div>
+                                    <div class="fs-4 fw-bold text-dark">N/A</div>
+                                    <h3 class="fs-13 fw-semibold ">Funcionários Transferidos</h3>
+                                </div>
+                            </div>
+                            <a href="{{ route('admin.employeee.index') }}" class="">
+                                <i data-feather="more-vertical"></i>
+                            </a>
+                        </div>
+                        <div class="pt-4">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <a href="{{ route('admin.employeee.index') }}" class="fs-12 fw-medium text-muted text-truncate-1-line">Ver Detalhes</a>
+                                <div class="w-100 text-end">
+                                    <span class="fs-12 text-dark">N/A</span>
+                                    <span class="fs-11 text-muted">(0%)</span>
+                                </div>
+                            </div>
+                            <div class="progress mt-2 ht-3">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Funcionários Falecidos -->
+            <div class="col-xxl-3 col-md-6">
+                <div class="card stretch stretch-full">
+                    <div class="card-body">
+                        <div class="d-flex align-items-start justify-content-between mb-4">
+                            <div class="d-flex gap-4 align-items-center">
+                                <div class="avatar-text avatar-lg bg-gray-200">
+                                    <i data-feather="plus" class="text-danger"></i>
+                                </div>
+                                <div>
+                                    <div class="fs-4 fw-bold text-dark">N/A</div>
+                                    <h3 class="fs-13 fw-semibold "> Funcionários Falecidos</h3>
+                                </div>
+                            </div>
+                            <a href="{{ route('admin.employeee.filterByStatus', ['status' => 'active']) }}" class="">
+                                <i data-feather="more-vertical"></i>
+                            </a>
+                        </div>
+                        <div class="pt-4">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <a href="{{ route('admin.employeee.filterByStatus', ['status' => 'active']) }}" class="fs-12 fw-medium text-muted text-truncate-1-line">Ver Detalhes</a>
+                                <div class="w-100 text-end">
+                                    <span class="fs-12 text-dark">N/A</span>
+                                    <span class="fs-11 text-muted">(0%)</span>
+                                </div>
+                            </div>
+                            <div class="progress mt-2 ht-3">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Funcionários Em licença -->
+            <div class="col-xxl-3 col-md-6">
+                <div class="card stretch stretch-full">
+                    <div class="card-body">
+                        <div class="d-flex align-items-start justify-content-between mb-4">
+                            <div class="d-flex gap-4 align-items-center">
+                                <div class="avatar-text avatar-lg bg-gray-200">
+                                    <i data-feather="calendar"></i>
+                                </div>
+                                <div>
+                                    <div class="fs-4 fw-bold text-dark">N/A</div>
+                                    <h3 class="fs-13 fw-semibold ">Funcionários Em Licença</h3>
+                                </div>
+                            </div>
+                            <a href="{{ route('secondment.index') }}" class="">
+                                <i data-feather="more-vertical"></i>
+                            </a>
+                        </div>
+                        <div class="pt-4">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <a href="{{ route('secondment.index') }}" class="fs-12 fw-medium text-muted text-truncate-1-line">Ver Detalhes</a>
+                                <div class="w-100 text-end">
+                                    <span class="fs-12 text-dark">N/A</span>
+                                    <span class="fs-11 text-muted">(0%)</span>
+                                </div>
+                            </div>
+                            <div class="progress mt-2 ht-3">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- Estagiários -->
             <div class="col-xxl-3 col-md-6">
                 <div class="card stretch stretch-full">
                     <div class="card-body">
@@ -178,7 +278,10 @@
                     </div>
                 </div>
             </div>
+
         </div>
+
+        
 
         <!-- Tabela de Chefes de Departamento -->
         <div class="row g-4">
