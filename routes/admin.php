@@ -49,10 +49,10 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get('/deletar/{id}', [InternController::class, 'destroy'])->name('intern.destroy');
 
         /* filtros */
-        Route::get("estagiarios/{id}/pdf", [InternController::class, "showPdf"])->name("intern.showPdf");
-        Route::get("estagiarios/pdf", [InternController::class, "pdfAll"])->name("intern.pdfAll");
-        Route::get("estagiarios/filtros", [InternController::class, "filterByDate"])->name("intern.filter");
-        Route::post("estagiarios/filtros/pdf", [InternController::class, "pdfFiltered"])->name("intern.filter.pdf");
+        Route::get("{id}/pdf", [InternController::class, "showPdf"])->name("intern.showPdf");
+        Route::get("pdf", [InternController::class, "pdfAll"])->name("intern.pdfAll");
+        Route::get("filtros", [InternController::class, "filterByDate"])->name("intern.filter");
+        Route::post("filtros/pdf", [InternController::class, "pdfFiltered"])->name("intern.filter.pdf");
     });
 
     // Reforma (Retirement) routes

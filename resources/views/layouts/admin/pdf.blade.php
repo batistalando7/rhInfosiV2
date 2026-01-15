@@ -35,7 +35,7 @@
         }
 
         .header img.logo {
-            width: 70px;
+            width: 50px;
         }
 
         .header h3 {
@@ -50,7 +50,7 @@
 
         .title-section {
             text-align: center;
-            margin-top: 5px;
+            margin-top: 0px;
             margin-bottom: 15px;
         }
 
@@ -112,6 +112,12 @@
             margin: 0;
             font-size: 0.85rem;
         }
+
+        .qr-code {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
     </style>
 </head>
 
@@ -136,19 +142,19 @@
     @yield('contentTable')
 
     <div class="footer ">
+        @isset($qrUrl)
+            {{-- QR Code no PDF --}}
+            <div class="qr-code">
+                <img src="{{ $qrUrl }}" width="100">
+            </div>
+        @endisset
+        <p style="text-align: center;">Data de Emissão: {{ date('d/m/Y') }}</p>
         <img src="{{ public_path('images/infosi/infosiH.png') }}" alt="Infosi Logo">
         <p><strong>Instituto Nacional de Fomento da Sociedade de Informação</strong></p>
         <p>Rua 17 de Setembro nº 59, Cidade Alta, Luanda - Angola</p>
         <p>Caixa Postal: 1412 | Tel.: +244 222 693 503 | Geral@infosi.gov.ao</p>
         <p>www.infosi.gov.ao</p> <br>
-        <p style="text-align: center;">Data de Emissão: {{ date('d/m/Y') }}</p>
     </div>
-    @isset($qrUrl)
-    {{-- QR Code no PDF --}}
-    <div style="text-align: right; margin-top: 0px; position: absolute; margin-left:600px;">
-        <img src="{{ $qrUrl }}" width="100">
-    </div>
-    @endisset
 
 
 </body>

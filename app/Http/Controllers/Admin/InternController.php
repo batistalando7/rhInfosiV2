@@ -134,8 +134,11 @@ class InternController extends Controller
 
     public function filterByDate(Request $request)
     {
-        if (!$request->has('start_date') && !$request->has('end_date')) {
-            return view('admin.intern.filter');
+        $departments = Department::all();
+        $speciality = Specialty::all();
+
+        if (!$request->has('start_date') && !$request->has('end_date') && !$request->has('departmentId') && !$request->has('specialityId')) {
+            return view('admin.intern.filter', compact('departments', 'speciality'));
         }
 
         $request->validate([
@@ -145,15 +148,31 @@ class InternController extends Controller
 
         $start = Carbon::parse($request->start_date)->startOfDay();
         $end   = Carbon::parse($request->end_date)->endOfDay();
+        $departmentId = $request->departmentId;
+        $specialityId = $request->specialityId;
 
-        $filtered = Intern::whereBetween('created_at', [$start, $end])
-            ->orderByDesc('id')
-            ->get();
+        $query = Intern::query();
+
+        if ($start && $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        }
+
+        if ($departmentId) {
+            $query->where('departmentId', $departmentId);
+        }
+
+        if ($specialityId) {
+            $query->where('specialtyId', $specialityId);
+        }
+
+        $filtered = $query->get();
 
         $startDate = $request->start_date;
         $endDate   = $request->end_date;
 
         return view('admin.intern.filter', [
+            'departments' => $departments,
+            'speciality'  => $speciality,
             'filtered'  => $filtered,
             'startDate' => $startDate,
             'endDate'   => $endDate,
@@ -173,10 +192,24 @@ class InternController extends Controller
 
         $start = Carbon::parse($request->start_date)->startOfDay();
         $end   = Carbon::parse($request->end_date)->endOfDay();
+        $departmentId = $request->departmentId;
+        $specialityId = $request->specialityId;
 
-        $filtered = Intern::whereBetween('created_at', [$start, $end])
-            ->orderByDesc('id')
-            ->get();
+        $query = Intern::query();
+
+        if ($start && $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        }
+
+        if ($departmentId) {
+            $query->where('departmentId', $departmentId);
+        }
+
+        if ($specialityId) {
+            $query->where('specialtyId', $specialityId);
+        }
+
+        $filtered = $query->get();
 
         // Manter as datas no formato Y-m-d para exibir no título do PDF
         $startDate = $request->start_date;
@@ -185,7 +218,7 @@ class InternController extends Controller
         $pdf = PDF::loadView('pdf.intern.filtered_pdf', compact('filtered', 'startDate', 'endDate'))
             ->setPaper('a3', 'portrait');
 
-        return $pdf->stream("RelatorioInterns_{$startDate}_{$endDate}.pdf");
+        return $pdf->download("RelatorioInterns_{$startDate}_{$endDate}.pdf");
     }
 
     public function pdfAll()
@@ -205,8 +238,13 @@ class InternController extends Controller
         $intern = Intern::with(['department', 'specialty']) // Adicionado
             ->findOrFail($id);
 
+        // Gera o QR Code com os dados desejados
+        $qrData = route('admin.intern.show', $intern->id); // ou qualquer link/texto que você quiser
+
+        $qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" . urlencode($qrData);
+
         // Renderiza o Blade 'admin.intern.show_pdf' e gera o PDF
-        $pdf = PDF::loadView('pdf.intern.show_pdf', compact(['intern']))
+        $pdf = PDF::loadView('pdf.intern.show_pdf', compact(['intern', 'qrUrl']))
             ->setPaper('a4', 'portrait');
 
         // Força o download com nome de arquivo dinâmico
