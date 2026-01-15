@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\EmployeeeController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\InternController;
 use App\Http\Controllers\Admin\RetirementController;
 
@@ -11,6 +12,23 @@ Route::middleware('auth')->name('admin.')->group(function () {
     /* dashboard routes */
     Route::get('/dashboard/filter-by-category/{categoryId}/{academicLevel?}', [DashboardController::class, 'filterByCategory'])->name('dashboard.filterByCategory');
     Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard");
+
+    /* department routes */
+    Route::prefix('departamentos')->group(function () {
+
+        Route::get('/lista', [DepartmentController::class, 'index'])->name('department.index');
+        Route::get('/criar', [DepartmentController::class, 'create'])->name('department.create');
+        Route::post('/salvar', [DepartmentController::class, 'store'])->name('department.store');
+        Route::get('/editar/{id}', [DepartmentController::class, 'edit'])->name('department.edit');
+        Route::put('/atualizar/{id}', [DepartmentController::class, 'update'])->name('department.update');
+        Route::get('/detalhes/{id}', [DepartmentController::class, 'show'])->name('department.show');
+        Route::get("{id}/delete", [DepartmentController::class, "destroy"])->name("department.destroy");
+
+        //outras rotas de departamento
+        Route::get("{departmentId}/pdf", [DepartmentController::class, "employeeePdf"])->name("department.employeee.pdf");
+        Route::get("employeee", [DepartmentController::class, "employeee"])->name("department.employeee");
+    });
+
 
 
     /* Employee routes */
@@ -26,10 +44,10 @@ Route::middleware('auth')->name('admin.')->group(function () {
 
         // filtros
 
-         /* Rota GET com parâmetro ?status=... */
+        /* Rota GET com parâmetro ?status=... */
         Route::get("employeee/filter-by-status", [EmployeeeController::class, "filterByStatus"])->name("employeee.filterByStatus");
         /* FIm da Rota GET com parâmetro ?status=... */
-        
+
         Route::get('/navbar/employee-search', [EmployeeeController::class, 'navbarSearch'])->name('employeee.navbar.search');
         Route::get("employeee/pdf", [EmployeeeController::class, "pdfAll"])->name("employeee.pdfAll");
         Route::get("employeee/{id}/pdf", [EmployeeeController::class, "showPdf"])->name("employeee.showPdf");

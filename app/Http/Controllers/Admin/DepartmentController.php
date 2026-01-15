@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Department;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
@@ -12,12 +13,12 @@ class DepartmentController extends Controller
     public function index()
     {
         $data = Department::orderByDesc('id')->get();
-        return view('department.index', ['data' => $data]);
+        return view('admin.department.list.index', ['data' => $data]);
     }
 
     public function create()
     {
-        return view('department.create');
+        return view('admin.department.create.index');
     }
 
     public function store(Request $request)
@@ -32,14 +33,14 @@ class DepartmentController extends Controller
         $data->description = $request->description;
         $data->save();
 
-        return redirect('depart/create')
+        return redirect()->back()
                ->with('msg', 'Dados Submetidos com Sucesso');
     }
 
     public function show($id)
     {
         $data = Department::findOrFail($id);
-        return view('department.show', compact('data'));
+        return view('admin.department.details.index', compact('data'));
     }
 
     public function employeee(Request $request)
@@ -47,13 +48,13 @@ class DepartmentController extends Controller
         $departmentId = $request->input('department');
         $department   = Department::with('employeee')
                           ->findOrFail($departmentId);
-        return view('department.employeee', compact('department'));
+        return view('admin.department.employeee', compact('department'));
     }
 
     public function edit($id)
     {
         $departs = Department::findOrFail($id);
-        return view('department.edit', ['data' => $departs]);
+        return view('admin.department.edit.index', ['data' => $departs]);
     }
 
     public function update(Request $request, $id)
@@ -71,7 +72,7 @@ class DepartmentController extends Controller
         $data->description = $request->description;
         $data->save();
 
-        return redirect("depart/{$id}/edit")
+        return redirect()->back()
                ->with('msg', 'Dados Submetidos com Sucesso');
     }
 
@@ -86,6 +87,7 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         Department::where('id', $id)->delete();
-        return redirect('depart');
+        return redirect()->back()
+               ->with('msg', 'Departamento excluído com sucesso');
     }
 }

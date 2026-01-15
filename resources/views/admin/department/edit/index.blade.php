@@ -7,11 +7,10 @@
     <i class="fas fa-table me-1"></i>
     Atualizar departamento
 
-    <a href="{{ asset('depart') }}" class="float-end btn btn-sm btn-info"><i class="fa-solid fa-list"></i></a>
-  </div>  
-  
+    <a href="{{ route('admin.department.index') }}" class="float-end btn btn-sm btn-info"><i class="fa-solid fa-list"></i></a>
+  </div>
 
-    <form method="POST" action="{{ asset('depart/'.$data->id) }}"> 
+    <form method="POST" action="{{ route('admin.department.update', $data->id) }}"> 
       @method('PUT')
       @csrf
       <table class="table table-bordered">

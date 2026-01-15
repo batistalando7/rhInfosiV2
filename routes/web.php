@@ -267,12 +267,6 @@ Route::middleware(["auth"])->group(function () {
      Route::get("my-profile", [EmployeeeController::class, "myProfile"])->name("profile");
 
 
-     // ====================== Departamentos ======================
-     Route::get("depart/{departmentId}/pdf", [DepartmentController::class, "employeeePdf"])->name("depart.employeee.pdf");
-     Route::get("depart/employeee", [DepartmentController::class, "employeee"])->name("depart.employeee");
-     Route::resource("depart", DepartmentController::class);
-     Route::get("depart/{id}/delete", [DepartmentController::class, "destroy"]);
-
 
      // ====================== Cargos (Positions) ======================
      Route::get("positions/employeee", [PositionController::class, "employeee"])->name("positions.employeee.filter");

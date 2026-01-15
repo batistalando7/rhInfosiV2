@@ -11,12 +11,12 @@
 
     <!-- Botão para gerar PDF -->
     <div>
-      <a href="{{ route('depart.employeee.pdf', $department->id) }}" 
+      <a href="{{ route('admin.department.employeee.pdf', $department->id) }}" 
          class="btn btn-outline-light btn-sm" 
          title="Baixar PDF" target="_blank" rel="noopener noreferrer">
         <i class="fas fa-file-earmark-pdf"></i> Baixar PDF
       </a>
-      <a href="{{ route('depart.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
+      <a href="{{ route('admin.department.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
         <i class="fas fa-arrow-left"></i> Voltar
       </a>
     </div>
@@ -40,10 +40,10 @@
                 <td>{{ $employeee->fullName }}</td>
                 <td>{{ $employeee->email }}</td>
                 <td>
-                  <a href="{{ route('employeee.show', $employeee->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
+                  <a href="{{ route('admin.employeee.show', $employeee->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
                     <i class="fas fa-eye"></i>
                   </a>
-                  <a href="{{ route('employeee.edit', $employeee->id) }}" class="btn btn-info btn-sm" title="Editar">
+                  <a href="{{ route('admin.employeee.edit', $employeee->id) }}" class="btn btn-info btn-sm" title="Editar">
                     <i class="fas fa-pencil"></i>
                   </a>
                 </td>

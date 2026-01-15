@@ -5,7 +5,7 @@
 <div class="card mb-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-building me-2"></i>Lista de Departamentos</span>
-    <a href="{{ route('depart.create') }}" class="btn btn-outline-light btn-sm" title="Adicionar Novo"> Novo
+    <a href="{{ route('admin.department.create') }}" class="btn btn-outline-light btn-sm" title="Adicionar Novo"> Novo
       <i class="fas fa-plus-circle"></i>
     </a>
   </div>
@@ -14,7 +14,7 @@
     <!-- Formulário para selecionar departamento e listar seus funcionários -->
     <div class="mt-4">
       <p class="mb-3  text-muted">Listar funcionários por departamento:</p>
-      <form action="{{ route('depart.employeee') }}" method="GET" class="d-inline-flex">
+      <form action="{{ route('admin.department.employeee') }}" method="GET" class="d-inline-flex">
         <div class="input-group w-auto">
           <select name="department" class="form-select" style="max-width: 300px;" required>
             <option value=""> Selecione o Departamento </option>
@@ -48,13 +48,13 @@
                 <td>{{ $d->title }}</td>
                 <td>{{ $d->description ?? '-' }}</td>
                 <td>
-                  <a href="{{ route('depart.show', $d->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
+                  <a href="{{ route('admin.department.show', $d->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
                     <i class="fas fa-eye"></i>
                   </a>
-                  <a href="{{ route('depart.edit', $d->id) }}" class="btn btn-info btn-sm" title="Editar">
+                  <a href="{{ route('admin.department.edit', $d->id) }}" class="btn btn-info btn-sm" title="Editar">
                     <i class="fas fa-pencil"></i>
                   </a>
-                  <a href="#" data-url="{{ url('depart/'.$d->id.'/delete') }}" class="btn btn-danger btn-sm delete-btn" title="Apagar">
+                  <a href="#" data-url="{{ route('admin.department.destroy', $d->id) }}" class="btn btn-danger btn-sm delete-btn" title="Apagar">
                     <i class="fas fa-trash"></i>
                   </a>
                 </td>

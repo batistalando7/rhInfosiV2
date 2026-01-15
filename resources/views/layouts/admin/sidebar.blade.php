@@ -43,8 +43,8 @@
                     </a>
                     <div class="collapse" id="collapseDept">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('depart') }}"><i class="fas fa-eye me-2"></i> Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('depart/create') }}"><i class="fas fa-plus me-2"></i> Adicionar Novo</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.department.index') }}"><i class="fas fa-eye me-2"></i> Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.department.create') }}"><i class="fas fa-plus me-2"></i> Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
