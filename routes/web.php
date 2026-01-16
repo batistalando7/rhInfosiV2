@@ -372,14 +372,14 @@ Route::middleware(["auth"])->group(function () {
      Route::resource("drivers", DriverController::class);
      Route::get("drivers/{driver}/delete", [DriverController::class, "destroy"])->name("drivers.delete");
 
-     // Viaturas – PDF total e filtrado
+    /*  // Viaturas – PDF total e filtrado
      Route::get("vehicles/pdf", [VehicleController::class, "pdfAll"])
           ->name("vehicles.pdfAll");
      Route::get("vehicles/pdf-filtered", [VehicleController::class, "exportFilteredPDF"])
           ->name("vehicles.pdfFiltered");
      Route::resource("vehicles", VehicleController::class);
      Route::get("vehicles/{vehicle}/delete", [VehicleController::class, "destroy"])
-          ->name("vehicles.delete");
+          ->name("vehicles.delete"); */
 
      // Manutenções – PDF total e filtrado
      Route::get("maintenance/pdf", [MaintenanceController::class, "pdfAll"])
@@ -404,7 +404,7 @@ Route::middleware(["auth"])->group(function () {
      Route::get("licenseCategories/{licenseCategory}/delete", [LicenseCategoryController::class, "destroy"])->name("licenseCategories.delete");
      //  PDF Individual download
      Route::get("drivers/{driver}/pdf", [DriverController::class, "showPdf"])->name("drivers.showPdf");
-     Route::get("vehicles/{vehicle}/pdf", [VehicleController::class, "showPdf"])->name("vehicles.showPdf");
+     /* Route::get("vehicles/{vehicle}/pdf", [VehicleControll::class, "showPdf"])->name("vehicles.showPdf"); */
      Route::get("maintenance/{maintenance}/pdf", [MaintenanceController::class, "showPdf"])->name("maintenance.showPdf");
 
 

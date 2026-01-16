@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use App\Models\Driver;
+use App\Models\Employeee;
+use App\Models\LeaveType;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class VehicleController extends Controller
@@ -19,13 +23,14 @@ class VehicleController extends Controller
             $query->whereDate('created_at', '<=', $request->endDate);
         }
         $vehicles = $query->orderByDesc('id')->get();
-        return view('vehicles.index', compact('vehicles'));
+        return view('admin.vehicles.list.index', compact('vehicles'));
     }
 
     public function create()
     {
-        $drivers = Driver::where('status', 'Active')->get();
-        return view('vehicles.create', compact('drivers'));
+        /* $drivers = Driver::where('status', 'Active')->get(); */
+        $employeee = Employeee::orderBy('fullName')->get();
+        return view('admin.vehicles.create.index', compact('employeee'));
     }
 
     public function store(Request $request)
@@ -48,19 +53,19 @@ class VehicleController extends Controller
             $vehicle->drivers()->attach($request->driverId, ['startDate' => now()]);
         }
 
-        return redirect()->route('vehicles.index')->with('msg', 'Viatura cadastrada com sucesso.');
+        return redirect()->route('admin.vehicles.index')->with('msg', 'Viatura cadastrada com sucesso.');
     }
 
     public function show(Vehicle $vehicle)
     {
         $vehicle->load('drivers', 'maintenance');
-        return view('vehicles.show', compact('vehicle'));
+        return view('admin.vehicles.details.index', compact('vehicle'));
     }
 
     public function edit(Vehicle $vehicle)
     {
-        $drivers = Driver::where('status', 'Active')->get();
-        return view('vehicles.edit', compact('vehicle', 'drivers'));
+        $employeee = Employeee::orderBy('fullName')->get();
+        return view('admin.vehicles.edit.index', compact('vehicle', 'employeee'));
     }
 
     public function update(Request $request, Vehicle $vehicle)
@@ -85,14 +90,14 @@ class VehicleController extends Controller
             $vehicle->drivers()->attach($request->driverId, ['startDate' => now()]);
         }
 
-        return redirect()->route('vehicles.edit', $vehicle)->with('msg', 'Viatura atualizada com sucesso.');
+        return redirect()->route('admin.vehicles.edit', $vehicle)->with('msg', 'Viatura atualizada com sucesso.');
     }
 
     public function destroy(Vehicle $vehicle)
     {
         $vehicle->drivers()->detach();
         $vehicle->delete();
-        return redirect()->route('vehicles.index')->with('msg', 'Viatura excluída com sucesso.');
+        return redirect()->route('admin.vehicles.index')->with('msg', 'Viatura excluída com sucesso.');
     }
 
     // PDFs (similar a outros; adicione filtros se quiser)
@@ -112,14 +117,15 @@ class VehicleController extends Controller
             ? '_Filtradas' : ''
         ) . '.pdf';
 
-        $pdf = PDF::loadView('vehicles.vehicles_pdf', compact('filtered'))->setPaper('a4', 'portrait');
+        $pdf = PDF::loadView('pdf.vehicles.vehicles_pdf', compact('filtered'))->setPaper('a4', 'portrait');
         return $pdf->stream($filename);
     }
 
     public function showPdf(Vehicle $vehicle)
     {
         $vehicle->load('drivers', 'maintenance');
-        $pdf = PDF::loadView('vehicles.vehicle_pdf_individual', compact('vehicle'))->setPaper('a4', 'portrait');
+        $pdf = PDF::loadView('pdf.vehicles.vehicle_pdf_individual', compact('vehicle'))->setPaper('a4', 'portrait');
         return $pdf->stream("Viatura_{$vehicle->id}.pdf");
     }
+
 }

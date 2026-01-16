@@ -7,10 +7,10 @@
             <h3><i class="fas fa-truck me-2"></i>Ver Viatura #{{ $vehicle->id }}</h3>
         </div>
         <div class="col-4 text-end">
-            <a href="{{ route('vehicles.index') }}" class="btn btn-outline-secondary btn-sm me-2">
+            <a href="{{ route('admin.vehicles.index') }}" class="btn btn-outline-secondary btn-sm me-2">
                 <i class="fas fa-arrow-left"></i> Voltar
             </a>
-            <a href="{{ route('vehicles.showPdf', $vehicle->id) }}" class="btn btn-outline-primary btn-sm" target="_blank">
+            <a href="{{ route('admin.vehicles.showPdf', $vehicle->id) }}" class="btn btn-outline-primary btn-sm" target="_blank">
                 <i class="fas fa-download"></i> Baixar PDF
             </a>
         </div>

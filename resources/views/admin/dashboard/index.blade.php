@@ -20,7 +20,7 @@
                         <div class="d-flex align-items-start justify-content-between mb-4">
                             <div class="d-flex gap-4 align-items-center">
                                 <div class="avatar-text avatar-lg bg-gray-200">
-                                    <i data-feather="users"></i>
+                                    <i data-feather="users" class="text-primary"></i>
                                 </div>
                                 <div>
                                     <div class="fs-4 fw-bold text-dark">{{ $totalEmployees }}</div>
@@ -53,7 +53,7 @@
                         <div class="d-flex align-items-start justify-content-between mb-4">
                             <div class="d-flex gap-4 align-items-center">
                                 <div class="avatar-text avatar-lg bg-gray-200">
-                                    <i data-feather="user-check"></i>
+                                    <i data-feather="user-check" class="text-success"></i>
                                 </div>
                                 <div>
                                     <div class="fs-4 fw-bold text-dark">{{ $activeEmployees }}</div>

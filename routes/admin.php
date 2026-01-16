@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\InternController;
 use App\Http\Controllers\Admin\RetirementController;
+use App\Http\Controllers\Admin\VehicleController;
+use App\Http\Controllers\Admin\ResourceAssignmentController;
 
 Route::middleware('auth')->name('admin.')->group(function () {
 
@@ -89,4 +91,40 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("reformas/pdf-filtered", [RetirementController::class, "pdfAll"])->name("retirements.exportFilteredPDF");
         Route::get("reformas/pdf", [RetirementController::class, "pdfAll"])->name("retirements.pdf");
     });
+
+    // Viaturas (vehicles) routes
+    Route::prefix('veiculos')->group(function () {
+
+        Route::get('/lista', [VehicleController::class, 'index'])->name('vehicles.index');
+        Route::get('/criar', [VehicleController::class, 'create'])->name('vehicles.create');
+        Route::post('/salvar', [VehicleController::class, 'store'])->name('vehicles.store');
+        Route::get('/editar/{vehicle}', [VehicleController::class, 'edit'])->name('vehicles.edit');
+        Route::put('/atualizar/{vehicle}', [VehicleController::class, 'update'])->name('vehicles.update');
+        Route::get('/detalhes/{vehicle}', [VehicleController::class, 'show'])->name('vehicles.show');
+        Route::get('/deletar/{vehicle}', [VehicleController::class, 'destroy'])->name('vehicles.destroy');
+
+        //filtros
+        Route::get("vehicles/{vehicle}/pdf", [VehicleController::class, "showPdf"])->name("vehicles.showPdf");
+        Route::get("pdf", [VehicleController::class, "pdfAll"])->name("vehicles.pdfAll");
+        Route::get("pdf-filtered", [VehicleController::class, "exportFilteredPDF"])->name("vehicles.pdfFiltered");
+    });
+
+    // Atribuições de Recursos (Resource Assignments) routes
+    Route::prefix('atribuicoes')->group(function () {
+
+        Route::get('/lista', [ResourceAssignmentController::class, 'index'])->name('resourceAssignments.index');
+        Route::get('/criar', [ResourceAssignmentController::class, 'create'])->name('resourceAssignments.create');
+        Route::post('/salvar', [ResourceAssignmentController::class, 'store'])->name('resourceAssignments.store');
+        Route::get('/editar/{resourceAssignment}', [ResourceAssignmentController::class, 'edit'])->name('resourceAssignments.edit');
+        Route::put('/atualizar/{resourceAssignment}', [ResourceAssignmentController::class, 'update'])->name('resourceAssignments.update');
+        Route::get('/detalhes/{resourceAssignment}', [ResourceAssignmentController::class, 'show'])->name('resourceAssignments.show');
+        Route::get('/deletar/{resourceAssignment}', [ResourceAssignmentController::class, 'destroy'])->name('resourceAssignments.destroy');
+
+        //filtros
+        Route::get('pesquisar/funcionario', [ResourceAssignmentController::class, "searchEmployee"])->name("resourceAssignments.searchEmployee");
+        Route::get("atribuicoes/{resourceAssignment}/pdf", [ResourceAssignmentController::class, "showPdf"])->name("resourceAssignments.showPdf");
+        Route::get("pdf", [ResourceAssignmentController::class, "pdfAll"])->name("resourceAssignments.pdfAll");
+        Route::get("pdf-filtered", [ResourceAssignmentController::class, "exportFilteredPDF"])->name("resourceAssignments.pdfFiltered");
+    });
+
 });

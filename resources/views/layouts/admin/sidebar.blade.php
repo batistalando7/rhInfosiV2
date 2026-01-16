@@ -86,7 +86,7 @@
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEmployeeType"
                         aria-expanded="false" aria-controls="collapseEmployeeType">
-                        <i class="fas fa-id-badge me-2"></i> Tipos de Funcionários <i
+                        <i class="fas fa-id-badge me-2"></i> Vínculo de Funcionários <i
                             class="fas fa-chevron-down ms-auto"></i>
                     </a>
                     <div class="collapse" id="collapseEmployeeType">
@@ -382,7 +382,7 @@
                 <!-- Frota e Transporte -->
                 <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Frota e Transporte
                 </li>
-                <li class="nav-item has-submenu">
+                {{-- <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse"
                         data-bs-target="#collapseLicenseCategories" aria-expanded="false"
                         aria-controls="collapseLicenseCategories">
@@ -397,7 +397,7 @@
                                         class="fas fa-plus me-2"></i>Adicionar Nova</a></li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVehicles"
                         aria-expanded="false" aria-controls="collapseVehicles">
@@ -405,14 +405,28 @@
                     </a>
                     <div class="collapse" id="collapseVehicles">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('vehicles.index') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.vehicles.index') }}"><i
                                         class="fas fa-eye me-2"></i>Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('vehicles.create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.vehicles.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseDrivers"
+                        aria-expanded="false" aria-controls="collapseDrivers">
+                        <i class="fas fa-user-tie me-2"></i> Atribuir Veículos <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseDrivers">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ route('admin.resourceAssignments.index') }}"><i
+                                        class="fas fa-eye me-2"></i>Ver Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.resourceAssignments.create') }}"><i
+                                        class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {{-- <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseDrivers"
                         aria-expanded="false" aria-controls="collapseDrivers">
                         <i class="fas fa-user-tie me-2"></i> Condutores <i class="fas fa-chevron-down ms-auto"></i>
@@ -425,7 +439,7 @@
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse"
                         data-bs-target="#collapseMaintenance" aria-expanded="false"
