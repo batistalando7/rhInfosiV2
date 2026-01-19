@@ -14,8 +14,8 @@ class CreateEmployeeHistoriesTable extends Migration
             $table->unsignedBigInteger('employee_id');
             $table->foreign('employee_id')->references('id')->on('employeees')->onDelete('cascade');
             $table->string('operation');
-            $table->string('old_value')->nullable();
-            $table->string('new_value')->nullable();
+            $table->json('old_value')->nullable();
+            $table->json('new_value')->nullable();
             $table->string('description')->nullable();
             $table->softDeletes();
             $table->timestamps();

@@ -305,21 +305,21 @@ class EmployeeeController extends Controller
         //verificar oque foi alterado
         $verify = Employeee::find($id);
         if ($verify->departmentId != $request->departmentId) {
-            $historyMessage['department'] = 'Departamento alterado de ' . $verify->departmentId . ' para ' . $request->departmentId;
+            $historyMessage['department'] = 'Departamento alterado de ' . $verify->department->title . ' para ' . $request->departmentId;
         }
         if ($verify->positionId != $request->positionId) {
-            $historyMessage['position'] = 'Cargo alterado de ' . $verify->positionId . ' para ' . $request->positionId;
+            $historyMessage['position'] = 'Cargo alterado de ' . $verify->position->name . ' para ' . $request->positionId;
         }
         if ($verify->specialtyId != $request->specialtyId) {
-            $historyMessage['specialty'] = 'Especialidade alterada de ' . $verify->specialtyId . ' para ' . $request->specialtyId;
+            $historyMessage['specialty'] = 'Especialidade alterada de ' . $verify->specialty->name . ' para ' . $request->specialtyId;
         }
         if ($verify->employeeTypeId != $request->employeeTypeId) {
-            $historyMessage['employeeType'] = 'Tipo de funcionário alterado de ' . $verify->employeeTypeId . ' para ' . $request->employeeTypeId;
+            $historyMessage['employeeType'] = 'Tipo de funcionário alterado de ' . $verify->employeeType->name . ' para ' . $request->employeeTypeId;
         }
         $data->employeeHistories()->create([
             'operation' => 'Atualização',
-            'old_value' => null,
-            'new_value' => null,
+            'old_value' => json_encode($verify->getChanges()),
+            'new_value' => json_encode($data->getChanges()),
             'description' => 'Dados do funcionário atualizados. ' . (!empty($historyMessage) ? implode('; ', $historyMessage) : ''),
         ]);
 
