@@ -391,7 +391,7 @@ class EmployeeeController extends Controller
         ]);
     }
 
-        public function filterByStatus(Request $request)
+    public function filterByStatus(Request $request)
     {
         $status = $request->input('status');
         $data = Employeee::where('employmentStatus', $status)->orderByDesc('id')->get();

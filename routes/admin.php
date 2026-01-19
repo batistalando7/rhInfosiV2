@@ -121,7 +121,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get('/deletar/{resourceAssignment}', [ResourceAssignmentController::class, 'destroy'])->name('resourceAssignments.destroy');
 
         //filtros
-        Route::get('pesquisar/funcionario', [ResourceAssignmentController::class, "searchEmployee"])->name("resourceAssignments.searchEmployee");
+       /*  Route::get('pesquisar/funcionario', [ResourceAssignmentController::class, "searchEmployee"])->name("resourceAssignments.searchEmployee"); */
         Route::get("atribuicoes/{resourceAssignment}/pdf", [ResourceAssignmentController::class, "showPdf"])->name("resourceAssignments.showPdf");
         Route::get("pdf", [ResourceAssignmentController::class, "pdfAll"])->name("resourceAssignments.pdfAll");
         Route::get("pdf-filtered", [ResourceAssignmentController::class, "exportFilteredPDF"])->name("resourceAssignments.pdfFiltered");

@@ -41,33 +41,33 @@
                         <th>ID</th>
                         <th>Matrícula</th>
                         <th>Modelo</th>
-                        <th>Status</th>
+                        {{-- <th>Status</th>
                         <th>Quilometragem Atual</th>
-                        <th>Próxima Manut.</th>
+                        <th>Próxima Manut.</th> --}}
                         <th>Motorista</th>
                         <th style="width: 58px">Acções</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($resourceAssignments as $v)
+                    @foreach ($resourceAssignments as $item)
                         <tr>
-                            <td>{{ $v->id }}</td>
-                            <td>{{ $v->plate }}</td>
-                            <td>{{ $v->model }}</td>
-                            <td>{{ $v->status == 'Available' ? 'Disponível' : ($v->status == 'UnderMaintenance' ? 'Em manutenção' : 'Indisponível') }}</td>
-                            <td>{{ number_format($v->currentMileage ?? 0, 0, ',', '.') }} km</td>
-                            <td>{{ $v->nextMaintenanceDate ? \Carbon\Carbon::parse($v->nextMaintenanceDate)->format('d/m/Y') : '-' }}</td>
-                            <td>
-                                @forelse ($v->drivers as $d)
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->vehicle->plate }}</td>
+                            <td>{{ $item->vehicle->model }}</td>
+                            <td>{{ $item->employeee->fullName }}</td>
+                            {{--<td>{{ number_format($item->currentMileage ?? 0, 0, ',', '.') }} km</td>
+                            <td>{{ $item->nextMaintenanceDate ? \Carbon\Carbon::parse($item->nextMaintenanceDate)->format('d/m/Y') : '-' }}</td>
+                             <td>
+                                @forelse ($item->drivers as $d)
                                     {{ $d->fullName }}@if(!$loop->last), @endif
                                 @empty
                                     -
                                 @endforelse
-                            </td>
+                            </td> --}}
                             <td>
-                                <a href="{{ route('admin.vehicles.show', $v->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('admin.vehicles.edit', $v->id) }}" class="btn btn-info btn-sm"><i class="fas fa-pencil"></i></a>
-                                <a href="#" data-url="{{ route('admin.vehicles.destroy', $v->id) }}" class="btn btn-danger btn-sm delete-btn"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.resourceAssignments.show', $item->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('admin.resourceAssignments.edit', $item->id) }}" class="btn btn-info btn-sm"><i class="fas fa-pencil"></i></a>
+                                <a href="#" data-url="{{ route('admin.resourceAssignments.destroy', $item->id) }}" class="btn btn-danger btn-sm delete-btn"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach

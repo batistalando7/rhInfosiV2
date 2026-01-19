@@ -13,13 +13,13 @@
                 <div class="card-body">
                     @if (!isset($employee))
                         <!-- Formulário de busca -->
-                        <form action="{{ route('admin.resourceAssignments.searchEmployee') }}" method="GET" class="mb-3">
+                        <form action="{{ route('admin.resourceAssignments.create') }}" method="GET" class="mb-3">
                             <div class="row g-2">
                                 <div class="col-8">
                                     <div class="form-floating">
                                         <input type="text" name="employeeSearch" id="employeeSearch" class="form-control"
                                             placeholder="" value="{{ old('employeeSearch') }}">
-                                        <label for="employeeSearch">Nome do Funcionário</label>
+                                        <label for="employeeSearch">Nome do Funcionário 2</label>
                                     </div>
                                     @error('employeeSearch')
                                         <small class="text-danger">{{ $message }}</small>
@@ -36,41 +36,40 @@
                         <div class="mb-3">
                             <h5 class="mb-1">Dados do Funcionário</h5>
                             <p class="mb-0"><strong>Nome:</strong> {{ $employee->fullName }}</p>
-                            <p class="mb-0"><strong>Departamento:</strong> {{ $employee->department->title ?? '-' }}</p>
+                            <p class="mb-0"><strong>Departamento:</strong> {{ $employee->department->title ?? ' -' }}</p>
                         </div>
                         <!-- Formulário de Pedido de Licença -->
-                        <form method="POST" action="{{ route('leaveRequest.store') }}">
+                        <form method="POST" action="{{ route('admin.resourceAssignments.store') }}">
                             @csrf
-                            <input type="hidden" name="employeeId" value="{{ $employee->id }}">
-                            <input type="hidden" name="departmentId" value="{{ $employee->department->id ?? '' }}">
+                            <input type="hidden" name="employeeeId" value="{{ $employee->id }}">
 
                             <div class="mb-3">
                                 <div class="form-floating">
-                                    <select name="leaveTypeId" id="leaveTypeId" class="form-select" required>
-                                        <option value="">-- Selecione o Tipo de Licença --</option>
-                                        @foreach ($leaveTypes as $lt)
-                                            <option value="{{ $lt->id }}"
-                                                {{ old('leaveTypeId') == $lt->id ? 'selected' : '' }}>
-                                                {{ $lt->name }}
+                                    <select name="vehicleId" id="vehicleId" class="form-select" required>
+                                        <option value="">-- Selecione o Veículo --</option>
+                                        @foreach ($vehicles as $vehicle)
+                                            <option value="{{ $vehicle->id }}"
+                                                {{ old('vehicleId') == $vehicle->id ? 'selected' : '' }}>
+                                                {{ $vehicle->brand }} - {{ $vehicle->model }} - {{ $vehicle->plate }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    <label for="leaveTypeId">Tipo de Licença</label>
+                                    <label for="vehicleId">Tipo de Veículo</label>
                                 </div>
                             </div>
                             <div class="row g-2">
                                 <div class="col-6">
                                     <div class="form-floating">
-                                        <input type="date" name="leaveStart" id="leaveStart" class="form-control"
-                                            value="{{ old('leaveStart') }}" required>
-                                        <label for="leaveStart">Data de Início</label>
+                                        <input type="date" name="start_date" id="start_date" class="form-control"
+                                            value="{{ old('start_date') }}" required>
+                                        <label for="start_date">Data de Início</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-floating">
-                                        <input type="date" name="leaveEnd" id="leaveEnd" class="form-control"
-                                            value="{{ old('leaveEnd') }}" required>
-                                        <label for="leaveEnd">Data de Término</label>
+                                        <input type="date" name="end_date" id="end_date" class="form-control"
+                                            value="{{ old('end_date') }}" required>
+                                        <label for="end_date">Data de Término</label>
                                     </div>
                                 </div>
                             </div>

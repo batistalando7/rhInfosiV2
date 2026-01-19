@@ -30,7 +30,7 @@
 
             @isset($employee)
                 <hr>
-                <h5>Dados do Funcionário:</h5>
+                <h5>Dados do Funcionário 2:</h5>
                 <p><strong>Nome:</strong> {{ $employee->fullName }}</p>
                 <p><strong>Departamento:</strong> {{ $employee->department->title ?? '-' }}</p>
 

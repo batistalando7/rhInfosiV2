@@ -1,10 +1,10 @@
 @extends('layouts.admin.layout')
 
-@section('title', 'Dashboard RH-INFOSI')
+@section('title', 'Gestão de Capital Humano-INFOSI')
 
 @section('content')
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Dashboard</h1>
+    <h1 class="mt-4">Gestão de Capital Humano</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Dashboard</li>
     </ol>
