@@ -44,6 +44,9 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get('/detalhes/{id}', [EmployeeeController::class, 'show'])->name('employeee.show');
         Route::delete('/deletar/{id}', [EmployeeeController::class, 'destroy'])->name('employeee.destroy');
 
+
+        // Histórico do funcionário
+        Route::get('/history/{id}', [EmployeeeController::class, 'employeeHistory'])->name('employeee.history');
         // filtros
 
         /* Rota GET com parâmetro ?status=... */

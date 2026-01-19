@@ -93,6 +93,12 @@ class Employeee extends Authenticatable implements CanResetPasswordContract
                     ->orderByDesc("startDate");
     }
 
+    // relacionamento entre employeee e historico de funcionário
+    public function employeeHistories()
+    {
+        return $this->hasMany(EmployeeHistory::class, 'employee_id', 'id');
+    }
+
 
 // Trabalhos Extras dos quais este funcionário participou.
 

@@ -16,6 +16,8 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Mail\NewEmployeeNotification;
+use App\Models\EmployeeHistory;
+use ParagonIE\Sodium\Core\Curve25519\H;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class EmployeeeController extends Controller
@@ -171,6 +173,13 @@ class EmployeeeController extends Controller
         $data->save();
         Mail::to($data->email)->send(new NewEmployeeNotification($data));
 
+        // Registrar o histórico de criação do funcionário
+        $data->employeeHistories()->create([
+            'operation' => 'Cadastro',
+            'new_value' => $data->toJson(),
+            'description' => 'Funcionário cadastrado.'
+        ]);
+
         return redirect()->route('admin.employeee.create')
             ->with('msg', 'Funcionário cadastrado e e-mail enviado!');
     }
@@ -291,6 +300,29 @@ class EmployeeeController extends Controller
 
         $data->save();
 
+        /* ====================== histórico de atualização ====================== */
+
+        //verificar oque foi alterado
+        $verify = Employeee::find($id);
+        if ($verify->departmentId != $request->departmentId) {
+            $historyMessage['department'] = 'Departamento alterado de ' . $verify->departmentId . ' para ' . $request->departmentId;
+        }
+        if ($verify->positionId != $request->positionId) {
+            $historyMessage['position'] = 'Cargo alterado de ' . $verify->positionId . ' para ' . $request->positionId;
+        }
+        if ($verify->specialtyId != $request->specialtyId) {
+            $historyMessage['specialty'] = 'Especialidade alterada de ' . $verify->specialtyId . ' para ' . $request->specialtyId;
+        }
+        if ($verify->employeeTypeId != $request->employeeTypeId) {
+            $historyMessage['employeeType'] = 'Tipo de funcionário alterado de ' . $verify->employeeTypeId . ' para ' . $request->employeeTypeId;
+        }
+        $data->employeeHistories()->create([
+            'operation' => 'Atualização',
+            'old_value' => null,
+            'new_value' => null,
+            'description' => 'Dados do funcionário atualizados. ' . (!empty($historyMessage) ? implode('; ', $historyMessage) : ''),
+        ]);
+
         return redirect()->route('admin.employeee.edit', $id)
             ->with('msg', 'Dados atualizados com sucesso');
     }
@@ -303,6 +335,14 @@ class EmployeeeController extends Controller
 
         // Passa sempre $employee (null ou modelo) para a view
         return view('admin.employeee.myProfile', compact('employee'));
+    }
+
+    public function employeeHistory($id)
+    {
+        $employee = Employeee::findOrFail($id);
+        $history = EmployeeHistory::with('employee')->where('employee_id', $employee->id)->get();
+
+        return view('admin.employeee.history', compact('employee', 'history'));
     }
 
 

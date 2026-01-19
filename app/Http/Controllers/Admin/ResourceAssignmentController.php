@@ -108,6 +108,7 @@ class ResourceAssignmentController extends Controller
         return redirect()->route('admin.resourceAssignment.index')->with('msg', 'Recurso atribuído excluído com sucesso.');
     }
 
+    //Imprimir a lista de todos os recursos atribuídos em PDF
     public function pdfAll()
     {
         $allResourceAssignments = ResourceAssignment::with(['vehicle', 'employeee'])->get();
