@@ -21,6 +21,7 @@ use ParagonIE\Sodium\Core\Curve25519\H;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class EmployeeeController extends Controller
+
 {
     public function index(Request $request)
     {
@@ -56,30 +57,6 @@ class EmployeeeController extends Controller
 
         return view('admin.employeee.list.index', ['data' => $data]);
     }
-
-    public function navbarSearch(Request $request)
-    {
-        $query = $request->get('q');
-
-        if (!$query || strlen($query) < 2) {
-            return response()->json([]);
-        }
-
-        $employees = Employeee::select('id', 'fullName')
-            ->where('fullName', 'LIKE', '%' . $query . '%')
-            ->orderBy('fullName')
-            ->limit(8)
-            ->get();
-
-        return response()->json(
-            $employees->map(fn($e) => [
-                'id'   => $e->id,
-                'text' => $e->fullName,
-                'url'  => route('admin.employeee.show', $e->id),
-            ])
-        );
-    }
-
 
     public function create()
     {
@@ -195,6 +172,7 @@ class EmployeeeController extends Controller
 
     public function showPdf($id)
     {
+
         // Carrega o funcionário e relacionamentos que você precisar exibir
         $employee = Employeee::with(['department', 'employeeType', 'position', 'specialty', 'employeeCategory', 'course']) // Adicionado
             ->findOrFail($id);
@@ -332,6 +310,12 @@ class EmployeeeController extends Controller
 
         return redirect()->route('admin.employeee.edit', $id)
             ->with('msg', 'Dados atualizados com sucesso');
+    }
+
+    public function destroy($id)
+    {
+        Employeee::destroy($id);
+        return redirect('employeee');
     }
 
     public function myProfile()
@@ -531,11 +515,26 @@ class EmployeeeController extends Controller
         return $pdf->download('RelatorioTodosFuncionarios.pdf');
     }
 
-
-
-    public function destroy($id)
+    public function navbarSearch(Request $request)
     {
-        Employeee::destroy($id);
-        return redirect('employeee');
+        $query = $request->get('q');
+
+        if (!$query || strlen($query) < 2) {
+            return response()->json([]);
+        }
+
+        $employees = Employeee::select('id', 'fullName')
+            ->where('fullName', 'LIKE', '%' . $query . '%')
+            ->orderBy('fullName')
+            ->limit(8)
+            ->get();
+
+        return response()->json(
+            $employees->map(fn($e) => [
+                'id'   => $e->id,
+                'text' => $e->fullName,
+                'url'  => route('admin.employeee.show', $e->id),
+            ])
+        );
     }
 }

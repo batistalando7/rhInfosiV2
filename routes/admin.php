@@ -11,11 +11,12 @@ use App\Http\Controllers\Admin\ResourceAssignmentController;
 
 Route::middleware('auth')->name('admin.')->group(function () {
 
-    /* dashboard routes */
+    /* start dashboard routes */
     Route::get('/dashboard/filter-by-category/{categoryId}/{academicLevel?}', [DashboardController::class, 'filterByCategory'])->name('dashboard.filterByCategory');
     Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard");
+    /* end dashboard routes */
 
-    /* department routes */
+    /* start department routes */
     Route::prefix('departamentos')->group(function () {
 
         Route::get('/lista', [DepartmentController::class, 'index'])->name('department.index');
@@ -30,10 +31,10 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("{departmentId}/pdf", [DepartmentController::class, "employeeePdf"])->name("department.employeee.pdf");
         Route::get("employeee", [DepartmentController::class, "employeee"])->name("department.employeee");
     });
+    /* end department routes */
 
 
-
-    /* Employee routes */
+    /* start Employee routes */
     Route::prefix('funcionarios')->group(function () {
 
         Route::get('/lista', [EmployeeeController::class, 'index'])->name('employeee.index');
@@ -59,8 +60,9 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("employeee/filter", [EmployeeeController::class, "filterByDate"])->name("employeee.filter");
         Route::post("employeee/filter/pdf", [EmployeeeController::class, "pdfFiltered"])->name("employeee.filter.pdf");
     });
+    /* end Employee routes */
 
-    // Estagiários (Intern) routes
+    // start Estagiários (Intern) routes
     Route::prefix('estagiarios')->group(function () {
 
         Route::get('/lista', [InternController::class, 'index'])->name('intern.index');
@@ -77,8 +79,9 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("filtros", [InternController::class, "filterByDate"])->name("intern.filter");
         Route::post("filtros/pdf", [InternController::class, "pdfFiltered"])->name("intern.filter.pdf");
     });
+    // end Estagiários (Intern) routes
 
-    // Reforma (Retirement) routes
+    // start Reforma (Retirement) routes
     Route::prefix('reformas')->group(function () {
 
         Route::get('/lista', [RetirementController::class, 'index'])->name('retirements.index');
@@ -94,8 +97,9 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("reformas/pdf-filtered", [RetirementController::class, "pdfAll"])->name("retirements.exportFilteredPDF");
         Route::get("reformas/pdf", [RetirementController::class, "pdfAll"])->name("retirements.pdf");
     });
+    // end Reforma (Retirement) routes
 
-    // Viaturas (vehicles) routes
+    // start Viaturas (vehicles) routes
     Route::prefix('veiculos')->group(function () {
 
         Route::get('/lista', [VehicleController::class, 'index'])->name('vehicles.index');
@@ -111,8 +115,9 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("pdf", [VehicleController::class, "pdfAll"])->name("vehicles.pdfAll");
         Route::get("pdf-filtered", [VehicleController::class, "exportFilteredPDF"])->name("vehicles.pdfFiltered");
     });
+    // end Viaturas (vehicles) routes
 
-    // Atribuições de Recursos (Resource Assignments) routes
+    //Start Atribuições de Recursos (Resource Assignments) routes
     Route::prefix('atribuicoes')->group(function () {
 
         Route::get('/lista', [ResourceAssignmentController::class, 'index'])->name('resourceAssignments.index');
@@ -129,5 +134,8 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("pdf", [ResourceAssignmentController::class, "pdfAll"])->name("resourceAssignments.pdfAll");
         Route::get("pdf-filtered", [ResourceAssignmentController::class, "exportFilteredPDF"])->name("resourceAssignments.pdfFiltered");
     });
+    //end Atribuições de Recursos (Resource Assignments) routes
+
+
 
 });
