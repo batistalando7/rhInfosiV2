@@ -26,7 +26,7 @@
       
       @foreach($history as $item)
       <li class="list-group-item">
-        {{ $item->new_value }}
+        {{ $item->description }}
       </li>
       @endforeach
       @endif

@@ -298,24 +298,31 @@ class EmployeeeController extends Controller
             $data->biPhoto = $biName;
         }
 
-        $data->save();
+        /* $data->save(); */
 
         /* ====================== histórico de atualização ====================== */
 
         //verificar oque foi alterado
         $verify = Employeee::find($id);
         if ($verify->departmentId != $request->departmentId) {
-            $historyMessage['department'] = 'Departamento alterado de ' . $verify->department->title . ' para ' . $request->departmentId;
+            $departmentName = Department::find($request->departmentId)->title ?? 'N/A';
+            $historyMessage['department'] = 'Departamento alterado de ' . $verify->department->title . ' para ' . $departmentName;
         }
         if ($verify->positionId != $request->positionId) {
-            $historyMessage['position'] = 'Cargo alterado de ' . $verify->position->name . ' para ' . $request->positionId;
+            $positionName = Position::find($request->positionId);
+            $historyMessage['position'] = 'Cargo alterado de ' . $verify->position->name . ' para ' . $positionName;
         }
         if ($verify->specialtyId != $request->specialtyId) {
-            $historyMessage['specialty'] = 'Especialidade alterada de ' . $verify->specialty->name . ' para ' . $request->specialtyId;
+            $specialtyName = Specialty::find($request->specialtyId)->name ?? 'N/A';
+            $historyMessage['specialty'] = 'Especialidade alterada de ' . $verify->specialty->name . ' para ' . $specialtyName;
         }
         if ($verify->employeeTypeId != $request->employeeTypeId) {
-            $historyMessage['employeeType'] = 'Tipo de funcionário alterado de ' . $verify->employeeType->name . ' para ' . $request->employeeTypeId;
+            $employeeTypeName = EmployeeType::find($request->employeeTypeId)->name ?? 'N/A';
+            $historyMessage['employeeType'] = 'Tipo de funcionário alterado de ' . $verify->employeeType->name . ' para ' . $employeeTypeName;
         }
+
+        $data->save();
+
         $data->employeeHistories()->create([
             'operation' => 'Atualização',
             'old_value' => json_encode($verify->getChanges()),
