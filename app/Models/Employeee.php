@@ -108,6 +108,12 @@ class Employeee extends Authenticatable implements CanResetPasswordContract
         return $this->hasMany(Mobility::class, 'employeeId');
     }
 
+    //relacionamento com salarypayment
+    public function salaryPayments()
+    {
+        return $this->hasMany(SalaryPayment::class, 'employeeId');
+    }
+
 
      // Veículos que este funcionário conduziu (através de Driver e pivot).
 

@@ -165,11 +165,19 @@
               <tr>
                 <th>ID</th>
                 <th>Nome Completo</th>
+                @if($selectedDepartment != null)
                 <th>Departamento</th>
+                @endif
+                @if($selectedPosition != null)
                 <th>Cargo</th>
+                @endif
+                @if($selectedSpeciality != null)
                 <th>Especialidade</th>
+                @endif
+                @if($selectedType != null)
                 <th>Tipo de Funcionário</th>
-                <th>Data de Registro</th>
+                @endif
+                <th>Data de Ingresso</th>
               </tr>
             </thead>
             <tbody>
@@ -177,11 +185,20 @@
                 <tr>
                   <td>{{ $emp->id }}</td>
                   <td>{{ $emp->fullName }}</td>
+                  @if($selectedDepartment != null)
                   <td>{{ $emp->department->title ?? "-" }}</td>
+                  @endif
+                  @if($selectedPosition != null)
                   <td>{{ $emp->position->name ?? "-" }}</td>
+                  @endif
+                  @if($selectedSpeciality != null)
                   <td>{{ $emp->specialty->name ?? "-" }}</td>
+                  @endif
+                  @if($selectedType != null)
                   <td>{{ $emp->employeeType->name ?? "-" }}</td>
-                  <td>{{ $emp->created_at->format("d/m/Y H:i") }}</td>
+                  @endif
+                  <td>{{ \Carbon\Carbon::parse($emp->entry_date)->format("d/m/Y") }}</td>
+                  
                 </tr>
               @endforeach
             </tbody>

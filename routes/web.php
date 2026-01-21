@@ -203,20 +203,20 @@ Route::middleware(["auth"])->group(function () {
      Route::get("intern/filter/pdf", [InternController::class, "pdfFiltered"])->name("intern.filter.pdf");
 
  */
-     // ====================== Rotas Para o Tipo de Funcionário (EmployeeType) ======================
+/*      // ====================== Rotas Para o Tipo de Funcionário (EmployeeType) ======================
      Route::resource("employeeType", EmployeeTypeController::class);
      Route::get("employeeType/{id}/delete", [EmployeeTypeController::class, "destroy"]);
-
-
+ */
+/* 
      // ====================== Rotas Para Categoria de Funcionário (EmployeeCategory) ======================
      Route::resource("employeeCategory", EmployeeCategoryController::class);
      Route::get("employeeCategory/{employeeCategory}/delete", [EmployeeCategoryController::class, "destroy"])->name("employeeCategory.delete");
+ */
 
-
-     // ====================== Rotas Para Cursos (Course) ======================
+     /* // ====================== Rotas Para Cursos (Course) ======================
      Route::resource("course", CourseController::class);
      Route::get("course/{course}/delete", [CourseController::class, "destroy"])->name("course.delete");
-
+ */
 
      // ====================== Funcionários (Employeee) ======================
  /*     Route::get(
@@ -268,19 +268,19 @@ Route::middleware(["auth"])->group(function () {
 
 
 
-     // ====================== Cargos (Positions) ======================
+/*      // ====================== Cargos (Positions) ======================
      Route::get("positions/employeee", [PositionController::class, "employeee"])->name("positions.employeee.filter");
      Route::get("positions/{positionId}/pdf", [PositionController::class, "pdf"])->name("positions.employeee.pdf");
      Route::resource("positions", PositionController::class);
      Route::get("positions/{id}/delete", [PositionController::class, "destroy"]);
+ */
 
-
-     // ====================== Especialidades (Specialties) ======================
+/*      // ====================== Especialidades (Specialties) ======================
      Route::get("specialties/employeee", [SpecialtyController::class, "employeee"])->name("specialties.employeee.filter");
      Route::get("specialties/{specialtyId}/pdf", [SpecialtyController::class, "pdf"])->name("specialties.pdf");
      Route::resource("specialties", SpecialtyController::class);
      Route::get("specialties/{id}/delete", [SpecialtyController::class, "destroy"]);
-
+ */
 
      /* // ====================== Estagiários (Intern) ======================
      Route::get("intern/pdf", [InternController::class, "pdfAll"])->name("intern.pdfAll");

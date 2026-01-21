@@ -3,7 +3,7 @@
 @section('content')
 <!-- Botão para voltar ao Dashboard -->
 <div class="mb-3">
-  <a href="{{ route('dashboard') }}" class="btn btn-secondary">
+  <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">
     <i class="fas fa-arrow-left"></i> Voltar para o Dashboard
   </a>
 </div>

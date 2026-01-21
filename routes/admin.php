@@ -1,15 +1,20 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\CourseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\EmployeeeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\EmployeeCategoryController;
 use App\Http\Controllers\Admin\InternController;
 use App\Http\Controllers\Admin\RetirementController;
 use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\ResourceAssignmentController;
 use App\Http\Controllers\Admin\EmployeeHistoryController;
+use App\Http\Controllers\Admin\EmployeeTypeController;
+use App\Http\Controllers\Admin\PositionController;
+use App\Http\Controllers\Admin\SpecialtyController;
 
 Route::middleware('auth')->name('admin.')->group(function () {
 
@@ -34,6 +39,80 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("employeee", [DepartmentController::class, "employeee"])->name("department.employeee");
     });
     /* end department routes */
+
+    // start Cargos (Positions) 
+    Route::prefix('cargos')->group(function () {
+
+        Route::get('/lista', [PositionController::class, 'index'])->name('positions.index');
+        Route::get('/criar', [PositionController::class, 'create'])->name('positions.create');
+        Route::post('/salvar', [PositionController::class, 'store'])->name('positions.store');
+        Route::get('/editar/{id}', [PositionController::class, 'edit'])->name('positions.edit');
+        Route::put('/atualizar/{id}', [PositionController::class, 'update'])->name('positions.update');
+        Route::get('/detalhes/{id}', [PositionController::class, 'show'])->name('positions.show');
+        Route::get("/{id}/delete", [PositionController::class, "destroy"])->name("positions.destroy");
+
+        //filtros
+        Route::get("/funcionarios", [PositionController::class, "employeee"])->name("positions.employeee.filter");
+        Route::get("/{positionId}/pdf", [PositionController::class, "pdf"])->name("positions.employeee.pdf");
+    });
+    // end Cargos (Positions)
+
+    // start Especialidades (Specialties) routes
+    Route::prefix('especialidades')->group(function () {
+
+        Route::get('/lista', [SpecialtyController::class, 'index'])->name('specialties.index');
+        Route::get('/criar', [SpecialtyController::class, 'create'])->name('specialties.create');
+        Route::post('/salvar', [SpecialtyController::class, 'store'])->name('specialties.store');
+        Route::get('/editar/{id}', [SpecialtyController::class, 'edit'])->name('specialties.edit');
+        Route::put('/atualizar/{id}', [SpecialtyController::class, 'update'])->name('specialties.update');
+        Route::get('/detalhes/{id}', [SpecialtyController::class, 'show'])->name('specialties.show');
+        Route::get("specialties/{id}/delete", [SpecialtyController::class, "destroy"]);
+
+        //filtros
+        Route::get("specialties/employeee", [SpecialtyController::class, "employeee"])->name("specialties.employeee.filter");
+        Route::get("specialties/{specialtyId}/pdf", [SpecialtyController::class, "pdf"])->name("specialties.pdf");
+    });
+    // end Especialidades (Specialties) routes
+
+    // start Rotas Para o Tipo de Funcionário (EmployeeType) 
+    Route::prefix('vinculo-funcionario')->group(function () {
+
+        Route::get('/lista', [EmployeeTypeController::class, 'index'])->name('employeeTypes.index');
+        Route::get('/criar', [EmployeeTypeController::class, 'create'])->name('employeeTypes.create');
+        Route::post('/salvar', [EmployeeTypeController::class, 'store'])->name('employeeTypes.store');
+        Route::get('/editar/{id}', [EmployeeTypeController::class, 'edit'])->name('employeeTypes.edit');
+        Route::put('/atualizar/{id}', [EmployeeTypeController::class, 'update'])->name('employeeTypes.update');
+        Route::get('/detalhes/{id}', [EmployeeTypeController::class, 'show'])->name('employeeTypes.show');
+        Route::get("{id}/delete", [EmployeeTypeController::class, "destroy"])->name("employeeTypes.destroy");
+    });
+    // end Rotas Para o Tipo de Funcionário (EmployeeType) 
+
+
+    // start Rotas Para Categoria de Funcionário (EmployeeCategory) 
+    Route::prefix('categoria-funcionario')->group(function () {
+
+        Route::get('/lista', [EmployeeCategoryController::class, 'index'])->name('employeeCategories.index');
+        Route::get('/criar', [EmployeeCategoryController::class, 'create'])->name('employeeCategories.create');
+        Route::post('/salvar', [EmployeeCategoryController::class, 'store'])->name('employeeCategories.store');
+        Route::get('/editar/{id}', [EmployeeCategoryController::class, 'edit'])->name('employeeCategories.edit');
+        Route::put('/atualizar/{id}', [EmployeeCategoryController::class, 'update'])->name('employeeCategories.update');
+        Route::get('/detalhes/{id}', [EmployeeCategoryController::class, 'show'])->name('employeeCategories.show');
+        Route::get("{id}/delete", [EmployeeCategoryController::class, "destroy"])->name("employeeCategories.destroy");
+    });
+    // end Rotas Para Categoria de Funcionário (EmployeeCategory) 
+
+    /* start course routes */
+    Route::prefix('cursos')->group(function () {
+
+        Route::get('/lista', [CourseController::class, 'index'])->name('courses.index');
+        Route::get('/criar', [CourseController::class, 'create'])->name('courses.create');
+        Route::post('/salvar', [CourseController::class, 'store'])->name('courses.store');
+        Route::get('/editar/{id}', [CourseController::class, 'edit'])->name('courses.edit');
+        Route::put('/atualizar/{id}', [CourseController::class, 'update'])->name('courses.update');
+        Route::get('/detalhes/{id}', [CourseController::class, 'show'])->name('courses.show');
+        Route::get("{id}/delete", [CourseController::class, "destroy"])->name("courses.destroy");
+    });
+    /* end course routes */
 
 
     /* start Employee routes */
@@ -140,7 +219,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
 
     // start users routes
     Route::prefix('utilizadores')->group(function () {
- 
+
         Route::get("/listar", [AdminAuthController::class, "index"])->name("users.index");
         Route::get("/criar", [AdminAuthController::class, "create"])->name("users.create");
         Route::post("/salvar", [AdminAuthController::class, "store"])->name("users.store");
@@ -149,7 +228,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::put("/atualizar/{id}", [AdminAuthController::class, "update"])->name("users.update");
         Route::delete("/apagar/{id}", [AdminAuthController::class, "destroy"])->name("users.destroy");
         Route::post("/login", [AdminAuthController::class, "login"])->name("users.login");
-        
+
         //cotrato em pdf
         Route::get("/{id}/contract", [AdminAuthController::class, "contractPdf"])->name("users.contract");
     });

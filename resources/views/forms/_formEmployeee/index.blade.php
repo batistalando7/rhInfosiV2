@@ -185,13 +185,22 @@
 
 <!-- Linha: Foto -->
 <div class="row g-3 mt-3">
-    <div class="col-md-6 offset-md-3">
+    <div class="col-md-6">
         <div class="form-floating">
             <input type="file" name="photo" id="photo" class="form-control">
             <label for="photo">Fotografia</label>
         </div>
     </div>
+    {{-- data de ingresso --}}
+     <div class="col-md-6">
+        <div class="form-floating">
+            <input type="date" name="entry_date" id="entry_date" class="form-control">
+            <label for="entry_date">Data de Ingresso</label>
+        </div>
+    </div>
 </div>
+
+
 
 <!-- Botão -->
 <div class="d-grid gap-2 col-6 mx-auto mt-4">

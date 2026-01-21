@@ -16,17 +16,24 @@
         <p><strong>Vínculo de Funcionário:</strong> {{ $employee->employeeType->name ?? '-' }}</p>
         <p><strong>E-mail:</strong> {{ $employee->email }}</p>
         <p><strong>Nacionalidade:</strong> {{ $employee->nationality }}</p>
+        <p><strong>Data de Ingresso:</strong> {{ \Carbon\Carbon::parse($employee->entry_date)->format('d/m/Y') }}</p>
       </div>
     </div>
 
     {{-- Seções cronológicas --}}
     <h4>Histórico de Cargos</h4>
     <ul class="list-group mb-4">
-      @if(isset($history))
-      
-      @foreach($history as $item)
+      @if(isset($employee->positionHistories))
+
+      @foreach($employee->positionHistories as $h)
       <li class="list-group-item">
-        {{ $item->description }}
+        {{ \Carbon\Carbon::parse($h->startDate)->format('d/m/Y') }}
+        @if($h->endDate)
+          até {{ \Carbon\Carbon::parse($h->endDate)->format('d/m/Y') }}
+        @else
+          até atualmente
+        @endif
+        — <strong>{{ $h->position->name }}</strong>
       </li>
       @endforeach
       @endif
@@ -70,7 +77,7 @@
         <tr><th>Competência</th><th>Bruto</th><th>Desconto</th><th>Líquido</th><th>Status</th></tr>
       </thead>
       <tbody>
-        {{-- @foreach($employee->salaryPayments as $p)
+        @foreach($employee->salaryPayments as $p)
         <tr>
           <td>{{ \Carbon\Carbon::parse($p->workMonth)->translatedFormat('F/Y') }}</td>
           <td>{{ number_format($p->baseSalary + $p->subsidies,2,',','.') }}</td>
@@ -78,7 +85,7 @@
           <td>{{ number_format($p->salaryAmount,2,',','.') }}</td>
           <td>{{ __('status.' . strtolower($p->paymentStatus)) }}</td>
         </tr>
-        @endforeach --}}
+        @endforeach
       </tbody>
     </table>
   </div>

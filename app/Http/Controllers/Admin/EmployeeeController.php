@@ -107,6 +107,7 @@ class EmployeeeController extends Controller
             'academicLevel'      => 'nullable|string|max:255', // Adicionado
             'courseId'           => 'nullable|exists:courses,id', // Adicionado
             'photo'              => 'nullable|image',
+            'entry_date'         => 'required|date|date_format:Y-m-d',//adicionado
         ], [
             'fullName.regex'               => 'O nome só pode conter letras e espaços.',
             'birth_date.before_or_equal'   => 'A idade minima permitida é 18 anos.',
@@ -134,7 +135,7 @@ class EmployeeeController extends Controller
         $data->academicLevel   = $request->academicLevel; // Adicionado
         $data->courseId        = $request->courseId; // Adicionado
         $data->employmentStatus = 'active';
-        $data->entry_date     = Carbon::now();
+        $data->entry_date     =  $request->entry_date;//adicionado
 
         if ($request->hasFile('photo')) {
             $photoName = time() . '_' . $request->file('photo')->getClientOriginalName();
@@ -150,13 +151,6 @@ class EmployeeeController extends Controller
 
         $data->save();
         Mail::to($data->email)->send(new NewEmployeeNotification($data));
-
-       /*  // Registrar o histórico de criação do funcionário
-        $data->employeeHistories()->create([
-            'operation' => 'Cadastro',
-            'new_value' => $data->toJson(),
-            'description' => 'Funcionário cadastrado.'
-        ]); */
 
         return redirect()->route('admin.employeee.create')
             ->with('msg', 'Funcionário cadastrado e e-mail enviado!');
@@ -352,6 +346,7 @@ class EmployeeeController extends Controller
             return view('admin.employeee.filter', ['employeeTypes' => $employeeTypes, 'employeeCategories' => $employeeCategories, 'courses' => $courses, 'speciality' => $speciality, 'position' => $position, 'departments' => $departments]);
         }
 
+        $entryDate = $request->input('entry_date');
         $startDate = $request->input('start_date');
         $endDate   = $request->input('end_date');
         $typeId    = $request->input('employeeTypeId');
@@ -401,6 +396,10 @@ class EmployeeeController extends Controller
             $query->where('departmentId', $departmentId);
         }
 
+        if($entryDate){
+            $query->where('entry_date', $entryDate);
+        }
+
         $filtered = $query->orderByDesc('id')->get();
 
         return view('admin.employeee.filter', [
@@ -413,6 +412,7 @@ class EmployeeeController extends Controller
             'filtered'      => $filtered,
             'start'         => $startDate,
             'end'           => $endDate,
+            'entryDate'     => $entryDate,
             'selectedType'  => $typeId,
             'selectedCategory' => $categoryId,
             /* 'selectedAcademicLevel' => $academicLevel, // Adicionado */
@@ -420,6 +420,7 @@ class EmployeeeController extends Controller
             'selectedSpeciality' => $specialityId,
             'selectedPosition' => $positionId,
             'selectedDepartment' => $departmentId,
+            'selectedEntry_date' => $entryDate,
         ]);
     }
 

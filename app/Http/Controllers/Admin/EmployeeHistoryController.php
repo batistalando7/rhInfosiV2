@@ -18,7 +18,7 @@ class EmployeeHistoryController extends Controller
             'mobilities.newDepartment',
             'secondments',
             'extraJobs',
-            /* 'salaryPayments', */
+            'salaryPayments',
         ])->findOrFail($id);
 
         return view('admin.employeee.history', compact('employee'));
