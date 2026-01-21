@@ -479,9 +479,9 @@
                     </a>
                     <div class="collapse" id="collapseUsers">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('admins') }}"><i class="fas fa-eye me-2"></i>Ver
+                            <li><a class="nav-link" href="{{ route('admin.users.index') }}"><i class="fas fa-eye me-2"></i>Ver
                                     Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('admins/create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.users.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>

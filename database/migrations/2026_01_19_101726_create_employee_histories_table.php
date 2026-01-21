@@ -11,12 +11,14 @@ class CreateEmployeeHistoriesTable extends Migration
     {
         Schema::create('employee_histories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('employee_id');
-            $table->foreign('employee_id')->references('id')->on('employeees')->onDelete('cascade');
-            $table->string('operation');
-            $table->json('old_value')->nullable();
-            $table->json('new_value')->nullable();
-            $table->string('description')->nullable();
+            $table->unsignedBigInteger('employeeId')->nullable();
+            $table->foreign('employeeId')->references('id')->on('employeees')->onDelete('cascade');
+            $table->unsignedBigInteger('mobilityId')->nullable();
+            $table->foreign('mobilityId')->references('id')->on('mobilities')->onDelete('cascade');
+            $table->unsignedBigInteger('leaveRequestId')->nullable();
+            $table->foreign('leaveRequestId')->references('id')->on('leave_requests')->onDelete('cascade');
+            $table->unsignedBigInteger('extraJobId')->nullable();
+            $table->foreign('extraJobId')->references('id')->on('extra_jobs')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

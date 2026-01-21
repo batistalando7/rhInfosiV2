@@ -11,29 +11,8 @@ class Employeee extends Authenticatable implements CanResetPasswordContract
 {
     use Notifiable, CanResetPassword;
 
-    protected $fillable = [
-        "departmentId",
-        "fullName",
-        "photo",
-        "iban",
-        "address",
-        "mobile",
-        "phone_code",
-        "bi",
-        "biPhoto",
-        "birth_date",
-        "nationality",
-        "gender",
-        "email",
-        "positionId",
-        "specialtyId",
-        "employeeTypeId",
-        "employeeCategoryId",
-        "academicLevel", 
-        "courseId", 
-        "employmentStatus",
-        "password",
-    ];
+    protected $table = "employeees";
+    protected $guarded = ['id'];
 
     protected $hidden = [
         "password",
@@ -96,7 +75,7 @@ class Employeee extends Authenticatable implements CanResetPasswordContract
     // relacionamento entre employeee e historico de funcionário
     public function employeeHistories()
     {
-        return $this->hasMany(EmployeeHistory::class, 'employee_id', 'id');
+        return $this->hasMany(EmployeeHistory::class, 'employeeId');
     }
 
 
@@ -121,6 +100,12 @@ class Employeee extends Authenticatable implements CanResetPasswordContract
     public function drivers()
     {
         return $this->hasMany(Driver::class, "employeeId");
+    }
+
+    //relacionamento employeee com mobilety
+    public function mobilities()
+    {
+        return $this->hasMany(Mobility::class, 'employeeId');
     }
 
 

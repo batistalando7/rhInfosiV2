@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Employeee;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class EmployeeHistoryController extends Controller
 {
-    public function show($id)
+    public function index($id)
     {
-        $emp = Employeee::with([
+        $employee = Employeee::with([
             'department',
             'employeeType',
             'positionHistories',
@@ -17,9 +18,9 @@ class EmployeeHistoryController extends Controller
             'mobilities.newDepartment',
             'secondments',
             'extraJobs',
-            'salaryPayments',
+            /* 'salaryPayments', */
         ])->findOrFail($id);
 
-        return view('employeee.history', compact('emp'));
+        return view('admin.employeee.history', compact('employee'));
     }
 }

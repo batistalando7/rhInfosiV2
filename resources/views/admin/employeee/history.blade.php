@@ -34,34 +34,34 @@
 
     <h4>Mobilidades</h4>
     <ul class="list-group mb-4">
-      {{-- @foreach($employee->mobilities as $m)
+      @foreach($employee->mobilities as $m)
       <li class="list-group-item">
         {{ \Carbon\Carbon::parse($m->created_at)->format('d/m/Y') }}
         — Transferido: <em>{{ $m->oldDepartment->title }} → {{ $m->newDepartment->title }}</em>
         <br><small>Motivo: {{ $m->causeOfMobility }}</small>
       </li>
-      @endforeach --}}
+      @endforeach
     </ul>
 
     <h4>Destacamentos</h4>
     <ul class="list-group mb-4">
-      {{-- @foreach($employee->secondments as $s)
+      @foreach($employee->secondments as $s)
       <li class="list-group-item">
         {{ \Carbon\Carbon::parse($s->created_at)->format('d/m/Y') }}
         — Destaque para <strong>{{ $s->institution }}</strong>
         <br><small>Motivo: {{ $s->causeOfTransfer }}</small>
       </li>
-      @endforeach --}}
+      @endforeach
     </ul>
 
     <h4>Trabalhos Extras</h4>
     <ul class="list-group mb-4">
-      {{-- @foreach($employee->extraJobs as $j)
+      @foreach($employee->extraJobs as $j)
       <li class="list-group-item">
         {{ $j->title }} ({{ \Carbon\Carbon::parse($j->created_at)->format('d/m/Y') }})
         <br><small>Recebeu: {{ number_format($j->pivot->assignedValue,2,',','.') }} Kz</small>
       </li>
-      @endforeach --}}
+      @endforeach
     </ul>
 
     <h4>Pagamentos de Salário</h4>

@@ -1,10 +1,10 @@
 @extends('layouts.admin.layout')
-@section('title', 'Lista de Tipos de Funcionários')
+@section('title', 'Lista de Vínculo de Funcionários')
 @section('content')
 
 <div class="card mb-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="fas fa-card-list me-2"></i>Lista de Tipos de Funcionários</span>
+    <span><i class="fas fa-card-list me-2"></i>Lista de Vínculo de Funcionários</span>
     <a href="{{ route('employeeType.create') }}" class="btn btn-outline-light btn-sm" title="Novo Tipo de Funcionário">
       <i class="fas fa-plus-circle"></i>
     </a>

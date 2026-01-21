@@ -16,6 +16,10 @@ class EmployeeHistory extends Model
 
     public function employee()
     {
-        return $this->belongsTo(Employeee::class, 'employee_id', 'id');
+        return $this->belongsTo(Employeee::class, 'employeeId');
+    }
+    public function mobility()
+    {
+        return $this->belongsTo(Mobility::class, 'mobilityId');
     }
 }

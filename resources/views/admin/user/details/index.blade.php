@@ -6,16 +6,16 @@
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-eye me-2"></i>Detalhes do Administrador: {{ $admin->email }}</span>
     <div>
-      <a href="{{ route('admins.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
+      <a href="{{ route('admin.users.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
         <i class="fa-solid fa-list"></i>
       </a>
-      <a href="{{ route('admins.edit', $admin->id) }}" class="btn btn-warning btn-sm" title="Editar">
+      <a href="{{ route('admin.users.edit', $admin->id) }}" class="btn btn-warning btn-sm" title="Editar">
         <i class="fas fa-pencil"></i>
       </a>
 
       <!-- Só mostra o botão de apagar se NÃO for o super-admin (role = admin e sem employeeId) -->
       @if(!($admin->role === 'admin' && $admin->employeeId === null))
-        <a href="#" data-url="{{ route('admins.destroy', $admin->id) }}" class="btn btn-danger btn-sm delete-btn" title="Apagar">
+        <a href="#" data-url="{{ route('admin.users.destroy', $admin->id) }}" class="btn btn-danger btn-sm delete-btn" title="Apagar">
           <i class="fas fa-trash"></i>
         </a>
       @endif

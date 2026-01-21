@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\EmployeeeController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Admin\InternController;
 use App\Http\Controllers\Admin\RetirementController;
 use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\ResourceAssignmentController;
+use App\Http\Controllers\Admin\EmployeeHistoryController;
 
 Route::middleware('auth')->name('admin.')->group(function () {
 
@@ -47,7 +49,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
 
 
         // Histórico do funcionário
-        Route::get('/history/{id}', [EmployeeeController::class, 'employeeHistory'])->name('employeee.history');
+        Route::get('/history/{id}', [EmployeeHistoryController::class, 'index'])->name('employeee.history');
         // filtros
 
         /* Rota GET com parâmetro ?status=... */
@@ -129,13 +131,28 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get('/deletar/{resourceAssignment}', [ResourceAssignmentController::class, 'destroy'])->name('resourceAssignments.destroy');
 
         //filtros
-       /*  Route::get('pesquisar/funcionario', [ResourceAssignmentController::class, "searchEmployee"])->name("resourceAssignments.searchEmployee"); */
+        /*  Route::get('pesquisar/funcionario', [ResourceAssignmentController::class, "searchEmployee"])->name("resourceAssignments.searchEmployee"); */
         Route::get("atribuicoes/{resourceAssignment}/pdf", [ResourceAssignmentController::class, "showPdf"])->name("resourceAssignments.showPdf");
         Route::get("pdf", [ResourceAssignmentController::class, "pdfAll"])->name("resourceAssignments.pdfAll");
         Route::get("pdf-filtered", [ResourceAssignmentController::class, "exportFilteredPDF"])->name("resourceAssignments.pdfFiltered");
     });
     //end Atribuições de Recursos (Resource Assignments) routes
 
-
+    // start users routes
+    Route::prefix('utilizadores')->group(function () {
+ 
+        Route::get("/listar", [AdminAuthController::class, "index"])->name("users.index");
+        Route::get("/criar", [AdminAuthController::class, "create"])->name("users.create");
+        Route::post("/salvar", [AdminAuthController::class, "store"])->name("users.store");
+        Route::get("/detalhes/{id}", [AdminAuthController::class, "show"])->name("users.show");
+        Route::get("/editar/{id}/edit", [AdminAuthController::class, "edit"])->name("users.edit");
+        Route::put("/atualizar/{id}", [AdminAuthController::class, "update"])->name("users.update");
+        Route::delete("/apagar/{id}", [AdminAuthController::class, "destroy"])->name("users.destroy");
+        Route::post("/login", [AdminAuthController::class, "login"])->name("users.login");
+        
+        //cotrato em pdf
+        Route::get("/{id}/contract", [AdminAuthController::class, "contractPdf"])->name("users.contract");
+    });
+    // end users routes
 
 });

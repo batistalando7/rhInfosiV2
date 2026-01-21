@@ -1,10 +1,10 @@
 @extends('layouts.admin.layout')
-@section('title', 'Novo Tipo de Funcionário')
+@section('title', 'Adivcionar Vínculo de Funcionário')
 @section('content')
 
 <div class="card mb-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="fas fa-plus-circle me-2"></i>Novo Tipo de Funcionário</span>
+    <span><i class="fas fa-plus-circle me-2"></i>Adivcionar Vínculo de Funcionário</span>
     <a href="{{ route('employeeType.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todos">
       <i class="fa-solid fa-list"></i>
     </a>

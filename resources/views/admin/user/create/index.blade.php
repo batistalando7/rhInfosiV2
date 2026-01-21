@@ -5,7 +5,7 @@
 <div class="card mb-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-plus-circle me-2"></i>Novo Administrador</span>
-    <a href="{{ route('admins.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
+    <a href="{{ route('admin.users.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
       <i class="fa-solid fa-list"></i>
     </a>
   </div>
@@ -13,7 +13,7 @@
   <div class="card-body">
     <div class="row justify-content-center">
       <div class="col-md-10">
-        <form method="POST" action="{{ route('admins.store') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.users.store') }}" enctype="multipart/form-data">
           @csrf
 
           <!-- Seleção de Funcionário -->

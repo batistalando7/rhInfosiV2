@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Department;
@@ -36,7 +37,7 @@ class AdminAuthController extends Controller
 
         $admins = $query->orderBy('id')->get();
 
-        return view('admins.index', compact('admins'));
+        return view('admin.user.list.index', compact('admins'));
     }
 
     public function create()
@@ -44,7 +45,7 @@ class AdminAuthController extends Controller
         $employees   = Employeee::whereDoesntHave('admin')->orderBy('fullName')->get();
         $departments = Department::orderBy('title')->get();
 
-        return view('admins.create', compact('employees', 'departments'));
+        return view('admin.user.create.index', compact('employees', 'departments'));
     }
 
     public function store(Request $request)
@@ -153,13 +154,13 @@ class AdminAuthController extends Controller
             }
         }
 
-        return redirect()->route('admins.index')->with('msg', 'Administrador criado com sucesso!');
+        return redirect()->route('admin.users.index')->with('msg', 'Administrador criado com sucesso!');
     }
 
     public function show($id)
     {
         $admin = Admin::with('employee')->findOrFail($id);
-        return view('admins.show', compact('admin'));
+        return view('admin.user.details.index', compact('admin'));
     }
 
     public function edit($id)
@@ -168,7 +169,7 @@ class AdminAuthController extends Controller
         $employees   = Employeee::orderBy('fullName')->get();
         $departments = Department::orderBy('title')->get();
 
-        return view('admins.edit', compact('admin', 'employees', 'departments'));
+        return view('admin.user.edit.index', compact('admin', 'employees', 'departments'));
     }
 
     public function update(Request $request, $id)
@@ -224,7 +225,7 @@ class AdminAuthController extends Controller
             }
         }
 
-        return redirect()->route('admins.edit', $id)->with('msg', 'Administrador atualizado com sucesso!');
+        return redirect()->route('admin.users.edit', $id)->with('msg', 'Administrador atualizado com sucesso!');
     }
 
     public function destroy($id)
@@ -232,13 +233,13 @@ class AdminAuthController extends Controller
         $admin = Admin::findOrFail($id);
 
         if ($admin->role === 'admin' && $admin->employeeId === null) {
-            return redirect()->route('admins.index')
+            return redirect()->route('admin.users.index')
                 ->withErrors(['msg' => 'Este administrador não pode ser excluído.']);
         }
 
         $admin->delete();
 
-        return redirect()->route('admins.index')
+        return redirect()->route('admin.users.index')
             ->with('msg', 'Administrador removido com sucesso.');
     }
 
@@ -262,7 +263,7 @@ class AdminAuthController extends Controller
         if (!$admin->employee) {
             abort(404, 'Funcionário não vinculado ao administrador.');
         }
-        $pdf = PDF::loadView('admins.contract_pdf', compact('admin'))
+        $pdf = PDF::loadView('pdf.user.contractPdf', compact('admin'))
                   ->setPaper('a4', 'portrait');
         return $pdf->stream("Contrato_Admin_{$admin->id}.pdf");
     }

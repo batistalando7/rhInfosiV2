@@ -134,6 +134,7 @@ class EmployeeeController extends Controller
         $data->academicLevel   = $request->academicLevel; // Adicionado
         $data->courseId        = $request->courseId; // Adicionado
         $data->employmentStatus = 'active';
+        $data->entry_date     = Carbon::now();
 
         if ($request->hasFile('photo')) {
             $photoName = time() . '_' . $request->file('photo')->getClientOriginalName();
@@ -150,12 +151,12 @@ class EmployeeeController extends Controller
         $data->save();
         Mail::to($data->email)->send(new NewEmployeeNotification($data));
 
-        // Registrar o histórico de criação do funcionário
+       /*  // Registrar o histórico de criação do funcionário
         $data->employeeHistories()->create([
             'operation' => 'Cadastro',
             'new_value' => $data->toJson(),
             'description' => 'Funcionário cadastrado.'
-        ]);
+        ]); */
 
         return redirect()->route('admin.employeee.create')
             ->with('msg', 'Funcionário cadastrado e e-mail enviado!');
@@ -328,13 +329,13 @@ class EmployeeeController extends Controller
         return view('admin.employeee.myProfile', compact('employee'));
     }
 
-    public function employeeHistory($id)
+    /* public function employeeHistory($id)
     {
         $employee = Employeee::findOrFail($id);
         $history = EmployeeHistory::with('employee')->where('employee_id', $employee->id)->get();
 
         return view('admin.employeee.history', compact('employee', 'history'));
-    }
+    } */
 
 
     public function filterByDate(Request $request)
