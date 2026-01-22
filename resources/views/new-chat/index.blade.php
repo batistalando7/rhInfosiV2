@@ -1,10 +1,10 @@
 @extends('layouts.admin.chat-layout')
 
 @section('content')
-<!-- Botão para voltar ao Painel de Controle -->
+<!-- Botão para voltar ao  Painel de Controle  -->
 <div class="mb-3">
   <a href="{{ route('dashboard') }}" class="btn btn-secondary">
-    <i class="fas fa-arrow-left"></i> Voltar para o Painel de Controle
+    <i class="fas fa-arrow-left"></i> Voltar para o Painel de Controle 
   </a>
 </div>
 
