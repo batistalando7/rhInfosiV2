@@ -9,6 +9,6 @@
     <p>Seu pedido de reforma foi <strong>{{ $retirement->status }}</strong>.</p>
     <p>Observações: {{ $retirement->observations }}</p>
     <p>Obrigado,</p>
-    <p>Equipe RH-INFOSI</p>
+    <p>Equipe Gestão de Capital Humano</p>
 </body>
 </html>

@@ -5,8 +5,10 @@
                 Copyright © INFOSI-RH Website 2025
             </div>
             <div class="col-md-6 text-end">
-                <a href="#" class="text-primary">Política de Privacidade</a> · <a href="#" class="text-primary">Termos & Condições</a>
+                <a href="#" class="text-white text-decoration-none">Política de Privacidade</a> · 
+                <a href="#" class="text-white text-decoration-none">Termos & Condições</a>
             </div>
+ 
         </div>
     </div>
 </footer>

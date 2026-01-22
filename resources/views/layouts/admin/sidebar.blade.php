@@ -26,7 +26,7 @@
             <!-- Painel -->
             <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Painel</li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+                <a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i> Painel de Controle</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('frontend.index') }}" target="_blank"><i class="fas fa-globe me-2"></i> SITE</a>
@@ -252,7 +252,7 @@
 {{-- Módulo de Infraestrutura (Material) --}}
 <li class="nav-item has-submenu">
     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMaterial" aria-expanded="false" aria-controls="collapseMaterial">
-        <i class="fas fa-tools me-2"></i> Infraestrutura (Material) <i class="fas fa-chevron-down ms-auto"></i>
+        <i class="fas fa-tools me-2"></i> Infraestrutura<i class="fas fa-chevron-down ms-auto"></i>
     </a>
     <div class="collapse" id="collapseMaterial">
         <ul class="submenu">
@@ -270,7 +270,7 @@
 {{-- Módulo de Património (Heritage) --}}
 <li class="nav-item has-submenu">
     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseHeritage" aria-expanded="false" aria-controls="collapseHeritage">
-        <i class="fas fa-building me-2"></i> Património (Heritage) <i class="fas fa-chevron-down ms-auto"></i>
+        <i class="fas fa-building me-2"></i> Património <i class="fas fa-chevron-down ms-auto"></i>
     </a>
     <div class="collapse" id="collapseHeritage">
         <ul class="submenu">

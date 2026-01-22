@@ -27,7 +27,7 @@ class NewMobilityNotification extends Mailable
 
     public function build()
     {
-        return $this->subject('Notificação de Mobilidade - RH-INFOSI')
+        return $this->subject('Notificação de Mobilidade - Gestão de Capital Humano')
                     ->view('emails.newMobilityNotification');
     }
 }

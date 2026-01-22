@@ -9,6 +9,6 @@
     <p>Seu pedido de licença foi <strong>{{ $leave->approvalStatus }}</strong>.</p>
     <p>Comentário: {{ $leave->approvalComment }}</p>
     <p>Obrigado,</p>
-    <p>Equipe RH-INFOSI</p>
+    <p>Equipe Gestão de Capital Humano</p>
 </body>
 </html>

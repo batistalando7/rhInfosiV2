@@ -32,7 +32,7 @@ class ResetPasswordNotification extends Mailable
      */
     public function build()
     {
-        return $this->subject('Redefinir Senha - RH-INFOSI')
+        return $this->subject('Redefinir Senha - Gestão de Capital Humano')
                     ->view('emails.resetPasswordNotification');
     }
 }

@@ -2,7 +2,7 @@
   <!-- Barra Superior -->
   <div style="background-color: #E46705; color: #fff; padding: 10px 20px; width: 100%;">
     <div style="display: flex; justify-content: flex-end; align-items: center; gap: 20px;">
-      <!-- RH-INFOSI -->
+      <!-- Gestão de Capital Humano -->
       <div style="white-space: nowrap;">
         <i class="fas fa-company"></i>
         <em><strong>RH</strong>-INFOSI </em>
@@ -41,7 +41,7 @@
             <!-- Branding -->
             <br>
             <div class="site-branding">
-              <a class="home-link" href="{{ route('frontend.index') }}" title="RH-INFOSI" rel="home">
+              <a class="home-link" href="{{ route('frontend.index') }}" title="Gestão de Capital Humano" rel="home">
                 <img id="logo-img" class="img-center" src="{{ asset('auth/img/infosi2.png') }}" alt="logo-img">
               </a>
             </div>
