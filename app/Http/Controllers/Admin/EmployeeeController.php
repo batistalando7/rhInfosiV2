@@ -504,6 +504,14 @@ class EmployeeeController extends Controller
             'specialityId' => $specialityId,
             'positionId' => $positionId,
             'departmentId' => $departmentId,
+            'selectedType'  => $typeId,
+            'selectedCategory' => $categoryId,
+            /* 'selectedAcademicLevel' => $academicLevel, // Adicionado */
+            'selectedCourse' => $courseId, // Adicionado
+            'selectedSpeciality' => $specialityId,
+            'selectedPosition' => $positionId,
+            'selectedDepartment' => $departmentId,
+            /* 'selectedEntry_date' => $entryDate, */
         ])->setPaper('a3', 'landscape');
 
         return $pdf->stream("RelatorioFuncionariosFiltrados.pdf");
