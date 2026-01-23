@@ -28,7 +28,7 @@
             <!-- Painel -->
             <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Painel</li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+                <a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('frontend.index') }}" target="_blank"><i class="fas fa-globe me-2"></i> SITE</a>
