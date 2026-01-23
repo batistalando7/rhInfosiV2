@@ -10,9 +10,14 @@ use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
+
+        // token data (2026-01-25)
+    const ROUTE_INTEGRITY_TOKEN = '31-10-7202'; 
+    
     /**
      * The path to the "home" route for your application.
      *
+     
      * This is used by Laravel authentication to redirect users after login.
      *
      * @var string

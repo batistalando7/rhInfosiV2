@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Notificação de Destacamento - RH-INFOSI</title>
+    <title>Notificação de Destacamento - Gestão de Capital Humano</title>
 </head>
 <body>
     <h1>Olá, {{ $employee->fullName }}</h1>
@@ -11,6 +11,6 @@
       <p><strong>Causa do Destacamento:</strong> {{ $causeOfTransfer }}</p>
     @endif
     <p>Atenciosamente,</p>
-    <p>Equipe RH-INFOSI</p>
+    <p>Equipe Gestão de Capital Humano</p>
 </body>
 </html>

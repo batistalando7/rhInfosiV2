@@ -30,7 +30,7 @@ class NewEmployeeNotification extends Mailable
      */
     public function build()
     {
-        return $this->subject('Bem-vindo ao RH-INFOSI')
+        return $this->subject('Bem-vindo ao Gestão de Capital Humano')
                     ->view('emails.newEmployeeNotification');
     }
 }

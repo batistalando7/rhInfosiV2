@@ -11,6 +11,6 @@
     <p>Data de Início: {{ $vacation->vacationStart }}</p>
     <p>Data de Término: {{ $vacation->vacationEnd }}</p>
     <p>Obrigado,</p>
-    <p>Equipe RH-INFOSI</p>
+    <p>Equipe Gestão de Capital Humano</p>
 </body>
 </html>

@@ -1,13 +1,15 @@
 @extends('layouts.admin.layout')
 
-@section('title', 'Gestão de Capital Humano-INFOSI')
+@section('title', 'Dashboard Gestão de Capital Humano')
 
 @section('content')
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Gestão de Capital Humano</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Dashboard</li>
-    </ol>
+    <h1 class="mt-4">Painel de Controle </h1>
+    <!-- <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"> Painel de Controle </li>
+    </ol> 
+     -->
+
     <p>Bem-vindo, {{ Auth::user()->employee->fullName ?? Auth::user()->email }}</p>
 
     @if(Auth::user()->role === 'admin' || Auth::user()->role === 'director')
@@ -418,7 +420,9 @@
         </div>
     @else
         <div class="alert alert-info">
-            <strong>Atenção:</strong> Você tem acesso aos menus gerais do sistema, porém não pode visualizar os dados estatísticos do dashboard.
+
+            <strong>Atenção: </strong>Você tem acesso aos menus gerais do sistema, porém não pode visualizar os dados estatísticos do Painel de Controle. 
+
         </div>
     @endif
 </div>

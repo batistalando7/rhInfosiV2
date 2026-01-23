@@ -16,6 +16,6 @@
     <li>Data de Pagamento: {{ $payment->paymentDate }}</li>
   </ul>
   <p>Qualquer dúvida, entre em contato com o RH.</p>
-  <p>Atenciosamente,<br>Equipe RH-INFOSI</p>
+  <p>Atenciosamente,<br>Equipe Gestão de Capital Humano</p>
 </body>
 </html>
