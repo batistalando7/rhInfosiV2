@@ -83,6 +83,12 @@ class MobilityController extends Controller
             'causeOfMobility' => $request->causeOfMobility,
         ]);
 
+        //registrar no histórico do funcionário
+        /* $history = $mobility->employeeHistory()->create([
+            'employeeId'   => $request->employeeId,
+            'mobilityId'   => $mobility->id,
+        ]); */
+
         // Atualiza o departamento do funcionário
         $employee = Employeee::find($request->employeeId);
         $oldDepartment = $employee->department;

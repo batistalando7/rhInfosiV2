@@ -319,6 +319,8 @@ class VacationRequestController extends Controller
         $vac->approvalStatus  = $request->approvalStatus;
         $vac->approvalComment = $request->approvalComment;
         $vac->save();
+        //registra no histórico do funcionário
+        $history = 1;
         return back()->with('msg','Status atualizado com sucesso!');
     }
 }

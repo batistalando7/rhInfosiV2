@@ -133,7 +133,7 @@
     <div id="restricted-area-container" style="position: relative; display: inline-block;">
       <a id="restricted-area-link"
          class="ttm-btn ttm-btn-size-md ttm-btn-shape-square ttm-btn-style-border ttm-btn-color-black"
-         href="{{ route('dashboard') }}"
+         href="{{ route('admin.dashboard') }}"
          style="width: 50px; height: 50px; border-radius: 50% !important; display: inline-flex; align-items: center; justify-content: center; padding: 0 !important;">
         <i class="fa fa-user" style="color: #f27602; font-size: 20px; padding: 8px; border: 2px solid #f27602; border-radius: 50%;"></i>
       </a>
@@ -167,7 +167,7 @@
   <nav id="menu" class="menu">
     <!-- Botão de área restrita no mobile -->
     <div class="restricted-mobile">
-      <a href="{{ route('dashboard') }}" 
+      <a href="{{ route('admin.dashboard') }}" 
          style="display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px; border: 2px solid #f27602; border-radius: 50%; margin: 0 auto;">
         <i class="fa fa-user" style="color: #f27602; font-size: 20px; padding: 8px;"></i>
       </a>

@@ -32,6 +32,7 @@ class CreateEmployeeesTable extends Migration
             $table->unsignedBigInteger("employeeCategoryId")->nullable();
             $table->string("academicLevel")->nullable();
             $table->unsignedBigInteger("courseId")->nullable(); 
+            $table->date('entry_date');
             $table->timestamps();
 
             $table->foreign("departmentId")->references("id")->on("departments")->onDelete("cascade");

@@ -1,0 +1,253 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Intern;
+use App\Models\Department;
+use App\Models\Specialty;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Carbon\Carbon;
+
+class InternController extends Controller
+{
+    public function index()
+    {
+        $data = Intern::orderByDesc('id')->get();
+        return view('admin.intern.list.index', compact('data'));
+    }
+
+    public function create()
+    {
+        $departments = Department::all();
+        $specialties = Specialty::all();
+
+        return view('admin.intern.create.index', compact('departments', 'specialties'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'depart'           => 'required',
+            'fullName'         => 'required',
+            'address'          => 'required',
+            'mobile'           => 'required',
+            'fatherName'      => 'required',
+            'motherName'      => 'required',
+            'bi'               => 'required|unique:interns',
+            'birth_date'       => 'required|date|date_format:Y-m-d|before_or_equal:today|after_or_equal:' . Carbon::now()->subYears(120)->format('Y-m-d'),
+            'nationality'      => 'required',
+            'gender'           => 'required',
+            'email'            => 'required|email|unique:interns',
+            'specialtyId'      => 'required|exists:specialties,id',
+            'internshipStart'  => 'required|date|date_format:Y-m-d',
+            'internshipEnd'    => 'required|date|date_format:Y-m-d|after_or_equal:internshipStart',
+            'institution'      => 'required|string'
+        ], [
+            'birth_date.date_format'       => 'A data de nascimento deve estar no formato AAAA-MM-DD.',
+            'birth_date.before_or_equal'   => 'A data de nascimento não pode ser superior à data atual.',
+            'birth_date.after_or_equal'    => 'A data de nascimento informada é inválida.',
+            'internshipStart.required'     => 'O início do estágio é obrigatório.',
+            'internshipEnd.required'       => 'O fim do estágio é obrigatório.',
+            'internshipEnd.after_or_equal' => 'O fim do estágio não pode ser anterior ao início.',
+            'institution.required'         => 'A instituição de origem é obrigatória.'
+        ]);
+
+        $intern = new Intern();
+        $intern->departmentId    = $request->depart;
+        $intern->fullName        = $request->fullName;
+        $intern->address         = $request->address;
+        $intern->mobile          = $request->mobile;
+        $intern->fatherName     = $request->fatherName;
+        $intern->motherName     = $request->motherName;
+        $intern->bi              = $request->bi;
+        $intern->birth_date      = $request->birth_date;
+        $intern->nationality     = $request->nationality;
+        $intern->gender          = $request->gender;
+        $intern->email           = $request->email;
+        $intern->specialtyId     = $request->specialtyId;
+        $intern->internshipStart = $request->internshipStart;
+        $intern->internshipEnd   = $request->internshipEnd;
+        $intern->institution     = $request->institution;
+        $intern->save();
+
+        return redirect()->route('admin.intern.create')->with('msg', 'Estagiário cadastrado com sucesso');
+    }
+
+    public function show($id)
+    {
+        $data = Intern::findOrFail($id);
+        return view('admin.intern.details.index', compact('data'));
+    }
+
+    public function edit($id)
+    {
+        $data        = Intern::findOrFail($id);
+        $departments = Department::orderByDesc('id')->get();
+        $specialties = Specialty::all();
+
+        return view('admin.intern.edit.index', compact('data', 'departments', 'specialties'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'depart'           => 'required',
+            'fullName'         => 'required',
+            'address'          => 'required',
+            'mobile'           => 'required',
+            'bi'               => 'required|unique:interns,bi,' . $id,
+            'email'            => 'required|email|unique:interns,email,' . $id,
+            'nationality'      => 'required',
+            'internshipStart'  => 'required|date|date_format:Y-m-d',
+            'internshipEnd'    => 'required|date|date_format:Y-m-d|after_or_equal:internshipStart',
+            'institution'      => 'required|string'
+        ], [
+            'internshipStart.required'     => 'O início do estágio é obrigatório.',
+            'internshipEnd.required'       => 'O fim do estágio é obrigatório.',
+            'internshipEnd.after_or_equal' => 'O fim do estágio não pode ser anterior ao início.',
+            'institution.required'         => 'A instituição de origem é obrigatória.'
+        ]);
+
+        $intern = Intern::findOrFail($id);
+        $intern->departmentId    = $request->depart;
+        $intern->fullName        = $request->fullName;
+        $intern->address         = $request->address;
+        $intern->mobile          = $request->mobile;
+        $intern->internshipStart = $request->internshipStart;
+        $intern->internshipEnd   = $request->internshipEnd;
+        $intern->institution     = $request->institution;
+        $intern->nationality     = $request->nationality;
+        $intern->save();
+
+        return redirect()->route('admin.intern.edit', $id)->with('msg', 'Estagiário atualizado com sucesso');
+    }
+
+    public function destroy($id)
+    {
+        Intern::findOrFail($id)->delete();
+        return redirect()->route('admin.intern.index')->with('msg', 'Estagiário deletado com sucesso');
+    }
+
+    /* ==================== Filtros e relatorios ==================== */
+
+    public function filterByDate(Request $request)
+    {
+        $departments = Department::all();
+        $speciality = Specialty::all();
+
+        if (!$request->has('start_date') && !$request->has('end_date') && !$request->has('departmentId') && !$request->has('specialityId')) {
+            return view('admin.intern.filter', compact('departments', 'speciality'));
+        }
+
+        $request->validate([
+            'start_date' => 'nullable|date',
+            'end_date'   => 'nullable|date|after_or_equal:start_date',
+        ]);
+
+        $start = Carbon::parse($request->start_date)->startOfDay();
+        $end   = Carbon::parse($request->end_date)->endOfDay();
+        $departmentId = $request->departmentId;
+        $specialityId = $request->specialityId;
+
+        $query = Intern::query();
+
+        if ($start && $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        }
+
+        if ($departmentId) {
+            $query->where('departmentId', $departmentId);
+        }
+
+        if ($specialityId) {
+            $query->where('specialtyId', $specialityId);
+        }
+
+        $filtered = $query->get();
+
+        $startDate = $request->start_date;
+        $endDate   = $request->end_date;
+
+        return view('admin.intern.filter', [
+            'departments' => $departments,
+            'speciality'  => $speciality,
+            'filtered'  => $filtered,
+            'startDate' => $startDate,
+            'endDate'   => $endDate,
+        ]);
+    }
+
+
+    public function pdfFiltered(Request $request)
+    {
+        set_time_limit(300);
+
+        $request->validate([
+            'start_date' => 'nullable|date',
+            'end_date'   => 'nullable|date|after_or_equal:start_date',
+        ]);
+
+
+        $start = Carbon::parse($request->start_date)->startOfDay();
+        $end   = Carbon::parse($request->end_date)->endOfDay();
+        $departmentId = $request->departmentId;
+        $specialityId = $request->specialityId;
+
+        $query = Intern::query();
+
+        if ($start && $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        }
+
+        if ($departmentId) {
+            $query->where('departmentId', $departmentId);
+        }
+
+        if ($specialityId) {
+            $query->where('specialtyId', $specialityId);
+        }
+
+        $filtered = $query->get();
+
+        // Manter as datas no formato Y-m-d para exibir no título do PDF
+        $startDate = $request->start_date;
+        $endDate   = $request->end_date;
+
+        $pdf = PDF::loadView('pdf.intern.filtered_pdf', compact('filtered', 'startDate', 'endDate'))
+            ->setPaper('a3', 'portrait');
+
+        return $pdf->download("RelatorioInterns_{$startDate}_{$endDate}.pdf");
+    }
+
+    public function pdfAll()
+    {
+        $allInterns = Intern::with(['department', 'specialty'])->get();
+        $pdf = PDF::loadView('pdf.intern.intern_pdf', compact('allInterns'))
+            ->setPaper('a3', 'portrait');
+
+        return $pdf->stream('RelatorioTodosEstagiarios.pdf');
+    }
+
+    //Faz o download da ficha individual em PDF
+
+    public function showPdf($id)
+    {
+        // Carrega o funcionário e relacionamentos que você precisar exibir
+        $intern = Intern::with(['department', 'specialty']) // Adicionado
+            ->findOrFail($id);
+
+        // Gera o QR Code com os dados desejados
+        $qrData = route('admin.intern.show', $intern->id); // ou qualquer link/texto que você quiser
+
+        $qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" . urlencode($qrData);
+
+        // Renderiza o Blade 'admin.intern.show_pdf' e gera o PDF
+        $pdf = PDF::loadView('pdf.intern.show_pdf', compact(['intern', 'qrUrl']))
+            ->setPaper('a4', 'portrait');
+
+        // Força o download com nome de arquivo dinâmico
+        return $pdf->stream("Ficha_Estagiario_{$intern->id}.pdf");
+    }
+}

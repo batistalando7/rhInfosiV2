@@ -33,4 +33,10 @@ class Mobility extends Model
     {
         return $this->belongsTo(Department::class, 'newDepartmentId');
     }
+
+    //relacionamento com o histórico de funcionário
+    public function employeeHistory()
+    {
+        return $this->hasOne(EmployeeHistory::class, 'mobilityId');
+    }
 }
