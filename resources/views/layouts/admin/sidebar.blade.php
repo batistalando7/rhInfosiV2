@@ -235,9 +235,9 @@
                     </a>
                     <div class="collapse" id="collapseLeaveType">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('leaveType') }}"><i class="fas fa-eye me-2"></i>Ver
+                            <li><a class="nav-link" href="{{ route('admin.leaveTypes.index') }}"><i class="fas fa-eye me-2"></i>Ver
                                     Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('leaveType/create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.leaveTypes.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>

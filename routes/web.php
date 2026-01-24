@@ -314,10 +314,10 @@ Route::middleware(["auth"])->group(function () {
      Route::resource("mobility", MobilityController::class);
 
 
-     // ====================== Tipos de Licença (LeaveType) ======================
+/*      // ====================== Tipos de Licença (LeaveType) ======================
      Route::resource("leaveType", LeaveTypeController::class);
      Route::get("leaveType/{id}/delete", [LeaveTypeController::class, "destroy"]);
-
+ */
 
      // ====================== Pedido de Licença (LeaveRequest) ======================
      Route::get("leaveRequest/searchEmployee", [LeaveRequestController::class, "searchEmployee"])->name("leaveRequest.searchEmployee");

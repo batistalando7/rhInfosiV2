@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\ResourceAssignmentController;
 use App\Http\Controllers\Admin\EmployeeHistoryController;
 use App\Http\Controllers\Admin\EmployeeTypeController;
+use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\SpecialtyController;
 
@@ -216,6 +217,19 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("pdf-filtered", [ResourceAssignmentController::class, "exportFilteredPDF"])->name("resourceAssignments.pdfFiltered");
     });
     //end Atribuições de Recursos (Resource Assignments) routes
+
+    // start Tipos de Licença (LeaveType) 
+    Route::prefix('tipos-licenca')->group(function () {
+
+        Route::get('/lista', [LeaveTypeController::class, 'index'])->name('leaveTypes.index');
+        Route::get('/criar', [LeaveTypeController::class, 'create'])->name('leaveTypes.create');
+        Route::post('/salvar', [LeaveTypeController::class, 'store'])->name('leaveTypes.store');
+        Route::get('/editar/{id}', [LeaveTypeController::class, 'edit'])->name('leaveTypes.edit');
+        Route::put('/atualizar/{id}', [LeaveTypeController::class, 'update'])->name('leaveTypes.update');
+        Route::get('/detalhes/{id}', [LeaveTypeController::class, 'show'])->name('leaveTypes.show');
+        Route::delete('/deletar/{id}', [LeaveTypeController::class, 'destroy'])->name('leaveTypes.destroy');
+    });
+    // end Tipos de Licença (LeaveType) 
 
     // start users routes
     Route::prefix('utilizadores')->group(function () {

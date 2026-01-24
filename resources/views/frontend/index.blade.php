@@ -681,7 +681,11 @@
                 <h5>Registo Assistido de Domínios <br> Alojamento e Email</h5>
               </div>
               <div class="featured-desc">
-                <p>Oferecemos suporte completo no registo de domínios, configuração de alojamento web e criação de contas de email profissionais, garantindo que a sua presença online seja estabelecida de forma eficiente e segura.</p>
+                <p class="mb-0 mx-4">
+                  Oferecemos suporte completo no registo de domínios, 
+                  configuração de alojamento web e criação de contas de email profissionais, 
+                  garantindo que a sua presença online seja estabelecida de forma eficiente e segura.
+                </p>
               </div>
             </div>
           </div>

@@ -21,7 +21,7 @@
         <div class="form-container">
             <div class="form-header">
                 <h2>Acesso ao Sistema</h2>
-                <p>Sistema de Recursos Humanos do INFOSI</p>
+                <p>Sistema de Gestão de Capital Humano do INFOSI</p>
             </div>
 
             <!-- Mensagens de erro/sucesso -->
