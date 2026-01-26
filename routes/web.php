@@ -21,7 +21,7 @@ use App\Http\Controllers\InternEvaluationController;
 use App\Http\Controllers\RetirementController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\Site\FrontendController;
 use App\Http\Controllers\NewChatController;
 use App\Http\Controllers\StatuteController;
 use App\Http\Controllers\ExtraJobController;
@@ -44,7 +44,7 @@ use App\Http\Controllers\HeritageTypeController;
 
 /*
 |--------------------------------------------------------------------------
-| Rotas Login/Logout e Recuperação de Senha - Laravel Sanctum
+| start Rotas Login/Logout e Recuperação de Senha - Laravel Sanctum
 |--------------------------------------------------------------------------
 */
 
@@ -61,10 +61,15 @@ Route::post("resetPassword", [AuthController::class, "resetPassword"])->name("re
 Route::get("password/reset/{token}", [AuthController::class, "showResetForm"])->name("password.reset");
 Route::post("password/reset", [AuthController::class, "resetPassword"])->name("password.update");
 
+/*
+|--------------------------------------------------------------------------
+| end Rotas Login/Logout e Recuperação de Senha - Laravel Sanctum
+|--------------------------------------------------------------------------
+*/
 
 /*
 |--------------------------------------------------------------------------
-| Rotas Públicas
+| start Site frontend routes
 |--------------------------------------------------------------------------
 */
 
@@ -75,6 +80,11 @@ Route::get("/diretoria", [FrontendController::class, "directors"])->name("fronte
 Route::get("/diretoria/{id}", [FrontendController::class, "showDirector"])->where("id", "[0-9]+")->name("frontend.directors.show"); // Página da Diretoria
 Route::get("/contato", [FrontendController::class, "contact"])->name("frontend.contact");
 
+/*
+|--------------------------------------------------------------------------
+| end Site frontend routes
+|--------------------------------------------------------------------------
+*/
 
 /*
 |--------------------------------------------------------------------------
