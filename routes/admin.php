@@ -133,6 +133,8 @@ Route::middleware('auth')->name('admin.')->group(function () {
 
         // Histórico do funcionário
         Route::get('/history/{id}', [EmployeeHistoryController::class, 'index'])->name('employeee.history');
+        Route::get('/history/{id}/pdf', [EmployeeHistoryController::class, 'employeeHistoryPdf'])->name('employeee.history.pdf');
+
         // filtros
 
         /* Rota GET com parâmetro ?status=... */
@@ -278,6 +280,19 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::delete("/apagar/{id}", [HeritageTypeController::class, "destroy"])->name("heritageTypes.destroy");
     });
     // end Tipos de Património
+    
+    // start 
+    Route::prefix('tipos-patrimonio')->group(function () {
+
+        Route::get("/listar", [HeritageTypeController::class, "index"])->name("heritageTypes.index");
+        Route::get("/criar", [HeritageTypeController::class, "create"])->name("heritageTypes.create");
+        Route::post("/salvar", [HeritageTypeController::class, "store"])->name("heritageTypes.store");
+        Route::get("/detalhes/{id}", [HeritageTypeController::class, "show"])->name("heritageTypes.show");
+        Route::get("/editar/{id}/edit", [HeritageTypeController::class, "edit"])->name("heritageTypes.edit");
+        Route::put("/atualizar/{id}", [HeritageTypeController::class, "update"])->name("heritageTypes.update");
+        Route::delete("/apagar/{id}", [HeritageTypeController::class, "destroy"])->name("heritageTypes.destroy");
+    });
+    // end 
 
     // start users routes
     Route::prefix('utilizadores')->group(function () {

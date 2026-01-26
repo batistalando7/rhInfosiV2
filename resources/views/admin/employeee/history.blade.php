@@ -2,16 +2,17 @@
 @section('title', 'Histórico de ' . $employee->fullName)
 @section('content')
 <div class="card mb-4">
-  <div class="card-header bg-secondary text-white">
-    <h3>Currículo: {{ $employee->fullName }}</h3>
+  <div class="card-header bg-secondary">
+    <h3 class="text-light fw-bold">Histórico do Funcionário</h3>
+      <a href="{{ route('admin.employeee.history.pdf', $employee->id) }}" target="_blank" class="btn btn-outline-light">Baixar PDF</a>
   </div>
   <div class="card-body">
     <div class="row mb-4">
       <div class="col-md-3 text-center">
         <img src="{{ asset('frontend/images/departments/' . $employee->photo) }}"
-             class="img-fluid rounded-circle" alt="Foto">
+             class="img-fluid rounded-circle shadow" alt="Foto">
       </div>
-      <div class="col-md-9">
+      <div class="col-md-6 m-auto border p-3 rounded shadow-sm">
         <p><strong>Departamento Atual:</strong> {{ $employee->department->title ?? '-' }}</p>
         <p><strong>Vínculo de Funcionário:</strong> {{ $employee->employeeType->name ?? '-' }}</p>
         <p><strong>E-mail:</strong> {{ $employee->email }}</p>
@@ -21,7 +22,7 @@
     </div>
 
     {{-- Seções cronológicas --}}
-    <h4>Histórico de Cargos</h4>
+    {{-- <h4>Histórico de Cargos</h4>
     <ul class="list-group mb-4">
       @if(isset($employee->positionHistories))
 
@@ -37,38 +38,51 @@
       </li>
       @endforeach
       @endif
+    </ul> --}}
+    <h4>Histórico de Cargos</h4>
+    <ul class="list-group mb-4">
+      <li class="list-group-item">
+        {{ \Carbon\Carbon::parse($employee->created_at)->format('d/m/Y') }}
+        — <strong>{{ $employee->position->name ?? 'Funcionário' }}</strong>
+      </li>
     </ul>
 
     <h4>Mobilidades</h4>
     <ul class="list-group mb-4">
-      @foreach($employee->mobilities as $m)
+      @forelse($employee->mobilities as $m)
       <li class="list-group-item">
         {{ \Carbon\Carbon::parse($m->created_at)->format('d/m/Y') }}
         — Transferido: <em>{{ $m->oldDepartment->title }} → {{ $m->newDepartment->title }}</em>
         <br><small>Motivo: {{ $m->causeOfMobility }}</small>
       </li>
-      @endforeach
+      @empty
+      <li class="list-group-item">Nenhuma mobilidade registrada.</li>
+      @endforelse
     </ul>
 
     <h4>Destacamentos</h4>
     <ul class="list-group mb-4">
-      @foreach($employee->secondments as $s)
+      @forelse($employee->secondments as $s)
       <li class="list-group-item">
         {{ \Carbon\Carbon::parse($s->created_at)->format('d/m/Y') }}
         — Destaque para <strong>{{ $s->institution }}</strong>
         <br><small>Motivo: {{ $s->causeOfTransfer }}</small>
       </li>
-      @endforeach
+      @empty
+      <li class="list-group-item">Nenhum destacamento registrado.</li>
+      @endforelse
     </ul>
 
     <h4>Trabalhos Extras</h4>
     <ul class="list-group mb-4">
-      @foreach($employee->extraJobs as $j)
+      @forelse($employee->extraJobs as $j)
       <li class="list-group-item">
         {{ $j->title }} ({{ \Carbon\Carbon::parse($j->created_at)->format('d/m/Y') }})
         <br><small>Recebeu: {{ number_format($j->pivot->assignedValue,2,',','.') }} Kz</small>
       </li>
-      @endforeach
+      @empty
+      <li class="list-group-item">Nenhum trabalho extra registrado.</li>
+      @endforelse
     </ul>
 
     <h4>Pagamentos de Salário</h4>
@@ -77,7 +91,7 @@
         <tr><th>Competência</th><th>Bruto</th><th>Desconto</th><th>Líquido</th><th>Status</th></tr>
       </thead>
       <tbody>
-        @foreach($employee->salaryPayments as $p)
+        @forelse($employee->salaryPayments as $p)
         <tr>
           <td>{{ \Carbon\Carbon::parse($p->workMonth)->translatedFormat('F/Y') }}</td>
           <td>{{ number_format($p->baseSalary + $p->subsidies,2,',','.') }}</td>
@@ -85,7 +99,11 @@
           <td>{{ number_format($p->salaryAmount,2,',','.') }}</td>
           <td>{{ __('status.' . strtolower($p->paymentStatus)) }}</td>
         </tr>
-        @endforeach
+        @empty
+        <tr>
+          <td colspan="5" class="text-center">Nenhum pagamento de salário registrado.</td>
+        </tr>
+        @endforelse
       </tbody>
     </table>
   </div>

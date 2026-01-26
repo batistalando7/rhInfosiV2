@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\Admin\EmployeeeController;
+use App\Http\Controllers\Admin\MaterialController as AdminMaterialController;
 use App\Http\Controllers\EmployeeTypeController;
 use App\Http\Controllers\InternController;
 use App\Http\Controllers\PositionController;
@@ -135,12 +136,12 @@ Route::middleware(["auth"])->group(function () {
                     ->name("transactions.report-all");
 
                // Rota para PDF Individual (Adicionada)
-               Route::get("{material}/pdf", [MaterialController::class, "showPdf"])->name("showPdf");
+               Route::get("{material}/pdf", [AdminMaterialController::class, "showPdf"])->name("showPdf");
           });
 
           // Materiais (CRUD completo: index, create, store, show, edit, update, destroy)
           // DEVE SER A ÚLTIMA ROTA A SER LIDA para evitar conflitos com as rotas acima
-          Route::resource("materials", MaterialController::class)
+          Route::resource("materials", AdminMaterialController::class)
                ->only(["index", "create", "store", "show", "edit", "update", "destroy"]);
      });
 

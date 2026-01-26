@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Material;
 use App\Models\MaterialType;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class MaterialController extends Controller
 {
@@ -18,7 +20,7 @@ class MaterialController extends Controller
         // Não há mais filtro por categoria
         $materials = Material::with('type')->get();
 
-        return view('materials.index', compact('materials'));
+        return view('admin.materials.list.index', compact('materials'));
     }
 
     public function create()
@@ -26,7 +28,7 @@ class MaterialController extends Controller
         // Traz todos os tipos, pois não há mais categoria
         $types = MaterialType::orderBy('name')->get();
 
-        return view('materials.create', compact('types'));
+        return view('admin.materials.create.index', compact('types'));
     }
 
     public function store(Request $request)
@@ -47,7 +49,7 @@ class MaterialController extends Controller
         Material::create($data);
 
         return redirect()
-            ->route('materials.index')
+            ->route('admin.materials.index')
             ->with('msg', 'Material cadastrado com sucesso.');
     }
 
@@ -55,14 +57,14 @@ class MaterialController extends Controller
     {
         $material = Material::findOrFail($id);
 
-        return view('materials.show', compact('material'));
+        return view('admin.materials.show.index', compact('material'));
     }
 
     public function showPdf(Material $material)
     {
         $material->load('type', 'transactions.employee');
         // Usar PDF::loadView para garantir que os estilos do layout são aplicados
-        return PDF::loadView('materials.show-pdf', compact('material'))->stream('material_' . $material->id . '.pdf');
+        return PDF::loadView('pdf.materials.showPdf', compact('material'))->stream('material_' . $material->id . '.pdf');
     }
  
 
@@ -73,7 +75,7 @@ class MaterialController extends Controller
         // Traz todos os tipos
         $types = MaterialType::orderBy('name')->get();
 
-        return view('materials.edit', compact('material', 'types'));
+        return view('admin.materials.edit.index', compact('material', 'types'));
     }
 
     public function update(Request $request, $id)
@@ -94,9 +96,7 @@ class MaterialController extends Controller
 
         $material->update($data);
 
-        return redirect()
-            ->route('materials.index')
-            ->with('msg', 'Material atualizado com sucesso.');
+        return redirect()->back()->with('msg', 'Material atualizado com sucesso.');
     }
 
     public function destroy($id)
@@ -104,8 +104,6 @@ class MaterialController extends Controller
         $material = Material::findOrFail($id);
         $material->delete();
 
-        return redirect()
-            ->route('materials.index')
-            ->with('msg', 'Material removido com sucesso.');
+        return redirect()->back()->with('msg', 'Material removido com sucesso.');
     }
 }
