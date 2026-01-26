@@ -452,9 +452,9 @@
                     </a>
                     <div class="collapse" id="collapseStatute">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('statutes.index') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.statutes.index') }}"><i
                                         class="fas fa-eye me-2"></i>Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('statutes.create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.statutes.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>

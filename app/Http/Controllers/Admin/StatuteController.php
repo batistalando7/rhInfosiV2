@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Statute;
 
@@ -13,7 +14,7 @@ class StatuteController extends Controller
     public function index()
     {
         $statutes = Statute::orderBy('created_at', 'desc')->get();
-        return view('statutes.index', compact('statutes'));
+        return view('admin.statutes.list.index', compact('statutes'));
     }
 
     /**
@@ -21,7 +22,7 @@ class StatuteController extends Controller
      */
     public function create()
     {
-        return view('statutes.create');
+        return view('admin.statutes.create.index');
     }
 
     /**
@@ -46,7 +47,7 @@ class StatuteController extends Controller
         }
         $statute->save();
 
-        return redirect()->route('statutes.index')->with('msg', 'Estatuto criado com sucesso!');
+        return redirect()->route('admin.statutes.index')->with('msg', 'Estatuto criado com sucesso!');
     }
 
     /**
@@ -55,7 +56,7 @@ class StatuteController extends Controller
     public function show($id)
     {
         $statute = Statute::findOrFail($id);
-        return view('statutes.show', compact('statute'));
+        return view('admin.statutes.details.index', compact('statute'));
     }
 
     /**
@@ -64,7 +65,7 @@ class StatuteController extends Controller
     public function edit($id)
     {
         $statute = Statute::findOrFail($id);
-        return view('statutes.edit', compact('statute'));
+        return view('admin.statutes.edit.index', compact('statute'));
     }
 
     /**
@@ -90,7 +91,7 @@ class StatuteController extends Controller
         }
         $statute->save();
 
-        return redirect()->route('statutes.index')->with('msg', 'Estatuto atualizado com sucesso!');
+        return redirect()->route('admin.statutes.index')->with('msg', 'Estatuto atualizado com sucesso!');
     }
 
     /**
@@ -101,6 +102,6 @@ class StatuteController extends Controller
         $statute = Statute::findOrFail($id);
         // Opcional: excluir o arquivo físico, se existir
         $statute->delete();
-        return redirect()->route('statutes.index')->with('msg', 'Estatuto removido com sucesso!');
+        return redirect()->back()->with('msg', 'Estatuto removido com sucesso!');
     }
 }

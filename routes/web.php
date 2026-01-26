@@ -453,13 +453,13 @@ Route::middleware(["auth"])->group(function () {
      Route::post("/new-chat/send-message", [NewChatController::class, "sendMessage"])->name("new-chat.sendMessage");
 
 
-     // ======================NOSSO ESTATUTO(OWR ESTATUTE)======================
+     /* // ======================NOSSO ESTATUTO(OWR ESTATUTE)======================
      Route::resource("statutes", StatuteController::class);
      Route::get("statutes/{id}/delete", [StatuteController::class, "destroy"])->name("statutes.delete");
+ */
 
-
-     // ====================== HOME ======================
-     Route::get("/homeRH-INFOSI", [FrontendController::class, "index"])->name("frontend.index.rhHome");
+     /* // ====================== HOME ======================
+     Route::get("/homeRH-INFOSI", [FrontendController::class, "index"])->name("frontend.index.rhHome"); */
 });
 
 

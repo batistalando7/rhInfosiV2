@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\MaintenanceController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\SpecialtyController;
+use App\Http\Controllers\Admin\StatuteController;
 
 Route::middleware('auth')->name('admin.')->group(function () {
 
@@ -250,6 +251,19 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::get("maintenance/pdf", [MaintenanceController::class, "pdfAll"])->name("maintenances.pdfAll");
     Route::get("maintenance/pdf-filtered", [MaintenanceController::class, "exportFilteredPDF"])->name("maintenances.pdfFiltered");
     // end Manutenções (maintenance) routes
+
+    // start estatuto (statute) routes
+    Route::prefix('estatuto')->group(function () {
+
+        Route::get('/lista', [StatuteController::class, 'index'])->name('statutes.index');
+        Route::get('/criar', [StatuteController::class, 'create'])->name('statutes.create');
+        Route::post('/salvar', [StatuteController::class, 'store'])->name('statutes.store');
+        Route::get('/editar/{id}', [StatuteController::class, 'edit'])->name('statutes.edit');
+        Route::put('/atualizar/{id}', [StatuteController::class, 'update'])->name('statutes.update');
+        Route::get('/detalhes/{id}', [StatuteController::class, 'show'])->name('statutes.show');
+        Route::get('/deletar/{id}', [StatuteController::class, 'destroy'])->name('statutes.destroy');
+    });
+    // end estatuto (statute) routes
 
 
     // start users routes
