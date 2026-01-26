@@ -28,7 +28,7 @@
             <!-- Painel -->
             <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Painel</li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+                <a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i> Painel de Controle</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('frontend.index') }}" target="_blank"><i class="fas fa-globe me-2"></i> SITE</a>
@@ -334,7 +334,7 @@
 {{-- Módulo de Infraestrutura (Material) --}}
 <li class="nav-item has-submenu">
     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMaterial" aria-expanded="false" aria-controls="collapseMaterial">
-        <i class="fas fa-tools me-2"></i> Infraestrutura (Material) <i class="fas fa-chevron-down ms-auto"></i>
+        <i class="fas fa-tools me-2"></i> Infraestrutura <i class="fas fa-chevron-down ms-auto"></i>
     </a>
     <div class="collapse" id="collapseMaterial">
         <ul class="submenu">
@@ -435,9 +435,9 @@
                     </a>
                     <div class="collapse" id="collapseMaintenance">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('maintenance.index') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.maintenances.index') }}"><i
                                         class="fas fa-eye me-2"></i>Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('maintenance.create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.maintenances.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>

@@ -5,14 +5,14 @@
 <div class="card mb-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-plus-circle me-2"></i>Novo Curso</span>
-    <a href="{{ route('course.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todos">
+    <a href="{{ route('admin.courses.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todos">
       <i class="fa-solid fa-list"></i>
     </a>
   </div>
   <div class="card-body">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <form method="POST" action="{{ route('course.store') }}">
+        <form method="POST" action="{{ route('admin.courses.store') }}">
           @csrf
 
           <div class="mb-3">

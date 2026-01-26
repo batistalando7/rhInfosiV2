@@ -4,15 +4,15 @@
 
 <div class="card mb-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="fas fa-plus-circle me-2"></i>Nova Categoria de Funcionário</span>
-    <a href="{{ route('employeeCategory.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todas">
+    <span><i class="fas fa-plus-circle me-2"></i>Nova Categoria</span>
+    <a href="{{ route('admin.employeeCategories.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todas">
       <i class="fa-solid fa-list"></i>
     </a>
   </div>
   <div class="card-body">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <form method="POST" action="{{ route('employeeCategory.store') }}">
+        <form method="POST" action="{{ route('admin.employeeCategories.store') }}">
           @csrf
 
           <div class="mb-3">

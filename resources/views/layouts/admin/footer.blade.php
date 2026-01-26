@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                Copyright © INFOSI-RH Website 2025
+                Copyright © Gestão de Capital Humano INFOSI {{ date('Y') }}
             </div>
             <div class="col-md-6 text-end">
                 <a href="#" class="text-white text-decoration-none">Política de Privacidade</a> · 
