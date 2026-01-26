@@ -51,9 +51,13 @@
                                             Chefe de Departamento
                                         @break
 
-                                        @case('employee')
-                                            Funcionário
-                                        @break
+	                                        @case('employee')
+	                                            Funcionário
+	                                        @break
+	
+	                                        @case('hr')
+	                                            Área Administrativa (RH)
+	                                        @break
 
                                         @default
                                             {{ ucfirst($admin->role) }}

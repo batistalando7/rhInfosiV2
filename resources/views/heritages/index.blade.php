@@ -30,7 +30,7 @@
                         <th style="width: 200px;" class="text-center">Ações</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody> 
     @forelse($heritages as $h)
         <tr>
             <td>{{ $h->Description }}</td>

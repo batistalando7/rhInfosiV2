@@ -28,18 +28,26 @@
       <p style="text-align: center;">Luanda, aos ____ de ____ de 20____</p>
       <br>
       <!-- Área de assinaturas: Chefe da Área à esquerda e Funcionário à direita -->
-      <table style="width: 100%; margin-top: 20px;">
-         <tr>
-            <td style="width: 50%; text-align: left;">
-                 <strong>O(A) CHEFE DA ÁREA:</strong> {{ $employee->department->department_head_name ?? 'N/D' }} <br>
-                 <strong>Assinatura:</strong> __________________________________
-            </td>
-            <td style="width: 50%; text-align: right;">
-                 <strong>O funcionario(a):</strong> {{ $employee->fullName }} <br>
-                 <strong>Assinatura:</strong> __________________________________
-            </td>
-         </tr>
-      </table>
+	      <table style="width: 100%; margin-top: 20px;">
+	         <tr>
+	            <td style="width: 50%; text-align: left;">
+	                 <strong>O(A) CHEFE DA ÁREA:</strong> {{ $employee->department->department_head_name ?? 'N/D' }} <br>
+	                 <strong>Assinatura:</strong> __________________________________
+	            </td>
+	            <td style="width: 50%; text-align: right;">
+	                 <strong>O funcionario(a):</strong> {{ $employee->fullName }} <br>
+	                 <strong>Assinatura:</strong> __________________________________
+	            </td>
+	         </tr>
+	      </table>
+
+          @if(isset($showSignature) && $showSignature)
+          <div style="margin-top: 30px; text-align: center;">
+              <p><strong>O DIRECTOR GERAL</strong></p>
+              <img src="{{ public_path('frontend/images/sign.png') }}" alt="Assinatura DG" style="height: 80px;">
+              <p>__________________________________</p>
+          </div>
+          @endif
       <p style="margin-top: 10px;">(a) Nome completo: {{ $employee->fullName }}</p>
       <p>(b) Categoria: {{ $employee->position->name ?? '-' }}</p>
       <br>

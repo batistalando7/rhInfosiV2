@@ -34,7 +34,7 @@
                 <a class="nav-link" href="{{ route('frontend.index') }}" target="_blank"><i class="fas fa-globe me-2"></i> SITE</a>
             </li>
 
-            @if ($role === 'admin')
+            @if ($role === 'admin' || $role === 'hr')
                 <!-- Estrutura Organizacional -->
 
                 <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Estrutura
@@ -631,6 +631,36 @@
                                         class="fas fa-file-alt me-2"></i>Licenças Pendentes</a></li>
                             <li><a class="nav-link" href="{{ route('dh.pendingRetirements') }}"><i
                                         class="fas fa-user-clock me-2"></i>Pedidos de Reforma</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Área Administrativa (RH) -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Área Administrativa (RH)</li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#hrMenu"
+                        aria-expanded="false" aria-controls="hrMenu">
+                        <i class="fas fa-user-cog me-2"></i> Gestão RH <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="hrMenu">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ route('admin.hr.pendingVacations') }}"><i
+                                        class="fas fa-umbrella-beach me-2"></i>Férias para Encaminhar</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Direção Geral -->
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Direção Geral</li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#directorMenu"
+                        aria-expanded="false" aria-controls="directorMenu">
+                        <i class="fas fa-user-tie me-2"></i> Portal Direção <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="directorMenu">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ route('admin.director.pendingVacations') }}"><i
+                                        class="fas fa-check-double me-2"></i>Aprovação de Férias</a></li>
                         </ul>
                     </div>
                 </li>

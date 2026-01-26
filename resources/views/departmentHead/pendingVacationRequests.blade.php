@@ -81,7 +81,7 @@
                     @csrf
                     <input type="hidden" id="hidden-approve-{{ $req->id }}" name="approvalComment">
                     <button type="submit" class="btn btn-success btn-sm">
-                      <i class="fas fa-check-circle"></i> Aprovar
+                      <i class="fas fa-check-circle"></i> Validar
                     </button>
                   </form>
                   {{-- Rejeitar --}}

@@ -20,6 +20,8 @@ class VacationRequest extends Model
         'originalFileName',
         'approvalStatus',
         'approvalComment',
+        'rejectionReason',
+        'signedPdfPath',
     ];
 
     protected $casts = [

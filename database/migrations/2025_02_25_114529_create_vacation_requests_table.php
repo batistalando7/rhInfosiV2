@@ -22,8 +22,10 @@ class CreateVacationRequestsTable extends Migration
             $table->string('supportDocument')->nullable();
             $table->string('originalFileName')->nullable();
 
-            $table->string('approvalStatus')->default('Pendente');
+            $table->string('approvalStatus')->default('Pendente'); // Pendente, Validado, Encaminhado, Aprovado, Recusado
             $table->string('approvalComment')->nullable();
+            $table->string('rejectionReason')->nullable(); // Justificativa do Diretor Geral
+            $table->string('signedPdfPath')->nullable(); // Caminho do PDF assinado
 
             $table->timestamps();
 

@@ -52,7 +52,7 @@ class AdminAuthController extends Controller
     {
         $request->validate([
             'employeeId'            => 'nullable|exists:employeees,id',
-            'role'                  => 'required|in:admin,director,department_head,employee',
+            'role'                  => 'required|in:admin,director,department_head,employee,hr',
             'email'                 => 'required|email|unique:admins,email',
             'password'              => 'required|min:6|confirmed',
             'photo'                 => 'nullable|image|max:2048',
@@ -176,7 +176,7 @@ class AdminAuthController extends Controller
     {
         $request->validate([
             'employeeId'     => 'nullable|exists:employeees,id',
-            'role'           => 'required|in:admin,director,department_head,employee',
+            'role'           => 'required|in:admin,director,department_head,employee,hr',
             'email'          => 'required|email|unique:admins,email,' . $id,
             'password'       => 'nullable|min:6|confirmed',
             'biography'      => 'nullable|string',

@@ -56,8 +56,9 @@
                   <option value="">Selecione o Papel</option>
                   <option value="admin">Administrador</option>
                   <option value="director">Diretor</option>
-                  <option value="department_head">Chefe de Departamento</option>
-                  <option value="employee">Funcionário</option>
+	                  <option value="department_head">Chefe de Departamento</option>
+	                  <option value="hr">Área Administrativa (RH)</option>
+	                  <option value="employee">Funcionário</option>
                 </select>
                 <label for="role">Papel *</label>
               </div>

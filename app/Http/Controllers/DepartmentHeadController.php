@@ -80,27 +80,27 @@ class DepartmentHeadController extends Controller
         return view('departmentHead.pendingVacationRequests', compact('pendingRequests', 'from', 'to'));
     }
 
-    // Aprova um pedido de férias e envia e‑mail de notificação
+    // Valida um pedido de férias (Chefe de Departamento)
     public function approveVacation($id, Request $request)
     {
         $user = Auth::user();
         if ($user->role !== 'department_head') {
-            abort(403, 'Acesso negada.');
+            abort(403, 'Acesso negado.');
         }
         $vacation = VacationRequest::findOrFail($id);
         if (! $vacation->employee || $vacation->employee->departmentId !== $user->employee->departmentId) {
-            abort(403, 'Você não pode aprovar pedidos de outro departamento.');
+            abort(403, 'Você não pode validar pedidos de outro departamento.');
         }
 
-        $vacation->approvalStatus  = 'Aprovado';
-        $vacation->approvalComment = $request->input('approvalComment') ?? 'Aprovado pelo chefe';
+        $vacation->approvalStatus  = 'Validado';
+        $vacation->approvalComment = $request->input('approvalComment') ?? 'Validado pelo chefe de departamento';
         $vacation->save();
 
-        Mail::to($vacation->employee->email)
-            ->send(new VacationResponseNotification($vacation));
+        // Nota: A notificação por e-mail pode ser mantida ou ajustada conforme necessário
+        // Mail::to($vacation->employee->email)->send(new VacationResponseNotification($vacation));
 
         return redirect()->route('dh.pendingVacations')
-            ->with('msg', 'Pedido de férias aprovado com sucesso!');
+            ->with('msg', 'Pedido de férias validado com sucesso e encaminhado para o RH!');
     }
 
     // Rejeita um pedido de férias e envia e‑mail de notificação

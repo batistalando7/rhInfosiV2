@@ -55,8 +55,9 @@
                   <option value="">Selecione o Papel</option>
                   <option value="admin" {{ $admin->role == 'admin' ? 'selected' : '' }}>Administrador</option>
                   <option value="director" {{ $admin->role == 'director' ? 'selected' : '' }}>Diretor</option>
-                  <option value="department_head" {{ $admin->role == 'department_head' ? 'selected' : '' }}>Chefe de Departamento</option>
-                  <option value="employee" {{ $admin->role == 'employee' ? 'selected' : '' }}>Funcionário</option>
+	                  <option value="department_head" {{ $admin->role == 'department_head' ? 'selected' : '' }}>Chefe de Departamento</option>
+	                  <option value="hr" {{ $admin->role == 'hr' ? 'selected' : '' }}>Área Administrativa (RH)</option>
+	                  <option value="employee" {{ $admin->role == 'employee' ? 'selected' : '' }}>Funcionário</option>
                 </select>
                 <label for="role">Papel *</label>
               </div>

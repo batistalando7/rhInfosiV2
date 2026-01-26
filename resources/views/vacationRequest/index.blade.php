@@ -50,6 +50,8 @@
         <select name="status" id="status" class="form-select">
           <option value="Todos" {{ request('status')==='Todos'?'selected':'' }}>Todos</option>
           <option value="Aprovado" {{ request('status')==='Aprovado'?'selected':'' }}>Aprovado</option>
+          <option value="Validado" {{ request('status')==='Validado'?'selected':'' }}>Validado</option>
+          <option value="Encaminhado" {{ request('status')==='Encaminhado'?'selected':'' }}>Encaminhado</option>
           <option value="Pendente" {{ request('status')==='Pendente'?'selected':'' }}>Pendente</option>
           <option value="Recusado" {{ request('status')==='Recusado'?'selected':'' }}>Recusado</option>
         </select>
@@ -73,6 +75,7 @@
             <th>Razão</th>
             <th>Status</th>
             <th>Comentário</th>
+            <th>Ações</th>
             <th>Criado em</th>
           </tr>
         </thead>
@@ -96,6 +99,10 @@
             <td>
               @if($vr->approvalStatus=='Aprovado')
                 <span class="badge bg-success">Aprovado</span>
+              @elseif($vr->approvalStatus=='Validado')
+                <span class="badge bg-info">Validado</span>
+              @elseif($vr->approvalStatus=='Encaminhado')
+                <span class="badge bg-primary">Encaminhado</span>
               @elseif($vr->approvalStatus=='Pendente')
                 <span class="badge bg-warning">Pendente</span>
               @elseif($vr->approvalStatus=='Recusado')
@@ -105,6 +112,13 @@
               @endif
             </td>
             <td>{{ $vr->approvalComment ?? '-' }}</td>
+            <td>
+              @if($vr->approvalStatus == 'Aprovado' && $vr->signedPdfPath)
+              <a href="{{ route('admin.director.downloadSignedPdf', $vr->id) }}" class="btn btn-success btn-sm" title="Baixar PDF Assinado">
+                <i class="fas fa-file-pdf"></i>
+              </a>
+              @endif
+            </td>
             <td>{{ $vr->created_at->format('d/m/Y H:i') }}</td>
           </tr>
           @empty

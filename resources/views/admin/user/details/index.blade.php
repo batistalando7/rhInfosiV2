@@ -34,10 +34,18 @@
             <th>Email</th>
             <td>{{ $admin->email }}</td>
           </tr>
-          <tr>
-            <th>Papel</th>
-            <td><span class="badge bg-primary">{{ ucfirst(str_replace('_', ' ', $admin->role)) }}</span></td>
-          </tr>
+	          <tr>
+	            <th>Papel</th>
+	            <td>
+	              <span class="badge bg-primary">
+	                @switch($admin->role)
+	                  @case('hr') Área Administrativa (RH) @break
+	                  @case('department_head') Chefe de Departamento @break
+	                  @default {{ ucfirst(str_replace('_', ' ', $admin->role)) }}
+	                @endswitch
+	              </span>
+	            </td>
+	          </tr>
           <tr>
             <th>Data de Criação</th>
             <td>{{ $admin->created_at->format('d/m/Y H:i') }}</td>
