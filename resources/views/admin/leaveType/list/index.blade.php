@@ -5,7 +5,7 @@
 <div class="card mb-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-card-list me-2"></i>Lista de Tipos de Licença</span>
-    <a href="{{ route('leaveType.create') }}" class="btn btn-outline-light btn-sm" title="Adicionar Novo"> Adicionar
+    <a href="{{ route('admin.leaveTypes.create') }}" class="btn btn-outline-light btn-sm" title="Adicionar Novo"> Adicionar
       <i class="fas fa-plus-circle"></i>
     </a>
   </div>
@@ -27,10 +27,10 @@
             <td>{{ $lt->name }}</td>
             <td>{{ $lt->description ?? '-' }}</td>
             <td>
-              <a href="{{ route('leaveType.show', $lt->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
+              <a href="{{ route('admin.leaveTypes.show', $lt->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
                 <i class="fas fa-eye"></i>
               </a>
-              <a href="{{ route('leaveType.edit', $lt->id) }}" class="btn btn-info btn-sm" title="Editar">
+              <a href="{{ route('admin.leaveTypes.edit', $lt->id) }}" class="btn btn-info btn-sm" title="Editar">
                 <i class="fas fa-pencil"></i>
               </a>
               <a href="#" data-url="{{ url('leaveType/'.$lt->id.'/delete') }}" class="btn btn-danger btn-sm delete-btn" title="Apagar">

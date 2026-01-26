@@ -314,10 +314,10 @@ Route::middleware(["auth"])->group(function () {
      Route::resource("mobility", MobilityController::class);
 
 
-     // ====================== Tipos de Licença (LeaveType) ======================
+/*      // ====================== Tipos de Licença (LeaveType) ======================
      Route::resource("leaveType", LeaveTypeController::class);
      Route::get("leaveType/{id}/delete", [LeaveTypeController::class, "destroy"]);
-
+ */
 
      // ====================== Pedido de Licença (LeaveRequest) ======================
      Route::get("leaveRequest/searchEmployee", [LeaveRequestController::class, "searchEmployee"])->name("leaveRequest.searchEmployee");
@@ -381,7 +381,7 @@ Route::middleware(["auth"])->group(function () {
      Route::get("vehicles/{vehicle}/delete", [VehicleController::class, "destroy"])
           ->name("vehicles.delete"); */
 
-     // Manutenções – PDF total e filtrado
+/*      // Manutenções – PDF total e filtrado
      Route::get("maintenance/pdf", [MaintenanceController::class, "pdfAll"])
           ->name("maintenance.pdfAll");
      Route::get("maintenance/pdf-filtered", [MaintenanceController::class, "exportFilteredPDF"])
@@ -389,7 +389,7 @@ Route::middleware(["auth"])->group(function () {
      Route::resource("maintenance", MaintenanceController::class);
      Route::get("maintenance/{maintenance}/delete", [MaintenanceController::class, "destroy"])
           ->name("maintenance.delete");
-
+ */
 
      Route::resource("licenseCategories", LicenseCategoryController::class)
           ->names([
@@ -405,8 +405,8 @@ Route::middleware(["auth"])->group(function () {
      //  PDF Individual download
      Route::get("drivers/{driver}/pdf", [DriverController::class, "showPdf"])->name("drivers.showPdf");
      /* Route::get("vehicles/{vehicle}/pdf", [VehicleControll::class, "showPdf"])->name("vehicles.showPdf"); */
-     Route::get("maintenance/{maintenance}/pdf", [MaintenanceController::class, "showPdf"])->name("maintenance.showPdf");
-
+     /* Route::get("maintenance/{maintenance}/pdf", [MaintenanceController::class, "showPdf"])->name("maintenance.showPdf");
+ */
 
 
     /*  // ====================== HISTORICO DE CADA FUNCIONARIO(EMPLOYEE HISTORY) ======================

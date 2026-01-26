@@ -5,7 +5,7 @@
     <div class="card my-4 shadow">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <span><i class="fas fa-file-contract me-2"></i>Novo Tipo de Licença</span>
-            <a href="{{ route('leaveType.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todos">
+            <a href="{{ route('admin.leaveTypes.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todos">
                 {{-- Ver --}}
                 <i class="fa-solid fa-list"></i>
             </a>
@@ -13,7 +13,7 @@
         <div class="card-body">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <form method="POST" action="{{ route('leaveType.store') }}">
+                    <form method="POST" action="{{ route('admin.leaveTypes.store') }}">
                         @csrf
 
                         <div class="mb-3">

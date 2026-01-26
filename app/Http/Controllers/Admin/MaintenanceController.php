@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Maintenance;
 use App\Models\Vehicle;
@@ -22,13 +23,13 @@ class MaintenanceController extends Controller
             $query->where('type', $request->type);
         }
         $records = $query->orderByDesc('maintenanceDate')->get();
-        return view('maintenance.index', compact('records'));
+        return view('admin.maintenance.list.index', compact('records'));
     }
 
     public function create()
     {
         $vehicles = Vehicle::where('status', '!=', 'Unavailable')->get();
-        return view('maintenance.create', compact('vehicles'));
+        return view('admin.maintenance.create.index', compact('vehicles'));
     }
 
     public function store(Request $request)
@@ -81,20 +82,23 @@ class MaintenanceController extends Controller
         return redirect()->route('maintenance.index')->with('msg', 'Manutenção registrada com sucesso.');
     }
 
-    public function show(Maintenance $maintenance)
+    public function show($id)
     {
+        $maintenance = Maintenance::findOrFail($id);
         $maintenance->load('vehicle');
-        return view('maintenance.show', compact('maintenance'));
+        return view('admin.maintenance.show.index', compact('maintenance'));
     }
 
-    public function edit(Maintenance $maintenance)
+    public function edit( $id)
     {
+        $maintenance = Maintenance::findOrFail($id);
         $vehicles = Vehicle::all();
-        return view('maintenance.edit', compact('maintenance', 'vehicles'));
+        return view('admin.maintenance.edit.index', compact('maintenance', 'vehicles'));
     }
 
-    public function update(Request $request, Maintenance $maintenance)
+    public function update(Request $request, $id)
     {
+        $maintenance = Maintenance::findOrFail($id);
         $data = $request->validate([
             'vehicleId' => 'required|exists:vehicles,id',
             'type' => 'required|in:Preventive,Corrective,Repair',
@@ -143,11 +147,12 @@ class MaintenanceController extends Controller
             'nextMaintenanceDate' => $data['nextMaintenanceDate'],
         ]);
 
-        return redirect()->route('maintenance.edit', $maintenance)->with('msg', 'Manutenção atualizada com sucesso.');
+        return redirect()->back()->with('msg', 'Manutenção atualizada com sucesso.');
     }
 
-    public function destroy(Maintenance $maintenance)
+    public function destroy($id)
     {
+        $maintenance = Maintenance::findOrFail($id);
         if ($maintenance->invoice_pre && file_exists(public_path('frontend/docs/maintenance/pre/' . $maintenance->invoice_pre))) {
             unlink(public_path('frontend/docs/maintenance/pre/' . $maintenance->invoice_pre));
         }

@@ -4,12 +4,12 @@
 <div class="card my-4 shadow">
     <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
         <span><i class="fas fa-tools me-2"></i>Nova Manutenção</span>
-        <a href="{{ route('maintenance.index') }}" class="btn btn-outline-light btn-sm">
+        <a href="{{ route('admin.maintenances.index') }}" class="btn btn-outline-light btn-sm">
             <i class="fa-solid fa-list"></i>
         </a>
     </div>
     <div class="card-body">
-        <form action="{{ route('maintenance.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.maintenances.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <!-- Viatura -->

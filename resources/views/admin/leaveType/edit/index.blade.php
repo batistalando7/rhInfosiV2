@@ -9,8 +9,8 @@
         <div class="card-body">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-        
-            <form method="POST" action="{{ route('leaveType.update', $data->id) }}">
+
+            <form method="POST" action="{{ route('admin.leaveTypes.update', $data->id) }}">
                 @csrf
                 @method('put')
                 <div class="mb-3">

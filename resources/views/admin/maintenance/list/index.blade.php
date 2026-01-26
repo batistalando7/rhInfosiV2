@@ -5,15 +5,15 @@
     <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
         <span><i class="fas fa-tools me-2"></i>Registros de Manutenção</span>
         <div>
-            <a href="{{ route('maintenance.pdfAll', request()->only(['startDate', 'endDate', 'type'])) }}" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">
+            <a href="{{ route('admin.maintenances.pdfAll', request()->only(['startDate', 'endDate', 'type'])) }}" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">
                 <i class="fas fa-file-pdf"></i> Baixar PDF ({{ request()->filled('startDate') || request()->filled('endDate') || request()->filled('type') ? 'Filtrado' : 'Todos' }})
             </a>
-            <a href="{{ route('maintenance.create') }}" class="btn btn-outline-light btn-sm" title="Novo Registro de Manutenção">
+            <a href="{{ route('admin.maintenances.create') }}" class="btn btn-outline-light btn-sm" title="Novo Registro de Manutenção">
                 Novo <i class="fas fa-plus-circle"></i>
             </a>
         </div>
     </div>
-    <form method="GET" action="{{ route('maintenance.index') }}" class="row g-3 mb-4 p-3 bg-light">
+    <form method="GET" action="{{ route('admin.maintenances.index') }}" class="row g-3 mb-4 p-3 bg-light">
         <div class="col-md-2">
             <div class="form-floating">
                 <input type="date" name="startDate" class="form-control" value="{{ request('startDate') }}">
@@ -42,7 +42,7 @@
         </div>
         @if(request()->hasAny(['startDate', 'endDate', 'type']))
             <div class="col-md-4 d-flex align-items-end">
-                <a href="{{ route('maintenance.index') }}" class="btn btn-secondary w-100"><i class="fas fa-times"></i> Limpar</a>
+                <a href="{{ route('admin.maintenances.index') }}" class="btn btn-secondary w-100"><i class="fas fa-times"></i> Limpar</a>
             </div>
         @endif
     </form>
@@ -77,13 +77,13 @@
                             <td>{{ $r->responsibleName ?? '-' }}</td>
                             <td>{{ $r->nextMaintenanceDate ? \Carbon\Carbon::parse($r->nextMaintenanceDate)->format('d/m/Y') : '-' }}</td>
                             <td>
-                                <a href="{{ route('maintenance.show', $r->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
+                                <a href="{{ route('admin.maintenances.show', $r->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="{{ route('maintenance.edit', $r->id) }}" class="btn btn-info btn-sm" title="Editar">
+                                <a href="{{ route('admin.maintenances.edit', $r->id) }}" class="btn btn-info btn-sm" title="Editar">
                                     <i class="fas fa-pencil"></i>
                                 </a>
-                                <a href="#" data-url="{{ route('maintenance.destroy', $r->id) }}" class="btn btn-danger btn-sm delete-btn" title="Excluir">
+                                <a href="#" data-url="{{ route('admin.maintenances.destroy', $r->id) }}" class="btn btn-danger btn-sm delete-btn" title="Excluir">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </td>
