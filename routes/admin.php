@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\ResourceAssignmentController;
 use App\Http\Controllers\Admin\EmployeeHistoryController;
 use App\Http\Controllers\Admin\EmployeeTypeController;
+use App\Http\Controllers\Admin\HeritageTypeController;
 use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\MaintenanceController;
 use App\Http\Controllers\Admin\PositionController;
@@ -265,6 +266,18 @@ Route::middleware('auth')->name('admin.')->group(function () {
     });
     // end estatuto (statute) routes
 
+    // start Tipos de Património
+    Route::prefix('tipos-patrimonio')->group(function () {
+
+        Route::get("/listar", [HeritageTypeController::class, "index"])->name("heritageTypes.index");
+        Route::get("/criar", [HeritageTypeController::class, "create"])->name("heritageTypes.create");
+        Route::post("/salvar", [HeritageTypeController::class, "store"])->name("heritageTypes.store");
+        Route::get("/detalhes/{id}", [HeritageTypeController::class, "show"])->name("heritageTypes.show");
+        Route::get("/editar/{id}/edit", [HeritageTypeController::class, "edit"])->name("heritageTypes.edit");
+        Route::put("/atualizar/{id}", [HeritageTypeController::class, "update"])->name("heritageTypes.update");
+        Route::delete("/apagar/{id}", [HeritageTypeController::class, "destroy"])->name("heritageTypes.destroy");
+    });
+    // end Tipos de Património
 
     // start users routes
     Route::prefix('utilizadores')->group(function () {

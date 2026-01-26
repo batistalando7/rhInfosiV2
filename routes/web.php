@@ -153,10 +153,10 @@ Route::middleware(["auth"])->group(function () {
 */
 
      Route::middleware(["auth", "can:manage-inventory"])->group(function () {
-          // Tipos de Património
+          /* // Tipos de Património
           Route::resource("heritage-types", HeritageTypeController::class);
           Route::get("heritage-types/{heritage_type}/delete", [HeritageTypeController::class, "destroy"])->name("heritage-types.delete");
-
+ */
           // Rotas de Manutenção, Transferência e Relatórios
           Route::prefix("heritages")->name("heritages.")->group(function () {
                // Manutenção

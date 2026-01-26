@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\HeritageType;
 use Illuminate\Http\Request;
 
@@ -10,12 +11,12 @@ class HeritageTypeController extends Controller
     public function index()
     {
         $types = HeritageType::all();
-        return view('heritage_types.index', compact('types'));
+        return view('admin.heritageTypes.list.index', compact('types'));
     }
 
     public function create()
     {
-        return view('heritage_types.create');
+        return view('admin.heritageTypes.create.index');
     }
 
     public function store(Request $request)
@@ -27,17 +28,17 @@ class HeritageTypeController extends Controller
 
         HeritageType::create($request->all());
 
-        return redirect()->route('heritage-types.index')->with('msg', 'Tipo de Património criado com sucesso!');
+        return redirect()->route('admin.heritageTypes.index')->with('msg', 'Tipo de Património criado com sucesso!');
     }
 
     public function show(HeritageType $heritageType)
     {
-        return view('heritage_types.show', ['type' => $heritageType]);
+        return view('admin.heritageTypes.show.index', ['type' => $heritageType]);
     }
 
     public function edit(HeritageType $heritageType)
     {
-        return view('heritage_types.edit', ['type' => $heritageType]);
+        return view('admin.heritageTypes.edit.index', ['type' => $heritageType]);
     }
 
     public function update(Request $request, HeritageType $heritageType)
@@ -49,17 +50,17 @@ class HeritageTypeController extends Controller
 
         $heritageType->update($request->all());
 
-        return redirect()->route('heritage-types.index')->with('msg', 'Tipo de Património atualizado com sucesso!');
+        return redirect()->route('admin.heritageTypes.index')->with('msg', 'Tipo de Património atualizado com sucesso!');
     }
 
     public function destroy(HeritageType $heritageType)
     {
         if ($heritageType->heritages()->count() > 0) {
-            return redirect()->route('heritage-types.index')->with('error', 'Não é possível remover. Existem patrimónios associados a este tipo.');
+            return redirect()->back()->with('error', 'Não é possível remover. Existem patrimónios associados a este tipo.');
         }
 
         $heritageType->delete();
 
-        return redirect()->route('heritage-types.index')->with('msg', 'Tipo de Património removido com sucesso!');
+        return redirect()->back()->with('msg', 'Tipo de Património removido com sucesso!');
     }
 }
