@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\Admin\EmployeeeController;
+use App\Http\Controllers\Admin\MaterialController as AdminMaterialController;
 use App\Http\Controllers\EmployeeTypeController;
 use App\Http\Controllers\InternController;
 use App\Http\Controllers\PositionController;
@@ -21,7 +22,7 @@ use App\Http\Controllers\InternEvaluationController;
 use App\Http\Controllers\RetirementController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\Site\FrontendController;
 use App\Http\Controllers\NewChatController;
 use App\Http\Controllers\StatuteController;
 use App\Http\Controllers\ExtraJobController;
@@ -44,7 +45,7 @@ use App\Http\Controllers\HeritageTypeController;
 
 /*
 |--------------------------------------------------------------------------
-| Rotas Login/Logout e Recuperação de Senha - Laravel Sanctum
+| start Rotas Login/Logout e Recuperação de Senha - Laravel Sanctum
 |--------------------------------------------------------------------------
 */
 
@@ -61,10 +62,15 @@ Route::post("resetPassword", [AuthController::class, "resetPassword"])->name("re
 Route::get("password/reset/{token}", [AuthController::class, "showResetForm"])->name("password.reset");
 Route::post("password/reset", [AuthController::class, "resetPassword"])->name("password.update");
 
+/*
+|--------------------------------------------------------------------------
+| end Rotas Login/Logout e Recuperação de Senha - Laravel Sanctum
+|--------------------------------------------------------------------------
+*/
 
 /*
 |--------------------------------------------------------------------------
-| Rotas Públicas
+| start Site frontend routes
 |--------------------------------------------------------------------------
 */
 
@@ -75,6 +81,11 @@ Route::get("/diretoria", [FrontendController::class, "directors"])->name("fronte
 Route::get("/diretoria/{id}", [FrontendController::class, "showDirector"])->where("id", "[0-9]+")->name("frontend.directors.show"); // Página da Diretoria
 Route::get("/contato", [FrontendController::class, "contact"])->name("frontend.contact");
 
+/*
+|--------------------------------------------------------------------------
+| end Site frontend routes
+|--------------------------------------------------------------------------
+*/
 
 /*
 |--------------------------------------------------------------------------
@@ -125,12 +136,12 @@ Route::middleware(["auth"])->group(function () {
                     ->name("transactions.report-all");
 
                // Rota para PDF Individual (Adicionada)
-               Route::get("{material}/pdf", [MaterialController::class, "showPdf"])->name("showPdf");
+               Route::get("{material}/pdf", [AdminMaterialController::class, "showPdf"])->name("showPdf");
           });
 
           // Materiais (CRUD completo: index, create, store, show, edit, update, destroy)
           // DEVE SER A ÚLTIMA ROTA A SER LIDA para evitar conflitos com as rotas acima
-          Route::resource("materials", MaterialController::class)
+          Route::resource("materials", AdminMaterialController::class)
                ->only(["index", "create", "store", "show", "edit", "update", "destroy"]);
      });
 
@@ -143,10 +154,10 @@ Route::middleware(["auth"])->group(function () {
 */
 
      Route::middleware(["auth", "can:manage-inventory"])->group(function () {
-          // Tipos de Património
+          /* // Tipos de Património
           Route::resource("heritage-types", HeritageTypeController::class);
           Route::get("heritage-types/{heritage_type}/delete", [HeritageTypeController::class, "destroy"])->name("heritage-types.delete");
-
+ */
           // Rotas de Manutenção, Transferência e Relatórios
           Route::prefix("heritages")->name("heritages.")->group(function () {
                // Manutenção
@@ -443,13 +454,13 @@ Route::middleware(["auth"])->group(function () {
      Route::post("/new-chat/send-message", [NewChatController::class, "sendMessage"])->name("new-chat.sendMessage");
 
 
-     // ======================NOSSO ESTATUTO(OWR ESTATUTE)======================
+     /* // ======================NOSSO ESTATUTO(OWR ESTATUTE)======================
      Route::resource("statutes", StatuteController::class);
      Route::get("statutes/{id}/delete", [StatuteController::class, "destroy"])->name("statutes.delete");
+ */
 
-
-     // ====================== HOME ======================
-     Route::get("/homeRH-INFOSI", [FrontendController::class, "index"])->name("frontend.index.rhHome");
+     /* // ====================== HOME ======================
+     Route::get("/homeRH-INFOSI", [FrontendController::class, "index"])->name("frontend.index.rhHome"); */
 });
 
 

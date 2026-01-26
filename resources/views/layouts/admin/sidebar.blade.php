@@ -357,7 +357,7 @@
     <div class="collapse" id="collapseHeritage">
         <ul class="submenu">
             <li><a class="nav-link" href="{{ route('heritages.index') }}"><i class="fas fa-box me-2"></i> Patrimónios</a></li>
-            <li><a class="nav-link" href="{{ route('heritage-types.index') }}"><i class="fas fa-tags me-2"></i> Tipos de Património</a></li>
+            <li><a class="nav-link" href="{{ route('admin.heritageTypes.index') }}"><i class="fas fa-tags me-2"></i> Tipos de Património</a></li>
             {{-- ROTAS DE TRANSAÇÃO (Histórico, Entrada, Saída) REMOVIDAS --}}
         </ul>
     </div>
@@ -452,9 +452,9 @@
                     </a>
                     <div class="collapse" id="collapseStatute">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('statutes.index') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.statutes.index') }}"><i
                                         class="fas fa-eye me-2"></i>Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('statutes.create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.statutes.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>

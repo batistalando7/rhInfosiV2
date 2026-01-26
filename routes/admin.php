@@ -13,10 +13,12 @@ use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\ResourceAssignmentController;
 use App\Http\Controllers\Admin\EmployeeHistoryController;
 use App\Http\Controllers\Admin\EmployeeTypeController;
+use App\Http\Controllers\Admin\HeritageTypeController;
 use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\MaintenanceController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\SpecialtyController;
+use App\Http\Controllers\Admin\StatuteController;
 
 Route::middleware('auth')->name('admin.')->group(function () {
 
@@ -131,6 +133,8 @@ Route::middleware('auth')->name('admin.')->group(function () {
 
         // Histórico do funcionário
         Route::get('/history/{id}', [EmployeeHistoryController::class, 'index'])->name('employeee.history');
+        Route::get('/history/{id}/pdf', [EmployeeHistoryController::class, 'employeeHistoryPdf'])->name('employeee.history.pdf');
+
         // filtros
 
         /* Rota GET com parâmetro ?status=... */
@@ -251,6 +255,44 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::get("maintenance/pdf-filtered", [MaintenanceController::class, "exportFilteredPDF"])->name("maintenances.pdfFiltered");
     // end Manutenções (maintenance) routes
 
+    // start estatuto (statute) routes
+    Route::prefix('estatuto')->group(function () {
+
+        Route::get('/lista', [StatuteController::class, 'index'])->name('statutes.index');
+        Route::get('/criar', [StatuteController::class, 'create'])->name('statutes.create');
+        Route::post('/salvar', [StatuteController::class, 'store'])->name('statutes.store');
+        Route::get('/editar/{id}', [StatuteController::class, 'edit'])->name('statutes.edit');
+        Route::put('/atualizar/{id}', [StatuteController::class, 'update'])->name('statutes.update');
+        Route::get('/detalhes/{id}', [StatuteController::class, 'show'])->name('statutes.show');
+        Route::get('/deletar/{id}', [StatuteController::class, 'destroy'])->name('statutes.destroy');
+    });
+    // end estatuto (statute) routes
+
+    // start Tipos de Património
+    Route::prefix('tipos-patrimonio')->group(function () {
+
+        Route::get("/listar", [HeritageTypeController::class, "index"])->name("heritageTypes.index");
+        Route::get("/criar", [HeritageTypeController::class, "create"])->name("heritageTypes.create");
+        Route::post("/salvar", [HeritageTypeController::class, "store"])->name("heritageTypes.store");
+        Route::get("/detalhes/{id}", [HeritageTypeController::class, "show"])->name("heritageTypes.show");
+        Route::get("/editar/{id}/edit", [HeritageTypeController::class, "edit"])->name("heritageTypes.edit");
+        Route::put("/atualizar/{id}", [HeritageTypeController::class, "update"])->name("heritageTypes.update");
+        Route::delete("/apagar/{id}", [HeritageTypeController::class, "destroy"])->name("heritageTypes.destroy");
+    });
+    // end Tipos de Património
+    
+    // start 
+    Route::prefix('tipos-patrimonio')->group(function () {
+
+        Route::get("/listar", [HeritageTypeController::class, "index"])->name("heritageTypes.index");
+        Route::get("/criar", [HeritageTypeController::class, "create"])->name("heritageTypes.create");
+        Route::post("/salvar", [HeritageTypeController::class, "store"])->name("heritageTypes.store");
+        Route::get("/detalhes/{id}", [HeritageTypeController::class, "show"])->name("heritageTypes.show");
+        Route::get("/editar/{id}/edit", [HeritageTypeController::class, "edit"])->name("heritageTypes.edit");
+        Route::put("/atualizar/{id}", [HeritageTypeController::class, "update"])->name("heritageTypes.update");
+        Route::delete("/apagar/{id}", [HeritageTypeController::class, "destroy"])->name("heritageTypes.destroy");
+    });
+    // end 
 
     // start users routes
     Route::prefix('utilizadores')->group(function () {

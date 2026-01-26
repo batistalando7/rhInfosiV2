@@ -70,7 +70,7 @@
                data-frames='[{"delay":830,"speed":500,"frame":"0","from":"y:[100%];opacity:0;","to":"o:1;","ease":"Power0.easeIn"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
                data-textAlign="['inherit','inherit','center','center']"
                data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]">
-               Oferecemos recursos, ferramentas e suporte para impulsionar a transformação digital no setor público e privado
+               {{-- Oferecemos recursos, ferramentas e suporte para impulsionar a transformação digital no setor público e privado --}}
           </div>
           <!-- LAYER NR. 5 -->
           <a class="tp-caption skin-flat-button tp-resizeme" href="#services " target="_self"
@@ -233,7 +233,7 @@
                data-frames='[{"delay":890,"speed":500,"frame":"0","from":"y:[100%];opacity:0;","to":"o:1;","ease":"Power0.easeIn"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
                data-textAlign="['inherit','inherit','center','center']"
                data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]">
-               Fomentando a inovação e a inclusão digital em Angola, Impulsionando o desenvolvimento e a modernização do país
+              {{--  Fomentando a inovação e a inclusão digital em Angola, Impulsionando o desenvolvimento e a modernização do país --}}
           </div>
           <!-- LAYER NR. 15 -->
           <a class="tp-caption tp-resizeme black-flatborder-button" href="#services " target="_self"
