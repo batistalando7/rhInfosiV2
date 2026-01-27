@@ -13,6 +13,10 @@ class Maintenance extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'services' => 'array',
+    ];
+
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class, 'vehicleId');

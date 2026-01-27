@@ -9,7 +9,7 @@
         </a>
     </div>
     <div class="card-body">
-        <form action="{{ route('admin.vehicles.store') }}" method="POST">
+        <form action="{{ route('admin.vehicles.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @include('forms._formVehicle.index')
         </form>

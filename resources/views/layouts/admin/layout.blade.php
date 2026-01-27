@@ -70,8 +70,6 @@
     <script src="{{ asset('assets/js/select2-active.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/js/theme-customizer-init.min.js') }}"></script>
-    {{-- start script do editor de texto --}}
-    <script src="{{ url('ckeditor5/main.js') }}"></script>
     {{-- end script do editor de texto --}}
     <script>
         // Abre/fecha sidebar em mobile ao clicar no botão hamburger

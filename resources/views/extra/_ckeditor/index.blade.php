@@ -48,12 +48,12 @@
                 Underline
             ],
             balloonToolbar: ['bold', 'italic'],
-            initialData: `{!! $news->description ?? '' !!}`,
+            initialData: `{!! old('description', $maintenance->description ?? '') !!}`,
             licenseKey: LICENSE_KEY,
             menuBar: {
                 isVisible: true
             },
-            placeholder: 'Digite seu conteúdo aqui!',
+            placeholder: 'Escreva a descrição da manutenção aqui...',
             table: {
                 contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties',
                     'tableCellProperties'
