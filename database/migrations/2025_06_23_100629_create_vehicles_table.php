@@ -22,6 +22,7 @@ class CreateVehiclesTable extends Migration
             $table->date('nextMaintenanceDate')->nullable();
             $table->enum('status', ['Available', 'UnderMaintenance', 'Unavailable'])->default('Available');
             $table->text('notes')->nullable();
+            $table->string('document')->nullable();
             $table->timestamps();
         });
     }

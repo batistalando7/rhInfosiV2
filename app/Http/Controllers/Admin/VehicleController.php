@@ -45,6 +45,7 @@ class VehicleController extends Controller
             'status' => 'required|in:Available,UnderMaintenance,Unavailable',
             'driverId' => 'nullable|exists:drivers,id',
             'notes' => 'nullable|string',
+            'document' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
         ]);
 
         $vehicle = Vehicle::create($data);
@@ -80,6 +81,7 @@ class VehicleController extends Controller
             'status' => 'required|in:Available,UnderMaintenance,Unavailable',
             'driverId' => 'nullable|exists:drivers,id',
             'notes' => 'nullable|string',
+            'document' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
         ]);
 
         $vehicle->update($data);

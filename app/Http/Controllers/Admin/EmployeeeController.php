@@ -60,14 +60,14 @@ class EmployeeeController extends Controller
 
     public function create()
     {
-        $departments        = Department::all();
-        $positions          = Position::all();
-        $specialties        = Specialty::all();
-        $employeeTypes      = EmployeeType::all();
-        $employeeCategories = EmployeeCategory::all();
-        $courses            = Course::all(); // Adicionado
+        $response['departments']        = Department::all();
+        $response['positions']          = Position::all();
+        $response['specialties']        = Specialty::all();
+        $response['employeeTypes']      = EmployeeType::all();
+        $response['employeeCategories'] = EmployeeCategory::all();
+        $response['courses']            = Course::all(); // Adicionado
 
-        return view('admin.employeee.create.index', compact('departments', 'positions', 'specialties', 'employeeTypes', 'employeeCategories', 'courses'));
+        return view('admin.employeee.create.index', $response);
     }
 
     public function store(Request $request)
@@ -108,6 +108,7 @@ class EmployeeeController extends Controller
             'courseId'           => 'nullable|exists:courses,id', // Adicionado
             'photo'              => 'nullable|image',
             'entry_date'         => 'required|date|date_format:Y-m-d',//adicionado
+            'processNumber'      => 'required|string|unique:employeees',
         ], [
             'fullName.regex'               => 'O nome só pode conter letras e espaços.',
             'birth_date.before_or_equal'   => 'A idade minima permitida é 18 anos.',
@@ -136,6 +137,7 @@ class EmployeeeController extends Controller
         $data->courseId        = $request->courseId; // Adicionado
         $data->employmentStatus = 'active';
         $data->entry_date     =  $request->entry_date;//adicionado
+        $data->processNumber  =  $request->processNumber;//adicionado
 
         if ($request->hasFile('photo')) {
             $photoName = time() . '_' . $request->file('photo')->getClientOriginalName();
@@ -189,15 +191,15 @@ class EmployeeeController extends Controller
 
     public function edit($id)
     {
-        $data               = Employeee::findOrFail($id);
-        $departs            = Department::orderByDesc('id')->get();
-        $employeeTypes      = EmployeeType::all();
-        $positions          = Position::all();
-        $specialties        = Specialty::all();
-        $employeeCategories = EmployeeCategory::all();
-        $courses            = Course::all(); // Adicionado
+        $response['employee'] = Employeee::findOrFail($id);
+        $response['departments']        = Department::all();
+        $response['positions']          = Position::all();
+        $response['specialties']        = Specialty::all();
+        $response['employeeTypes']      = EmployeeType::all();
+        $response['employeeCategories'] = EmployeeCategory::all();
+        $response['courses']            = Course::all(); // Adicionado
 
-        return view('admin.employeee.edit.index', compact('data', 'departs', 'employeeTypes', 'positions', 'specialties', 'employeeCategories', 'courses'));
+        return view('admin.employeee.edit.index', $response);
     }
 
     public function update(Request $request, $id)
@@ -233,6 +235,7 @@ class EmployeeeController extends Controller
             'nationality'        => 'required',
             'academicLevel'      => 'nullable|string|max:255', // Adicionado
             'courseId'           => 'nullable|exists:courses,id', // Adicionado
+            'processNumber'      => 'required|string|unique:employeees,processNumber,' . $id,
         ], [
             'fullName.regex'               => 'O nome só pode conter letras e espaços.',
             'birth_date.before_or_equal'   => 'Você deve ter no mínimo 18 anos.',
@@ -258,6 +261,7 @@ class EmployeeeController extends Controller
         $data->specialtyId     = $request->specialtyId;
         $data->academicLevel   = $request->academicLevel; // Adicionado
         $data->courseId        = $request->courseId; // Adicionado
+        $data->processNumber  =  $request->processNumber;//adicionado
 
         if ($request->hasFile('photo')) {
             $photoName = time() . '_' . $request->file('photo')->getClientOriginalName();

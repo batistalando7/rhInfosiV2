@@ -2,10 +2,16 @@
 <div class="row g-3">
     <div class="col-md-3">
         <div class="form-floating">
-            <select name="depart" id="depart" class="form-select">
-                <option value="" selected>Selecione</option>
+            <select name="departmentId" id="depart" class="form-select"
+                {{ isset($employee->departmentId) ? 'disabled' : '' }}>
+
+                <option value="">Selecione</option>
+
                 @foreach ($departments as $depart)
-                    <option value="{{ $depart->id }}">{{ $depart->title }}</option>
+                    <option value="{{ $depart->id }}"
+                        {{ ($employee->departmentId ?? old('departmentId')) == $depart->id ? 'selected' : '' }}>
+                        {{ $depart->title }}
+                    </option>
                 @endforeach
             </select>
             <label for="depart">Departamento</label>
@@ -14,10 +20,14 @@
 
     <div class="col-md-3">
         <div class="form-floating">
-            <select name="positionId" id="positionId" class="form-select">
+            <select name="positionId" id="positionId" class="form-select"
+                {{ isset($employee->positionId) ? 'disabled' : '' }}>
                 <option value="" selected>Selecione</option>
                 @foreach ($positions as $position)
-                    <option value="{{ $position->id }}">{{ $position->name }}</option>
+                    <option value="{{ $position->id }}"
+                        {{ ($employee->positionId ?? old('positionId')) == $position->id ? 'selected' : '' }}>
+                        {{ $position->name }}
+                    </option>
                 @endforeach
             </select>
             <label for="positionId">Cargo</label>
@@ -26,10 +36,13 @@
 
     <div class="col-md-3">
         <div class="form-floating">
-            <select name="specialtyId" id="specialtyId" class="form-select">
+            <select name="specialtyId" id="specialtyId" class="form-select" {{-- {{ isset($employee->specialtyId) ? 'disabled' : '' }} --}}>
                 <option value="" selected>Selecione</option>
                 @foreach ($specialties as $specialty)
-                    <option value="{{ $specialty->id }}">{{ $specialty->name }}</option>
+                    <option value="{{ $specialty->id }}"
+                        {{ ($employee->specialtyId ?? old('specialtyId')) == $specialty->id ? 'selected' : '' }}>
+                        {{ $specialty->name }}
+                    </option>
                 @endforeach
             </select>
             <label for="specialtyId">Especialidade</label>
@@ -38,10 +51,13 @@
 
     <div class="col-md-3">
         <div class="form-floating">
-            <select name="employeeTypeId" id="employeeTypeId" class="form-select">
+            <select name="employeeTypeId" id="employeeTypeId" class="form-select" {{-- {{ isset($employee->employeeTypeId) ? 'disabled' : '' }} --}}>
                 <option value="" selected>Selecione</option>
                 @foreach ($employeeTypes as $etype)
-                    <option value="{{ $etype->id }}">{{ $etype->name }}</option>
+                    <option value="{{ $etype->id }}"
+                        {{ ($employee->employeeTypeId ?? old('employeeTypeId')) == $etype->id ? 'selected' : '' }}>
+                        {{ $etype->name }}
+                    </option>
                 @endforeach
             </select>
             <label for="employeeTypeId">Tipo de Funcionário</label>
@@ -53,10 +69,13 @@
 <div class="row g-3 mt-3">
     <div class="col-md-3">
         <div class="form-floating">
-            <select name="employeeCategoryId" id="employeeCategoryId" class="form-select">
+            <select name="employeeCategoryId" id="employeeCategoryId" class="form-select" {{-- {{ isset($employee->employeeCategoryId) ? 'disabled' : '' }} --}}>
                 <option value="" selected>Selecione</option>
                 @foreach ($employeeCategories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    <option value="{{ $category->id }}"
+                        {{ ($employee->employeeCategoryId ?? old('employeeCategoryId')) == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
                 @endforeach
             </select>
             <label for="employeeCategoryId">Categoria</label>
@@ -78,7 +97,7 @@
     <div class="col-md-3">
         <div class="form-floating">
             <input type="text" name="academicLevel" id="academicLevel" class="form-control" placeholder=""
-                value="{{ old('academicLevel') }}">
+                value="{{ old('academicLevel', $employee->academicLevel ?? '') }}">
             <label for="academicLevel">Nível Acadêmico</label>
         </div>
     </div>
@@ -86,9 +105,12 @@
     <div class="col-md-3">
         <div class="form-floating">
             <select name="gender" id="gender" class="form-select">
-                <option value="" selected>Selecione</option>
-                <option value="Masculino" @if (old('gender') == 'Masculino') selected @endif>Masculino</option>
-                <option value="Feminino" @if (old('gender') == 'Feminino') selected @endif>Feminino</option>
+                <option value="" {{ old('gender', $employee->gender ?? '') == '' ? 'selected' : '' }}>Selecione
+                </option>
+                <option value="Masculino"
+                    {{ old('gender', $employee->gender ?? '') == 'Masculino' ? 'selected' : '' }}>Masculino</option>
+                <option value="Feminino" {{ old('gender', $employee->gender ?? '') == 'Feminino' ? 'selected' : '' }}>
+                    Feminino</option>
             </select>
             <label for="gender">Gênero</label>
         </div>
@@ -100,14 +122,14 @@
     <div class="col-md-6">
         <div class="form-floating">
             <input type="text" name="fullName" id="fullName" class="form-control" placeholder=""
-                value="{{ old('fullName') }}">
+                value="{{ old('fullName', $employee->fullName ?? '') }}">
             <label for="fullName">Nome Completo</label>
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-floating">
             <input type="text" name="email" id="email" class="form-control" placeholder="nome.sobrenome apenas"
-                value="{{ old('email') }}">
+                value="{{ old('email', $employee->email ?? '') }}">
             <label for="email"></label>
         </div>
     </div>
@@ -118,7 +140,7 @@
     <div class="col-md-6">
         <div class="form-floating">
             <input type="text" name="address" id="address" class="form-control" placeholder=""
-                value="{{ old('address') }}">
+                value="{{ old('address', $employee->address ?? '') }}">
             <label for="address">Endereço</label>
         </div>
     </div>
@@ -132,40 +154,34 @@
             </button>
             <ul class="dropdown-menu" id="phone_code_menu" style="max-height: 30em; overflow-y: auto;"></ul>
             <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Telefone"
-                maxlength="16" value="{{ old('mobile') }}">
-            <input type="hidden" name="phoneCode" id="phoneCode" value="{{ old('phoneCode') }}">
+                maxlength="16" value="{{ old('mobile', $employee->mobile ?? '') }}">
+            <input type="hidden" name="phoneCode" id="phoneCode"
+                value="{{ old('phoneCode', $employee->phoneCode ?? '') }}">
         </div>
     </div>
-</div>
 
-<!-- Linha: BI, Cópia, Data de Nascimento -->
-<div class="row g-3 mt-3">
-    <div class="col-md-4">
-        <div class="form-floating">
-            <input type="text" name="bi" id="bi" class="form-control" maxlength="16"
-                value="{{ old('bi') }}">
-            <label for="bi">Bilhete de Identidade / Passaporte</label>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-floating">
-            <input type="file" name="biPhoto" id="biPhoto" class="form-control">
-            <label for="biPhoto">Cópia do BI / Passaporte</label>
-        </div>
-    </div>
-    <div class="col-md-4">
+    {{-- data de nascimento --}}
+    <div class="col-md-6">
         <div class="form-floating">
             <input type="date" name="birth_date" id="birth_date" class="form-control"
-                value="{{ old('birth_date') }}" max="{{ date('Y-m-d') }}"
+                value="{{ old('birth_date', $employee->birth_date ?? '') }}" max="{{ date('Y-m-d') }}"
                 min="{{ \Carbon\Carbon::now()->subYears(120)->format('Y-m-d') }}">
             <label for="birth_date">Data de Nascimento</label>
+        </div>
+    </div>
+    {{-- data de ingresso --}}
+    <div class="col-md-6">
+        <div class="form-floating">
+            <input type="date" name="entry_date" id="entry_date" class="form-control"
+                value="{{ old('entry_date', $employee->entry_date ?? '') }}">
+            <label for="entry_date">Data de Ingresso</label>
         </div>
     </div>
 </div>
 
 <!-- Linha: Nacionalidade, IBAN -->
 <div class="row g-3 mt-3">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="form-floating">
             <select name="nationality" id="nationality" class="form-select">
                 <option value="">Selecione seu país</option>
@@ -173,11 +189,11 @@
             <label for="nationality">Nacionalidade</label>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="form-floating">
             <input type="text" name="iban" id="iban" class="form-control" placeholder=""
-                value="AO06{{ old('iban') ? substr(old('iban'), 4) : '' }}" maxlength="25" pattern="AO06[0-9]{21}"
-                title="O IBAN deve começar por AO06 seguido de 21 dígitos.">
+                value="AO06{{ old('iban', $employee->iban ?? '') ? substr(old('iban', $employee->iban ?? ''), 4) : '' }}"
+                maxlength="25" pattern="AO06[0-9]{21}" title="O IBAN deve começar por AO06 seguido de 21 dígitos.">
             <label for="iban">IBAN</label>
         </div>
     </div>
@@ -185,18 +201,41 @@
 
 <!-- Linha: Foto -->
 <div class="row g-3 mt-3">
-    <div class="col-md-6">
+    <div class="col-md-4">
+        <div class="form-floating">
+            <input type="text" name="bi" id="bi" class="form-control" maxlength="16"
+                value="{{ old('bi', $employee->bi ?? '') }}">
+            <label for="bi">Bilhete de Identidade / Passaporte</label>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="form-floating">
+            <input type="file" name="biPhoto" id="biPhoto" class="form-control">
+            <label for="biPhoto">Cópia do BI / Passaporte</label>
+        </div>
+        @if ($employee->biPhoto)
+            <small class="text-success">Arquivo atual: <a
+                    href="{{ asset('frontend/images/biPhotos/' . $employee->biPhoto) }}"
+                    target="_blank">Ver</a></small>
+        @endif
+    </div>
+
+</div>
+<!-- Linha: Foto, número do processo -->
+<div class="row g-3 mt-3">
+    <div class="col-md-4">
+        <div class="form-floating">
+            <input type="text" name="processNumber" id="processNumber" class="form-control" maxlength="16"
+                value="{{ old('processNumber', $employee->processNumber ?? '') }}">
+            <label for="bi">Número do Processo</label>
+        </div>
+    </div>
+    <div class="col-md-8">
         <div class="form-floating">
             <input type="file" name="photo" id="photo" class="form-control">
             <label for="photo">Fotografia</label>
         </div>
-    </div>
-    {{-- data de ingresso --}}
-     <div class="col-md-6">
-        <div class="form-floating">
-            <input type="date" name="entry_date" id="entry_date" class="form-control">
-            <label for="entry_date">Data de Ingresso</label>
-        </div>
+
     </div>
 </div>
 
@@ -204,7 +243,14 @@
 
 <!-- Botão -->
 <div class="d-grid gap-2 col-6 mx-auto mt-4">
-    <button type="submit" class="btn btn-primary btn-lg">
-        <i class="fas fa-check-circle me-2"></i>Cadastrar Funcionário
-    </button>
+    @if (isset($employee))
+        <button type="submit" class="btn btn-primary btn-lg">
+            <i class="fas fa-save me-2"></i>Atualizar Funcionário
+        </button>
+    @else
+        <button type="submit" class="btn btn-primary btn-lg">
+            <i class="fas fa-check-circle me-2"></i>Cadastrar Funcionário
+        </button>
+    @endif
+
 </div>

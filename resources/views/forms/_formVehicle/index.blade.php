@@ -61,20 +61,25 @@
     </div>
 </div>
 <div class="row g-3 mt-3">
-    {{-- <div class="col-md-4">
-                    <div class="form-floating">
-                        <select name="driverId" id="driverId" class="form-select">
-                            <option value="">Sem Motorista</option>
-                            @foreach ($employeee as $d)
-                                <option value="{{ $d->id }}" {{ old('driverId', $vehicle->drivers->first()->id ?? '') == $d->id ? 'selected' : '' }}>{{ $d->fullName }}</option>
-                            @endforeach
-                        </select>
-                        <label for="driverId">Atribuir Motorista</label>
-                    </div>
-                </div> --}}
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="form-floating">
-            <textarea name="notes" id="notes" class="form-control" placeholder="" style="height:80px">{{ old('notes', $vehicle->notes ?? '') }}</textarea>
+            <input type="file" name="document" id="document" class="form-control"
+                value="{{ old('document', $vehicle->document ?? '') }}">
+            <label for="document">Documento da Viatura</label>
+        </div>
+        <div class="form-text">
+            <small>Formato aceito: PDF, JPG, PNG. Tamanho máximo: 2MB.</small>
+            @if (isset($vehicle) && $vehicle->document)
+                @php
+                    $verDocumento = asset('storage/documents/vehicles/' . $vehicle->document);
+                @endphp
+                <small><a href="{{ $verDocumento }}" target="_blank" class="text-decoration-underline">ver</a></small>
+            @endif
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-floating">
+            <textarea name="notes" id="notes" class="form-control" placeholder="" style="height:60px">{{ old('notes', $vehicle->notes ?? '') }}</textarea>
             <label for="notes">Observações</label>
         </div>
     </div>
