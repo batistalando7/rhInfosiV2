@@ -213,11 +213,11 @@
             <input type="file" name="biPhoto" id="biPhoto" class="form-control">
             <label for="biPhoto">Cópia do BI / Passaporte</label>
         </div>
-        @if ($employee->biPhoto)
+        @isset ($employee->biPhoto)
             <small class="text-success">Arquivo atual: <a
                     href="{{ asset('frontend/images/biPhotos/' . $employee->biPhoto) }}"
                     target="_blank">Ver</a></small>
-        @endif
+        @endisset
     </div>
 
 </div>
