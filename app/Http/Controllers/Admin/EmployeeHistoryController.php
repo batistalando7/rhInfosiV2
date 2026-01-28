@@ -39,8 +39,8 @@ class EmployeeHistoryController extends Controller
         ])->findOrFail($id);
 
         $pdf = PDF::loadView('pdf.employeee.history', compact('employee'))->setPaper('a4', 'portrait');
-        /* return $pdf->download('historico_funcionario_' . $employee->id . '.pdf'); */
-        return view('pdf.employeee.history', compact('employee'));
+        return $pdf->stream('historico_funcionario_' . $employee->id . '.pdf');
+        /* return view('pdf.employeee.history', compact('employee')); */
 
     }
 }
