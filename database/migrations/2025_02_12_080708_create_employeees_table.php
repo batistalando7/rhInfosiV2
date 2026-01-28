@@ -33,6 +33,7 @@ class CreateEmployeeesTable extends Migration
             $table->string("academicLevel")->nullable();
             $table->unsignedBigInteger("courseId")->nullable(); 
             $table->date('entry_date');
+            $table->string('processNumber')->nullable();
             $table->timestamps();
 
             $table->foreign("departmentId")->references("id")->on("departments")->onDelete("cascade");

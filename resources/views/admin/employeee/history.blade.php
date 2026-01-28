@@ -12,7 +12,7 @@
         <img src="{{ asset('frontend/images/departments/' . $employee->photo) }}"
              class="img-fluid rounded-circle shadow" alt="Foto">
       </div>
-      <div class="col-md-6 m-auto border p-3 rounded shadow-sm">
+      <div class="col-md-6 m-auto border p-3 px-4 rounded shadow-sm">
         <p><strong>Departamento Atual:</strong> {{ $employee->department->title ?? '-' }}</p>
         <p><strong>Vínculo de Funcionário:</strong> {{ $employee->employeeType->name ?? '-' }}</p>
         <p><strong>E-mail:</strong> {{ $employee->email }}</p>

@@ -3,35 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Maintenance extends Model
 {
+    use SoftDeletes;
+    
     protected $table = 'maintenance';
 
-    protected $fillable = [
-        'vehicleId',
-        'type',
-        'subType',
-        'maintenanceDate',
-        'mileage',
-        'cost',
-        'description',
-        'piecesReplaced',
-        'services',
-        'nextMaintenanceDate',
-        'nextMileage',
-        'responsibleName',
-        'responsiblePhone',
-        'responsibleEmail',
-        'observations',
-        'invoice_pre',
-        'invoice_post'
-    ];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'services' => 'array',
-        'maintenanceDate' => 'date',
-        'nextMaintenanceDate' => 'date',
     ];
 
     public function vehicle()

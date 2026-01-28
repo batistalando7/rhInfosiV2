@@ -28,6 +28,7 @@ class CreateMaintenancesTable extends Migration
             /* $table->string('invoice_pre')->nullable(); */
             $table->string('file')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('vehicleId')->references('id')->on('vehicles')->onDelete('cascade');
         });

@@ -15,7 +15,7 @@ class VehicleController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Vehicle::with('drivers', 'maintenance');
+        $query = Vehicle::with('maintenance');
         if ($request->filled('startDate')) {
             $query->whereDate('created_at', '>=', $request->startDate);
         }
@@ -43,15 +43,16 @@ class VehicleController extends Controller
             'color' => 'required|string|max:30',
             'loadCapacity' => 'required|integer|min:1',
             'status' => 'required|in:Available,UnderMaintenance,Unavailable',
-            'driverId' => 'nullable|exists:drivers,id',
+            /* 'driverId' => 'nullable|exists:drivers,id', */
             'notes' => 'nullable|string',
+            'document' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
         ]);
 
         $vehicle = Vehicle::create($data);
 
-        if ($request->filled('driverId')) {
+        /* if ($request->filled('driverId')) {
             $vehicle->drivers()->attach($request->driverId, ['startDate' => now()]);
-        }
+        } */
 
         return redirect()->route('admin.vehicles.index')->with('msg', 'Viatura cadastrada com sucesso.');
     }
@@ -78,17 +79,18 @@ class VehicleController extends Controller
             'color' => 'required|string|max:30',
             'loadCapacity' => 'required|integer|min:1',
             'status' => 'required|in:Available,UnderMaintenance,Unavailable',
-            'driverId' => 'nullable|exists:drivers,id',
+            /* 'driverId' => 'nullable|exists:drivers,id', */
             'notes' => 'nullable|string',
+            'document' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
         ]);
 
         $vehicle->update($data);
 
-        if ($request->filled('driverId') && $request->driverId != $vehicle->driverId) {
+        /* if ($request->filled('driverId') && $request->driverId != $vehicle->driverId) {
             // Lógica para trocar driver se necessário
             $vehicle->drivers()->detach();
             $vehicle->drivers()->attach($request->driverId, ['startDate' => now()]);
-        }
+        } */
 
         return redirect()->route('admin.vehicles.edit', $vehicle)->with('msg', 'Viatura atualizada com sucesso.');
     }

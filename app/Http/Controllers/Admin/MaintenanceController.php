@@ -14,15 +14,15 @@ class MaintenanceController extends Controller
     {
         $query = Maintenance::with('vehicle');
         if ($request->filled('startDate')) {
-            $query->whereDate('maintenanceDate', '>=', $request->startDate);
+            $query->whereDate('date', '>=', $request->startDate);
         }
         if ($request->filled('endDate')) {
-            $query->whereDate('maintenanceDate', '<=', $request->endDate);
+            $query->whereDate('date', '<=', $request->endDate);
         }
         if ($request->filled('type')) {
             $query->where('type', $request->type);
         }
-        $records = $query->orderByDesc('maintenanceDate')->get();
+        $records = $query->orderByDesc('date')->get();
         return view('admin.maintenance.list.index', compact('records'));
     }
 
@@ -37,27 +37,27 @@ class MaintenanceController extends Controller
         $data = $request->validate([
             'vehicleId' => 'required|exists:vehicles,id',
             'type' => 'required|in:Preventive,Corrective,Repair',
-            'subType' => 'required|string|max:50',
-            'maintenanceDate' => 'required|date|before_or_equal:today',
-            'mileage' => 'required|numeric|min:0',  // Numeric para 4.000
+            /* 'subType' => 'required|string|max:50', */
+            'date' => 'required|date|before_or_equal:today',
+            'mileageNow' => 'required|numeric|min:0',  // Numeric para 4.000
             'cost' => 'required|numeric|min:0',  // Numeric para 50.000
             'description' => 'nullable|string',
             'piecesReplaced' => 'nullable|string',
             'services' => 'required|array|min:1',
-            'nextMaintenanceDate' => 'nullable|date|after:maintenanceDate',
-            'nextMileage' => 'nullable|numeric|gt:mileage',  // Numeric
+            /* 'nextMaintenanceDate' => 'nullable|date|after:maintenanceDate', */
+            /* 'nextMileage' => 'nullable|numeric|gt:mileage',  // Numeric */
             'responsibleName' => 'required|string|max:100',
             'responsiblePhone' => 'nullable|string|max:20',
             'responsibleEmail' => 'nullable|email|max:100',
-            'observations' => 'nullable|string',
+            /* 'observations' => 'nullable|string',
             'invoice_pre' => 'nullable|file|mimes:pdf,jpg,png',  // Sem max
-            'invoice_post' => 'nullable|file|mimes:pdf,jpg,png',  // Sem max
+            'invoice_post' => 'nullable|file|mimes:pdf,jpg,png',  // Sem max */
         ], [
             'services.min' => 'Selecione pelo menos um serviço.',
             'nextMileage.gt' => 'Próxima quilometragem deve ser maior que atual.',
         ]);
 
-        if ($request->hasFile('invoice_pre')) {
+        /* if ($request->hasFile('invoice_pre')) {
             $file = $request->file('invoice_pre');
             $name = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('frontend/docs/maintenance/pre'), $name);
@@ -68,25 +68,24 @@ class MaintenanceController extends Controller
             $name = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('frontend/docs/maintenance/post'), $name);
             $data['invoice_post'] = $name;
-        }
+        } */
 
         $record = Maintenance::create($data);
 
         $vehicle = Vehicle::find($data['vehicleId']);
         $vehicle->update([
-            'currentMileage' => $data['mileage'],
-            'lastMaintenanceDate' => $data['maintenanceDate'],
-            'nextMaintenanceDate' => $data['nextMaintenanceDate'],
+            'currentMileage' => $data['mileageNow'],
+            'lastMaintenanceDate' => $data['date'],
         ]);
 
-        return redirect()->route('maintenance.index')->with('msg', 'Manutenção registrada com sucesso.');
+        return redirect()->route('admin.maintenances.index')->with('msg', 'Manutenção registrada com sucesso.');
     }
 
     public function show($id)
     {
         $maintenance = Maintenance::findOrFail($id);
         $maintenance->load('vehicle');
-        return view('admin.maintenance.show.index', compact('maintenance'));
+        return view('admin.maintenance.details.index', compact('maintenance'));
     }
 
     public function edit( $id)
@@ -200,14 +199,14 @@ class MaintenanceController extends Controller
             ? '_Filtradas' : ''
         ) . '.pdf';
 
-        $pdf = PDF::loadView('maintenance.maintenance_pdf', ['filtered' => $all])->setPaper('a4', 'portrait');
+        $pdf = PDF::loadView('pdf.maintenance.maintenancePdf', ['filtered' => $all])->setPaper('a4', 'portrait');
         return $pdf->stream($filename);
     }
 
     public function showPdf(Maintenance $maintenance)
     {
         $maintenance->load('vehicle');
-        $pdf = PDF::loadView('maintenance.maintenance_pdf_individual', compact('maintenance'))->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('pdf.maintenance.maintenancePdfIndividual', compact('maintenance'))->setPaper('a4', 'landscape');
         return $pdf->stream("Manutencao_{$maintenance->id}.pdf");
     }
 }

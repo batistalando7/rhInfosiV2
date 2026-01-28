@@ -9,7 +9,7 @@
         </a>
     </div>
     <div class="card-body">
-        <form action="{{ route('admin.vehicles.update', $vehicle->id) }}" method="POST">
+        <form action="{{ route('admin.vehicles.update', $vehicle->id) }}" method="POST" enctype="multipart/form-data">
             @csrf @method('PUT')
             @include('forms._formVehicle.index')
         </form>

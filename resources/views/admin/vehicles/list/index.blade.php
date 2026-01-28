@@ -44,7 +44,7 @@
                         <th>Status</th>
                         <th>Quilometragem Atual</th>
                         <th>Próxima Manut.</th>
-                        <th>Motorista</th>
+                        {{-- <th>Motorista</th> --}}
                         <th style="width: 58px">Acções</th>
                     </tr>
                 </thead>
@@ -58,11 +58,11 @@
                             <td>{{ number_format($v->currentMileage ?? 0, 0, ',', '.') }} km</td>
                             <td>{{ $v->nextMaintenanceDate ? \Carbon\Carbon::parse($v->nextMaintenanceDate)->format('d/m/Y') : '-' }}</td>
                             <td>
-                                @forelse ($v->drivers as $d)
+                                {{-- @forelse ($v->drivers as $d)
                                     {{ $d->fullName }}@if(!$loop->last), @endif
                                 @empty
                                     -
-                                @endforelse
+                                @endforelse --}}
                             </td>
                             <td>
                                 <a href="{{ route('admin.vehicles.show', $v->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-eye"></i></a>
