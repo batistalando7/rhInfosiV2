@@ -107,7 +107,7 @@ class EmployeeeController extends Controller
             'academicLevel'      => 'nullable|string|max:255', // Adicionado
             'courseId'           => 'nullable|exists:courses,id', // Adicionado
             'photo'              => 'nullable|image',
-            'entry_date'         => 'required|date|date_format:Y-m-d',//adicionado
+            'entry_date'         => 'required|date|date_format:Y-m-d', //adicionado
             'processNumber'      => 'required|string|unique:employeees',
         ], [
             'fullName.regex'               => 'O nome só pode conter letras e espaços.',
@@ -136,8 +136,8 @@ class EmployeeeController extends Controller
         $data->academicLevel   = $request->academicLevel; // Adicionado
         $data->courseId        = $request->courseId; // Adicionado
         $data->employmentStatus = 'active';
-        $data->entry_date     =  $request->entry_date;//adicionado
-        $data->processNumber  =  $request->processNumber;//adicionado
+        $data->entry_date     =  $request->entry_date; //adicionado
+        $data->processNumber  =  $request->processNumber; //adicionado
 
         if ($request->hasFile('photo')) {
             $photoName = time() . '_' . $request->file('photo')->getClientOriginalName();
@@ -205,34 +205,19 @@ class EmployeeeController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'departmentId'             => 'nullable',
-            'fullName'           => [
-                'required',
-                'string',
-                'max:255',
-                'regex:/^[\pL\s]+$/u'
-            ],
-            'address'            => 'required',
-            'mobile'             => 'required',
+            'departmentId'  => 'nullable',
+            'fullName' => ['required', 'string', 'max:255', 'regex:/^[\pL\s]+$/u'],
+            'address' => 'required',
+            'mobile' => 'required',
             'bi' => 'required|string|max:16|unique:employeees,bi,' . $id,
-            'biPhoto'            => 'nullable|file|mimes:pdf,jpeg,png,jpg',
-            'birth_date'         => [
-                'required',
-                'date',
-                'date_format:Y-m-d',
-                'before_or_equal:' . Carbon::now()->subYears(18)->format('Y-m-d'),
-                'after_or_equal:'  . Carbon::now()->subYears(120)->format('Y-m-d')
-            ],
+            'biPhoto' => 'nullable|file|mimes:pdf,jpeg,png,jpg',
+            'birth_date' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:' . Carbon::now()->subYears(18)->format('Y-m-d'), 'after_or_equal:'  . Carbon::now()->subYears(120)->format('Y-m-d')],
             /* 'email'              => 'required|unique:employeees,email,' . $id . '|regex:/^[a-zA-Z0-9._%+-]+$/', */
-            'iban'               => [
-                'nullable',
-                'string',
-                'max:25',
-                'regex:/^AO06[0-9]{21}$/',
-            ],
+            'iban' => ['nullable', 'string', 'max:25', 'regex:/^AO06[0-9]{21}$/',],
             'employeeTypeId'     => 'required|exists:employee_types,id',
             'employeeCategoryId' => 'required|exists:employee_categories,id',
             'nationality'        => 'required',
+            /* 'positionId'   => 'required|exists:positions,id', */
             'academicLevel'      => 'nullable|string|max:255', // Adicionado
             'courseId'           => 'nullable|exists:courses,id', // Adicionado
             'processNumber'      => 'required|string|unique:employeees,processNumber,' . $id,
@@ -257,11 +242,11 @@ class EmployeeeController extends Controller
         $data->iban            = $request->iban;
         $data->employeeTypeId  = $request->employeeTypeId;
         $data->employeeCategoryId = $request->employeeCategoryId;
-        $data->positionId      = $request->positionId;
+        /* $data->positionId      = $request->positionId; */
         $data->specialtyId     = $request->specialtyId;
         $data->academicLevel   = $request->academicLevel; // Adicionado
         $data->courseId        = $request->courseId; // Adicionado
-        $data->processNumber  =  $request->processNumber;//adicionado
+        $data->processNumber  =  $request->processNumber; //adicionado
 
         if ($request->hasFile('photo')) {
             $photoName = time() . '_' . $request->file('photo')->getClientOriginalName();
@@ -280,7 +265,7 @@ class EmployeeeController extends Controller
         /* ====================== histórico de atualização ====================== */
 
         //verificar oque foi alterado
-       /*  $verify = Employeee::find($id);
+        /*  $verify = Employeee::find($id);
         if ($verify->departmentId != $request->departmentId) {
             $departmentName = Department::find($request->departmentId)->title ?? 'N/A';
             $historyMessage['department'] = 'Departamento alterado de ' . $verify->department->title . ' para ' . $departmentName;
@@ -400,7 +385,7 @@ class EmployeeeController extends Controller
             $query->where('departmentId', $departmentId);
         }
 
-        if($entryDate){
+        if ($entryDate) {
             $query->where('entry_date', $entryDate);
         }
 

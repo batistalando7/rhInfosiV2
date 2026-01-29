@@ -4,11 +4,11 @@
     <div class="card mb-4 shadow" style="margin-top: 1.5rem;">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <h4>Novo Trabalho Extra</h4>
-            <a href="{{ route('extras.index') }}" class="btn btn-outline-light btn-sm"><i
+            <a href="{{ route('admin.extras.index') }}" class="btn btn-outline-light btn-sm"><i
                     class="fas fa-arrow-left"></i>Voltar</a>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ route('extras.store') }}" id="jobForm">
+            <form method="POST" action="{{ route('admin.extras.store') }}" id="jobForm">
                 @csrf
 
                 {{-- Compact fields in one row --}}
@@ -76,7 +76,7 @@
                 selectedTable = document.querySelector('#selectedTable tbody');
             let selectedEmployees = {};
 
-            const searchUrl = "{{ route('extras.searchEmployee') }}";
+            const searchUrl = "{{ route('admin.extras.searchEmployee') }}";
 
             employeeSearch.addEventListener('input', async () => {
                 const query = employeeSearch.value.trim();

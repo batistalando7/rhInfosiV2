@@ -188,7 +188,7 @@
             </div> --}}
 
 <!-- Responsável -->
-<h5 class="mb-3 mt-4">Responsável</h5>
+{{-- <h5 class="mb-3 mt-4">Responsável</h5>
 <div class="row g-3 mb-3">
     <div class="col-md-4">
         <div class="form-floating">
@@ -211,7 +211,7 @@
             <label>Email</label>
         </div>
     </div>
-</div>
+</div> --}}
 
 {{-- <div class="row g-3 mt-3">
                 <div class="col-md-6">

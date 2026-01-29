@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\ResourceAssignmentController;
 use App\Http\Controllers\Admin\EmployeeHistoryController;
 use App\Http\Controllers\Admin\EmployeeTypeController;
+use App\Http\Controllers\Admin\ExtraJobController;
 use App\Http\Controllers\Admin\HeritageTypeController;
 use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\MaintenanceController;
@@ -280,19 +281,24 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::delete("/apagar/{id}", [HeritageTypeController::class, "destroy"])->name("heritageTypes.destroy");
     });
     // end Tipos de Património
-    
-    // start 
-    Route::prefix('tipos-patrimonio')->group(function () {
 
-        Route::get("/listar", [HeritageTypeController::class, "index"])->name("heritageTypes.index");
-        Route::get("/criar", [HeritageTypeController::class, "create"])->name("heritageTypes.create");
-        Route::post("/salvar", [HeritageTypeController::class, "store"])->name("heritageTypes.store");
-        Route::get("/detalhes/{id}", [HeritageTypeController::class, "show"])->name("heritageTypes.show");
-        Route::get("/editar/{id}/edit", [HeritageTypeController::class, "edit"])->name("heritageTypes.edit");
-        Route::put("/atualizar/{id}", [HeritageTypeController::class, "update"])->name("heritageTypes.update");
-        Route::delete("/apagar/{id}", [HeritageTypeController::class, "destroy"])->name("heritageTypes.destroy");
+    // start Trabalhos extras(ExtraJobs)
+    Route::prefix('trabalhos-extras')->group(function () {
+
+        Route::get("/listar", [ExtraJobController::class, "index"])->name("extras.index");
+        Route::get("/criar", [ExtraJobController::class, "create"])->name("extras.create");
+        Route::post("/salvar", [ExtraJobController::class, "store"])->name("extras.store");
+        Route::get("/detalhes/{id}", [ExtraJobController::class, "show"])->name("extras.show");
+        Route::get("/editar/{id}/edit", [ExtraJobController::class, "edit"])->name("extras.edit");
+        Route::put("/atualizar/{id}", [ExtraJobController::class, "update"])->name("extras.update");
+        Route::delete("/apagar/{id}", [ExtraJobController::class, "destroy"])->name("extras.destroy");
+
+        //filtros
+        Route::get("extras/pdf", [ExtraJobController::class, "pdfAll"])->name("extras.pdfAll");
+        Route::get("extras/{id}/pdf", [ExtraJobController::class, "pdfShow"])->whereNumber("id")->name("extras.pdfShow");
+        Route::get("extras/search-employee", [ExtraJobController::class, "searchEmployee"])->name("extras.searchEmployee");
     });
-    // end 
+    // end Trabalhos extras(ExtraJobs)
 
     // start users routes
     Route::prefix('utilizadores')->group(function () {
@@ -313,12 +319,12 @@ Route::middleware('auth')->name('admin.')->group(function () {
 
 
     // start Administrative Area (RH) routes
-        Route::prefix('area-administrativa')->group(function () {
+    Route::prefix('area-administrativa')->group(function () {
         Route::get('/ferias-pendentes', [App\Http\Controllers\AdministrativeAreaController::class, 'pendingVacations'])->name('hr.pendingVacations');
         Route::post('/encaminhar-ferias/{id}', [App\Http\Controllers\AdministrativeAreaController::class, 'forwardVacation'])->name('hr.forwardVacation');
     });
 
-    
+
     // start Director General routes
     Route::prefix('direcao-geral')->group(function () {
         Route::get('/ferias-pendentes', [App\Http\Controllers\DirectorGeneralController::class, 'pendingVacations'])->name('director.pendingVacations');
@@ -326,6 +332,4 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::post('/rejeitar-ferias/{id}', [App\Http\Controllers\DirectorGeneralController::class, 'rejectVacation'])->name('director.rejectVacation');
         Route::get('/download-ferias-assinada/{id}', [App\Http\Controllers\VacationRequestController::class, 'downloadSignedPdf'])->name('director.downloadSignedPdf');
     });
-
-
 });

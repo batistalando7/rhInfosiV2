@@ -198,9 +198,9 @@
                     </a>
                     <div class="collapse" id="collapseExtras">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('extras.index') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.extras.index') }}"><i
                                         class="fas fa-eye me-2"></i>Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ route('extras.create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.extras.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
@@ -352,7 +352,7 @@
 {{-- Módulo de Património (Heritage) --}}
 <li class="nav-item has-submenu">
     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseHeritage" aria-expanded="false" aria-controls="collapseHeritage">
-        <i class="fas fa-building me-2"></i> Património (Heritage) <i class="fas fa-chevron-down ms-auto"></i>
+        <i class="fas fa-building me-2"></i> Património  <i class="fas fa-chevron-down ms-auto"></i>
     </a>
     <div class="collapse" id="collapseHeritage">
         <ul class="submenu">
@@ -402,7 +402,7 @@
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseDrivers"
                         aria-expanded="false" aria-controls="collapseDrivers">
-                        <i class="fas fa-user-tie me-2"></i> Atribuir Veículos <i class="fas fa-chevron-down ms-auto"></i>
+                        <i class="fas fa-user-tie me-2"></i> Atribuir Meios <i class="fas fa-chevron-down ms-auto"></i>
                     </a>
                     <div class="collapse" id="collapseDrivers">
                         <ul class="submenu">
