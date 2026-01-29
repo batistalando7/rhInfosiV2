@@ -43,12 +43,12 @@ class ExtraJobController extends Controller
         $jobs = ExtraJob::with('employees')
                         ->orderByDesc('created_at')
                         ->get();
-        return view('Extras.index', compact('jobs'));
+        return view('admin.extraWork.list.index', compact('jobs'));
     }
 
     public function create()
     {
-        return view('Extras.create');
+        return view('admin.extraWork.create.index');
     }
 
     public function searchEmployee(Request $request)
@@ -166,20 +166,20 @@ class ExtraJobController extends Controller
             ]);
         }
 
-        return redirect()->route('extras.index')
+        return redirect()->route('admin.extras.index')
                          ->with('msg','Trabalho Extra criado com sucesso.');
     }
 
     public function show($id)
     {
         $job = ExtraJob::with('employees')->findOrFail($id);
-        return view('Extras.show', compact('job'));
+        return view('admin.extraWork.details.index', compact('job'));
     }
 
     public function edit($id)
     {
         $job = ExtraJob::with('employees')->findOrFail($id);
-        return view('Extras.edit', compact('job'));
+        return view('admin.extraWork.edit.index', compact('job'));
     }
 
     public function update(Request $request, $id)
@@ -267,29 +267,29 @@ class ExtraJobController extends Controller
             ]);
         }
 
-        return redirect()->route('extras.index')
+        return redirect()->route('admin.extras.index')
                          ->with('msg','Trabalho Extra atualizado.');
     }
 
     public function destroy($id)
     {
         ExtraJob::destroy($id);
-        return redirect()->route('extras.index')
+        return redirect()->route('admin.extraWork.index')
                          ->with('msg','Trabalho Extra removido.');
     }
 
     public function pdfAll()
     {
         $jobs = ExtraJob::with('employees')->orderByDesc('created_at')->get();
-        $pdf  = PDF::loadView('Extras.extraJobs_pdf', compact('jobs'))
+        $pdf  = PDF::loadView('pdf.extraWork.extraJobs_pdf', compact('jobs'))
                    ->setPaper('a4','landscape');
-        return $pdf->stream('ExtraJobs_All.pdf');
+        return $pdf->stream('ExtraJobsAll.pdf');
     }
 
     public function pdfShow($id)
     {
         $job = ExtraJob::with('employees')->findOrFail($id);
-        $pdf = PDF::loadView('Extras.extraJob_pdf', compact('job'))
+        $pdf = PDF::loadView('pdf.extraWork.extraJobPdf', compact('job'))
                   ->setPaper('a4','landscape');
         return $pdf->stream("ExtraJob_{$job->id}.pdf");
     }

@@ -353,12 +353,12 @@ Route::middleware(["auth"])->group(function () {
      Route::resource("secondment", SecondmentController::class);
 
 
-     // ====================== Trabalhos extras(ExtraJobs) ======================
+    /*  // ====================== Trabalhos extras(ExtraJobs) ======================
      Route::get("extras/pdf", [ExtraJobController::class, "pdfAll"])->name("extras.pdfAll");
      Route::get("extras/{id}/pdf", [ExtraJobController::class, "pdfShow"])->whereNumber("id")->name("extras.pdfShow");
      Route::get("extras/search-employee", [ExtraJobController::class, "searchEmployee"])->name("extras.searchEmployee");
      Route::resource("extras", ExtraJobController::class)->where(["extras" => "[0-9]+"]);
-     Route::get("extras/{id}/delete", [ExtraJobController::class, "destroy"]);
+     Route::get("extras/{id}/delete", [ExtraJobController::class, "destroy"]); */
 
 
 /*      // ====================== Reforma (Retirement) ======================

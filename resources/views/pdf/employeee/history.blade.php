@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,7 +70,8 @@
             margin-top: 10px;
         }
 
-        table th, table td {
+        table th,
+        table td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
@@ -80,28 +82,36 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
             <div class="photo">
-                <img src="{{ asset('frontend/images/departments/' . $employee->photo)}}" alt="Foto do Funcionário">
+                <img src="{{ url('frontend/images/departments/' . $employee->photo) }}" alt="Foto do Funcionário">
             </div>
             <div class="personal-data">
-                <h1>Nome do Funcionário: João Silva</h1>
-                <p><strong>Data de Nascimento:</strong> 15/05/1985</p>
-                <p><strong>Endereço:</strong> Rua Exemplo, 123, Luanda, Angola</p>
-                <p><strong>Contato:</strong> +244 999 999 999</p>
-                <p><strong>Email:</strong> joao.silva@empresa.com</p>
-                <p><strong>Data de Admissão:</strong> 01/01/2010</p>
+                <h1>Nome do Funcionário: {{ $employee->fullName }}</h1>
+                <p><strong>Data de Nascimento:</strong>
+                    {{ \Carbon\Carbon::parse($employee->birth_date)->format('d/m/Y') }}</p>
+                <p><strong>Endereço:</strong> {{ $employee->address }}</p>
+                <p><strong>Contato:</strong> {{ $employee->mobile }}</p>
+                <p><strong>Email:</strong> {{ $employee->email }}</p>
+                <p><strong>Data de Admissão:</strong>
+                    {{ \Carbon\Carbon::parse($employee->entry_date)->format('d/m/Y') }}</p>
             </div>
         </div>
-
+        {{-- <h1>{{ $employee->department }}</h1> --}}
         <div class="section">
             <h2>Departamento Atual e Histórico</h2>
             <ul>
-                <li><strong>Departamento Atual:</strong> Recursos Humanos (desde 01/01/2020)</li>
-                <li>Departamento de Vendas (01/01/2015 a 31/12/2019)</li>
-                <li>Departamento de Marketing (01/01/2010 a 31/12/2014)</li>
+                <li><strong>Departamento Atual:</strong> {{ $employee->department->title ?? '-' }} (desde 01/01/2020)
+                </li>
+                {{-- @if ($employee->mmobility)
+                    @foreach ($employee->department as $item)
+                    <li>{{ $item->title }} ({{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }} )</li>
+                    @endforeach
+                @endif --}}
+                {{-- <li>Departamento de Marketing (01/01/2010 a 31/12/2014)</li> --}}
             </ul>
         </div>
 
@@ -135,8 +145,14 @@
             <h2>Mobilidade</h2>
             <p>Transferências internas ou mudanças de localização:</p>
             <ul>
-                <li>Transferido para filial em Luanda (01/01/2015)</li>
-                <li>Mudança para sede principal (01/01/2020)</li>
+                @if (isset($employee->mobilities))
+                    @foreach ($employee->mobilities as $item)
+                        <li>Transferido de {{ $item->oldDepartment->title }} para {{ $item->newDepartment->title }}
+                            ({{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }})</li>
+                    @endforeach
+                @else
+                    <li>Nenhuma mobilidade registrada</li>
+                @endif
             </ul>
         </div>
 
@@ -144,40 +160,56 @@
             <h2>Destacamentos</h2>
             <p>Períodos de destacamento para projetos especiais:</p>
             <ul>
-                <li>Projeto Internacional: 3 meses (01/04/2017 a 30/06/2017)</li>
-                <li>Destacamento Regional: 1 mês (15/09/2021 a 14/10/2021)</li>
+                @if (isset($employee->secondments))
+                    @foreach ($employee->secondments as $item)
+                        <li>Destaque para {{ $item->institution }}
+                            ({{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }})
+                    @endforeach
+                @else
+                    <li>Nenhum destaque registrado</li>
+                @endif
+                {{-- <li>Projeto Internacional: 3 meses (01/04/2017 a 30/06/2017)</li>
+                <li>Destacamento Regional: 1 mês (15/09/2021 a 14/10/2021)</li> --}}
             </ul>
         </div>
 
         <div class="section">
             <h2>Trabalhos Extras</h2>
             <ul>
-                <li>Horas extras: 50 horas em 2023</li>
-                <li>Projetos adicionais: Consultoria interna em 2022 (20 horas)</li>
+                @if ($employee->extraJobs)
+                    @foreach ($employee->extraJobs as $item)
+                        <li>{{ $item->title }} ({{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }})</li>
+                        <small>Recebeu: {{ number_format($item->pivot->assignedValue, 2, ',', '.') }} Kz</small>
+                    @endforeach
+                @else
+                @endif
+                {{-- <li>Horas extras: 50 horas em 2023</li>
+                <li>Projetos adicionais: Consultoria interna em 2022 (20 horas)</li> --}}
             </ul>
         </div>
 
         <div class="section">
             <h2>Mapa de Efetividade (Faltas e Presenças)</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Ano</th>
-                        <th>Dias Trabalhados</th>
-                        <th>Faltas Justificadas</th>
-                        <th>Faltas Injustificadas</th>
-                        <th>Presenças Totais</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>2023</td>
-                        <td>250</td>
-                        <td>5</td>
-                        <td>0</td>
-                        <td>255</td>
-                    </tr>
-                    <tr>
+            @if ($employee->records)
+                <table>
+                    <thead>
+                        <tr>
+                            {{-- <th>Ano</th> --}}
+                            <th>Dias Trabalhados</th>
+                            <th>Faltas Justificadas</th>
+                            <th>Faltas Injustificadas</th>
+                            <th>Presenças Totais</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                {{-- <td>NA</td> --}}
+                                <td>{{ $employee->totalWeekDays }}</td>
+                                <td>{{ $employee->justifiedDays}}</td>
+                                <td>{{ $employee->injustifiedDays}}</td>
+                                <td>{{ $employee->presences }}</td>
+                            </tr>
+                        {{-- <tr>
                         <td>2022</td>
                         <td>240</td>
                         <td>10</td>
@@ -190,10 +222,13 @@
                         <td>8</td>
                         <td>1</td>
                         <td>254</td>
-                    </tr>
-                    <!-- Adicione mais linhas conforme necessário para o período completo -->
-                </tbody>
-            </table>
+                    </tr> --}}
+                        <!-- Adicione mais linhas conforme necessário para o período completo -->
+                    </tbody>
+                </table>
+            @else
+                <li>Nenhuma informação registrado</li>
+            @endif
         </div>
 
         <div class="section">
@@ -203,4 +238,5 @@
         </div>
     </div>
 </body>
+
 </html>
