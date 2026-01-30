@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\LeaveRequest;
 use App\Models\LeaveType;
@@ -29,7 +30,7 @@ class LeaveRequestController extends Controller
 
         $data = $query->orderByDesc('id')->get();
 
-        return view('leaveRequest.index', [
+        return view('admin.leaveRequest.list.index', [
             'data'    => $data,
             'filters' => [
                 'startDate' => $request->startDate,
@@ -55,7 +56,7 @@ class LeaveRequestController extends Controller
 
         $filtered = $query->orderByDesc('id')->get();
 
-        $pdf = PDF::loadView('leaveRequest.leaveRequest_pdf', ['allLeaveRequests' => $filtered])
+        $pdf = PDF::loadView('pdf.leaveRequest.leaveRequestPdf', ['allLeaveRequests' => $filtered])
                   ->setPaper('a3', 'landscape');
 
         return $pdf->download('RelatorioPedidosLicenca_Filtrados.pdf');
@@ -74,10 +75,10 @@ class LeaveRequestController extends Controller
         $leaveTypes = LeaveType::all();
         if (in_array($user->role, ['admin', 'director', 'department_head'])) {
             $departments = Department::all();
-            return view('leaveRequest.create', compact('departments', 'leaveTypes'));
+            return view('admin.leaveRequest.create.index', compact('departments', 'leaveTypes'));
         } else {
             $employee = $user->employee;
-            return view('leaveRequest.createEmployee', compact('employee', 'leaveTypes'));
+            return view('admin.leaveRequest.createEmployee', compact('employee', 'leaveTypes'));
         }
     }
 
@@ -104,7 +105,7 @@ class LeaveRequestController extends Controller
         $currentDepartment = $employee->department;
         $departments = Department::all();
         $leaveTypes = LeaveType::all();
-        return view('leaveRequest.create', [
+        return view('admin.leaveRequest.create.index', [
             'departments'       => $departments,
             'leaveTypes'        => $leaveTypes,
             'employee'          => $employee,
@@ -129,14 +130,14 @@ class LeaveRequestController extends Controller
 
         LeaveRequest::create($data);
 
-        return redirect()->route('leaveRequest.index')
+        return redirect()->route('admin.leaveRequestes.index')
                          ->with('msg', 'Pedido de licença registrado com sucesso!');
     }
 
     public function show($id)
     {
         $data = LeaveRequest::with(['employee', 'department', 'leaveType'])->findOrFail($id);
-        return view('leaveRequest.show', compact('data'));
+        return view('admin.leaveRequest.details.index', compact('data'));
     }
 
     public function edit($id)
@@ -144,7 +145,7 @@ class LeaveRequestController extends Controller
         $data = LeaveRequest::findOrFail($id);
         $departments = Department::all();
         $leaveTypes = LeaveType::all();
-        return view('leaveRequest.edit', compact('data', 'departments', 'leaveTypes'));
+        return view('admin.leaveRequest.edit.index', compact('data', 'departments', 'leaveTypes'));
     }
 
     public function update(Request $request, $id)
@@ -157,14 +158,14 @@ class LeaveRequestController extends Controller
         ]);
         $leaveRequest = LeaveRequest::findOrFail($id);
         $leaveRequest->update($request->all());
-        return redirect()->route('leaveRequest.index')
+        return redirect()->route('admin.leaveRequestes.index')
                          ->with('msg', 'Pedido de licença atualizado com sucesso!');
     }
 
     public function destroy($id)
     {
         LeaveRequest::destroy($id);
-        return redirect()->route('leaveRequest.index');
+        return redirect()->back()->with('Eliminado com sucesso!');
     }
 
     /**
@@ -186,7 +187,7 @@ class LeaveRequestController extends Controller
 
         $allLeaveRequests = $query->orderByDesc('id')->get();
 
-        $pdf = PDF::loadView('leaveRequest.leaveRequest_pdf', compact('allLeaveRequests'))
+        $pdf = PDF::loadView('pdf.leaveRequest.leaveRequestPdf', compact('allLeaveRequests'))
                   ->setPaper('a3', 'landscape');
 
         $filename = 'RelatorioPedidosLicenca'

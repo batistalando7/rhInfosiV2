@@ -328,7 +328,7 @@
                                                     <div class="avatar-image">
                                                         <img src="{{ $head->photo ? asset('frontend/images/departments/' . $head->photo) : asset('public/assets/images/avatar/default.png') }}" alt="{{ $head->fullName ?? 'Sem Nome' }}" class="img-fluid" />
                                                     </div>
-                                                    <a href="{{ route('employeee.show', $head->id) }}">
+                                                    <a href="{{ route('admin.employeee.show', $head->id) }}">
                                                         <span class="d-block">{{ $head->fullName ?? 'Sem Nome' }}</span>
                                                         <span class="fs-12 d-block fw-normal text-muted">{{ $head->email ?? 'Sem Email' }}</span>
                                                     </a>

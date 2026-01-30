@@ -6,7 +6,7 @@
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <span><i class="fas fa-file-alt me-2"></i>Lista de Pedidos de Licença</span>
             <div>
-                <a href="{{ route('leaveRequest.pdfAll') }}" class="btn btn-outline-light btn-sm" title="Baixar PDF"
+                <a href="{{ route('admin.leaveRequestes.pdfAll') }}" class="btn btn-outline-light btn-sm" title="Baixar PDF"
                     target="_blank" rel="noopener noreferrer">
                     <i class="fas fa-file-pdf"></i> Baixar PDF (Todos)
                 </a>
@@ -15,21 +15,21 @@
                 @if (request()->filled('startDate') ||
                         request()->filled('endDate') ||
                         (request()->filled('status') && request('status') !== 'Todos'))
-                    <a href="{{ route('leaveRequest.pdfAll') }}?{{ http_build_query(request()->only(['startDate', 'endDate', 'status'])) }}"
+                    <a href="{{ route('admin.leaveRequestes.pdfAll') }}?{{ http_build_query(request()->only(['startDate', 'endDate', 'status'])) }}"
                         class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">
                         <i class="fas fa-file-pdf"></i> Baixar PDF (Filtrados)
                     </a>
                 @endif
 
 
-                <a href="{{ route('leaveRequest.create') }}" class="btn btn-outline-light btn-sm">
+                <a href="{{ route('admin.leaveRequestes.create') }}" class="btn btn-outline-light btn-sm">
                     <i class="fas fa-plus-circle"></i> Novo Pedido
                 </a>
             </div>
         </div>
 
         <div class="card-body">
-            <form method="GET" action="{{ route('leaveRequest.index') }}" class="row g-3 mb-4">
+            <form method="GET" action="{{ route('admin.leaveRequestes.index') }}" class="row g-3 mb-4">
                 <div class="col-md-3">
                     <div class="form-floating">
                         <input type="date" name="startDate" class="form-control" value="{{ request('startDate') }}">

@@ -28,14 +28,14 @@ class LeaveTypeController extends Controller
 
         LeaveType::create($request->only('name', 'description'));
 
-        return redirect()->route('admin.leaveType.index')
+        return redirect()->route('admin.leaveTypes.index')
                          ->with('msg', 'Tipo de licença criado com sucesso!');
     }
 
     public function show($id)
     {
         $data = LeaveType::findOrFail($id);
-        return view('admin.leaveType.show.index', compact('data'));
+        return view('admin.leaveType.details.index', compact('data'));
     }
 
     public function edit($id)

@@ -319,10 +319,10 @@ Route::middleware(["auth"])->group(function () {
      Route::resource("internEvaluation", InternEvaluationController::class);
 
 
-     // ====================== Mobilidade (Mobility) ======================
+     /* // ====================== Mobilidade (Mobility) ======================
      Route::get("mobility/pdf", [MobilityController::class, "pdfAll"])->name("mobility.pdfAll");
      Route::get("mobility/search-employee", [MobilityController::class, "searchEmployee"])->name("mobility.searchEmployee");
-     Route::resource("mobility", MobilityController::class);
+     Route::resource("mobility", MobilityController::class); */
 
 
 /*      // ====================== Tipos de Licença (LeaveType) ======================
@@ -330,12 +330,12 @@ Route::middleware(["auth"])->group(function () {
      Route::get("leaveType/{id}/delete", [LeaveTypeController::class, "destroy"]);
  */
 
-     // ====================== Pedido de Licença (LeaveRequest) ======================
+    /*  // ====================== Pedido de Licença (LeaveRequest) ======================
      Route::get("leaveRequest/searchEmployee", [LeaveRequestController::class, "searchEmployee"])->name("leaveRequest.searchEmployee");
      Route::get("leave-request/pdf-filtered", [LeaveRequestController::class, "pdfAll"])->name("leaveRequest.exportFilteredPDF");
      Route::get("leaveRequest/pdf", [LeaveRequestController::class, "pdfAll"])->name("leaveRequest.pdfAll");
      Route::resource("leaveRequest", LeaveRequestController::class);
-     Route::get("leaveRequest/{id}/delete", [LeaveRequestController::class, "destroy"]);
+     Route::get("leaveRequest/{id}/delete", [LeaveRequestController::class, "destroy"]); */
 
 
      // ====================== Pedido de Férias (Vacation Request) ======================
@@ -402,7 +402,7 @@ Route::middleware(["auth"])->group(function () {
           ->name("maintenance.delete");
  */
 
-     Route::resource("licenseCategories", LicenseCategoryController::class)
+     /* Route::resource("licenseCategories", LicenseCategoryController::class)
           ->names([
                "index"   => "licenseCategories.index",
                "create"  => "licenseCategories.create",
@@ -412,7 +412,7 @@ Route::middleware(["auth"])->group(function () {
                "update"  => "licenseCategories.update",
                "destroy" => "licenseCategories.destroy",
           ]);
-     Route::get("licenseCategories/{licenseCategory}/delete", [LicenseCategoryController::class, "destroy"])->name("licenseCategories.delete");
+     Route::get("licenseCategories/{licenseCategory}/delete", [LicenseCategoryController::class, "destroy"])->name("licenseCategories.delete"); */
      //  PDF Individual download
      Route::get("drivers/{driver}/pdf", [DriverController::class, "showPdf"])->name("drivers.showPdf");
      /* Route::get("vehicles/{vehicle}/pdf", [VehicleControll::class, "showPdf"])->name("vehicles.showPdf"); */

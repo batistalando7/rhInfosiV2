@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\LicenseCategory;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class LicenseCategoryController extends Controller
     public function index()
     {
         $categories = LicenseCategory::orderBy('name')->get();
-        return view('license_categories.index', compact('categories'));
+        return view('admin.licenseCategories.list.index', compact('categories'));
     }
 
     /**
@@ -21,7 +22,7 @@ class LicenseCategoryController extends Controller
      */
     public function create()
     {
-        return view('license_categories.create');
+        return view('admin.licenseCategories.create.index');
     }
 
     /**
@@ -37,7 +38,7 @@ class LicenseCategoryController extends Controller
         LicenseCategory::create($data);
 
         return redirect()
-            ->route('licenseCategories.index')
+            ->route('admin.licenseCategories.index')
             ->with('msg', 'Categoria criada com sucesso.');
     }
 
@@ -46,7 +47,7 @@ class LicenseCategoryController extends Controller
      */
     public function edit(LicenseCategory $licenseCategory)
     {
-        return view('license_categories.edit', compact('licenseCategory'));
+        return view('admin.licenseCategories.edit.index', compact('licenseCategory'));
     }
 
     /**
@@ -62,7 +63,7 @@ class LicenseCategoryController extends Controller
         $licenseCategory->update($data);
 
         return redirect()
-            ->route('licenseCategories.index')
+            ->route('admin.licenseCategories.index')
             ->with('msg', 'Categoria atualizada com sucesso.');
     }
 
@@ -73,8 +74,6 @@ class LicenseCategoryController extends Controller
     {
         $licenseCategory->delete();
 
-        return redirect()
-            ->route('licenseCategories.index')
-            ->with('msg', 'Categoria removida.');
+        return redirect()->back()->with('msg', 'Categoria removida.');
     }
 }

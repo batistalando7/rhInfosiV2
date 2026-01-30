@@ -28,10 +28,12 @@
             <!-- Painel -->
             <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Painel</li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i> Painel de Controle</a>
+                <a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i>
+                    Painel de Controle</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('frontend.index') }}" target="_blank"><i class="fas fa-globe me-2"></i> SITE</a>
+                <a class="nav-link" href="{{ route('frontend.index') }}" target="_blank"><i
+                        class="fas fa-globe me-2"></i> SITE</a>
             </li>
 
             @if ($role === 'admin' || $role === 'hr')
@@ -60,7 +62,8 @@
                     </a>
                     <div class="collapse" id="collapsePositions">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('admin.positions.index') }}"><i class="fas fa-eye me-2"></i> Ver
+                            <li><a class="nav-link" href="{{ route('admin.positions.index') }}"><i
+                                        class="fas fa-eye me-2"></i> Ver
                                     Todos</a></li>
                             <li><a class="nav-link" href="{{ route('admin.positions.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
@@ -74,7 +77,8 @@
                     </a>
                     <div class="collapse" id="collapseSpecialties">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('admin.specialties.index') }}"><i class="fas fa-eye me-2"></i> Ver
+                            <li><a class="nav-link" href="{{ route('admin.specialties.index') }}"><i
+                                        class="fas fa-eye me-2"></i> Ver
                                     Todos</a></li>
                             <li><a class="nav-link" href="{{ route('admin.specialties.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
@@ -89,7 +93,8 @@
                     </a>
                     <div class="collapse" id="collapseEmployeeType">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('admin.employeeTypes.index') }}"><i class="fas fa-eye me-2"></i> Ver
+                            <li><a class="nav-link" href="{{ route('admin.employeeTypes.index') }}"><i
+                                        class="fas fa-eye me-2"></i> Ver
                                     Todos</a></li>
                             <li><a class="nav-link" href="{{ route('admin.employeeTypes.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
@@ -235,7 +240,8 @@
                     </a>
                     <div class="collapse" id="collapseLeaveType">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('admin.leaveTypes.index') }}"><i class="fas fa-eye me-2"></i>Ver
+                            <li><a class="nav-link" href="{{ route('admin.leaveTypes.index') }}"><i
+                                        class="fas fa-eye me-2"></i>Ver
                                     Todos</a></li>
                             <li><a class="nav-link" href="{{ route('admin.leaveTypes.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
@@ -251,9 +257,9 @@
                     </a>
                     <div class="collapse" id="collapseLeaveRequest">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('leaveRequest') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.leaveRequestes.index') }}"><i
                                         class="fas fa-eye me-2"></i>Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.leaveRequestes.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
@@ -331,37 +337,46 @@
                     </div>
                 </li>
 
-{{-- Módulo de Infraestrutura (Material) --}}
-<li class="nav-item has-submenu">
-    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMaterial" aria-expanded="false" aria-controls="collapseMaterial">
-        <i class="fas fa-tools me-2"></i> Infraestrutura <i class="fas fa-chevron-down ms-auto"></i>
-    </a>
-    <div class="collapse" id="collapseMaterial">
-        <ul class="submenu">
-            <li><a class="nav-link" href="{{ route('materials.index') }}"><i class="fas fa-box me-2"></i> Materiais</a></li>
-            <li><a class="nav-link" href="{{ route('material-types.index') }}"><i class="fas fa-tags me-2"></i> Tipos de Material</a></li>
-            {{-- CORREÇÃO: As rotas devem ser materials.transactions.index, materials.transactions.in, etc. --}}
-            <li><a class="nav-link" href="{{ route('materials.transactions.index') }}"><i class="fas fa-history me-2"></i> Histórico</a></li>
-            <li><a class="nav-link" href="{{ route('materials.transactions.in') }}"><i class="fas fa-sign-in-alt me-2"></i> Registrar Entrada</a></li>
-            <li><a class="nav-link" href="{{ route('materials.transactions.out') }}"><i class="fas fa-sign-out-alt me-2"></i> Registrar Saída</a></li>
-        </ul>
-    </div>
-</li>
+                {{-- Módulo de Infraestrutura (Material) --}}
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMaterial"
+                        aria-expanded="false" aria-controls="collapseMaterial">
+                        <i class="fas fa-tools me-2"></i> Infraestrutura <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseMaterial">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ route('materials.index') }}"><i
+                                        class="fas fa-box me-2"></i> Materiais</a></li>
+                            <li><a class="nav-link" href="{{ route('material-types.index') }}"><i
+                                        class="fas fa-tags me-2"></i> Tipos de Material</a></li>
+                            {{-- CORREÇÃO: As rotas devem ser materials.transactions.index, materials.transactions.in, etc. --}}
+                            <li><a class="nav-link" href="{{ route('materials.transactions.index') }}"><i
+                                        class="fas fa-history me-2"></i> Histórico</a></li>
+                            <li><a class="nav-link" href="{{ route('materials.transactions.in') }}"><i
+                                        class="fas fa-sign-in-alt me-2"></i> Registrar Entrada</a></li>
+                            <li><a class="nav-link" href="{{ route('materials.transactions.out') }}"><i
+                                        class="fas fa-sign-out-alt me-2"></i> Registrar Saída</a></li>
+                        </ul>
+                    </div>
+                </li>
 
 
-{{-- Módulo de Património (Heritage) --}}
-<li class="nav-item has-submenu">
-    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseHeritage" aria-expanded="false" aria-controls="collapseHeritage">
-        <i class="fas fa-building me-2"></i> Património  <i class="fas fa-chevron-down ms-auto"></i>
-    </a>
-    <div class="collapse" id="collapseHeritage">
-        <ul class="submenu">
-            <li><a class="nav-link" href="{{ route('heritages.index') }}"><i class="fas fa-box me-2"></i> Patrimónios</a></li>
-            <li><a class="nav-link" href="{{ route('admin.heritageTypes.index') }}"><i class="fas fa-tags me-2"></i> Tipos de Património</a></li>
-            {{-- ROTAS DE TRANSAÇÃO (Histórico, Entrada, Saída) REMOVIDAS --}}
-        </ul>
-    </div>
-</li>
+                {{-- Módulo de Património (Heritage) --}}
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseHeritage"
+                        aria-expanded="false" aria-controls="collapseHeritage">
+                        <i class="fas fa-building me-2"></i> Património <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseHeritage">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ route('heritages.index') }}"><i
+                                        class="fas fa-box me-2"></i> Patrimónios</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.heritageTypes.index') }}"><i
+                                        class="fas fa-tags me-2"></i> Tipos de Património</a></li>
+                            {{-- ROTAS DE TRANSAÇÃO (Histórico, Entrada, Saída) REMOVIDAS --}}
+                        </ul>
+                    </div>
+                </li>
 
 
 
@@ -402,7 +417,8 @@
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseDrivers"
                         aria-expanded="false" aria-controls="collapseDrivers">
-                        <i class="fas fa-user-tie me-2"></i> Atribuir Meios <i class="fas fa-chevron-down ms-auto"></i>
+                        <i class="fas fa-user-tie me-2"></i> Atribuir Meios <i
+                            class="fas fa-chevron-down ms-auto"></i>
                     </a>
                     <div class="collapse" id="collapseDrivers">
                         <ul class="submenu">
@@ -466,7 +482,8 @@
                     </a>
                     <div class="collapse" id="collapseUsers">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('admin.users.index') }}"><i class="fas fa-eye me-2"></i>Ver
+                            <li><a class="nav-link" href="{{ route('admin.users.index') }}"><i
+                                        class="fas fa-eye me-2"></i>Ver
                                     Todos</a></li>
                             <li><a class="nav-link" href="{{ route('admin.users.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
@@ -484,7 +501,8 @@
                     </a>
                     <div class="collapse" id="collapseDept">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('admin.department.index') }}"><i class="fas fa-eye me-2"></i>Ver
+                            <li><a class="nav-link" href="{{ route('admin.department.index') }}"><i
+                                        class="fas fa-eye me-2"></i>Ver
                                     Todos</a></li>
                             <li><a class="nav-link" href="{{ route('admin.department.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
@@ -498,9 +516,9 @@
                     </a>
                     <div class="collapse" id="collapsePositions">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('positions') }}"><i class="fas fa-eye me-2"></i>Ver
+                            <li><a class="nav-link" href="{{ route('admin.positions.index') }}"><i class="fas fa-eye me-2"></i>Ver
                                     Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('positions/create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.positions.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
@@ -513,9 +531,9 @@
                     </a>
                     <div class="collapse" id="collapseSpecialties">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('specialties') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.specialties.index') }}"><i
                                         class="fas fa-eye me-2"></i>Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('specialties/create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.specialties.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
@@ -535,7 +553,8 @@
                     </a>
                     <div class="collapse" id="collapseEmp">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('admin.employeee.index') }}"><i class="fas fa-eye me-2"></i>Ver
+                            <li><a class="nav-link" href="{{ route('admin.employeee.index') }}"><i
+                                        class="fas fa-eye me-2"></i>Ver
                                     Todos</a></li>
                             <li><a class="nav-link" href="{{ route('admin.employeee.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
@@ -573,9 +592,9 @@
                     </a>
                     <div class="collapse" id="collapseLeaveRequest">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('leaveRequest') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.leaveRequestes.index') }}"><i
                                         class="fas fa-eye me-2"></i>Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.leaveRequestes.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
@@ -588,9 +607,9 @@
                     </a>
                     <div class="collapse" id="collapseMobility">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('mobility') }}"><i class="fas fa-eye me-2"></i>Ver
+                            <li><a class="nav-link" href="{{ route('admin.mobilities.index') }}"><i class="fas fa-eye me-2"></i>Ver
                                     Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('mobility/create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.mobilities.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
@@ -636,7 +655,8 @@
                 </li>
 
                 <!-- Área Administrativa (RH) -->
-                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Área Administrativa (RH)</li>
+                <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Área
+                    Administrativa (RH)</li>
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#hrMenu"
                         aria-expanded="false" aria-controls="hrMenu">
@@ -655,7 +675,8 @@
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#directorMenu"
                         aria-expanded="false" aria-controls="directorMenu">
-                        <i class="fas fa-user-tie me-2"></i> Portal Direção <i class="fas fa-chevron-down ms-auto"></i>
+                        <i class="fas fa-user-tie me-2"></i> Portal Direção <i
+                            class="fas fa-chevron-down ms-auto"></i>
                     </a>
                     <div class="collapse" id="directorMenu">
                         <ul class="submenu">
@@ -730,9 +751,9 @@
                     </a>
                     <div class="collapse" id="collapseLeaveRequest">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('leaveRequest') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.leaveRequestes.index') }}"><i
                                         class="fas fa-eye me-2"></i>Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('leaveRequest/create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.leaveRequestes.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>

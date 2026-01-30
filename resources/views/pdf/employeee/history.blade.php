@@ -136,8 +136,15 @@
         <div class="section">
             <h2>Licenças</h2>
             <ul>
-                <li>Licença Médica: 10 dias (05/03/2022 a 14/03/2022)</li>
-                <li>Licença Paternidade: 5 dias (20/11/2018 a 24/11/2018)</li>
+                @if(isset($employee->leaveRequest))
+                @foreach ($employee->leaveRequest as $item)
+                    <li>Licença {{$item->leaveType->name}}: {{ $item->duration  }} dias</li>
+                @endforeach
+                @else
+                <li>nenhuma informação registrada</li>
+                @endif
+                {{-- <li>Licença Médica: 10 dias (05/03/2022 a 14/03/2022)</li>
+                <li>Licença Paternidade: 5 dias (20/11/2018 a 24/11/2018)</li> --}}
             </ul>
         </div>
 
@@ -148,7 +155,8 @@
                 @if (isset($employee->mobilities))
                     @foreach ($employee->mobilities as $item)
                         <li>Transferido de {{ $item->oldDepartment->title }} para {{ $item->newDepartment->title }}
-                            ({{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }})</li>
+                            ({{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }})
+                        </li>
                     @endforeach
                 @else
                     <li>Nenhuma mobilidade registrada</li>
@@ -202,13 +210,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                            <tr>
-                                {{-- <td>NA</td> --}}
-                                <td>{{ $employee->totalWeekDays }}</td>
-                                <td>{{ $employee->justifiedDays}}</td>
-                                <td>{{ $employee->injustifiedDays}}</td>
-                                <td>{{ $employee->presences }}</td>
-                            </tr>
+                        <tr>
+                            {{-- <td>NA</td> --}}
+                            <td>{{ $employee->totalWeekDays }}</td>
+                            <td>{{ $employee->justifiedDays }}</td>
+                            <td>{{ $employee->injustifiedDays }}</td>
+                            <td>{{ $employee->presences }}</td>
+                        </tr>
                         {{-- <tr>
                         <td>2022</td>
                         <td>240</td>
@@ -233,8 +241,12 @@
 
         <div class="section">
             <h2>Último Salário Pago</h2>
-            <p><strong>Valor:</strong> 5.000.000 AOA</p>
-            <p><strong>Data do Pagamento:</strong> 31/12/2023</p>
+            @if ($employee->salaryPayments)
+                @foreach ($employee->salaryPayments as $p)
+                    <p><strong>Valor:</strong> {{ number_format($p->salaryAmount,2,',','.') }}</p>
+                    <p><strong>Data do Pagamento:</strong> {{ \Carbon\Carbon::parse($p->workMonth)->translatedFormat('F/Y') }}</p>
+                @endforeach
+            @endif
         </div>
     </div>
 </body>
