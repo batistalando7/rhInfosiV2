@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Mobility;
 use App\Models\Employeee;
@@ -24,14 +25,14 @@ class MobilityController extends Controller
 
     $data = $query->orderBy('created_at','desc')->get();
 
-    return view('mobility.index', compact('data'));
+    return view('admin.mobility.list.index', compact('data'));
 }
 
 
     public function create()
     {
         $departments = Department::all();
-        return view('mobility.create', compact('departments'));
+        return view('admin.mobility.create.index', compact('departments'));
     }
 
     /**
@@ -59,7 +60,7 @@ class MobilityController extends Controller
         $oldDepartment = $employee->department;
         $departments = Department::all();
 
-        return view('mobility.create', [
+        return view('admin.mobility.create.index', [
             'departments'   => $departments,
             'employee'      => $employee,
             'oldDepartment' => $oldDepartment,
@@ -99,7 +100,7 @@ class MobilityController extends Controller
         $newDepartment = Department::find($request->newDepartmentId);
         Mail::to($employee->email)->send(new NewMobilityNotification($employee, $oldDepartment, $newDepartment, $request->causeOfMobility));
 
-        return redirect()->route('mobility.index')
+        return redirect()->route('admin.mobilities.index')
                          ->with('msg', 'Mobilidade registrada com sucesso e e-mail enviado!');
     }
 
@@ -109,7 +110,7 @@ class MobilityController extends Controller
                                 ->orderByDesc('id')
                                 ->get();
 
-        $pdf = PDF::loadView('mobility.mobility_pdf', compact('allMobility'))
+        $pdf = PDF::loadView('pdf.mobility.mobilityPdf', compact('allMobility'))
                   ->setPaper('a3', 'portrait');
 
         return $pdf->stream('RelatorioMobilidades.pdf');
@@ -118,6 +119,6 @@ class MobilityController extends Controller
     public function destroy($id)
     {
         Mobility::destroy($id);
-        return redirect()->route('mobility.index');
+        return redirect()->route('admin.mobilities.index');
     }
 }

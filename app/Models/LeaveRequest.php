@@ -34,4 +34,12 @@ class LeaveRequest extends Model
     {
         return $this->belongsTo(LeaveType::class, 'leaveTypeId');
     }
+    
+    /* start Função para calcular o intervalo entre as data leave start e leave end */
+    public function getDurationAttribute()
+    {
+        return \Carbon\Carbon::parse($this->leaveStart)
+            ->diffInDays($this->leaveEnd) + 1;
+    }
+    /* start Função para calcular o intervalo entre as data leave start e leave end */
 }

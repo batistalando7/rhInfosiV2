@@ -15,8 +15,11 @@ use App\Http\Controllers\Admin\EmployeeHistoryController;
 use App\Http\Controllers\Admin\EmployeeTypeController;
 use App\Http\Controllers\Admin\ExtraJobController;
 use App\Http\Controllers\Admin\HeritageTypeController;
+use App\Http\Controllers\Admin\LeaveRequestController;
 use App\Http\Controllers\Admin\LeaveTypeController;
+use App\Http\Controllers\Admin\LicenseCategoryController;
 use App\Http\Controllers\Admin\MaintenanceController;
+use App\Http\Controllers\Admin\MobilityController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\SpecialtyController;
 use App\Http\Controllers\Admin\StatuteController;
@@ -281,6 +284,23 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::delete("/apagar/{id}", [HeritageTypeController::class, "destroy"])->name("heritageTypes.destroy");
     });
     // end Tipos de Património
+   
+    // start Mobilidade (Mobility)
+    Route::prefix('mobilidade')->group(function () {
+
+        Route::get("/listar", [MobilityController::class, "index"])->name("mobilities.index");
+        Route::get("/criar", [MobilityController::class, "create"])->name("mobilities.create");
+        Route::post("/salvar", [MobilityController::class, "store"])->name("mobilities.store");
+        Route::get("/detalhes/{id}", [MobilityController::class, "show"])->name("mobilities.show");
+        Route::get("/editar/{id}/edit", [MobilityController::class, "edit"])->name("mobilities.edit");
+        Route::put("/atualizar/{id}", [MobilityController::class, "update"])->name("mobilities.update");
+        Route::delete("/apagar/{id}", [MobilityController::class, "destroy"])->name("mobilities.destroy");
+    });
+
+    //filtros
+     Route::get("/pdf", [MobilityController::class, "pdfAll"])->name("mobilities.pdfAll");
+     Route::get("/search-employee", [MobilityController::class, "searchEmployee"])->name("mobilities.searchEmployee");
+    // end Mobilidade (Mobility)
 
     // start Trabalhos extras(ExtraJobs)
     Route::prefix('trabalhos-extras')->group(function () {
@@ -294,11 +314,43 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::delete("/apagar/{id}", [ExtraJobController::class, "destroy"])->name("extras.destroy");
 
         //filtros
-        Route::get("extras/pdf", [ExtraJobController::class, "pdfAll"])->name("extras.pdfAll");
-        Route::get("extras/{id}/pdf", [ExtraJobController::class, "pdfShow"])->whereNumber("id")->name("extras.pdfShow");
-        Route::get("extras/search-employee", [ExtraJobController::class, "searchEmployee"])->name("extras.searchEmployee");
+        Route::get("/pdf", [ExtraJobController::class, "pdfAll"])->name("extras.pdfAll");
+        Route::get("/{id}/pdf", [ExtraJobController::class, "pdfShow"])->whereNumber("id")->name("extras.pdfShow");
+        Route::get("/search-employee", [ExtraJobController::class, "searchEmployee"])->name("extras.searchEmployee");
     });
     // end Trabalhos extras(ExtraJobs)
+
+    // start categoria de Licença (LeaveRequest) 
+    Route::prefix('categoria-licenca')->group(function () {
+
+        Route::get("/listar", [LicenseCategoryController::class, "index"])->name("licenseCategories.index");
+        Route::get("/criar", [LicenseCategoryController::class, "create"])->name("licenseCategories.create");
+        Route::post("/salvar", [LicenseCategoryController::class, "store"])->name("licenseCategories.store");
+        Route::get("/detalhes/{id}", [LicenseCategoryController::class, "show"])->name("licenseCategories.show");
+        Route::get("/editar/{id}/edit", [LicenseCategoryController::class, "edit"])->name("licenseCategories.edit");
+        Route::put("/atualizar/{id}", [LicenseCategoryController::class, "update"])->name("licenseCategories.update");
+        Route::delete("/apagar/{id}", [LicenseCategoryController::class, "destroy"])->name("licenseCategories.destroy");
+
+    });
+    // end Pedido de Licença (LeaveRequest) 
+
+    // start Pedido de Licença (LeaveRequest) 
+    Route::prefix('pedido-licenca')->group(function () {
+
+        Route::get("/listar", [LeaveRequestController::class, "index"])->name("leaveRequestes.index");
+        Route::get("/criar", [LeaveRequestController::class, "create"])->name("leaveRequestes.create");
+        Route::post("/salvar", [LeaveRequestController::class, "store"])->name("leaveRequestes.store");
+        Route::get("/detalhes/{id}", [LeaveRequestController::class, "show"])->name("leaveRequestes.show");
+        Route::get("/editar/{id}/edit", [LeaveRequestController::class, "edit"])->name("leaveRequestes.edit");
+        Route::put("/atualizar/{id}", [LeaveRequestController::class, "update"])->name("leaveRequestes.update");
+        Route::delete("/apagar/{id}", [LeaveRequestController::class, "destroy"])->name("leaveRequestes.destroy");
+
+        //filtros
+        Route::get("leaveRequest/searchEmployee", [LeaveRequestController::class, "searchEmployee"])->name("leaveRequestes.searchEmployee");
+        Route::get("leave-request/pdf-filtered", [LeaveRequestController::class, "pdfAll"])->name("leaveRequestes.exportFilteredPDF");
+        Route::get("leaveRequest/pdf", [LeaveRequestController::class, "pdfAll"])->name("leaveRequestes.pdfAll");
+    });
+    // end Pedido de Licença (LeaveRequest) 
 
     // start users routes
     Route::prefix('utilizadores')->group(function () {
