@@ -339,11 +339,11 @@
 
                 {{-- Módulo de fornecedor (Material) --}}
                 <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMaterial"
-                        aria-expanded="false" aria-controls="collapseMaterial">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSupplier"
+                        aria-expanded="false" aria-controls="collapseSupplier">
                         <i class="fas fa-box me-2"></i> Fornecedor <i class="fas fa-chevron-down ms-auto"></i>
                     </a>
-                    <div class="collapse" id="collapseMaterial">
+                    <div class="collapse" id="collapseSupplier">
                         <ul class="submenu">
                             <li><a class="nav-link" href="{{ route('admin.suppliers.index') }}"><i
                                         class="fas fa-eye me-2"></i> Lista</a></li>
@@ -372,21 +372,21 @@
                     </a>
                     <div class="collapse" id="collapseMaterial">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('admin.suppliers.index') }}"><i
+                           {{-- <li><a class="nav-link" href="{{ route('admin.suppliers.index') }}"><i
                                         class="fas fa-box me-2"></i> Entrada de Material</a></li>
                             <li><a class="nav-link" href="{{ route('admin.suppliers.create') }}"><i
                                         class="fas fa-box me-2"></i> Saída de Material</a></li>
-                            {{-- <li><a class="nav-link" href="{{ route('materials.index') }}"><i
+                             <li><a class="nav-link" href="{{ route('materials.index') }}"><i
                                         class="fas fa-box me-2"></i> Materiais</a></li>
                             <li><a class="nav-link" href="{{ route('material-types.index') }}"><i
                                         class="fas fa-tags me-2"></i> Tipos de Material</a></li> --}}
                             {{-- CORREÇÃO: As rotas devem ser materials.transactions.index, materials.transactions.in, etc. --}}
                             {{-- <li><a class="nav-link" href="{{ route('materials.transactions.index') }}"><i
-                                        class="fas fa-history me-2"></i> Histórico</a></li>
+                                        class="fas fa-history me-2"></i> Histórico</a></li> --}}
                             <li><a class="nav-link" href="{{ route('materials.transactions.in') }}"><i
                                         class="fas fa-sign-in-alt me-2"></i> Registrar Entrada</a></li>
                             <li><a class="nav-link" href="{{ route('materials.transactions.out') }}"><i
-                                        class="fas fa-sign-out-alt me-2"></i> Registrar Saída</a></li> --}}
+                                        class="fas fa-sign-out-alt me-2"></i> Registrar Saída</a></li>
                         </ul>
                     </div>
                 </li>

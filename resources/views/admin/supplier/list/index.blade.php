@@ -37,8 +37,12 @@
                                     title="Ver"><i class="fas fa-eye"></i></a>
                                 <a href="{{ route('admin.suppliers.edit', $item->id) }}" class="btn btn-sm btn-warning"
                                     title="Editar"><i class="fas fa-pencil"></i></a>
-                                <a href="#" data-url="{{ route('admin.suppliers.destroy', $item->id) }}"
-                                    class="btn btn-sm btn-danger delete-btn" title="Remover"><i class="fas fa-trash"></i></a>
+                                <form action="{{ route('admin.suppliers.destroy', $item->id) }}">
+                                    @csrf
+                                    @method("DELETE")
+                                    <button
+                                    class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                </form>
                             </td>
                         </tr>
                     @empty
