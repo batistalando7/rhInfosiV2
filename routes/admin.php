@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\MobilityController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\SpecialtyController;
 use App\Http\Controllers\Admin\StatuteController;
+use App\Http\Controllers\Admin\SupplierController;
 
 Route::middleware('auth')->name('admin.')->group(function () {
 
@@ -284,7 +285,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::delete("/apagar/{id}", [HeritageTypeController::class, "destroy"])->name("heritageTypes.destroy");
     });
     // end Tipos de Património
-   
+
     // start Mobilidade (Mobility)
     Route::prefix('mobilidade')->group(function () {
 
@@ -298,8 +299,8 @@ Route::middleware('auth')->name('admin.')->group(function () {
     });
 
     //filtros
-     Route::get("/pdf", [MobilityController::class, "pdfAll"])->name("mobilities.pdfAll");
-     Route::get("/search-employee", [MobilityController::class, "searchEmployee"])->name("mobilities.searchEmployee");
+    Route::get("/pdf", [MobilityController::class, "pdfAll"])->name("mobilities.pdfAll");
+    Route::get("/search-employee", [MobilityController::class, "searchEmployee"])->name("mobilities.searchEmployee");
     // end Mobilidade (Mobility)
 
     // start Trabalhos extras(ExtraJobs)
@@ -330,7 +331,6 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("/editar/{id}/edit", [LicenseCategoryController::class, "edit"])->name("licenseCategories.edit");
         Route::put("/atualizar/{id}", [LicenseCategoryController::class, "update"])->name("licenseCategories.update");
         Route::delete("/apagar/{id}", [LicenseCategoryController::class, "destroy"])->name("licenseCategories.destroy");
-
     });
     // end Pedido de Licença (LeaveRequest) 
 
@@ -351,6 +351,20 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("leaveRequest/pdf", [LeaveRequestController::class, "pdfAll"])->name("leaveRequestes.pdfAll");
     });
     // end Pedido de Licença (LeaveRequest) 
+
+    // start fornecedo(supplier) 
+    Route::prefix('fornecedor')->group(function () {
+
+        Route::get("/listar", [SupplierController::class, "index"])->name("suppliers.index");
+        Route::get("/criar", [SupplierController::class, "create"])->name("suppliers.create");
+        Route::post("/salvar", [SupplierController::class, "store"])->name("suppliers.store");
+        Route::get("/detalhes/{id}", [SupplierController::class, "show"])->name("suppliers.show");
+        Route::get("/editar/{id}/edit", [SupplierController::class, "edit"])->name("suppliers.edit");
+        Route::put("/atualizar/{id}", [SupplierController::class, "update"])->name("suppliers.update");
+        Route::delete("/apagar/{id}", [SupplierController::class, "destroy"])->name("suppliers.destroy");
+
+    });
+    // end fornecedo(LeaveRequest) 
 
     // start users routes
     Route::prefix('utilizadores')->group(function () {
