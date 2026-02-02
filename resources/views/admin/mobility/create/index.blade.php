@@ -5,7 +5,7 @@
     <div class="card my-4 shadow">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <span><i class="fas fa-arrow-left-right me-2"></i>Nova Mobilidade</span>
-            <a href="{{ route('mobility.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
+            <a href="{{ route('admin.mobilities.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
                 <i class="fas fa-arrow-left"></i> Voltar
             </a>
         </div>
@@ -15,7 +15,7 @@
         
             <!-- Formulário para buscar o funcionário por ID ou Nome -->
             @if (!isset($employee))
-                <form action="{{ route('mobility.searchEmployee') }}" method="GET" class="mb-4">
+                <form action="{{ route('admin.mobilities.searchEmployee') }}" method="GET" class="mb-4">
                     <div class="row g-3">
                         <div class="col-md-8">
                             <div class="form-floating">
@@ -42,7 +42,7 @@
                     <p><strong>Departamento Atual:</strong> {{ $oldDepartment->title ?? '-' }}</p>
                 </div>
                 <!-- Formulário de Mobilidade -->
-                <form action="{{ route('mobility.store') }}" method="POST">
+                <form action="{{ route('admin.mobilities.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="employeeId" value="{{ $employee->id }}">
                     <input type="hidden" name="oldDepartmentId" value="{{ $oldDepartment->id ?? '' }}">

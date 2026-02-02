@@ -40,7 +40,6 @@ class InternController extends Controller
             'nationality'      => 'required',
             'gender'           => 'required',
             'email'            => 'required|email|unique:interns',
-            'specialtyId'      => 'required|exists:specialties,id',
             'internshipStart'  => 'required|date|date_format:Y-m-d',
             'internshipEnd'    => 'required|date|date_format:Y-m-d|after_or_equal:internshipStart',
             'institution'      => 'required|string'
@@ -66,7 +65,6 @@ class InternController extends Controller
         $intern->nationality     = $request->nationality;
         $intern->gender          = $request->gender;
         $intern->email           = $request->email;
-        $intern->specialtyId     = $request->specialtyId;
         $intern->internshipStart = $request->internshipStart;
         $intern->internshipEnd   = $request->internshipEnd;
         $intern->institution     = $request->institution;
@@ -161,10 +159,6 @@ class InternController extends Controller
             $query->where('departmentId', $departmentId);
         }
 
-        if ($specialityId) {
-            $query->where('specialtyId', $specialityId);
-        }
-
         $filtered = $query->get();
 
         $startDate = $request->start_date;
@@ -172,7 +166,6 @@ class InternController extends Controller
 
         return view('admin.intern.filter', [
             'departments' => $departments,
-            'speciality'  => $speciality,
             'filtered'  => $filtered,
             'startDate' => $startDate,
             'endDate'   => $endDate,
@@ -193,7 +186,6 @@ class InternController extends Controller
         $start = Carbon::parse($request->start_date)->startOfDay();
         $end   = Carbon::parse($request->end_date)->endOfDay();
         $departmentId = $request->departmentId;
-        $specialityId = $request->specialityId;
 
         $query = Intern::query();
 
@@ -203,10 +195,6 @@ class InternController extends Controller
 
         if ($departmentId) {
             $query->where('departmentId', $departmentId);
-        }
-
-        if ($specialityId) {
-            $query->where('specialtyId', $specialityId);
         }
 
         $filtered = $query->get();

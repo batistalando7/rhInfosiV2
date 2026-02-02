@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\EmployeeHistoryController;
 use App\Http\Controllers\Admin\EmployeeTypeController;
 use App\Http\Controllers\Admin\ExtraJobController;
 use App\Http\Controllers\Admin\HeritageTypeController;
+use App\Http\Controllers\Admin\InfrastructureController;
 use App\Http\Controllers\Admin\LeaveRequestController;
 use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\LicenseCategoryController;
@@ -383,9 +384,26 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("/editar/{id}/edit", [SupplierController::class, "edit"])->name("suppliers.edit");
         Route::put("/atualizar/{id}", [SupplierController::class, "update"])->name("suppliers.update");
         Route::delete("/apagar/{id}", [SupplierController::class, "destroy"])->name("suppliers.destroy");
-
     });
-    // end fornecedo(LeaveRequest) 
+    // end fornecedo(supplier) 
+
+    //start infraestrutura (infrastructure)
+    Route::prefix('infraestrutura')->group(function () {
+
+        Route::get('/listar', [InfrastructureController::class, 'index'])->name('infrastructures.index');
+        Route::get('/criar', [InfrastructureController::class, 'create'])->name('infrastructures.create');
+        Route::post('/salvar', [InfrastructureController::class, 'store'])->name('infrastructures.store');
+        Route::get("/detalhes/{id}", [InfrastructureController::class, "show"])->name("infrastructures.show");
+        Route::get("/editar/{id}/edit", [InfrastructureController::class, "edit"])->name("infrastructures.edit");
+        Route::put("/atualizar/{id}", [InfrastructureController::class, "update"])->name("infrastructures.update");
+        Route::delete("/apagar/{id}", [InfrastructureController::class, "destroy"])->name("infrastructures.destroy");
+        
+        Route::get('/entrada', [InfrastructureController::class, 'materialInput'])->name('infrastructures.materialInput');
+        Route::get('/saida', [InfrastructureController::class, 'materialOutput'])->name('infrastructures.materialOutput');
+        Route::put('output', [InfrastructureController::class, 'output'])->name('infrastructures.output');
+    });
+    //end infraestrutura (infrastructure)
+
 
     // start users routes
     Route::prefix('utilizadores')->group(function () {

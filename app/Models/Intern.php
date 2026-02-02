@@ -31,9 +31,4 @@ class Intern extends Model
     {
         return $this->belongsTo(Department::class, 'departmentId');
     }
-
-    public function specialty()
-    {
-        return $this->belongsTo(Specialty::class, 'specialtyId');
-    }
 }

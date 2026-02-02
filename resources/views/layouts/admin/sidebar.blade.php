@@ -272,9 +272,9 @@
                     </a>
                     <div class="collapse" id="collapseMobility">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ url('mobility') }}"><i class="fas fa-eye me-2"></i>Ver
+                            <li><a class="nav-link" href="{{ route('admin.mobilities.index') }}"><i class="fas fa-eye me-2"></i>Ver
                                     Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('mobility/create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.mobilities.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
@@ -349,17 +349,6 @@
                                         class="fas fa-eye me-2"></i> Lista</a></li>
                             <li><a class="nav-link" href="{{ route('admin.suppliers.create') }}"><i
                                         class="fas fa-plus me-2"></i> Novo</a></li>
-                            {{-- <li><a class="nav-link" href="{{ route('materials.index') }}"><i
-                                        class="fas fa-box me-2"></i> Materiais</a></li>
-                            <li><a class="nav-link" href="{{ route('material-types.index') }}"><i
-                                        class="fas fa-tags me-2"></i> Tipos de Material</a></li> --}}
-                            {{-- CORREÇÃO: As rotas devem ser materials.transactions.index, materials.transactions.in, etc. --}}
-                            {{-- <li><a class="nav-link" href="{{ route('materials.transactions.index') }}"><i
-                                        class="fas fa-history me-2"></i> Histórico</a></li>
-                            <li><a class="nav-link" href="{{ route('materials.transactions.in') }}"><i
-                                        class="fas fa-sign-in-alt me-2"></i> Registrar Entrada</a></li>
-                            <li><a class="nav-link" href="{{ route('materials.transactions.out') }}"><i
-                                        class="fas fa-sign-out-alt me-2"></i> Registrar Saída</a></li> --}}
                         </ul>
                     </div>
                 </li>
@@ -377,15 +366,14 @@
                             <li><a class="nav-link" href="{{ route('admin.suppliers.create') }}"><i
                                         class="fas fa-box me-2"></i> Saída de Material</a></li>
                              <li><a class="nav-link" href="{{ route('materials.index') }}"><i
-                                        class="fas fa-box me-2"></i> Materiais</a></li>
-                            <li><a class="nav-link" href="{{ route('material-types.index') }}"><i
-                                        class="fas fa-tags me-2"></i> Tipos de Material</a></li> --}}
-                            {{-- CORREÇÃO: As rotas devem ser materials.transactions.index, materials.transactions.in, etc. --}}
-                            {{-- <li><a class="nav-link" href="{{ route('materials.transactions.index') }}"><i
-                                        class="fas fa-history me-2"></i> Histórico</a></li> --}}
-                            <li><a class="nav-link" href="{{ route('materials.transactions.in') }}"><i
+                                        class="fas fa-box me-2"></i> Materiais</a></li>--}}
+                            <li><a class="nav-link" href="{{ route('admin.infrastructures.index') }}"><i
+                                        class="fas fa-eye me-2"></i> Lista</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.infrastructures.create') }}"><i
+                                        class="fas fa-plus me-2"></i> Novo Material</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.infrastructures.materialInput') }}"><i
                                         class="fas fa-sign-in-alt me-2"></i> Registrar Entrada</a></li>
-                            <li><a class="nav-link" href="{{ route('materials.transactions.out') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.infrastructures.materialOutput') }}"><i
                                         class="fas fa-sign-out-alt me-2"></i> Registrar Saída</a></li>
                         </ul>
                     </div>
