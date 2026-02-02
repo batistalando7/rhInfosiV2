@@ -6,10 +6,10 @@
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-arrow-left-right me-2"></i>Lista de Mobilidades</span>
     <div>
-      <a href="{{ route('mobility.pdfAll') }}" class="btn btn-outline-light btn-sm" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
+      <a href="{{ route('admin.mobilities.pdfAll') }}" class="btn btn-outline-light btn-sm" title="Baixar PDF" target="_blank" rel="noopener noreferrer">
         <i class="fas fa-file-pdf"></i> Baixar PDF
       </a>
-      <a href="{{ route('mobility.create') }}" class="btn btn-outline-light btn-sm" title="Nova Mobilidade">
+      <a href="{{ route('admin.mobilities.create') }}" class="btn btn-outline-light btn-sm" title="Nova Mobilidade">
         <i class="fas fa-plus-circle"></i> Nova Mobilidade
       </a>
     </div>
