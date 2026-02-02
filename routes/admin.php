@@ -397,8 +397,10 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("/editar/{id}/edit", [InfrastructureController::class, "edit"])->name("infrastructures.edit");
         Route::put("/atualizar/{id}", [InfrastructureController::class, "update"])->name("infrastructures.update");
         Route::delete("/apagar/{id}", [InfrastructureController::class, "destroy"])->name("infrastructures.destroy");
+        
         Route::get('/entrada', [InfrastructureController::class, 'materialInput'])->name('infrastructures.materialInput');
         Route::get('/saida', [InfrastructureController::class, 'materialOutput'])->name('infrastructures.materialOutput');
+        Route::put('output', [InfrastructureController::class, 'output'])->name('infrastructures.output');
     });
     //end infraestrutura (infrastructure)
 

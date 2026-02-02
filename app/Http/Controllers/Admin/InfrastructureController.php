@@ -12,7 +12,7 @@ class InfrastructureController extends Controller
     public function index()
     {
 
-        $response['infrastructures'] = Infrastructure::orderByDesc('created_at')->get();
+        $response['infrastructures'] = Infrastructure::where('status', true)->orderByDesc('created_at')->get();
 
         return view('admin.infrastructure.list.index', $response);
     }
@@ -53,14 +53,16 @@ class InfrastructureController extends Controller
         }
     }
 
-    public function show($id) {
+    public function show($id)
+    {
 
         $response['infrastructure'] = Infrastructure::findOrFail($id);
 
         return view('admin.infrastructure.details.index', $response);
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
 
         $response['infrastructure'] = Infrastructure::findOrFail($id);
         $response['supplier'] = Supplier::all();
@@ -68,7 +70,8 @@ class InfrastructureController extends Controller
         return view('admin.infrastructure.edit.index', $response);
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -94,7 +97,6 @@ class InfrastructureController extends Controller
         } else {
             return redirect()->back()->with('Erro aou atualizar!');
         }
-
     }
 
     public function destroy($id)
@@ -114,9 +116,34 @@ class InfrastructureController extends Controller
         return view('admin.infrastructure.materialInput.index');
     }
 
-    public function materialOutput()
+    public function materialOutput(Request $request)
     {
 
-        return view('admin.infrastructure.materialOutput.index');
+        $response['infrastructure'] = Infrastructure::all();
+        
+        $data = [
+            'id' => $request->infrastructureId,
+            'document' => $request->document,
+            'notes' => $request->notes
+        ];
+
+
+        if (!isset($data)) {
+             return view('admin.infrastructure.materialOutput.index', $response);
+        }
+
+        /* return response()->json('fudeu'); */
+        return view('admin.infrastructure.materialOutput.index', $response);
+    }
+
+    public function output(Request $request){
+        $request->validate([
+            'infrastructureId' => 'required'
+        ]);
+        $id = $request->infrastructureId;
+        $data = Infrastructure::findOrFail($id);
+        $data->status = false;
+        $data->save();
+        return redirect()->route('admin.infrastructures.index')->with('Saída de material registrado!');
     }
 }

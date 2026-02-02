@@ -11,6 +11,7 @@ class CreateInternsTable extends Migration
         Schema::create('interns', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('departmentId');
+            $table->foreign('departmentId')->references('id')->on('departments')->onDelete('cascade');
             $table->string('fullName');
             $table->string('address');
             $table->string('mobile');
@@ -21,14 +22,11 @@ class CreateInternsTable extends Migration
             $table->string('nationality');
             $table->enum('gender', ['Masculino', 'Feminino']);
             $table->string('email')->unique();
-            $table->unsignedBigInteger('specialtyId');
             $table->date('internshipStart');
             $table->date('internshipEnd');
             $table->string('institution');
             $table->timestamps();
 
-            $table->foreign('departmentId')->references('id')->on('departments')->onDelete('cascade');
-            $table->foreign('specialtyId')->references('id')->on('specialties');
         });
     }
 
