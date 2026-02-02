@@ -338,14 +338,14 @@ Route::middleware(["auth"])->group(function () {
      Route::get("leaveRequest/{id}/delete", [LeaveRequestController::class, "destroy"]); */
 
 
-     // ====================== Pedido de Férias (Vacation Request) ======================
+/*      // ====================== Pedido de Férias (Vacation Request) ======================
      Route::get("vacationRequest/departmentSummary", [VacationRequestController::class, "departmentSummary"])->name("vacationRequest.departmentSummary");
      Route::get("vacationRequest/searchEmployee", [VacationRequestController::class, "searchEmployee"])->name("vacationRequest.searchEmployee");
      Route::get("vacation-request/pdf-filtered",  [VacationRequestController::class, "pdfAll"])->name("vacationRequest.exportFilteredPDF");
      Route::get("vacationRequest/pdf", [VacationRequestController::class, "pdfAll"])->name("vacationRequest.pdfAll");
      Route::resource("vacationRequest", VacationRequestController::class);
      Route::get("vacationRequest/{id}/delete", [LeaveRequestController::class, "destroy"]);
-
+ */
 
      // ====================== Destacamento (Secondment) ======================
      Route::get("secondment/searchEmployee", [SecondmentController::class, "searchEmployee"])->name("secondment.searchEmployee");

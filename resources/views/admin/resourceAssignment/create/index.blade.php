@@ -6,7 +6,7 @@
             <div class="card mb-4 shadow">
                 <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
                     <span><i class="fas fa-file-alt me-2"></i>Novo Pedido de Licença</span>
-                    <a href="{{ route('leaveRequest.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
+                    <a href="{{ route('admin.leaveRequestes.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
                         <i class="fas fa-arrow-left"></i> Voltar
                     </a>
                 </div>
@@ -19,7 +19,7 @@
                                     <div class="form-floating">
                                         <input type="text" name="employeeSearch" id="employeeSearch" class="form-control"
                                             placeholder="" value="{{ old('employeeSearch') }}">
-                                        <label for="employeeSearch">Nome do Funcionário 2</label>
+                                        <label for="employeeSearch">Nome do Funcionário</label>
                                     </div>
                                     @error('employeeSearch')
                                         <small class="text-danger">{{ $message }}</small>

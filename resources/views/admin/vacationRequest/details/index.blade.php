@@ -6,7 +6,7 @@
     <div class="card mb-4 shadow">
       <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
         <span>Detalhes do Pedido de Férias</span>
-        <a href="{{ route('vacationRequest.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
+        <a href="{{ route('admin.leaveRequestes.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">
           <i class="fas fa-arrow-left"></i> Voltar
         </a>
       </div>

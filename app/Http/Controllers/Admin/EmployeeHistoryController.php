@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\AttendanceRecord;
 use App\Models\LeaveRequest;
+use App\Models\VacationRequest;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Carbon\Carbon;
 
@@ -72,8 +73,11 @@ class EmployeeHistoryController extends Controller
         /* end Trabalhando dados da efetividade */
 
         /* pegando as licencas */
-        $employee['leaveRequest'] = LeaveRequest::with('employee')->where('approvalStatus', 'Aprovado')->where('employeeId', $id)->get();
+        $employee['leaveRequest'] = LeaveRequest::findOrFail($id)->where('approvalStatus', 'Aprovado')->get();
         /* $employee['leaveDays'] = $employee->leaveRequest->leaveEnd - $employee->leaveRequest->leaveStart; */
+
+        /* pegando as férias */
+        $employee['vacation'] = VacationRequest::findOrFail($id)->where('approvalStatus', 'Validado')->get();
         
         $pdf = PDF::loadView('pdf.employeee.history', compact('employee'))->setPaper('a4', 'portrait');
         /* return $pdf->stream('historico_funcionario_' . $employee->id . '.pdf'); */

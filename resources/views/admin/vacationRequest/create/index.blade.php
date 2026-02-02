@@ -6,13 +6,13 @@
     <div class="card mb-4 shadow">
       <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
         <span><i class="fas fa-umbrella-beach me-2"></i>Novo Pedido de Férias</span>
-        <a href="{{ route('vacationRequest.index') }}" class="btn btn-outline-light btn-sm">
+        <a href="{{ route('admin.leaveRequestes.index') }}" class="btn btn-outline-light btn-sm">
           <i class="fas fa-arrow-left"></i> Voltar
         </a>
       </div>
       <div class="card-body">
         @if(!isset($employee))
-          <form action="{{ route('vacationRequest.searchEmployee') }}" method="GET" class="mb-3">
+          <form action="{{ route('admin.leaveRequestes.searchEmployee') }}" method="GET" class="mb-3">
             <div class="row g-2">
               <div class="col-8">
                 <div class="form-floating">
@@ -34,7 +34,7 @@
             <p><strong>Nome:</strong> {{ $employee->fullName }}</p>
             <p><strong>Departamento:</strong> {{ $employee->department->title ?? '-' }}</p>
           </div>
-          <form action="{{ route('vacationRequest.store') }}" method="POST" enctype="multipart/form-data">
+          <form action="{{ route('admin.leaveRequestes.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="employeeId" value="{{ $employee->id }}">
 
