@@ -5,16 +5,16 @@
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-umbrella-beach me-2"></i>Lista de Pedidos de Férias</span>
     <div>
-      <a href="{{ route('vacationRequest.pdfAll') }}" class="btn btn-outline-light btn-sm" target="_blank">
+      <a href="{{ route('admin.leaveRequestes.pdfAll') }}" class="btn btn-outline-light btn-sm" target="_blank">
         <i class="fas fa-file-earmark-pdf"></i> Baixar PDF (Todos)
       </a>
       @if(request()->filled('startDate')||request()->filled('endDate')||(request()->filled('status')&&request('status')!=='Todos'))
-      <a href="{{ route('vacationRequest.pdfAll') }}?{{ http_build_query(request()->only(['startDate','endDate','status'])) }}"
+      <a href="{{ route('admin.leaveRequestes.pdfAll') }}?{{ http_build_query(request()->only(['startDate','endDate','status'])) }}"
          class="btn btn-outline-light btn-sm" target="_blank">
         <i class="fas fa-file-earmark-pdf"></i> Baixar PDF (Filtrados)
       </a>
       @endif
-      <a href="{{ route('vacationRequest.create') }}" class="btn btn-outline-light btn-sm">
+      <a href="{{ route('admin.leaveRequestes.create') }}" class="btn btn-outline-light btn-sm">
         <i class="fas fa-plus-circle"></i> Novo Pedido
       </a>
     </div>
@@ -34,7 +34,7 @@
     </form>
 
 
-    <form method="GET" action="{{ route('vacationRequest.index') }}" class="row g-3 mb-4">
+    <form method="GET" action="{{ route('admin.leaveRequestes.index') }}" class="row g-3 mb-4">
       <div class="col-md-3">
         <label for="startDate" class="form-label">Data Início</label>
         <input type="date" name="startDate" id="startDate" class="form-control"

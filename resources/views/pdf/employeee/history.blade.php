@@ -127,21 +127,28 @@
         <div class="section">
             <h2>Férias</h2>
             <ul>
-                <li>2023: 15 dias (01/07/2023 a 15/07/2023)</li>
+                @if (isset($employee->vacation))
+                    @foreach ($employee->vacation as $item)
+                        <li>{{\Carbon\Carbon::parse($item->created_at)->format('Y')}}: 15 dias (01/07/2023 a 15/07/2023)</li>
+                    @endforeach
+                @else
+                    <li>Nenhuma informação registrada</li>
+                @endif
+                {{-- <li>2023: 15 dias (01/07/2023 a 15/07/2023)</li>
                 <li>2022: 30 dias (01/06/2022 a 30/06/2022)</li>
-                <li>2021: 20 dias (15/08/2021 a 04/09/2021)</li>
+                <li>2021: 20 dias (15/08/2021 a 04/09/2021)</li> --}}
             </ul>
         </div>
 
         <div class="section">
             <h2>Licenças</h2>
             <ul>
-                @if(isset($employee->leaveRequest))
-                @foreach ($employee->leaveRequest as $item)
-                    <li>Licença {{$item->leaveType->name}}: {{ $item->duration  }} dias</li>
-                @endforeach
+                @if (isset($employee->leaveRequest))
+                    @foreach ($employee->leaveRequest as $item)
+                        <li>Licença {{ $item->leaveType->name }}: {{ $item->duration }} dias</li>
+                    @endforeach
                 @else
-                <li>nenhuma informação registrada</li>
+                    <li>nenhuma informação registrada</li>
                 @endif
                 {{-- <li>Licença Médica: 10 dias (05/03/2022 a 14/03/2022)</li>
                 <li>Licença Paternidade: 5 dias (20/11/2018 a 24/11/2018)</li> --}}
@@ -243,8 +250,9 @@
             <h2>Último Salário Pago</h2>
             @if ($employee->salaryPayments)
                 @foreach ($employee->salaryPayments as $p)
-                    <p><strong>Valor:</strong> {{ number_format($p->salaryAmount,2,',','.') }}</p>
-                    <p><strong>Data do Pagamento:</strong> {{ \Carbon\Carbon::parse($p->workMonth)->translatedFormat('F/Y') }}</p>
+                    <p><strong>Valor:</strong> {{ number_format($p->salaryAmount, 2, ',', '.') }}</p>
+                    <p><strong>Data do Pagamento:</strong>
+                        {{ \Carbon\Carbon::parse($p->workMonth)->translatedFormat('F/Y') }}</p>
                 @endforeach
             @endif
         </div>

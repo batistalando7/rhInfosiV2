@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\VacationRequest;
 use App\Models\Employeee;
@@ -45,7 +46,7 @@ class VacationRequestController extends Controller
 
         $data = $query->orderByDesc('id')->get();
 
-        return view('vacationRequest.index', [
+        return view('admin.vacationRequest.list.index', [
             'data'    => $data,
             'filters' => $request->only('startDate','endDate','status'),
         ]);
@@ -78,7 +79,7 @@ class VacationRequestController extends Controller
 
         $all = $query->orderByDesc('id')->get();
 
-        $pdf = PDF::loadView('vacationRequest.pdf', ['allRequests'=>$all])
+        $pdf = PDF::loadView('admin.vacationRequest.pdf', ['allRequests'=>$all])
                   ->setPaper('a3','portrait');
 
         return $pdf->download('RelatorioPedidosFerias_Filtrados.pdf');
@@ -90,11 +91,11 @@ class VacationRequestController extends Controller
         $vacationTypes = ['22 dias úteis','11 dias úteis'];
 
         if (in_array($user->role, ['admin','director','department_head'])) {
-            return view('vacationRequest.createSearch', compact('vacationTypes'));
+            return view('admin.vacationRequest.createSearch', compact('vacationTypes'));
         }
 
         $employee = $user->employee;
-        return view('vacationRequest.createEmployee', compact('employee','vacationTypes'));
+        return view('admin.vacationRequest.createEmployee', compact('employee','vacationTypes'));
     }
 
     public function searchEmployee(Request $request)
@@ -113,7 +114,7 @@ class VacationRequestController extends Controller
         }
 
         $vacationTypes = ['22 dias úteis','11 dias úteis'];
-        return view('vacationRequest.createSearch', compact('employee','vacationTypes'));
+        return view('admin.vacationRequest.createSearch', compact('employee','vacationTypes'));
     }
 
     public function store(Request $request)
@@ -166,21 +167,21 @@ class VacationRequestController extends Controller
             'approvalComment'  => null,
         ]);
 
-        return redirect()->route('vacationRequest.index')
+        return redirect()->route('admin.vacationRequest.index')
                          ->with('msg','Pedido de férias registrado com sucesso!');
     }
 
     public function show($id)
     {
         $data = VacationRequest::with('employee')->findOrFail($id);
-        return view('vacationRequest.show', compact('data'));
+        return view('admin.vacationRequest.details.index', compact('data'));
     }
 
     public function edit($id)
     {
         $data = VacationRequest::findOrFail($id);
         $vacationTypes = ['22 dias úteis','11 dias úteis'];
-        return view('vacationRequest.edit', compact('data','vacationTypes'));
+        return view('admin.vacationRequest.edit.index', compact('data','vacationTypes'));
     }
 
     public function update(Request $request, $id)
@@ -234,8 +235,7 @@ class VacationRequestController extends Controller
             'originalFileName' => $orig,
         ]);
 
-        return redirect()->route('vacationRequest.edit',$id)
-                         ->with('msg','Pedido de férias atualizado com sucesso!');
+        return redirect()->back()->with('msg','Pedido de férias atualizado com sucesso!');
     }
 
     public function destroy($id)
@@ -245,8 +245,7 @@ class VacationRequestController extends Controller
             Storage::disk('public')->delete($vac->supportDocument);
         }
         $vac->delete();
-        return redirect()->route('vacationRequest.index')
-                         ->with('msg','Pedido de férias removido.');
+        return redirect()->back()->with('msg','Pedido de férias removido.');
     }
 
     public function pdfAll(Request $request)
@@ -276,7 +275,7 @@ class VacationRequestController extends Controller
 
         $all = $query->orderByDesc('id')->get();
 
-        $pdf = PDF::loadView('vacationRequest.vacationRequest_pdf',['allRequests'=>$all])
+        $pdf = PDF::loadView('pdf.vacationRequest.vacationRequestPdf',['allRequests'=>$all])
                   ->setPaper('a3','portrait');
 
         return $pdf->stream('RelatorioPedidosFerias.pdf');
@@ -297,7 +296,7 @@ class VacationRequestController extends Controller
             elseif (in_array($st,['rejected','recusado']))  $summary[$dept]['rejected']++;
             else                                            $summary[$dept]['pending']++;
         }
-        return view('vacationRequest.departmentSummary',['summaryData'=>array_values($summary)]);
+        return view('admin.vacationRequest.departmentSummary',['summaryData'=>array_values($summary)]);
     }
 
     public function approval($departmentId)
@@ -306,7 +305,7 @@ class VacationRequestController extends Controller
             ->whereHas('employee', fn($q)=> $q->where('departmentId',$departmentId))
             ->orderByDesc('id')
             ->get();
-        return view('vacationRequest.approval',compact('data'));
+        return view('admin.vacationRequest.approval',compact('data'));
     }
 
     public function updateApproval(Request $request, $id)

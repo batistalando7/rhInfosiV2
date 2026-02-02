@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\MobilityController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\SpecialtyController;
 use App\Http\Controllers\Admin\StatuteController;
+use App\Http\Controllers\Admin\VacationRequestController;
 
 Route::middleware('auth')->name('admin.')->group(function () {
 
@@ -284,7 +285,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::delete("/apagar/{id}", [HeritageTypeController::class, "destroy"])->name("heritageTypes.destroy");
     });
     // end Tipos de Património
-   
+
     // start Mobilidade (Mobility)
     Route::prefix('mobilidade')->group(function () {
 
@@ -298,8 +299,8 @@ Route::middleware('auth')->name('admin.')->group(function () {
     });
 
     //filtros
-     Route::get("/pdf", [MobilityController::class, "pdfAll"])->name("mobilities.pdfAll");
-     Route::get("/search-employee", [MobilityController::class, "searchEmployee"])->name("mobilities.searchEmployee");
+    Route::get("/pdf", [MobilityController::class, "pdfAll"])->name("mobilities.pdfAll");
+    Route::get("/search-employee", [MobilityController::class, "searchEmployee"])->name("mobilities.searchEmployee");
     // end Mobilidade (Mobility)
 
     // start Trabalhos extras(ExtraJobs)
@@ -330,7 +331,6 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("/editar/{id}/edit", [LicenseCategoryController::class, "edit"])->name("licenseCategories.edit");
         Route::put("/atualizar/{id}", [LicenseCategoryController::class, "update"])->name("licenseCategories.update");
         Route::delete("/apagar/{id}", [LicenseCategoryController::class, "destroy"])->name("licenseCategories.destroy");
-
     });
     // end Pedido de Licença (LeaveRequest) 
 
@@ -351,6 +351,26 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("leaveRequest/pdf", [LeaveRequestController::class, "pdfAll"])->name("leaveRequestes.pdfAll");
     });
     // end Pedido de Licença (LeaveRequest) 
+
+    // start Pedido de Férias (Vacation Request) 
+    Route::prefix('pedido-ferias')->group(function () {
+
+        Route::get("/listar", [VacationRequestController::class, "index"])->name("vacationRequestes.index");
+        Route::get("/criar", [VacationRequestController::class, "create"])->name("vacationRequestes.create");
+        Route::post("/salvar", [VacationRequestController::class, "store"])->name("vacationRequestes.store");
+        Route::get("/detalhes/{id}", [VacationRequestController::class, "show"])->name("vacationRequestes.show");
+        Route::get("/editar/{id}/edit", [VacationRequestController::class, "edit"])->name("vacationRequestes.edit");
+        Route::put("/atualizar/{id}", [VacationRequestController::class, "update"])->name("vacationRequestes.update");
+        Route::delete("/apagar/{id}", [VacationRequestController::class, "destroy"])->name("vacationRequestes.destroy");
+
+        //filtros
+        Route::get("vacationRequest/departmentSummary", [VacationRequestController::class, "departmentSummary"])->name("vacationRequestes.departmentSummary");
+        Route::get("vacationRequest/searchEmployee", [VacationRequestController::class, "searchEmployee"])->name("vacationRequestes.searchEmployee");
+        Route::get("vacation-request/pdf-filtered",  [VacationRequestController::class, "pdfAll"])->name("vacationRequestes.exportFilteredPDF");
+        Route::get("vacationRequest/pdf", [VacationRequestController::class, "pdfAll"])->name("vacationRequestes.pdfAll");
+    });
+    // end Pedido de Férias (Vacation Request) 
+
 
     // start users routes
     Route::prefix('utilizadores')->group(function () {
@@ -382,6 +402,6 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get('/ferias-pendentes', [App\Http\Controllers\DirectorGeneralController::class, 'pendingVacations'])->name('director.pendingVacations');
         Route::post('/aprovar-ferias/{id}', [App\Http\Controllers\DirectorGeneralController::class, 'approveVacation'])->name('director.approveVacation');
         Route::post('/rejeitar-ferias/{id}', [App\Http\Controllers\DirectorGeneralController::class, 'rejectVacation'])->name('director.rejectVacation');
-        Route::get('/download-ferias-assinada/{id}', [App\Http\Controllers\VacationRequestController::class, 'downloadSignedPdf'])->name('director.downloadSignedPdf');
+        Route::get('/download-ferias-assinada/{id}', [VacationRequestController::class, 'downloadSignedPdf'])->name('director.downloadSignedPdf');
     });
 });

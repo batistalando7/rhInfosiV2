@@ -219,11 +219,11 @@
                     </a>
                     <div class="collapse" id="collapseVacationRequest">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('vacationRequest.departmentSummary') }}">Férias
+                            <li><a class="nav-link" href="{{ route('admin.vacationRequestes.departmentSummary') }}">Férias
                                     por Departamento</a></li>
-                            <li><a class="nav-link" href="{{ url('vacationRequest') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.vacationRequestes.index') }}"><i
                                         class="fas fa-eye me-2"></i>Ver Todos</a></li>
-                            <li><a class="nav-link" href="{{ url('vacationRequest/create') }}"><i
+                            <li><a class="nav-link" href="{{ route('admin.vacationRequestes.create') }}"><i
                                         class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
                         </ul>
                     </div>
@@ -570,7 +570,7 @@
                     </a>
                     <div class="collapse" id="collapseVacationRequest">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('vacationRequest.departmentSummary') }}">Férias
+                            <li><a class="nav-link" href="{{ route('vacationRequestes.departmentSummary') }}">Férias
                                     por Departamento</a></li>
                             <li><a class="nav-link" href="{{ url('vacationRequest') }}"><i
                                         class="fas fa-eye me-2"></i>Ver Todos</a></li>
@@ -698,7 +698,7 @@
                     </a>
                     <div class="collapse" id="collapseVacationRequest">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('vacationRequest.departmentSummary') }}">Férias
+                            <li><a class="nav-link" href="{{ route('vacationRequestes.departmentSummary') }}">Férias
                                     por Departamento</a></li>
                             <li><a class="nav-link" href="{{ url('vacationRequest') }}"><i
                                         class="fas fa-eye me-2"></i>Ver Todos</a></li>
