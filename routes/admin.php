@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\SpecialtyController;
 use App\Http\Controllers\Admin\StatuteController;
 use App\Http\Controllers\Admin\VacationRequestController;
+use App\Http\Controllers\Admin\SupplierController;
 
 Route::middleware('auth')->name('admin.')->group(function () {
 
@@ -352,6 +353,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
     });
     // end Pedido de Licença (LeaveRequest) 
 
+
     // start Pedido de Férias (Vacation Request) 
     Route::prefix('pedido-ferias')->group(function () {
 
@@ -371,6 +373,19 @@ Route::middleware('auth')->name('admin.')->group(function () {
     });
     // end Pedido de Férias (Vacation Request) 
 
+    // start fornecedo(supplier) 
+    Route::prefix('fornecedor')->group(function () {
+
+        Route::get("/listar", [SupplierController::class, "index"])->name("suppliers.index");
+        Route::get("/criar", [SupplierController::class, "create"])->name("suppliers.create");
+        Route::post("/salvar", [SupplierController::class, "store"])->name("suppliers.store");
+        Route::get("/detalhes/{id}", [SupplierController::class, "show"])->name("suppliers.show");
+        Route::get("/editar/{id}/edit", [SupplierController::class, "edit"])->name("suppliers.edit");
+        Route::put("/atualizar/{id}", [SupplierController::class, "update"])->name("suppliers.update");
+        Route::delete("/apagar/{id}", [SupplierController::class, "destroy"])->name("suppliers.destroy");
+
+    });
+    // end fornecedo(LeaveRequest) 
 
     // start users routes
     Route::prefix('utilizadores')->group(function () {
