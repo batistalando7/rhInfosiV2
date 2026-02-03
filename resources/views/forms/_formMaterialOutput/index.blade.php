@@ -15,9 +15,9 @@
     </div>    
     <div class="col-md-6 mb-3">
         <div class="form-floating">
-            <input type="number" name="CurrentStock" id="CurrentStock" class="form-control" placeholder=""
-                value="{{ old('CurrentStock', 0) }}" min="0" >
-            <label for="CurrentStock">Qtd. Inicial em Estoque</label>
+            <input type="number" name="quantity" id="quantity" class="form-control" placeholder=""
+                value="{{ old('quantity', 0) }}" min="0" >
+            <label for="quantity">Qtd. Inicial em Estoque</label>
         </div>
     </div>
     <div class="col-md-12 mb-3">

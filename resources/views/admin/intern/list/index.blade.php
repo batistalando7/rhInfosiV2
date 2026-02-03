@@ -49,29 +49,29 @@
                             <th>ID</th>
                             <th>Nome</th>
                             <th>Departamento</th>
-                            <th>Especialidade</th>
+                            {{-- <th>Especialidade</th> --}}
                             <th>Endereço</th>
                             <th>Email</th>
                             <th>Ação</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($data as $d)
+                        @forelse($data as $item)
                             <tr>
-                                <td>{{ $d->id }}</td>
-                                <td>{{ $d->fullName }}</td>
-                                <td>{{ $d->department->title ?? '-' }}</td>
-                                <td>{{ $d->specialty->name ?? '-' }}</td>
-                                <td>{{ $d->address ?? '-' }}</td>
-                                <td>{{ $d->email ?? '-' }}</td>
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->fullName }}</td>
+                                <td>{{ $item->department->title ?? '-' }}</td>
+                                {{-- <td>{{ $item->specialty->name ?? '-' }}</td> --}}
+                                <td>{{ $item->address ?? '-' }}</td>
+                                <td>{{ $item->email ?? '-' }}</td>
                                 <td>
-                                    <a href="{{ route('admin.intern.show', $d->id) }}" class="btn btn-warning btn-sm">
+                                    <a href="{{ route('admin.intern.show', $item->id) }}" class="btn btn-warning btn-sm">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('admin.intern.edit', $d->id) }}" class="btn btn-info btn-sm">
+                                    <a href="{{ route('admin.intern.edit', $item->id) }}" class="btn btn-info btn-sm">
                                         <i class="fas fa-pencil"></i>
                                     </a>
-                                    <a href="#" data-url="{{ route('admin.intern.destroy', $d->id) }}"
+                                    <a href="#" data-url="{{ route('admin.intern.destroy', $item->id) }}"
                                         class="btn btn-danger btn-sm delete-btn">
                                         <i class="fas fa-trash"></i>
                                     </a>

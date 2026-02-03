@@ -13,6 +13,7 @@ class CreateInfrastructuresTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('serialNumber')->nullable();
+            $table->string('macAddress')->nullable();
             $table->string('model')->nullable();
             $table->integer('quantity');
             $table->date('manufactureDate')->nullable();

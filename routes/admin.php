@@ -400,6 +400,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
         
         Route::get('/entrada', [InfrastructureController::class, 'materialInput'])->name('infrastructures.materialInput');
         Route::get('/saida', [InfrastructureController::class, 'materialOutput'])->name('infrastructures.materialOutput');
+        Route::put('input', [InfrastructureController::class, 'input'])->name('infrastructures.input');
         Route::put('output', [InfrastructureController::class, 'output'])->name('infrastructures.output');
     });
     //end infraestrutura (infrastructure)
