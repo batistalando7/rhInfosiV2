@@ -20,4 +20,9 @@ class Infrastructure extends Model
         return $this->belongsTo(Supplier::class, "supplierId");
         
     }
+
+    public function infrastructure_moviments() {
+
+        return $this->hasMany(InfrastructureMoviments::class, 'infrastructureId');
+    }
 }

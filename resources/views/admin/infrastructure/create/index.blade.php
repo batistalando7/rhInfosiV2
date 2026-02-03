@@ -4,7 +4,7 @@
 @section('content')
     <div class="card mb-4 shadow">
         <div class="card-header bg-secondary text-white">
-            <i class="fas fa-plus-circle me-2"></i> Adicionar Novo Material
+            <a href="{{ route('admin.infrastructures.index')}}" class="btn btn-outline-secondary btn-sm" title="Ver todos"><i class="fas fa-list me-3"></i></a>
         </div>
         <div class="card-body">
             <form action="{{ route('admin.infrastructures.store') }}" method="POST">

@@ -52,24 +52,15 @@
         </div>
     </div>
 
-    <!-- Modal Dinâmica Única -->
-    <div class="modal fade" id="globalModal" tabindex="-1" aria-labelledby="globalModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="globalModalLabel"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer"></div>
-            </div>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/select2-active.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/js/theme-customizer-init.min.js') }}"></script>
+
+    <!-- start Modal Dinâmica Única -->
+    @include('extra._alerts.index')
+    <!-- end Modal Dinâmica Única -->
+    
     {{-- end script do editor de texto --}}
     <script>
         // Abre/fecha sidebar em mobile ao clicar no botão hamburger
@@ -131,32 +122,6 @@
             });
         }
 
-        // Lógica de Modal Dinâmica
-        function showModal(type, title, message, footer = '') {
-            const modal = new bootstrap.Modal(document.getElementById('globalModal'));
-            const modalHeader = document.querySelector('#globalModal .modal-header');
-            const modalBody = document.querySelector('#globalModal .modal-body');
-            const modalFooter = document.querySelector('#globalModal .modal-footer');
-
-            modalHeader.className = 'modal-header';
-            if (type === 'success') modalHeader.classList.add('bg-success', 'text-white');
-            else if (type === 'error') modalHeader.classList.add('bg-danger', 'text-white');
-            else if (type === 'delete') modalHeader.classList.add('bg-danger', 'text-white');
-
-            document.getElementById('globalModalLabel').textContent = title;
-            modalBody.innerHTML = message;
-            modalFooter.innerHTML = footer;
-
-            modal.show();
-        }
-
-        // Modais de Sucesso e Erro
-        @if(session('msg'))
-            showModal('success', 'Sucesso', '{{ session('msg') }}');
-        @endif
-        @if($errors->any())
-            showModal('error', 'Erro(s)', '@foreach($errors->all() as $error)<p>{{ $error }}</p>@endforeach');
-        @endif
 
         // Modal de Deleção
         document.addEventListener('click', e => {

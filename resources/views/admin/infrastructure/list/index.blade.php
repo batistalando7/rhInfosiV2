@@ -19,8 +19,10 @@
                         <th>Nome</th>
                         <th>Tipo</th>
                         <th>Nº Série</th>
+                        <th>MAC</th>
                         <th>Modelo</th>
                         <th>Quantidade</th>
+                        <th>Estado</th>
                         <th style="width: 100px;" class="text-center">Ação</th>
                     </tr>
                 </thead>
@@ -30,8 +32,10 @@
                             <td>{{ $item->name ?? '-' }}</td>
                             <td>{{ $item->id ?? '-' }}</td>
                             <td>{{ $item->serialNumber ?? '-' }}</td>
+                            <td>{{ $item->macAddress ?? '-' }}</td>
                             <td>{{ $item->model ?? '-' }}</td>
                             <td>{{ $item->quantity ?? '-' }}</td>
+                            <td class="text-{{($item->status ?? '-') == 1 ? 'success':'danger'}}">{{ ($item->status ?? '-') == 1 ? 'Disponível':'Indisponível' }}</td>
                             <td class="text-center">
                                 <a href="{{ route('admin.infrastructures.show', $item->id) }}" class="btn btn-sm btn-info"
                                     title="Ver"><i class="fas fa-eye"></i></a>

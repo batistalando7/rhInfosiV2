@@ -21,10 +21,10 @@
           <th>Departamento</th>
           <td>{{ $data->department->title ?? $data->departmentId }}</td>
         </tr>
-        <tr>
+        {{-- <tr>
           <th>Especialidade</th>
           <td>{{ $data->specialty->name ?? $data->specialtyId }}</td>
-        </tr>
+        </tr> --}}
         <tr>
           <th>Nome Completo</th>
           <td>{{ $data->fullName }}</td>

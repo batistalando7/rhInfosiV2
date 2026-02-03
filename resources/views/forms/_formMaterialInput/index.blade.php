@@ -3,64 +3,21 @@
     <hr>
     <div class="col-md-6 mb-3">
         <div class="form-floating">
-            <input type="text" name="Name" id="Name" class="form-control" placeholder=""
-                value="{{ old('Name') }}" required>
-            <label for="Name">Nome</label>
+            <select type="text" name="infrastructureId" id="infrastructureId" class="form-select" placeholder=""
+                value="{{ old('infrastructureId') }}" >
+                <option value="">selecione</option>
+                @foreach ($infrastructure as $item)
+                    <option value="{{ $item->id }}"> {{ $item->name }}</option>
+                @endforeach
+            </select>
+            <label for="infrastructureId">Nome</label>
         </div>
-    </div>
-    {{-- <div class="col-md-6 mb-3">
-        <div class="form-floating">
-            <input type="text" name="materialType" id="materialType" class="form-control" required>
-            <label for="materialTypeId">Tipo de Material</label>
-        </div>
-    </div> --}}
+    </div>    
     <div class="col-md-6 mb-3">
         <div class="form-floating">
-            <input type="text" name="SerialNumber" id="SerialNumber" class="form-control" placeholder=""
-                value="{{ old('SerialNumber') }}" required>
-            <label for="SerialNumber">Número de Série</label>
-        </div>
-    </div>
-    <div class="col-md-6 mb-3">
-        <div class="form-floating">
-            <input type="text" name="Model" id="Model" class="form-control" placeholder=""
-                value="{{ old('Model') }}" required>
-            <label for="Model">Modelo</label>
-        </div>
-    </div>
-    <div class="col-md-6 mb-3">
-        <div class="form-floating">
-            <input type="date" name="ManufactureDate" id="ManufactureDate" class="form-control" placeholder=""
-                value="{{ old('ManufactureDate') }}" required>
-            <label for="ManufactureDate">Data de Fabrico</label>
-        </div>
-    </div>
-    <div class="col-md-6 mb-3">
-        <div class="form-floating">
-            <input type="text" name="SupplierName" id="SupplierName" class="form-control" placeholder=""
-                value="{{ old('SupplierName') }}" required>
-            <label for="SupplierName">Fornecedor</label>
-        </div>
-    </div>
-    <div class="col-md-6 mb-3">
-        <div class="form-floating">
-            <input type="text" name="SupplierIdentifier" id="SupplierIdentifier" class="form-control" placeholder=""
-                value="{{ old('SupplierIdentifier') }}" required>
-            <label for="SupplierIdentifier">NIF</label>
-        </div>
-    </div>
-    <div class="col-md-6 mb-3">
-        <div class="form-floating">
-            <input type="date" name="EntryDate" id="EntryDate" class="form-control" placeholder=""
-                value="{{ old('EntryDate') }}" required>
-            <label for="EntryDate">Data de Entrada</label>
-        </div>
-    </div>
-    <div class="col-md-6 mb-3">
-        <div class="form-floating">
-            <input type="number" name="CurrentStock" id="CurrentStock" class="form-control" placeholder=""
-                value="{{ old('CurrentStock', 0) }}" min="0" required>
-            <label for="CurrentStock">Qtd. Inicial em Estoque</label>
+            <input type="number" name="quantity" id="quantity" class="form-control" placeholder=""
+                value="{{ old('quantity', 0) }}" min="0" >
+            <label for="quantity">Qtd. Inicial em Estoque</label>
         </div>
     </div>
     <div class="col-md-12 mb-3">

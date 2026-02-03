@@ -26,7 +26,7 @@
             <label for="depart">Departamento</label>
           </div>
         </div>
-        <div class="col-md-6">
+        {{-- <div class="col-md-6">
           <div class="form-floating">
             <select name="specialtyId" id="specialtyId" class="form-select">
               <option value="" selected>Selecione</option>
@@ -37,7 +37,7 @@
             <label for="specialtyId">Especialidade</label>
           </div>
         </div>
-      </div>
+      </div> --}}
 
       <!-- Linha: Nome Completo e Email -->
       <div class="row g-3 mt-3">

@@ -97,7 +97,7 @@
                                     <th>ID</th>
                                     <th>Nome Completo</th>
                                     <th>Departamento</th>
-                                    <th>Especialidade</th>
+                                    {{-- <th>Especialidade</th> --}}
                                     <th>Data de Registro</th>
                                 </tr>
                             </thead>
@@ -107,7 +107,7 @@
                                         <td>{{ $intern->id }}</td>
                                         <td>{{ $intern->fullName }}</td>
                                         <td>{{ $intern->department->title ?? '-' }}</td>
-                                        <td>{{ $intern->specialty->name ?? '-' }}</td>
+                                        {{-- <td>{{ $intern->specialty->name ?? '-' }}</td> --}}
                                         <td>{{ $intern->created_at->format('d/m/Y H:i') }}</td>
                                     </tr>
                                 @endforeach

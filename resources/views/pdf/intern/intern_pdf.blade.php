@@ -17,7 +17,7 @@
           <th>ID</th>
           <th>Nome Completo</th>
           <th>Departamento</th>
-          <th>Especialidade</th>
+          {{-- <th>Especialidade</th> --}}
           <th>Email</th>
           <th>Início do Estágio</th>
           <th>Fim do Estágio</th>
@@ -30,7 +30,7 @@
             <td>{{ $intern->id }}</td>
             <td>{{ $intern->fullName }}</td>
             <td>{{ $intern->department->title ?? '-' }}</td>
-            <td>{{ $intern->specialty->name ?? '-' }}</td>
+            {{-- <td>{{ $intern->specialty->name ?? '-' }}</td> --}}
             <td>{{ $intern->email }}</td>
             <td>{{ $intern->internshipStart }}</td>
             <td>{{ $intern->internshipEnd ? $intern->internshipEnd : 'A definir' }}</td>

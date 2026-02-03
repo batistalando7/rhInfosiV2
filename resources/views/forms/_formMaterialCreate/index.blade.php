@@ -23,6 +23,13 @@
     </div>
     <div class="col-md-6 mb-3">
         <div class="form-floating">
+            <input type="text" name="macAddress" id="macAddress" class="form-control" placeholder=""
+                value="{{ old('macAddress', $infrastructure->macAddress ?? '') }}" >
+            <label for="macAddress">Endereço MAC</label>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-floating">
             <input type="text" name="model" id="model" class="form-control" placeholder=""
                 value="{{ old('model', $infrastructure->model ?? '') }}" required>
             <label for="model">Modelo</label>
