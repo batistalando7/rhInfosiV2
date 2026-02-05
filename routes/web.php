@@ -110,7 +110,7 @@ Route::middleware(["auth"])->group(function () {
 
 
 
-     Route::middleware(["auth", "can:manage-inventory"])->group(function () {
+/*      Route::middleware(["auth", "can:manage-inventory"])->group(function () {
           // Tipos de Material
           Route::resource("material-types", MaterialTypeController::class);
           Route::get("material-types/{material_type}/delete", [MaterialTypeController::class, "destroy"])->name("material-types.delete");
@@ -143,7 +143,7 @@ Route::middleware(["auth"])->group(function () {
           // DEVE SER A ÚLTIMA ROTA A SER LIDA para evitar conflitos com as rotas acima
           Route::resource("materials", AdminMaterialController::class)
                ->only(["index", "create", "store", "show", "edit", "update", "destroy"]);
-     });
+     }); */
 
 
 
@@ -153,13 +153,13 @@ Route::middleware(["auth"])->group(function () {
 |--------------------------------------------------------------------------
 */
 
-     Route::middleware(["auth", "can:manage-inventory"])->group(function () {
+    /*  Route::middleware(["auth", "can:manage-inventory"])->group(function () { */
           /* // Tipos de Património
           Route::resource("heritage-types", HeritageTypeController::class);
           Route::get("heritage-types/{heritage_type}/delete", [HeritageTypeController::class, "destroy"])->name("heritage-types.delete");
  */
           // Rotas de Manutenção, Transferência e Relatórios
-          Route::prefix("heritages")->name("heritages.")->group(function () {
+         /*  Route::prefix("heritages")->name("heritages.")->group(function () {
                // Manutenção
                Route::get("{heritage}/maintenance",           [HeritageController::class, "maintenance"])
                     ->name("maintenance");
@@ -190,13 +190,13 @@ Route::middleware(["auth"])->group(function () {
 
                // Rota para PDF Individual (Adicionada)
                Route::get("{heritage}/pdf", [HeritageController::class, "showPdf"])->name("showPdf");
-          });
+          }); */
 
           // Património (CRUD completo: index, create, store, show, edit, update, destroy)
           // DEVE SER A ÚLTIMA ROTA A SER LIDA para evitar conflitos com as rotas acima
-          Route::resource("heritages", HeritageController::class)
+          /* Route::resource("heritages", HeritageController::class)
                ->only(["index", "create", "store", "show", "edit", "update", "destroy"]);
-     });
+     }); */
 
 
 

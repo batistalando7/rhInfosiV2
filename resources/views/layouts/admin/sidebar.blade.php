@@ -388,17 +388,22 @@
                     </a>
                     <div class="collapse" id="collapseHeritage">
                         <ul class="submenu">
-                            <li><a class="nav-link" href="{{ route('heritages.index') }}"><i
-                                        class="fas fa-box me-2"></i> Patrimónios</a></li>
-                            <li><a class="nav-link" href="{{ route('admin.heritageTypes.index') }}"><i
-                                        class="fas fa-tags me-2"></i> Tipos de Património</a></li>
+                            {{-- <li><a class="nav-link" href="{{ route('admin.heritages.index') }}"><i
+                                        class="fas fa-box me-2"></i> Patrimónios</a></li> --}}
+                                        <li><a class="nav-link" href="{{ route('admin.heritageTypes.index') }}"><i
+                                                    class="fas fa-tags me-2"></i> Categoria de Património</a></li>
+                                        <li><a class="nav-link" href="{{ route('admin.heritages.index') }}"><i
+                                        class="fas fa-eye me-2"></i> Lista</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.heritages.create') }}"><i
+                                        class="fas fa-plus me-2"></i> Novo Material</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.heritages.materialInput') }}"><i
+                                        class="fas fa-sign-in-alt me-2"></i> Registrar Entrada</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.heritages.materialOutput') }}"><i
+                                        class="fas fa-sign-out-alt me-2"></i> Registrar Saída</a></li>
                             {{-- ROTAS DE TRANSAÇÃO (Histórico, Entrada, Saída) REMOVIDAS --}}
                         </ul>
                     </div>
                 </li>
-
-
-
 
                 <!-- Frota e Transporte -->
                 <li class="nav-item" style="color: #6c757d; font-weight: bold; padding: 10px 15px;">Frota e Transporte

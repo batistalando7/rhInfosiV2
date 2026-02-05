@@ -9,7 +9,7 @@
         <div class="card-body">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <form action="{{ route('heritage-types.store') }}" method="POST">
+                    <form action="{{ route('admin.heritageTypes.store') }}" method="POST">
                         @csrf
 
                         <div class="mb-3">
@@ -32,7 +32,7 @@
                             <button class="btn btn-success">
                                 <i class="fas fa-save me-1"></i> Salvar
                             </button>
-                            <a href="{{ route('heritage-types.index') }}" class="btn btn-secondary ms-2">
+                            <a href="{{ route('admin.heritageTypes.index') }}" class="btn btn-secondary ms-2">
                                 Cancelar
                             </a>
                         </div>

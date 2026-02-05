@@ -15,8 +15,22 @@
     </div>    
     <div class="col-md-6 mb-3">
         <div class="form-floating">
+            <input type="text" name="destiny" id="destiny" class="form-control" placeholder=""
+                value="{{ old('destiny') }}" >
+            <label for="destiny">Destino</label>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-floating">
+            <input type="text" name="responsible" id="responsible" class="form-control" placeholder=""
+                value="{{ old('responsible') }}"  >
+            <label for="responsible">Responsável</label>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-floating">
             <input type="number" name="quantity" id="quantity" class="form-control" placeholder=""
-                value="{{ old('quantity', 0) }}" min="0" >
+                value="{{ old('quantity') }}"  >
             <label for="quantity">Qtd. Inicial em Estoque</label>
         </div>
     </div>

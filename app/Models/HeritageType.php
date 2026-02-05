@@ -9,10 +9,9 @@ class HeritageType extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'description',
-    ];
+    protected $table = 'heritage_types';
+
+    protected $guarded = ['id'];
 
     public function heritages()
     {

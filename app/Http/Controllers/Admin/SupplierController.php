@@ -41,9 +41,9 @@ class SupplierController extends Controller
         $data = Supplier::create($request->except('_token'));
 
         if ($data) {
-            return redirect()->back()->with('Fornecedor Registrado com sucesso!');
+            return redirect()->back()->with('success','Fornecedor Registrado com sucesso!');
         } else {
-            return redirect()->back()->with('Erro ao registrar!');
+            return redirect()->back()->with('error','Erro ao registrar!');
         }
     }
 
@@ -80,9 +80,9 @@ class SupplierController extends Controller
         $data = Supplier::findOrFail($id)->update($request->except('_token'));
 
         if ($data) {
-            return redirect()->back()->with('Fornecedor atualizado com sucesso!');
+            return redirect()->back()->with('success', 'Fornecedor atualizado com sucesso!');
         } else {
-            return redirect()->back()->with('Erro ao atualizar!');
+            return redirect()->back()->with('error', 'Erro ao atualizar!');
         }
     }
 
@@ -91,9 +91,9 @@ class SupplierController extends Controller
         $data = Supplier::findOrFail('$id')->delete();
 
         if ($data) {
-            return redirect()->back()->with('Fornecedor deletado com sucesso!');
+            return redirect()->back()->with('success', 'Fornecedor deletado com sucesso!');
         } else {
-            return redirect()->back()->with('Erro ao deletar!');
+            return redirect()->back()->with('error', 'Erro ao deletar!');
         }
     }
 }

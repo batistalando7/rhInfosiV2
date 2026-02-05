@@ -133,6 +133,8 @@ class InfrastructureController extends Controller
         $request->validate([
             'infrastructureId' => ['required', 'integer'],
             'document' => ['nullable', 'file'],
+            'destiny' => ['nullable', 'string',  'max:255'],
+            'responsible' => ['nullable', 'string',  'max:255'],
             'notes' => ['nullable', 'string',  'max:255'],
             'quantity' => ['required', 'integer', 'max:255','min:1']
         ], [
@@ -145,6 +147,8 @@ class InfrastructureController extends Controller
         $data = [
             'infrastructureId' => $request->infrastructureId,
             'document' => $request->document,
+            'destiny' => $request->destiny,
+            'responsible' => $request->responsible,
             'notes' => $request->notes,
             'quantity' => $request->quantity,
             'type' => 'output'
@@ -178,6 +182,8 @@ class InfrastructureController extends Controller
         $request->validate([
             'infrastructureId' => ['required', 'integer'],
             'document' => ['nullable', 'file'],
+            'destiny' => ['nullable', 'string',  'max:255'],
+            'responsible' => ['nullable', 'string',  'max:255'],
             'notes' => ['nullable', 'string',  'max:255'],
             'quantity' => ['required', 'integer', 'max:255','min:1']
         ], [
@@ -190,6 +196,8 @@ class InfrastructureController extends Controller
         $data = [
             'infrastructureId' => $request->infrastructureId,
             'document' => $request->document,
+            'destiny' => $request->destiny,
+            'responsible' => $request->responsible,
             'notes' => $request->notes,
             'quantity' => $request->quantity,
             'type' => 'input'

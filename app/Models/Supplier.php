@@ -18,4 +18,9 @@ class Supplier extends Model
 
         return $this->hasMany(Infrastructure::class, "supplierId");
     }
+    
+    public function heritage(){
+
+        return $this->hasMany(Heritage::class, "supplierId");
+    }
 }

@@ -15,6 +15,10 @@ class CreateInfrastructureMovimentsTable extends Migration
             $table->foreign('infrastructureId')->references('id')->on('infrastructures')->onDelete('cascade');
             $table->string('type');
             $table->integer('quantity');
+            $table->date('date')->nullable();
+            $table->string('destiny')->nullable();
+            $table->string('responsible')->nullable();
+            $table->string('notes')->nullable();
             $table->string('document')->nullable();
             $table->softDeletes();
             $table->timestamps();

@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ResourceAssignmentController;
 use App\Http\Controllers\Admin\EmployeeHistoryController;
 use App\Http\Controllers\Admin\EmployeeTypeController;
 use App\Http\Controllers\Admin\ExtraJobController;
+use App\Http\Controllers\Admin\HeritageController;
 use App\Http\Controllers\Admin\HeritageTypeController;
 use App\Http\Controllers\Admin\InfrastructureController;
 use App\Http\Controllers\Admin\LeaveRequestController;
@@ -275,8 +276,8 @@ Route::middleware('auth')->name('admin.')->group(function () {
     });
     // end estatuto (statute) routes
 
-    // start Tipos de Património
-    Route::prefix('tipos-patrimonio')->group(function () {
+    // start categoria de Património
+    Route::prefix('categoria-patrimonio')->group(function () {
 
         Route::get("/listar", [HeritageTypeController::class, "index"])->name("heritageTypes.index");
         Route::get("/criar", [HeritageTypeController::class, "create"])->name("heritageTypes.create");
@@ -286,7 +287,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::put("/atualizar/{id}", [HeritageTypeController::class, "update"])->name("heritageTypes.update");
         Route::delete("/apagar/{id}", [HeritageTypeController::class, "destroy"])->name("heritageTypes.destroy");
     });
-    // end Tipos de Património
+    // end categoria de Património
 
     // start Mobilidade (Mobility)
     Route::prefix('mobilidade')->group(function () {
@@ -404,6 +405,24 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::put('output', [InfrastructureController::class, 'output'])->name('infrastructures.output');
     });
     //end infraestrutura (infrastructure)
+   
+    //start patrimonio (heritage)
+    Route::prefix('patrimonio')->group(function () {
+
+        Route::get('/listar', [HeritageController::class, 'index'])->name('heritages.index');
+        Route::get('/criar', [HeritageController::class, 'create'])->name('heritages.create');
+        Route::post('/salvar', [HeritageController::class, 'store'])->name('heritages.store');
+        Route::get("/detalhes/{id}", [HeritageController::class, "show"])->name("heritages.show");
+        Route::get("/editar/{id}/edit", [HeritageController::class, "edit"])->name("heritages.edit");
+        Route::put("/atualizar/{id}", [HeritageController::class, "update"])->name("heritages.update");
+        Route::delete("/apagar/{id}", [HeritageController::class, "destroy"])->name("heritages.destroy");
+        
+        Route::get('/entrada', [HeritageController::class, 'materialInput'])->name('heritages.materialInput');
+        Route::get('/saida', [HeritageController::class, 'materialOutput'])->name('heritages.materialOutput');
+        Route::put('input', [HeritageController::class, 'input'])->name('heritages.input');
+        Route::put('output', [HeritageController::class, 'output'])->name('heritages.output');
+    });
+    //end patrimonio (infrastructure)
 
 
     // start users routes
