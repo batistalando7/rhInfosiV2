@@ -31,9 +31,10 @@ class HeritageTypeController extends Controller
         return redirect()->route('admin.heritageTypes.index')->with('msg', 'Tipo de Património criado com sucesso!');
     }
 
-    public function show(HeritageType $heritageType)
+    public function show($id)
     {
-        return view('admin.heritageTypes.show.index', ['type' => $heritageType]);
+        $heritageType = HeritageType::findOrFail($id);
+        return view('admin.heritageTypes.details.index', ['type' => $heritageType]);
     }
 
     public function edit(HeritageType $heritageType)

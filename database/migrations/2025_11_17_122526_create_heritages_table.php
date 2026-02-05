@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('heritages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('heritageTypeId')->constrained('heritage_types');
-            $table->string('Description');
-            $table->decimal('Value', 10, 2); // Valor do Património
-            $table->date('AcquisitionDate');
-            $table->string('Location');
-            $table->string('ResponsibleName'); // Corrigido: Campo de texto para o nome do responsável
-            $table->string('Condition'); // Novo, Usado, Danificado, etc.
-            $table->text('Notes')->nullable();
-            $table->string('DocumentationPath')->nullable(); // Novo: Para o documento de aquisição
+            $table->string('name');
+            $table->integer('quantity');
+            $table->string('model')->nullable();
+            $table->date('manufactureDate')->nullable();
+            $table->unsignedBigInteger('heritageTypeId');
+            $table->foreign('heritageTypeId')->references('id')->on('heritage_types')->onDelete('cascade');
+            $table->unsignedBigInteger('supplierId');
+            $table->foreign('supplierId')->references('id')->on('suppliers')->onDelete('cascade');
+            $table->text('notes')->nullable();
+            $table->string('document')->nullable(); // Novo: Para o documento de aquisição
+            $table->softDeletes();
             $table->timestamps();
         });
     }

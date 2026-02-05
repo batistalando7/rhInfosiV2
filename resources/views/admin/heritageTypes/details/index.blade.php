@@ -6,13 +6,13 @@
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <span><i class="fas fa-eye me-2"></i> Detalhes do Tipo de Património</span>
             <div>
-                <a href="{{ route('heritage-types.index') }}" class="btn btn-outline-light btn-sm" title="Voltar à Lista">
+                <a href="{{ route('admin.heritageTypes.index') }}" class="btn btn-outline-light btn-sm" title="Voltar à Lista">
                     <i class="fa-solid fa-list"></i>
                 </a>
-                <a href="{{ route('heritage-types.edit', $type->id) }}" class="btn btn-warning btn-sm" title="Editar">
+                <a href="{{ route('admin.heritageTypes.edit', $type->id) }}" class="btn btn-warning btn-sm" title="Editar">
                     <i class="fas fa-pencil"></i>
                 </a>
-                <a href="#" data-url="{{ route('heritage-types.destroy', $type->id) }}"
+                <a href="#" data-url="{{ route('admin.heritageTypes.destroy', $type->id) }}"
                     class="btn btn-danger btn-sm delete-btn" title="Remover">
                     <i class="fas fa-trash"></i>
                 </a>
