@@ -17,32 +17,61 @@
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>Tipo</th>
-                        <th>Nº Série</th>
-                        <th>MAC</th>
+                        <th>Categoria</th>
+                        <th>Fornecedor</th>
+                        {{-- <th>MAC</th> --}}
                         <th>Modelo</th>
                         <th>Quantidade</th>
-                        <th>Estado</th>
+                        <th>Data de fabríco</th>
                         <th style="width: 100px;" class="text-center">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($infrastructures as $item)
+                    @forelse($heritages as $item)
                         <tr>
                             <td>{{ $item->name ?? '-' }}</td>
-                            <td>{{ $item->id ?? '-' }}</td>
-                            <td>{{ $item->serialNumber ?? '-' }}</td>
-                            <td>{{ $item->macAddress ?? '-' }}</td>
+                            <td>{{ $item->heritageType->name ?? '-' }}</td>
+                            <td>{{ $item->supplier->name ?? '-' }}</td>
+                            {{-- <td>{{ $item->macAddress ?? '-' }}</td> --}}
                             <td>{{ $item->model ?? '-' }}</td>
                             <td>{{ $item->quantity ?? '-' }}</td>
-                            <td class="text-{{($item->status ?? '-') == 1 ? 'success':'danger'}}">{{ ($item->status ?? '-') == 1 ? 'Disponível':'Indisponível' }}</td>
+                            <td>{{ $item->manufactureDate ?? '-' }}</td>
                             <td class="text-center">
-                                <a href="{{ route('admin.infrastructures.show', $item->id) }}" class="btn btn-sm btn-info"
+                                <div class="btn-group">
+                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Operações
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="{{ route('admin.heritages.show', $item->id) }}" class="dropdown-item">
+                                                <i class="fas fa-eye"></i> Detalhes
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('admin.heritages.edit', $item->id) }}" class="dropdown-item">
+                                                <i class="fas fa-pencil"></i>Editar
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('admin.heritages.destroy', $item->id) }}"
+                                                class="dropdown-item">
+                                                <i class="fas fa-trash"></i>Deletar
+                                            </a>
+                                        </li>
+                                        {{-- <li>
+                                            <a href="#" data-url="{{ route('admin.heritageTypes.destroy', $t->id) }}" class="dropdown-item"
+                                                 title="Remover"><i
+                                                    class="fas fa-trash"></i></a>Deletar
+                                        </li> --}}
+                                    </ul>
+                                </div>
+                                {{-- <a href="{{ route('admin.infrastructures.show', $item->id) }}" class="btn btn-sm btn-info"
                                     title="Ver"><i class="fas fa-eye"></i></a>
                                 <a href="{{ route('admin.infrastructures.edit', $item->id) }}" class="btn btn-sm btn-warning"
                                     title="Editar"><i class="fas fa-pencil"></i></a>
                                 <a href="#" data-url="{{ route('admin.infrastructures.destroy', $item->id) }}"
-                                    class="btn btn-sm btn-danger delete-btn" title="Remover"><i class="fas fa-trash"></i></a>
+                                    class="btn btn-sm btn-danger delete-btn" title="Remover"><i class="fas fa-trash"></i></a> --}}
                             </td>
                         </tr>
                     @empty

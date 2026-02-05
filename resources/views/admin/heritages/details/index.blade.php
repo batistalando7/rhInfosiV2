@@ -1,71 +1,71 @@
 @extends('layouts.admin.layout')
-@section('title', 'Detalhes da Transação de Material')
+@section('title', 'Detalhes do Produto')
 
 @section('content')
     <div class="card mb-4 shadow">
         <div class="card-header bg-secondary text-white">
-            <i class="fas fa-info-circle me-2"></i> Detalhes da Transação
+            <i class="fas fa-info-circle me-2"></i> Detalhes do Produto
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <table class="table table-striped table-bordered mb-3">
                         <tr>
-                            <th>Tipo de Transação</th>
-                            <td><span class="badge bg-{{ $tx->TransactionType == 'in' ? 'success' : 'danger' }}">{{ $tx->TransactionType == 'in' ? 'Entrada' : 'Saída' }}</span></td>
+                            <th>Nome</th>
+                            <td><span class="badge bg-{{ $heritage->TransactionType == 'in' ? 'success' : 'danger' }}">{{ $heritage->TransactionType == 'in' ? 'Entrada' : 'Saída' }}</span></td>
                         </tr>
                         <tr>
-                            <th>Material</th>
-                            <td>{{ $tx->material->Name }} ({{ $tx->material->type->name }})</td>
+                            <th>Categoria</th>
+                            <td>{{ $heritage->Name }} ({{ $heritage->heritageType->name }})</td>
                         </tr>
                         <tr>
                             <th>Quantidade</th>
-                            <td>{{ $tx->Quantity }}</td>
+                            <td>{{ $heritage->quantity }}</td>
                         </tr>
                         <tr>
-                            <th>Data</th>
-                            <td>{{ $tx->TransactionDate->format('d/m/Y') }}</td>
+                            <th>Data de fabríco</th>
+                            <td>{{ $heritage->manufactureDate }}</td>
                         </tr>
                     </table>
                 </div>
-                <div class="col-md-6">
+                {{-- <div class="col-md-6">
                     <table class="table table-striped table-bordered mb-3">
                         <tr>
                             <th>Origem/Destino</th>
-                            <td>{{ $tx->OriginOrDestination }}</td>
+                            <td>{{ $heritage->OriginOrDestination }}</td>
                         </tr>
                         <tr>
                             <th>Departamento</th>
-                            <td>{{ $tx->department->name ?? 'N/A' }}</td>
+                            <td>{{ $heritage->department->name ?? 'N/A' }}</td>
                         </tr>
                         <tr>
                             <th>Responsável</th>
-                            <td>{{ $tx->creator->fullName ?? 'Admin' }}</td>
+                            <td>{{ $heritage->creator->fullName ?? 'Admin' }}</td>
                         </tr>
                         <tr>
                             <th>Documentação</th>
                             <td>
-                                @if ($tx->DocumentationPath)
-                                    <a href="{{ asset('storage/' . $tx->DocumentationPath) }}" target="_blank" class="btn btn-sm btn-info">Ver Documento</a>
+                                @if ($heritage->DocumentationPath)
+                                    <a href="{{ asset('storage/' . $heritage->DocumentationPath) }}" target="_blank" class="btn btn-sm btn-info">Ver Documento</a>
                                 @else
                                     —
                                 @endif
                             </td>
                         </tr>
                     </table>
-                </div>
+                </div> --}}
             </div>
             <div class="row">
                 <div class="col-12">
                     <h5>Observações</h5>
-                    <p>{{ $tx->Notes ?? 'Nenhuma observação.' }}</p>
+                    <p>{{ $heritage->notes ?? 'Nenhuma observação.' }}</p>
                 </div>
             </div>
-            <div class="text-center mt-4">
+            {{-- <div class="text-center mt-4">
                 <a href="{{ route('materials.transactions.index') }}" class="btn btn-secondary">
                     <i class="fas fa-arrow-left me-1"></i> Voltar ao Histórico
                 </a>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection

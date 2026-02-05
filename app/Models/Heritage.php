@@ -14,9 +14,14 @@ class Heritage extends Model
     protected $guarded = ['id'];
 
 
-    public function type()
+    public function heritageType()
     {
         return $this->belongsTo(HeritageType::class, 'heritageTypeId');
+    }
+    
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'supplierId');
     }
 
 }

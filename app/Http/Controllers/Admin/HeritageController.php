@@ -13,7 +13,7 @@ class HeritageController extends Controller
 {
     public function index()
     {
-        $response['heritages'] = Heritage::with('type')->get();
+        $response['heritages'] = Heritage::with('heritageType')->get();
         return view('admin.heritages.list.index', $response);
     }
 
@@ -56,7 +56,7 @@ class HeritageController extends Controller
     {
         $response['heritage'] = Heritage::findOrFail($id);
 
-        return view('admin.heritages.show.index', $response);
+        return view('admin.heritages.details.index', $response);
     }
 
     public function edit($id)
