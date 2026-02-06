@@ -7,10 +7,11 @@
             <i class="fas fa-plus-circle me-2"></i> Registrar Entrada de Material
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.infrastructures.input') }}" method="GET">
+            <form action="{{ route('admin.heritages.input') }}" method="POST">
                 @csrf
+                @method('PUT')
                 
-                @include('forms._formMaterialInput.index')
+                @include('forms._formHeritageInput.index')
             </form>
         </div>
     </div>

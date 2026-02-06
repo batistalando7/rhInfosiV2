@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Heritage;
+use App\Models\HeritageMoviments;
 use App\Models\HeritageType;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -14,14 +15,14 @@ class HeritageController extends Controller
     public function index()
     {
         $response['heritages'] = Heritage::with('heritageType')->get();
-        return view('admin.heritages.list.index', $response);
+        return view('admin.heritage.list.index', $response);
     }
 
     public function create()
     {
         $response['heritageTypes'] = HeritageType::all();
         $response['suppliers'] = Supplier::all();
-        return view('admin.heritages.create.index', $response);
+        return view('admin.heritage.create.index', $response);
     }
 
     public function store(Request $request)
@@ -56,7 +57,7 @@ class HeritageController extends Controller
     {
         $response['heritage'] = Heritage::findOrFail($id);
 
-        return view('admin.heritages.details.index', $response);
+        return view('admin.heritage.details.index', $response);
     }
 
     public function edit($id)
@@ -65,7 +66,7 @@ class HeritageController extends Controller
         $response['heritageTypes'] = HeritageType::all();
         $response['suppliers'] = Supplier::all();
 
-        return view('admin.heritages.edit.index', $response);
+        return view('admin.heritage.edit.index', $response);
     }
 
     public function update(Request $request, $id)
@@ -108,11 +109,159 @@ class HeritageController extends Controller
             return redirect()->back()->with('error', 'Erro ao deletar!');
         }
     }
+    /* start registrar entrada de material(devoluçaõ) */
+    public function materialInput()
+    {
+        /*  $response['heritages'] = Heritage::whereHas('heritageMoviment', function ($query) {
+            $query->where('type', 'output');
+        })->get(); */
+
+        /* pegando todos os materias que naqual existem registros de saidas cujo não foram devolvidas */
+        $response['heritages'] = Heritage::with(['heritageMoviments' => function ($q) {
+            $q->whereNull('deleted_at');
+        }])
+            ->whereIn('id', function ($query) {
+                $query->select('heritageId')
+                    ->from('heritage_moviments')
+                    ->groupBy('heritageId')
+                    ->havingRaw("
+            SUM(CASE WHEN type = 'output' THEN quantity ELSE 0 END)
+          - SUM(CASE WHEN type = 'input' THEN quantity ELSE 0 END) > 0
+        ");
+            })
+            ->get();
+
+        return view('admin.heritage.materialInput.index', $response);
+    }
+
+    //função que determina a quantidade a ser devovida
+    public function inputLimit($id)
+    {
+
+        $totalExit = HeritageMoviments::where('heritageId', $id)
+            ->where('type', 'output')
+            ->sum('quantity'); //total que saiu
+
+        $totalReturn =  HeritageMoviments::where('heritageId', $id)
+            ->where('type', 'input')
+            ->sum('quantity'); //total já devolvido
+
+        $limit = $totalExit - $totalReturn; //total que falta devolver
+        return response()->json([
+            'quantity' => $limit
+        ]);
+    }
+
+    public function input(Request $request)
+    {
+        $request->validate([
+            'heritageId' => ['required', 'integer'],
+            'date' => ['nullable', 'date'],
+            'notes' => ['nullable', 'string',  'max:255'],
+            'document' => ['nullable', 'file'],
+            'quantity' => ['required', 'integer', 'max:255', 'min:1']
+        ], [
+            'heritageId' => 'Selecione o material',
+            'quantity.required' => 'Determine a quantidade',
+            'quantity.min' => 'Determine quantidade igual ou superior a 1'
+        ]);
+
+
+        $data = [
+            'heritageId' => $request->heritageId,
+            'document' => $request->document,
+            'destiny' => $request->destiny,
+            'responsible' => $request->responsible,
+            'notes' => $request->notes,
+            'quantity' => $request->quantity,
+            'type' => 'input'
+        ];
+
+        $id = $data['heritageId']; //pegando o id do material selecionado 
+        $query = Heritage::findOrFail($id); //pegando a coleção dos materiais de infrastrutura
+        $stockQuantity = $query->quantity; //pegando a quantidade em estoque desse mesmo material pelo id
+
+        //verificando se a quantidade em estoque pode atender o pedido de registro de saida
+        if (($stockQuantity - $data['quantity']) > 0) {
+
+            $stockUpdate = $stockQuantity + $data['quantity'];
+
+            $query->quantity = $stockUpdate;
+            $query->save();
+
+            HeritageMoviments::create($data);
+
+
+            return redirect()->route('admin.heritages.index')->with('success', 'Saída de material registrado!');
+        } else {
+            return redirect()->back()->with('error', 'Impossível regitrar o pedido. Quantidade exede o estoque!');
+        }
+    }
+
+    /* end registrar entrada de material(devoluçaõ) */
+
+    /* star registrar saída de material */
+    public function materialOutput()
+    {
+
+        $response['heritages'] = Heritage::all();
+
+        return view('admin.heritage.materialOutput.index', $response);
+    }
+
+    public function output(Request $request)
+    {
+        $request->validate([
+            'heritageId' => ['required', 'integer'],
+            'destiny' => ['nullable', 'string',  'max:255'],
+            'date' => ['nullable', 'date'],
+            'responsible' => ['nullable', 'string',  'max:255'],
+            'notes' => ['nullable', 'string',  'max:255'],
+            'document' => ['nullable', 'file'],
+            'quantity' => ['required', 'integer', 'max:255', 'min:1']
+        ], [
+            'heritageId' => 'Selecione o material',
+            'quantity.required' => 'Determine a quantidade',
+            'quantity.min' => 'Determine quantidade igual ou superior a 1'
+        ]);
+
+
+        $data = [
+            'heritageId' => $request->heritageId,
+            'document' => $request->document,
+            'destiny' => $request->destiny,
+            'responsible' => $request->responsible,
+            'notes' => $request->notes,
+            'quantity' => $request->quantity,
+            'type' => 'output'
+        ];
+
+        $id = $data['heritageId']; //pegando o id do material selecionado 
+        $query = Heritage::findOrFail($id); //pegando a coleção dos materiais de infrastrutura
+        $stockQuantity = $query->quantity; //pegando a quantidade em estoque desse mesmo material pelo id
+
+        //verificando se a quantidade em estoque pode atender o pedido de registro de saida
+        if (($stockQuantity - $data['quantity']) > 0) {
+
+            $stockUpdate = $stockQuantity - $data['quantity'];
+
+            $query->quantity = $stockUpdate;
+            $query->save();
+
+            HeritageMoviments::create($data);
+
+
+            return redirect()->route('admin.heritages.index')->with('success', 'Saída de material registrado!');
+        } else {
+            return redirect()->back()->with('error', 'Impossível regitrar o pedido. Quantidade exede o estoque!');
+        }
+    }
+    /* end registrar saída de material */
 
     /*     // Manutenção - CRUD Completo
     public function maintenance(Heritage $heritage)
     {
-        return view('admin.heritages.maintenance.create', compact('heritage'));
+        return view('admin.heritage.maintenance.create', compact('heritage'));
     }
 
     public function storeMaintenance(Request $request, Heritage $heritage)
@@ -131,7 +280,7 @@ class HeritageController extends Controller
  */
     /*  public function editMaintenance(Heritage $heritage, HeritageMaintenance $maintenance)
     {
-        return view('admin.heritages.maintenance.edit', compact('heritage', 'maintenance'));
+        return view('admin.heritage.maintenance.edit', compact('heritage', 'maintenance'));
     }
     
     public function updateMaintenance(Request $request, Heritage $heritage, HeritageMaintenance $maintenance)
@@ -157,7 +306,7 @@ class HeritageController extends Controller
     // Transferência - CRUD Completo
     /* public function transfer(Heritage $heritage)
     {
-        return view('admin.heritages.transfer.create', compact('heritage'));
+        return view('admin.heritage.transfer.create', compact('heritage'));
     }
 
     public function storeTransfer(Request $request, Heritage $heritage)
@@ -184,7 +333,7 @@ class HeritageController extends Controller
 
     /* public function editTransfer(Heritage $heritage, HeritageTransfer $transfer)
     {
-        return view('admin.heritages.transfer.edit', compact('heritage', 'transfer'));
+        return view('admin.heritage.transfer.edit', compact('heritage', 'transfer'));
     }
     
     public function updateTransfer(Request $request, Heritage $heritage, HeritageTransfer $transfer)
@@ -220,13 +369,13 @@ class HeritageController extends Controller
     {
         $heritages = Heritage::with('type')->get();
         // Usar PDF::loadView para garantir que os estilos do layout são aplicados
-        return PDF::loadView('admin.heritages.report-all', compact('heritages'))->stream('patrimonio_total.pdf');
+        return PDF::loadView('admin.heritage.report-all', compact('heritages'))->stream('patrimonio_total.pdf');
     }
     
     public function showPdf(Heritage $heritage)
     {
         $history = $heritage->fullHistory();
         // Usar PDF::loadView para garantir que os estilos do layout são aplicados
-        return PDF::loadView('admin.heritages.show-pdf', compact('heritage', 'history'))->stream('patrimonio_' . $heritage->id . '.pdf');
+        return PDF::loadView('admin.heritage.show-pdf', compact('heritage', 'history'))->stream('patrimonio_' . $heritage->id . '.pdf');
     } */
 }

@@ -19,6 +19,11 @@ class Heritage extends Model
         return $this->belongsTo(HeritageType::class, 'heritageTypeId');
     }
     
+    public function heritageMoviment()
+    {
+        return $this->hasMany(HeritageMoviments::class, 'heritageId');
+    }
+    
     public function supplier()
     {
         return $this->belongsTo(Supplier::class, 'supplierId');

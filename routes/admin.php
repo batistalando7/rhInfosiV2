@@ -422,8 +422,9 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get('/saida', [HeritageController::class, 'materialOutput'])->name('heritages.materialOutput');
         Route::put('input', [HeritageController::class, 'input'])->name('heritages.input');
         Route::put('output', [HeritageController::class, 'output'])->name('heritages.output');
+        Route::get('/limite/{id}', [HeritageController::class, 'inputLimit'])->name('input.limit');
     });
-    //end patrimonio (infrastructure)
+    //end patrimonio (heritage)
 
 
     // start users routes

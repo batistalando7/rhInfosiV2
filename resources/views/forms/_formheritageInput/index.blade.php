@@ -1,26 +1,23 @@
-{{-- @php
-    $urlLimit = route('admin.input.limit');
-@endphp --}}
 <div class="row">
     <h3>Informações sobre o produto</h3>
     <hr>
     <div class="col-md-6 mb-3">
         <div class="form-floating">
-            <select type="text" name="infrastructureId" id="infrastructureId" class="form-select" placeholder=""
-                value="{{ old('infrastructureId') }}">
+            <select type="text" name="heritageId" id="heritageId" class="form-select" placeholder=""
+                value="{{ old('heritageId') }}" >
                 <option value="">selecione</option>
-                @foreach ($infrastructures as $item)
+                @foreach ($heritages as $item)
                     <option value="{{ $item->id }}"> {{ $item->name }}</option>
                 @endforeach
             </select>
-            <label for="infrastructureId">Nome</label>
+            <label for="heritageId">Nome</label>
         </div>
     </div>
     <div class="col-md-6 mb-3">
         <div class="form-floating">
-            <input type="number" name="quantity" id="quantity" min="1" class="form-control" placeholder=""
-                value="{{ old('quantity', 0) }}" min="0">
-            <label for="quantity">Qtd. Inicial em Estoque</label>
+            <input type="number" name="quantity" id="quantity" class="form-control" placeholder=""
+                value="{{ old('quantity') }}"  >
+            <label for="quantity">Quantidade</label>
         </div>
     </div>
     <div class="col-md-12 mb-3">
@@ -31,8 +28,8 @@
     </div>
     <div class="col-md-12 mb-3">
         <div class="form-floating">
-            <textarea name="Notes" id="Notes" class="form-control" placeholder="" style="height: 100px;">{{ old('Notes') }}</textarea>
-            <label for="Notes">Observações</label>
+            <textarea name="notes" id="notes" class="form-control" placeholder="" style="height: 100px;">{{ old('notes') }}</textarea>
+            <label for="notes">Observações</label>
         </div>
     </div>
 </div>
@@ -44,17 +41,17 @@
 <script>
     $(document).ready(function() {
 
-        $('#infrastructureId').on('change', function() {
-            let infrastructureId = $(this).val();
+        $('#heritageId').on('change', function() {
+            let heritageId = $(this).val();
 
             // se não selecionou nada
-            if (!infrastructureId) {
+            if (!heritageId) {
                 $('#quantity').attr('max', 0).val(0);
                 return;
             }
 
             $.ajax({
-                url: `/infraestrutura/limite/${infrastructureId}`,
+                url: `/patrimonio/limite/${heritageId}`,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
