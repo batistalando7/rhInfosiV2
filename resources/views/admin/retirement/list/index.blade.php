@@ -2,7 +2,7 @@
 @section('title', 'Pedidos de Reforma')
 @section('content')
 
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <span><i class="fas fa-user-check me-2"></i>Lista de Pedidos de Reforma</span>
             <div>

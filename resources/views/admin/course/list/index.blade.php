@@ -2,7 +2,7 @@
 @section("title", "Cursos")
 @section("content")
 
-<div class="card mb-4 shadow">
+<div class="card mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-book me-2"></i>Todos os Cursos</span>
     <div>

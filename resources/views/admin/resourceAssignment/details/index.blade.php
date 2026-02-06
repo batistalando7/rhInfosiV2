@@ -3,7 +3,7 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card mb-4 shadow">
+            <div class="card mt-4 shadow">
                 <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
                     <span>Detalhes do Atribuição de Recursos</span>
                     <a href="{{ route('admin.resourceAssignments.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">

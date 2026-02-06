@@ -2,7 +2,7 @@
 @section('title', 'Editar Vínculo de Funcionário')
 @section('content')
 
-<div class="card mb-4 mt-4 shadow">
+<div class="card mt-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-pencil me-2"></i>Editar Vínculo de Funcionário</span>
     <a href="{{ route('admin.employeeTypes.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todos">

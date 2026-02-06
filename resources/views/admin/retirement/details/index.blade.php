@@ -1,7 +1,7 @@
 @extends('layouts.admin.layout')
 @section('title', 'Detalhes do Pedido de Reforma')
 @section('content')
-<div class="card mb-4 shadow">
+<div class="card mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span>Detalhes do Pedido de Reforma</span>
     <a href="{{ route('admin.retirements.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">

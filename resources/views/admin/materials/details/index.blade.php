@@ -2,7 +2,7 @@
 @section('title', 'Ver Material')
 
 @section('content')
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <span><i class="fas fa-eye me-2"></i> Detalhes do Material: {{ $material->Name }}</span>
             <div>

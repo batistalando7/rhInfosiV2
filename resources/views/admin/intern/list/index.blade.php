@@ -2,7 +2,7 @@
 @section('title', 'Estagiários')
 @section('content')
 
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
 
         {{-- <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-person-lines-fill me-2"></i>Todos os Estagiários</span>

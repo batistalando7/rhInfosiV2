@@ -2,7 +2,7 @@
 @section("title", "Categorias de Funcionários")
 @section("content")
 
-<div class="card mb-4 shadow">
+<div class="card mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-tags me-2"></i>Todas as Categorias de Funcionários</span>
     <div>

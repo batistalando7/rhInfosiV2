@@ -2,7 +2,7 @@
 @section('title', 'Detalhes da Avaliação')
 
 @section('content')
-<div class="card mb-4 shadow">
+<div class="card mt-4 shadow">
   <div class="card-header bg-primary  text-white d-flex justify-content-between align-items-center">
     <h4>Detalhes da Avaliação</h4>
     <a href="{{ route('internEvaluation.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">

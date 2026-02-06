@@ -2,7 +2,7 @@
 @section('title', 'Materiais')
 
 @section('content')
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <span><i class="fas fa-tools me-2"></i> Materiais de Infraestrutura</span>
             <a href="{{ route('admin.infrastructures.create') }}" class="btn btn-outline-light btn-sm">
@@ -10,9 +10,6 @@
             </a>
         </div>
         <div class="card-body">
-            @if (session('msg'))
-                <div class="alert alert-success">{{ session('msg') }}</div>
-            @endif
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -59,19 +56,8 @@
                                                 <i class="fas fa-trash"></i>Deletar
                                             </a>
                                         </li>
-                                        {{-- <li>
-                                            <a href="#" data-url="{{ route('admin.heritageTypes.destroy', $t->id) }}" class="dropdown-item"
-                                                 title="Remover"><i
-                                                    class="fas fa-trash"></i></a>Deletar
-                                        </li> --}}
                                     </ul>
                                 </div>
-                                {{-- <a href="{{ route('admin.infrastructures.show', $item->id) }}" class="btn btn-sm btn-info"
-                                    title="Ver"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('admin.infrastructures.edit', $item->id) }}" class="btn btn-sm btn-warning"
-                                    title="Editar"><i class="fas fa-pencil"></i></a>
-                                <a href="#" data-url="{{ route('admin.infrastructures.destroy', $item->id) }}"
-                                    class="btn btn-sm btn-danger delete-btn" title="Remover"><i class="fas fa-trash"></i></a> --}}
                             </td>
                         </tr>
                     @empty

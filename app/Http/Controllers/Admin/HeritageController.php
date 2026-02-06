@@ -62,9 +62,10 @@ class HeritageController extends Controller
     public function edit($id)
     {
         $response['heritage'] = Heritage::findOrFail($id);
-        $response['types'] = HeritageType::all();
+        $response['heritageTypes'] = HeritageType::all();
+        $response['suppliers'] = Supplier::all();
 
-        return view('admin.heritages.edit', $response);
+        return view('admin.heritages.edit.index', $response);
     }
 
     public function update(Request $request, $id)
@@ -85,9 +86,13 @@ class HeritageController extends Controller
             'supplierId' => 'Selecione o fornecedor',
         ]);
 
-        $heritage = Heritage::findOrFail($id)->update($request->except('_token'));
+        $data = Heritage::findOrFail($id)->update($request->except('_token'));
 
-        return redirect()->route('admin.heritages.index')->with('msg', 'Património atualizado com sucesso!');
+        if ($data) {
+            return redirect()->route('admin.heritages.index')->with('success', 'Património atualizado com sucesso!');
+        } else {
+            return redirect()->route('admin.heritages.index')->with('error', 'Erro ao atualizar!');
+        }
     }
 
     public function destroy($id)
@@ -102,10 +107,9 @@ class HeritageController extends Controller
 
             return redirect()->back()->with('error', 'Erro ao deletar!');
         }
-
     }
 
-/*     // Manutenção - CRUD Completo
+    /*     // Manutenção - CRUD Completo
     public function maintenance(Heritage $heritage)
     {
         return view('admin.heritages.maintenance.create', compact('heritage'));

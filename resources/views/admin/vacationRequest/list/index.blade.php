@@ -1,7 +1,7 @@
 @extends('layouts.admin.layout')
 @section('title', 'Pedidos de Férias')
 @section('content')
-<div class="card mb-4 shadow" style="margin-top: 1.5rem;">
+<div class="card mt-4 shadow" style="margin-top: 1.5rem;">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-umbrella-beach me-2"></i>Lista de Pedidos de Férias</span>
     <div>

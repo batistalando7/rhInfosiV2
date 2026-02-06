@@ -2,7 +2,7 @@
 @section('title', 'Lista de Destacamentos')
 @section('content')
 
-<div class="card mb-4 shadow">
+<div class="card mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-id-badge me-2"></i>Lista de Destacamentos</span>
     <div>

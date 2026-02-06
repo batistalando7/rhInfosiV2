@@ -2,7 +2,7 @@
 @section('title', 'Ver Departamento')
 @section('content')
 
-<div class="card mb-4 mt-4 shadow">
+<div class="card mt-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-building me-2"></i>Ver Departamento</span>
     <a href="{{ route('admin.department.index') }}" class="btn btn-outline-light btn-sm" title="Ver Todos os Departamentos">

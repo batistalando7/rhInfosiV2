@@ -4,7 +4,7 @@
 
     <div class="row justify-content-center" style="margin-top: 1.5rem;">
         <div class="col-md-5">
-            <div class="card mb-4 shadow">
+            <div class="card mt-4 shadow">
                 <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
                     <h4>Adicionar Pedido de Reforma</h4>
                     <a href="{{ route('admin.retirements.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">

@@ -1,7 +1,7 @@
 @extends('layouts.admin.layout')
 @section('title', 'Mapa de Férias por Departamento')
 @section('content')
-<div class="card mb-4 shadow">
+<div class="card mt-4 shadow">
   <div class="card-header bg-secondary text-white">
     <h4>Mapa de Férias por Departamento</h4>
   </div>

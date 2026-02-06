@@ -2,9 +2,9 @@
 @section('title', 'Detalhes do Produto')
 
 @section('content')
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
         <div class="card-header bg-secondary text-white">
-            <i class="fas fa-info-circle me-2"></i> Detalhes do Produto
+             <a href="{{ route('admin.heritages.index') }}" class="btn btn-outline-secondary border text-white">Voltar</a>
         </div>
         <div class="card-body">
             <div class="row">
@@ -12,15 +12,27 @@
                     <table class="table table-striped table-bordered mb-3">
                         <tr>
                             <th>Nome</th>
-                            <td><span class="badge bg-{{ $heritage->TransactionType == 'in' ? 'success' : 'danger' }}">{{ $heritage->TransactionType == 'in' ? 'Entrada' : 'Saída' }}</span></td>
+                            <td><span >{{ $heritage->name }}</span></td>
                         </tr>
                         <tr>
                             <th>Categoria</th>
-                            <td>{{ $heritage->Name }} ({{ $heritage->heritageType->name }})</td>
+                            <td>{{ $heritage->heritageType->name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Modelo</th>
+                            <td>{{ $heritage->model }} ({{ $heritage->heritageType->name }})</td>
                         </tr>
                         <tr>
                             <th>Quantidade</th>
                             <td>{{ $heritage->quantity }}</td>
+                        </tr>
+                        <tr>
+                            <th>Fornecedor</th>
+                            <td>{{ $heritage->supplier->name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Documento</th>
+                            <td><a href="#document">Ver</a></td>
                         </tr>
                         <tr>
                             <th>Data de fabríco</th>

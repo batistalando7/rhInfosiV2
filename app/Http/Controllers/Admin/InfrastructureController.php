@@ -115,9 +115,28 @@ class InfrastructureController extends Controller
 
     public function materialInput()
     {
-        $response['infrastructure'] = Infrastructure::where('status', false)->get();
+        $response['infrastructure'] = Infrastructure::whereHas('infrastructureMoviments', function ($query) {
+            $query->where('type', 'output');
+        })->get();
 
         return view('admin.infrastructure.materialInput.index', $response);
+    }
+
+    public function inputLimit($id)
+    {
+
+        $totalExit = InfrastructureMoviments::where('infrastructureId', $id)
+            ->where('type', 'output')
+            ->sum('quantity');
+
+        $totalReturn =  InfrastructureMoviments::where('infrastructureId', $id)
+            ->where('type', 'input')
+            ->sum('quantity');
+
+        $limit = $totalExit - $totalReturn;
+        return response()->json([
+            'quantity' => $limit
+        ]);
     }
 
     public function materialOutput()
@@ -136,14 +155,14 @@ class InfrastructureController extends Controller
             'destiny' => ['nullable', 'string',  'max:255'],
             'responsible' => ['nullable', 'string',  'max:255'],
             'notes' => ['nullable', 'string',  'max:255'],
-            'quantity' => ['required', 'integer', 'max:255','min:1']
+            'quantity' => ['required', 'integer', 'max:255', 'min:1']
         ], [
             'infrastructureId' => 'Selecione o material',
             'quantity.required' => 'Determine a quantidade',
             'quantity.min' => 'Determine quantidade igual ou superior a 1'
         ]);
 
-        
+
         $data = [
             'infrastructureId' => $request->infrastructureId,
             'document' => $request->document,
@@ -157,9 +176,9 @@ class InfrastructureController extends Controller
         $id = $data['infrastructureId']; //pegando o id do material selecionado 
         $query = Infrastructure::findOrFail($id); //pegando a coleção dos materiais de infrastrutura
         $stockQuantity = $query->quantity; //pegando a quantidade em estoque desse mesmo material pelo id
-        
+
         //verificando se a quantidade em estoque pode atender o pedido de registro de saida
-        if(($stockQuantity - $data['quantity']) > 0){
+        if (($stockQuantity - $data['quantity']) > 0) {
 
             $stockUpdate = $stockQuantity - $data['quantity'];
 
@@ -169,12 +188,10 @@ class InfrastructureController extends Controller
             InfrastructureMoviments::create($data);
 
 
-            return redirect()->route('admin.infrastructures.index')->with('success','Saída de material registrado!');
-        
-        }else{
-            return redirect()->back()->with('error','Impossível regitrar o pedido. Quantidade exede o estoque!');
+            return redirect()->route('admin.infrastructures.index')->with('success', 'Saída de material registrado!');
+        } else {
+            return redirect()->back()->with('error', 'Impossível regitrar o pedido. Quantidade exede o estoque!');
         }
-
     }
 
     public function input(Request $request)
@@ -185,14 +202,14 @@ class InfrastructureController extends Controller
             'destiny' => ['nullable', 'string',  'max:255'],
             'responsible' => ['nullable', 'string',  'max:255'],
             'notes' => ['nullable', 'string',  'max:255'],
-            'quantity' => ['required', 'integer', 'max:255','min:1']
+            'quantity' => ['required', 'integer', 'max:255', 'min:1']
         ], [
             'infrastructureId' => 'Selecione o material',
             'quantity.required' => 'Determine a quantidade',
             'quantity.min' => 'Determine quantidade igual ou superior a 1'
         ]);
 
-        
+
         $data = [
             'infrastructureId' => $request->infrastructureId,
             'document' => $request->document,
@@ -202,28 +219,25 @@ class InfrastructureController extends Controller
             'quantity' => $request->quantity,
             'type' => 'input'
         ];
-        
+
         $id = $data['infrastructureId']; //pegando o id do material selecionado 
         $query = Infrastructure::findOrFail($id); //pegando a coleção dos materiais de infrastrutura
         $stockQuantity = $query->quantity; //pegando a quantidade em estoque desse mesmo material pelo id
-        
+
         //verificando se a quantidade em estoque pode atender o pedido de registro de saida
-        if(($stockQuantity - $data['quantity']) > 0){
+        if (($stockQuantity - $data['quantity']) > 0) {
 
             $stockUpdate = $stockQuantity + $data['quantity'];
 
             $query->quantity = $stockUpdate;
             $query->save();
-            
+
             InfrastructureMoviments::create($data);
 
 
-            return redirect()->route('admin.infrastructures.index')->with('success','Saída de material registrado!');
-        
-        }else{
-            return redirect()->back()->with('error','Impossível regitrar o pedido. Quantidade exede o estoque!');
+            return redirect()->route('admin.infrastructures.index')->with('success', 'Saída de material registrado!');
+        } else {
+            return redirect()->back()->with('error', 'Impossível regitrar o pedido. Quantidade exede o estoque!');
         }
-        
-
     }
 }

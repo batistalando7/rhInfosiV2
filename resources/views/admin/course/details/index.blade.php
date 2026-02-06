@@ -2,7 +2,7 @@
 @section("title", "Detalhes do Curso")
 @section("content")
 
-<div class="card my-4 shadow">
+<div class="card mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-info-circle me-2"></i>Detalhes do Curso</span>
     <a href="{{ route("admin.courses.index") }}" class="btn btn-outline-light btn-sm" title="Voltar">

@@ -2,7 +2,7 @@
 @section('title', 'Lista de Tipos de Licença')
 @section('content')
 
-<div class="card mb-4 mt-4 shadow">
+<div class="card mt-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-card-list me-2"></i>Lista de Tipos de Licença</span>
     <a href="{{ route('admin.leaveTypes.create') }}" class="btn btn-outline-light btn-sm" title="Adicionar Novo"> Adicionar

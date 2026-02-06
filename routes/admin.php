@@ -403,6 +403,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get('/saida', [InfrastructureController::class, 'materialOutput'])->name('infrastructures.materialOutput');
         Route::put('input', [InfrastructureController::class, 'input'])->name('infrastructures.input');
         Route::put('output', [InfrastructureController::class, 'output'])->name('infrastructures.output');
+        Route::get('/limite/{id}', [InfrastructureController::class, 'inputLimit'])->name('input.limit');
     });
     //end infraestrutura (infrastructure)
    

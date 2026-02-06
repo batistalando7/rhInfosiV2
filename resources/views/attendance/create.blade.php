@@ -3,7 +3,7 @@
 @section('content')
     <div class="row justify-content-center" style="margin-top: 1.5rem;">
         <div class="col-md-5">
-            <div class="card mb-4 shadow">
+            <div class="card mt-4 shadow">
                 <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
                     <span><i class="fa fa-calendar-check me-2"></i>Registrar Presença</span>
                     <a href="{{ route('attendance.index') }}" class="btn btn-outline-light btn-sm" title="Ver Registros">

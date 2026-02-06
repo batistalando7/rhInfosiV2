@@ -2,7 +2,7 @@
 @section('title', 'Detalhes da Transação de Património')
 
 @section('content')
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
         <div class="card-header bg-secondary text-white">
             <i class="fas fa-info-circle me-2"></i> Detalhes da Transação
         </div>

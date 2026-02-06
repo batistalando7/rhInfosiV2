@@ -6,7 +6,7 @@
     $departmentHead = auth()->user()->employee;
 @endphp
 
-<div class="card mb-4 mt-4 shadow-lg border-0">
+<div class="card mt-4 mt-4 shadow-lg border-0">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center rounded-top">
     <h5 class="mb-0"><i class="fas fa-users me-3"></i>Meus Funcionários</h5>
     <a href="{{ route('dh.pendingVacations') }}" class="btn btn-outline-light btn-sm">

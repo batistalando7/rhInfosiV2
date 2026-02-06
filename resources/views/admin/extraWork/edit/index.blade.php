@@ -1,7 +1,7 @@
 @extends('layouts.admin.layout')
 @section('title', 'Editar Trabalho Extra')
 @section('content')
-    <div class="card mb-4 shadow" style="margin-top: 1.5rem;">
+    <div class="card mt-4 shadow" style="margin-top: 1.5rem;">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <h4>Editar Trabalho Extra</h4>
             <a href="{{ route('extras.index') }}" class="btn btn-outline-light btn-sm"><i

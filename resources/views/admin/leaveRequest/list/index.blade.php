@@ -2,7 +2,7 @@
 @section('title', 'Pedidos de Licença')
 @section('content')
 
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <span><i class="fas fa-file-alt me-2"></i>Lista de Pedidos de Licença</span>
             <div>

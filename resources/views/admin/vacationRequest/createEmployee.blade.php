@@ -1,7 +1,7 @@
 @extends('layouts.admin.layout')
 @section('title', 'Novo Pedido de Férias')
 @section('content')
-<div class="card mb-4 shadow">
+<div class="card mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-umbrella-beach me-2"></i>Novo Pedido de Férias</span>
     <a href="{{ route('vacationRequest.index') }}" class="btn btn-outline-light btn-sm">
