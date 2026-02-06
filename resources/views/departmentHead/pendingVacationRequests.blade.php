@@ -2,7 +2,7 @@
 @section('title', 'Pedidos de Férias Pendentes')
 @section('content')
 
-<div class="card mb-4 shadow">
+<div class="card mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <h4 class="mb-0">Pedidos de Férias Pendentes</h4>
   </div>

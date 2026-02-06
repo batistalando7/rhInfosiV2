@@ -1,7 +1,7 @@
 @extends('layouts.admin.layout')
 @section('title', 'Registro de Presença - Lote')
 @section('content')
-<div class="card mb-4 shadow">
+<div class="card mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <h4 class="mb-0">Registro de Presença - Data: {{ \Carbon\Carbon::parse($recordDate)->format('d/m/Y') }}</h4>
     <a href="{{ route('attendance.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">

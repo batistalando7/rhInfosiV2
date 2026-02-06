@@ -2,7 +2,7 @@
 @section('title', 'Aprovação de Pedidos de Férias')
 @section('content')
 
-<div class="card mb-4 shadow">
+<div class="card mt-4 shadow">
   <div class="card-header bg-secondary text-white">
     <h4 class="mb-0">Pedidos de Férias para Aprovação</h4>
   </div>

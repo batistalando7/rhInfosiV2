@@ -2,7 +2,7 @@
 @section('title', 'Novo Tipo de Património')
 
 @section('content')
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
         <div class="card-header bg-primary text-white">
             <i class="fas fa-plus-circle me-2"></i> Cadastrar Novo Tipo de Património
         </div>

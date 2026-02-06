@@ -1,7 +1,7 @@
 @extends('layouts.admin.layout')
 @section('title','Avaliações de Funcionários')
 @section('content')
-<div class="card mb-4 shadow">
+<div class="card mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between">
     <span><i class="fas fa-star me-2"></i>Avaliações de Funcionários</span>
     <div>

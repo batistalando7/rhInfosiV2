@@ -3,7 +3,7 @@
 @section('content')
     <div class="row justify-content-center" style="margin-top: 1.5rem">
         <div class="{{ isset($employee) ? 'col-md-5' : 'col-md-8' }}">
-            <div class="card mb-4 shadow">
+            <div class="card mt-4 shadow">
                 <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
                     <span><i class="fas fa-file-alt me-2"></i>Novo Pedido de Licença</span>
                     <a href="{{ route('admin.leaveRequestes.index') }}" class="btn btn-outline-light btn-sm" title="Voltar">

@@ -2,7 +2,7 @@
 @section('title', 'Ver Tipo de Património')
 
 @section('content')
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <span><i class="fas fa-eye me-2"></i> Detalhes do Tipo de Património</span>
             <div>

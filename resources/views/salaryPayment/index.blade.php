@@ -2,7 +2,7 @@
 @section('title','Pagamentos de Salário')
 @section('content')
 
-<div class="card mb-4 shadow" style="margin-top: 1.5rem;">
+<div class="card mt-4 shadow" style="margin-top: 1.5rem;">
 
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span><i class="fas fa-money-bill-wave me-2"></i>Pagamentos de Salário</span>

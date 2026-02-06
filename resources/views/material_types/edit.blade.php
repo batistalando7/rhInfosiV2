@@ -2,7 +2,7 @@
 @section('title', 'Editar Tipo de Material')
 
 @section('content')
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
         <div class="card-header bg-secondary text-white">
             <i class="fas fa-edit me-2"></i> Editar Tipo de Material
         </div>

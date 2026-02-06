@@ -1,7 +1,7 @@
 @extends('layouts.admin.layout')
 @section('title', 'Artibuiçaõo de Recursos')
 @section('content')
-<div class="card mb-4 shadow">
+<div class="card mt-4 shadow">
     <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
         <span><i class="fas fa-truck me-2"></i>Todos os Recursos Atribuidos</span>
         <div>

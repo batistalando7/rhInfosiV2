@@ -2,7 +2,7 @@
 @section('title', 'Materiais')
 
 @section('content')
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <span><i class="fas fa-tools me-2"></i> Materiais de Infraestrutura</span>
             <a href="{{ route('admin.suppliers.create') }}" class="btn btn-outline-light btn-sm">

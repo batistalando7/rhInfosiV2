@@ -1,7 +1,7 @@
 @extends('layouts.admin.layout')
 @section('title', 'Histórico de ' . $employee->fullName)
 @section('content')
-<div class="card mb-4">
+<div class="card mt-4">
   <div class="card-header bg-secondary">
     <h3 class="text-light fw-bold">Histórico do Funcionário</h3>
       <a href="{{ route('admin.employeee.history.pdf', $employee->id) }}" target="_blank" class="btn btn-outline-light">Baixar PDF</a>

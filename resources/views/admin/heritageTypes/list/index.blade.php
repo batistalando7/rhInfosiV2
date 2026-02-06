@@ -2,7 +2,7 @@
 @section('title', 'Tipos de Património')
 
 @section('content')
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <span><i class="fas fa-tags me-2"></i> Tipos de Património</span>
             <a href="{{ route('admin.heritageTypes.create') }}" class="btn btn-outline-light btn-sm">

@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('heritage_moviments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('heritageId');
-            $table->foreign('HeritageId')->references('id')->on('heritages')->onDelete('cascade');
+            $table->foreign('heritageId')->references('id')->on('heritages')->onDelete('cascade');
             $table->string('type');
             $table->integer('quantity');
             $table->date('date')->nullable();
-            $table->string('ResponsibleName')->nullable(); // Corrigido: Quem Autorizou/Executou
+            $table->string('responsible')->nullable(); // Corrigido: Quem Autorizou/Executou
             $table->string('destiny')->nullable();
             $table->string('notes')->nullable();
             $table->string('document')->nullable();

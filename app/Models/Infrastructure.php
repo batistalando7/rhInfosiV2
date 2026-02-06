@@ -21,7 +21,7 @@ class Infrastructure extends Model
         
     }
 
-    public function infrastructure_moviments() {
+    public function infrastructureMoviments() {
 
         return $this->hasMany(InfrastructureMoviments::class, 'infrastructureId');
     }

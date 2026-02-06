@@ -2,7 +2,7 @@
 @section('title', 'Novo Tipo de Material')
 
 @section('content')
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
         <div class="card-header bg-secondary text-white">
             <i class="fas fa-plus-circle me-2"></i> Cadastrar Novo Tipo de Material
         </div>

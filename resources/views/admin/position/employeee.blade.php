@@ -2,7 +2,7 @@
 @section('title', 'Funcionários por Cargo')
 @section('content')
 
-<div class="card mb-4 mt-4 shadow">
+<div class="card mt-4 mt-4 shadow">
   <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
     <span>
       <i class="fas fa-briefcase me-2"></i>

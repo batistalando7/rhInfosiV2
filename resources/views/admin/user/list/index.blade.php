@@ -1,7 +1,7 @@
 @extends('layouts.admin.layout')
 @section('title', 'Administradores')
 @section('content')
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <span><i class="fas fa-person-lines-fill me-2"></i>Lista de Administradores</span>
             <a href="{{ route('admin.users.create') }}" class="btn btn-outline-light btn-sm" title="Adicionar Novo">

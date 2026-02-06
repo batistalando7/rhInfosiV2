@@ -2,7 +2,7 @@
 @section('title', 'Tipos de Material')
 
 @section('content')
-    <div class="card mb-4 shadow">
+    <div class="card mt-4 shadow">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <span><i class="fas fa-tags me-2"></i> Tipos de Material</span>
             <a href="{{ route('material-types.create') }}" class="btn btn-outline-light btn-sm">

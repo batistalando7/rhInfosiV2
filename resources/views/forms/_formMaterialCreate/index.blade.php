@@ -56,13 +56,6 @@
     </div>
     <div class="col-md-6 mb-3">
         <div class="form-floating">
-            <input type="text" name="nif" id="nif" class="form-control" placeholder=""
-                value="{{ old('nif', $infrastructure->supplier->nif ?? '') }}" required>
-            <label for="nif">NIF</label>
-        </div>
-    </div>
-    <div class="col-md-6 mb-3">
-        <div class="form-floating">
             <input type="date" name="entryDate" id="entryDate" class="form-control" placeholder=""
                 value="{{ old('entryDate', $infrastructure->entryDate ?? '') }}" required>
             <label for="entryDate">Data de Entrada</label>
