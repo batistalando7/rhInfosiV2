@@ -32,13 +32,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($admins as $admin)
+                        @foreach ($admins as $item)
                             <tr>
-                                <td>{{ $admin->id }}</td>
-                                <td>{{ $admin->email }}</td>
-                                <td>{{ $admin->employee->fullName ?? 'Não vinculado' }}</td>
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->email }}</td>
+                                <td>{{ $item->employee->fullName ?? 'Não vinculado' }}</td>
                                 <td>
-                                    @switch($admin->role)
+                                    @switch($item->role)
                                         @case('admin')
                                             Administrador
                                         @break
@@ -51,41 +51,54 @@
                                             Chefe de Departamento
                                         @break
 
-	                                        @case('employee')
-	                                            Funcionário
-	                                        @break
-	
-	                                        @case('hr')
-	                                            Área Administrativa (RH)
-	                                        @break
+                                        @case('employee')
+                                            Funcionário
+                                        @break
+
+                                        @case('hr')
+                                            Área Administrativa (RH)
+                                        @break
 
                                         @default
-                                            {{ ucfirst($admin->role) }}
+                                            {{ ucfirst($item->role) }}
                                     @endswitch
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.users.show', $admin->id) }}" class="btn btn-warning btn-sm"
-                                        style="width: 40px" title="Visualizar">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('admin.users.edit', $admin->id) }}" class="btn btn-info btn-sm"
-                                        style="width: 40px" title="Editar">
-                                        <i class="fas fa-pencil"></i>
-                                    </a>
-                                    <form action="{{ route('admin.users.destroy', $admin->id) }}" method="POST"
-                                        style="display:inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" title="Apagar"
-                                            onclick="return confirm('Tem certeza?')">
-                                            <i class="fas fa-trash"></i>
+                                    <div class="btn-group">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Operações
                                         </button>
-                                    </form>
-                                    @if ($admin->role == 'employee')
-                                        <a href="{{ route('admin.users.contract', $admin->id) }}" 
-                                        class="btn btn-success btn-sm" 
-                                        style="width: 40px" 
-                                        title="Gerar Contrato">
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ route('admin.users.show', $item->id) }}" class="dropdown-item">
+                                                    <i class="fas fa-eye"></i> Detalhes
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('admin.users.edit', $item->id) }}" class="dropdown-item">
+                                                    <i class="fas fa-pencil"></i>Editar
+                                                </a>
+                                            </li>
+                                            <li>
+                                                {{-- <a href="{{ route('admin.users.destroy', $item->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class="fas fa-trash"></i>Deletar
+                                                </a> --}}
+                                                <form action="{{ route('admin.users.destroy', $item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class=" dropdown-item" title="Apagar"
+                                                        onclick="return confirm('Tem certeza?')">
+                                                        <i class="fas fa-trash"></i>Deletar
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    @if ($item->role == 'employee')
+                                        <a href="{{ route('admin.users.contract', $item->id) }}"
+                                            class="btn btn-success btn-sm" style="width: 40px" title="Gerar Contrato">
                                             <i class="fas fa-file-pdf"></i>
                                         </a>
                                     @endif

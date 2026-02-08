@@ -38,14 +38,14 @@
           </tr>
         </thead>
         <tbody>
-          @forelse($data as $mob)
+          @forelse($data as $item)
             <tr>
-              <td>{{ $mob->id }}</td>
-              <td>{{ $mob->employee->fullName ?? '-' }}</td>
-              <td>{{ $mob->oldDepartment->title ?? '-' }}</td>
-              <td>{{ $mob->newDepartment->title ?? '-' }}</td>
-              <td>{{ $mob->causeOfMobility ?? '-' }}</td>
-              <td>{{ $mob->created_at->format('d/m/Y H:i') }}</td>
+              <td>{{ $item->id }}</td>
+              <td>{{ $item->employee->fullName ?? '-' }}</td>
+              <td>{{ $item->oldDepartment->title ?? '-' }}</td>
+              <td>{{ $item->newDepartment->title ?? '-' }}</td>
+              <td>{{ $item->causeOfMobility ?? '-' }}</td>
+              <td>{{ $item->created_at->format('d/m/Y H:i') }}</td>
             </tr>
           @empty
             <tr>

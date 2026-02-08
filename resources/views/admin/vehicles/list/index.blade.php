@@ -49,14 +49,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($vehicles as $v)
+                    @foreach ($vehicles as $item)
                         <tr>
-                            <td>{{ $v->id }}</td>
-                            <td>{{ $v->plate }}</td>
-                            <td>{{ $v->model }}</td>
-                            <td>{{ $v->status == 'Available' ? 'Disponível' : ($v->status == 'UnderMaintenance' ? 'Em manutenção' : 'Indisponível') }}</td>
-                            <td>{{ number_format($v->currentMileage ?? 0, 0, ',', '.') }} km</td>
-                            <td>{{ $v->nextMaintenanceDate ? \Carbon\Carbon::parse($v->nextMaintenanceDate)->format('d/m/Y') : '-' }}</td>
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->plate }}</td>
+                            <td>{{ $item->model }}</td>
+                            <td>{{ $item->status == 'Available' ? 'Disponível' : ($item->status == 'UnderMaintenance' ? 'Em manutenção' : 'Indisponível') }}</td>
+                            <td>{{ number_format($item->currentMileage ?? 0, 0, ',', '.') }} km</td>
+                            <td>{{ $item->nextMaintenanceDate ? \Carbon\Carbon::parse($v->nextMaintenanceDate)->format('d/m/Y') : '-' }}</td>
                             <td>
                                 {{-- @forelse ($v->drivers as $d)
                                     {{ $d->fullName }}@if(!$loop->last), @endif
@@ -65,10 +65,32 @@
                                 @endforelse --}}
                             </td>
                             <td>
-                                <a href="{{ route('admin.vehicles.show', $v->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('admin.vehicles.edit', $v->id) }}" class="btn btn-info btn-sm"><i class="fas fa-pencil"></i></a>
-                                <a href="#" data-url="{{ route('admin.vehicles.destroy', $v->id) }}" class="btn btn-danger btn-sm delete-btn"><i class="fas fa-trash"></i></a>
-                            </td>
+                                <div class="btn-group">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Operações
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ route('admin.vehicles.show', $item->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class="fas fa-eye"></i> Detalhes
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('admin.vehicles.edit', $item->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class="fas fa-pencil"></i>Editar
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('admin.vehicles.destroy', $item->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class="fas fa-trash"></i>Deletar
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                         </tr>
                     @endforeach
                 </tbody>

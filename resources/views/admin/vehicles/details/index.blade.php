@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        {{-- <div class="col-md-6">
             <div class="card shadow-sm mb-3">
                 <div class="card-header bg-secondary text-white">
                     <strong>Condutores</strong>
@@ -72,7 +72,7 @@
                     @endforelse
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
 @endsection

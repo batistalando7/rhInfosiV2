@@ -33,16 +33,32 @@
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->site }}</td>
                             <td class="text-center">
-                                <a href="{{ route('admin.suppliers.show', $item->id) }}" class="btn btn-sm btn-info"
-                                    title="Ver"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('admin.suppliers.edit', $item->id) }}" class="btn btn-sm btn-warning"
-                                    title="Editar"><i class="fas fa-pencil"></i></a>
-                                <form action="{{ route('admin.suppliers.destroy', $item->id) }}">
-                                    @csrf
-                                    @method("DELETE")
-                                    <button
-                                    class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                </form>
+                                <div class="btn-group">
+                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Operações
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="{{ route('admin.suppliers.show', $item->id) }}"
+                                                class="dropdown-item">
+                                                <i class="fas fa-eye"></i> Detalhes
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('admin.suppliers.edit', $item->id) }}"
+                                                class="dropdown-item">
+                                                <i class="fas fa-pencil"></i>Editar
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('admin.suppliers.destroy', $item->id) }}"
+                                                class="dropdown-item">
+                                                <i class="fas fa-trash"></i>Deletar
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                     @empty

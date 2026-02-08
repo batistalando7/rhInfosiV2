@@ -2,51 +2,69 @@
 @section('title', 'Lista de Vínculo de Funcionários')
 @section('content')
 
-<div class="card mt-4 mt-4 shadow">
-  <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="fas fa-card-list me-2"></i>Lista de Vínculo de Funcionários</span>
-    <a href="{{ route('admin.employeeTypes.create') }}" class="btn btn-outline-light btn-sm" title="Novo Tipo de Funcionário">
-      <i class="fas fa-plus-circle"></i>
-    </a>
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th style="width: 58px;">Ação</th>
-          </tr>
-        </thead>
-        <tbody>
-          @forelse($data as $type)
-            <tr>
-              <td>{{ $type->id }}</td>
-              <td>{{ $type->name }}</td>
-              <td>{{ $type->description ?? '-' }}</td>
-              <td>
-                <a href="{{ route('admin.employeeTypes.show', $type->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
-                    <i class="fas fa-eye"></i>
-                  </a>
-                <a href="{{ route('admin.employeeTypes.edit', $type->id) }}" class="btn btn-info btn-sm" title="Editar">
-                  <i class="fas fa-pencil"></i>
-                </a>
-                <a href="#" data-url="{{ url('employeeType/'.$type->id.'/delete') }}" class="btn btn-danger btn-sm delete-btn" title="Apagar">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </td>
-            </tr>
-          @empty
-            <tr>
-              <td colspan="4" class="text-center">Nenhum tipo de funcionário cadastrado.</td>
-            </tr>
-          @endforelse
-        </tbody>
-      </table>
+    <div class="card mt-4 mt-4 shadow">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-card-list me-2"></i>Lista de Vínculo de Funcionários</span>
+            <a href="{{ route('admin.employeeTypes.create') }}" class="btn btn-outline-light btn-sm"
+                title="Novo Tipo de Funcionário">
+                <i class="fas fa-plus-circle"></i>
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th style="width: 58px;">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($data as $item)
+                            <tr>
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->description ?? '-' }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Operações
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ route('admin.employeeTypes.show', $item->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class="fas fa-eye"></i> Detalhes
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('admin.employeeTypes.edit', $item->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class="fas fa-pencil"></i>Editar
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('admin.employeeTypes.destroy', $item->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class="fas fa-trash"></i>Deletar
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center">Nenhum tipo de funcionário cadastrado.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 @endsection

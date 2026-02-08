@@ -59,7 +59,6 @@ class VehicleController extends Controller
 
     public function show(Vehicle $vehicle)
     {
-        $vehicle->load('drivers', 'maintenance');
         return view('admin.vehicles.details.index', compact('vehicle'));
     }
 
