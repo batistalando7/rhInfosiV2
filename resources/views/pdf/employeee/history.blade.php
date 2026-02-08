@@ -87,7 +87,8 @@
     <div class="container">
         <div class="header">
             <div class="photo">
-                <img src="{{ url('frontend/images/departments/' . $employee->photo) }}" alt="Foto do Funcionário">
+                {{-- <img src="{{ url('frontend/images/departments/' . $employee->photo) }}" alt="Foto do Funcionário"> --}}
+                <img src="{{ public_path('frontend/images/departments/' . $employee->photo) }}" alt="Foto do Funcionário">
             </div>
             <div class="personal-data">
                 <h1>Nome do Funcionário: {{ $employee->fullName }}</h1>
@@ -127,9 +128,10 @@
         <div class="section">
             <h2>Férias</h2>
             <ul>
-                @if (isset($employee->vacation))
+                @if ($employee->vacation->isNotEmpty())
                     @foreach ($employee->vacation as $item)
-                        <li>{{\Carbon\Carbon::parse($item->created_at)->format('Y')}}: 15 dias (01/07/2023 a 15/07/2023)</li>
+                        <li>{{ \Carbon\Carbon::parse($item->created_at)->format('Y') }}: 15 dias (01/07/2023 a
+                            15/07/2023)</li>
                     @endforeach
                 @else
                     <li>Nenhuma informação registrada</li>
@@ -143,7 +145,7 @@
         <div class="section">
             <h2>Licenças</h2>
             <ul>
-                @if (isset($employee->leaveRequest))
+                @if ($employee->leaveRequest->isNotEmpty())
                     @foreach ($employee->leaveRequest as $item)
                         <li>Licença {{ $item->leaveType->name }}: {{ $item->duration }} dias</li>
                     @endforeach
@@ -197,6 +199,7 @@
                         <small>Recebeu: {{ number_format($item->pivot->assignedValue, 2, ',', '.') }} Kz</small>
                     @endforeach
                 @else
+                    <li>Nenhum destaque registrado</li>
                 @endif
                 {{-- <li>Horas extras: 50 horas em 2023</li>
                 <li>Projetos adicionais: Consultoria interna em 2022 (20 horas)</li> --}}
