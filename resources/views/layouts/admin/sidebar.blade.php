@@ -71,6 +71,21 @@
                     </div>
                 </li>
                 <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRoles"
+                        aria-expanded="false" aria-controls="collapseRoles">
+                        <i class="fas fa-tag me-2"></i> Função <i class="fas fa-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="collapseRoles">
+                        <ul class="submenu">
+                            <li><a class="nav-link" href="{{ route('admin.roles.index') }}"><i
+                                        class="fas fa-eye me-2"></i> Ver
+                                    Todos</a></li>
+                            <li><a class="nav-link" href="{{ route('admin.roles.create') }}"><i
+                                        class="fas fa-plus me-2"></i>Adicionar Novo</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item has-submenu">
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSpecialties"
                         aria-expanded="false" aria-controls="collapseSpecialties">
                         <i class="fas fa-star me-2"></i> Especialidades <i class="fas fa-chevron-down ms-auto"></i>

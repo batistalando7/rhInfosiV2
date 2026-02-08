@@ -32,14 +32,14 @@
             <div class="col-md-4 text-center mb-3 mb-md-0">
                 @if ($data->photo)
                     <img src="{{ asset('frontend/images/departments/' . $data->photo) }}"
-                        class="img-fluid rounded-circle border" style="width:160px; height:160px; object-fit:cover;">
+                        class="img-fluid rounded-circle border rounded shadow" style="width:160px; height:160px; object-fit:cover;">
                 @else
                     <i class="fas fa-user-circle text-secondary" style="font-size:9rem;"></i>
                 @endif
             </div>
 
             {{-- Card de Informações Pessoais (com o nome dentro) --}}
-            <div class="col-md-6">
+            <div class="col-md-8 m">
                 <div class="card shadow-sm">
                     <div class="card-header bg-secondary text-white text-center">
                         <strong>Informações Pessoais</strong>
@@ -101,7 +101,7 @@
 
         {{-- Card de Detalhes Adicionais --}}
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="card shadow-sm">
                     <div class="card-header bg-secondary text-white text-center">
                         <strong>Detalhes Adicionais</strong>

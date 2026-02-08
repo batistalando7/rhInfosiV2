@@ -70,7 +70,7 @@ class InternController extends Controller
         $intern->institution     = $request->institution;
         $intern->save();
 
-        return redirect()->route('admin.intern.create')->with('msg', 'Estagiário cadastrado com sucesso');
+        return redirect()->route('admin.intern.create')->with('success', 'Estagiário cadastrado com sucesso');
     }
 
     public function show($id)
@@ -119,13 +119,13 @@ class InternController extends Controller
         $intern->nationality     = $request->nationality;
         $intern->save();
 
-        return redirect()->route('admin.intern.edit', $id)->with('msg', 'Estagiário atualizado com sucesso');
+        return redirect()->route('admin.intern.edit', $id)->with('success', 'Estagiário atualizado com sucesso');
     }
 
     public function destroy($id)
     {
         Intern::findOrFail($id)->delete();
-        return redirect()->route('admin.intern.index')->with('msg', 'Estagiário deletado com sucesso');
+        return redirect()->route('admin.intern.index')->with('success', 'Estagiário deletado com sucesso');
     }
 
     /* ==================== Filtros e relatorios ==================== */

@@ -1,0 +1,52 @@
+@extends("layouts.admin.layout")
+@section("title", "Detalhes do Curso")
+@section("content")
+
+<div class="card mt-4 shadow">
+  <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+    <span><i class="fas fa-info-circle me-2"></i>Detalhes do Curso</span>
+    <a href="{{ route("admin.roles.index") }}" class="btn btn-outline-light btn-sm" title="Voltar">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped table-bordered">
+      <tbody>
+        <tr>
+          <th>ID</th>
+          <td>{{ $role->id }}</td>
+        </tr>
+        <tr>
+          <th>Nome do Curso</th>
+          <td>{{ $role->name }}</td>
+        </tr>
+        <tr>
+          <th>Criado em</th>
+          <td>{{ Carbon\Carbon::parse($role->created_at)->format("d/m/Y H:i:s") }}</td>
+        </tr>
+        <tr>
+          <th>Atualizado em</th>
+          <td>{{ Carbon\Carbon::parse($role->updated_at)->format("d/m/Y H:i:s") }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-end">
+      <a href="{{ route('admin.roles.edit', $role->id) }}" class="btn btn-info me-2">
+        <i class="fas fa-pencil"></i> Editar
+      </a>
+      <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST" onsubmit="return confirm("Tem certeza que deseja excluir este curso?");">
+        @csrf
+        @method("DELETE")
+        <button type="submit" class="btn btn-danger">
+          <i class="fas fa-trash"></i> Excluir
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+@endsection
+
+
+
+
