@@ -85,39 +85,51 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($retirements as $retirement)
+                            @foreach ($retirements as $item)
                                 <tr>
-                                    <td>{{ $retirement->employee->fullName ?? '-' }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($retirement->requestDate)->format('d/m/Y') }}</td>
+                                    <td>{{ $item->employee->fullName ?? '-' }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->requestDate)->format('d/m/Y') }}</td>
                                     <td>
-                                        {{ $retirement->retirementDate ? \Carbon\Carbon::parse($retirement->retirementDate)->format('d/m/Y') : '-' }}
+                                        {{ $item->retirementDate ? \Carbon\Carbon::parse($item->retirementDate)->format('d/m/Y') : '-' }}
                                     </td>
                                     <td>
-                                        @if ($retirement->status == 'Aprovado')
+                                        @if ($item->status == 'Aprovado')
                                             <span class="badge bg-success">Aprovado</span>
-                                        @elseif($retirement->status == 'Recusado')
+                                        @elseif($item->status == 'Recusado')
                                             <span class="badge bg-danger">Recusado</span>
                                         @else
                                             <span class="badge bg-warning">Pendente</span>
                                         @endif
                                     </td>
-                                    <td>{{ $retirement->observations ?? '-' }}</td>
-                                    <td>{{ $retirement->created_at->format('d/m/Y H:i') }}</td>
+                                    <td>{{ $item->observations ?? '-' }}</td>
+                                    <td>{{ $item->created_at->format('d/m/Y H:i') }}</td>
                                     <td>
-                                        <a href="{{ route('admin.retirements.show', $retirement->id) }}"
-                                            class="btn btn-warning btn-sm">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a href="{{ route('admin.retirements.edit', $retirement->id) }}"
-                                            class="btn btn-info btn-sm">
-                                            <i class="fas fa-pencil"></i>
-                                        </a>
-                                        <form action="{{ route('admin.retirements.destroy', $retirement->id) }}"
-                                            method="POST" style="display:inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                        </form>
+                                        <div class="btn-group">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                Operações
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="{{ route('admin.retirements.show', $item->id) }}"
+                                                        class="dropdown-item">
+                                                        <i class="fas fa-eye"></i> Detalhes
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('admin.retirements.edit', $item->id) }}"
+                                                        class="dropdown-item">
+                                                        <i class="fas fa-pencil"></i>Editar
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('admin.retirements.destroy', $item->id) }}"
+                                                        class="dropdown-item">
+                                                        <i class="fas fa-trash"></i>Deletar
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

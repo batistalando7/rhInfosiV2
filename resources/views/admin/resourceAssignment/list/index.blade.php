@@ -65,9 +65,32 @@
                                 @endforelse
                             </td> --}}
                             <td>
-                                <a href="{{ route('admin.resourceAssignments.show', $item->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('admin.resourceAssignments.edit', $item->id) }}" class="btn btn-info btn-sm"><i class="fas fa-pencil"></i></a>
-                                <a href="#" data-url="{{ route('admin.resourceAssignments.destroy', $item->id) }}" class="btn btn-danger btn-sm delete-btn"><i class="fas fa-trash"></i></a>
+                                <div class="btn-group">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Operações
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ route('admin.resourceAssignments.show', $item->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class="fas fa-eye"></i> Detalhes
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('admin.resourceAssignments.edit', $item->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class="fas fa-pencil"></i>Editar
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('admin.resourceAssignments.destroy', $item->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class="fas fa-trash"></i>Deletar
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                             </td>
                         </tr>
                     @endforeach

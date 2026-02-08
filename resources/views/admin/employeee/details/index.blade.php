@@ -21,7 +21,7 @@
                 </a>
 
                 <a href="{{ route('admin.employeee.showPdf', $data->id) }}" style="width: 90px;"
-                    class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                    class="btn btn-outline-secondary btn-sm" target="_blank" rel="noopener noreferrer">
                     <i class="fas fa-download"></i> Baixar PDF
                 </a>
             </div>
@@ -86,7 +86,7 @@
                                     <th class="ps-0">Histórico do Funcionário</th>
                                     <td>
                                         <a href="{{ route('admin.employeee.history', $data->id) }}" style="width: 90px;"
-                                            class="btn btn-outline-primary btn-sm" 
+                                            class="btn btn-outline-secondary btn-sm" 
                                             rel="noopener noreferrer">
                                             ver
                                         </a>

@@ -96,7 +96,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get('/editar/{id}', [SpecialtyController::class, 'edit'])->name('specialties.edit');
         Route::put('/atualizar/{id}', [SpecialtyController::class, 'update'])->name('specialties.update');
         Route::get('/detalhes/{id}', [SpecialtyController::class, 'show'])->name('specialties.show');
-        Route::get("specialties/{id}/delete", [SpecialtyController::class, "destroy"]);
+        Route::get("specialties/{id}/delete", [SpecialtyController::class, "destroy"])->name('specialties.destroy');
 
         //filtros
         Route::get("specialties/employeee", [SpecialtyController::class, "employeee"])->name("specialties.employeee.filter");

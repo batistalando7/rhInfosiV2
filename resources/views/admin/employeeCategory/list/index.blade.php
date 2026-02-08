@@ -1,54 +1,70 @@
-@extends("layouts.admin.layout")
-@section("title", "Categorias de Funcionários")
-@section("content")
+@extends('layouts.admin.layout')
+@section('title', 'Categorias de Funcionários')
+@section('content')
 
-<div class="card mt-4 shadow">
-  <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-    <span><i class="fas fa-tags me-2"></i>Todas as Categorias de Funcionários</span>
-    <div>
-      <a href="{{ route("admin.employeeCategories.create") }}" class="btn btn-outline-light btn-sm" title="Adicionar Nova Categoria"> 
-        Nova <i class="fas fa-plus-circle"></i>
-      </a>
+    <div class="card mt-4 shadow">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-tags me-2"></i>Todas as Categorias de Funcionários</span>
+            <div>
+                <a href="{{ route('admin.employeeCategories.create') }}" class="btn btn-outline-light btn-sm"
+                    title="Adicionar Nova Categoria">
+                    Nova <i class="fas fa-plus-circle"></i>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="datatablesSimple" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome da Categoria</th>
+                            <th>Descrição</th>
+                            <th style="width: 58px;">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($employeeCategories)
+                            @foreach ($employeeCategories as $item)
+                                <tr>
+                                    <td>{{ $item->id }}</td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->description ?? '-' }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                Operações
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="{{ route('admin.employeeCategories.show', $item->id) }}"
+                                                        class="dropdown-item">
+                                                        <i class="fas fa-eye"></i> Detalhes
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('admin.employeeCategories.edit', $item->id) }}"
+                                                        class="dropdown-item">
+                                                        <i class="fas fa-pencil"></i>Editar
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('admin.employeeCategories.destroy', $item->id) }}"
+                                                        class="dropdown-item">
+                                                        <i class="fas fa-trash"></i>Deletar
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table id="datatablesSimple" class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nome da Categoria</th>
-            <th>Descrição</th>
-            <th style="width: 58px;">Ação</th>
-          </tr>
-        </thead>
-        <tbody>
-          @if ($employeeCategories)
-            @foreach($employeeCategories as $category)
-              <tr>
-                <td>{{ $category->id }}</td>
-                <td>{{ $category->name }}</td>
-                <td>{{ $category->description ?? "-" }}</td>
-                <td>
-                  <a href="{{ route("admin.employeeCategories.show", $category->id) }}" class="btn btn-warning btn-sm" title="Visualizar">
-                    <i class="fas fa-eye"></i>
-                  </a>
-                  <a href="{{ route("admin.employeeCategories.edit", $category->id) }}" class="btn btn-info btn-sm" title="Editar">
-                    <i class="fas fa-pencil"></i>
-                  </a>
-                  <a href="#" data-url="{{ url("employeeCategory/".$category->id."/delete") }}" class="btn btn-danger btn-sm delete-btn" title="Apagar">
-                    <i class="fas fa-trash"></i>
-                  </a>
-                </td>
-              </tr>
-            @endforeach
-          @endif
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
 
 @endsection
-
-
