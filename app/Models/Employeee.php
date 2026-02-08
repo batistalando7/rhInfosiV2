@@ -128,4 +128,9 @@ class Employeee extends Authenticatable implements CanResetPasswordContract
             "id"          // PK em drivers.id
         );
     }
+
+    /* relação função -> funcionario */
+    public function role(){
+        return $this->belongsTo(Role::class, 'roleId');
+    }
 }

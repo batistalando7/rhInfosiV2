@@ -1,16 +1,16 @@
 <!-- Linha: Departamento, Cargo, Especialidade e Tipo -->
 <div class="row g-3">
-    <div class="col-md-3">
+    <div class="col-md-6">
         <div class="form-floating">
             <select name="departmentId" id="depart" class="form-select"
                 {{ isset($employee->departmentId) ? 'disabled' : '' }}>
 
                 <option value="">Selecione</option>
 
-                @foreach ($departments as $depart)
-                    <option value="{{ $depart->id }}"
-                        {{ ($employee->departmentId ?? old('departmentId')) == $depart->id ? 'selected' : '' }}>
-                        {{ $depart->title }}
+                @foreach ($departments as $item)
+                    <option value="{{ $item->id }}"
+                        {{ ($employee->departmentId ?? old('departmentId')) == $item->id ? 'selected' : '' }}>
+                        {{ $item->title }}
                     </option>
                 @endforeach
             </select>
@@ -18,15 +18,15 @@
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-6">
         <div class="form-floating">
             <select name="positionId" id="positionId" class="form-select"
                 {{ isset($employee->positionId) ? 'disabled' : '' }}>
                 <option value="" selected>Selecione</option>
-                @foreach ($positions as $position)
-                    <option value="{{ $position->id }}"
-                        {{ ($employee->positionId ?? old('positionId')) == $position->id ? 'selected' : '' }}>
-                        {{ $position->name }}
+                @foreach ($positions as $item)
+                    <option value="{{ $item->id }}"
+                        {{ ($employee->positionId ?? old('positionId')) == $item->id ? 'selected' : '' }}>
+                        {{ $item->name }}
                     </option>
                 @endforeach
             </select>
@@ -34,14 +34,29 @@
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
+        <div class="form-floating">
+            <select name="roleId" id="roleId" class="form-select">
+                <option value="" selected>Selecione</option>
+                @foreach ($roles as $item)
+                    <option value="{{ $item->id }}"
+                        {{ ($employee->roleId ?? old('roleId')) == $item->id ? 'selected' : '' }}>
+                        {{ $item->name }}
+                    </option>
+                @endforeach
+            </select>
+            <label for="roleId">Função</label>
+        </div>
+    </div>
+
+    <div class="col-md-4">
         <div class="form-floating">
             <select name="specialtyId" id="specialtyId" class="form-select" {{-- {{ isset($employee->specialtyId) ? 'disabled' : '' }} --}}>
                 <option value="" selected>Selecione</option>
-                @foreach ($specialties as $specialty)
-                    <option value="{{ $specialty->id }}"
-                        {{ ($employee->specialtyId ?? old('specialtyId')) == $specialty->id ? 'selected' : '' }}>
-                        {{ $specialty->name }}
+                @foreach ($specialties as $item)
+                    <option value="{{ $item->id }}"
+                        {{ ($employee->specialtyId ?? old('specialtyId')) == $item->id ? 'selected' : '' }}>
+                        {{ $item->name }}
                     </option>
                 @endforeach
             </select>
@@ -49,14 +64,14 @@
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-floating">
             <select name="employeeTypeId" id="employeeTypeId" class="form-select" {{-- {{ isset($employee->employeeTypeId) ? 'disabled' : '' }} --}}>
                 <option value="" selected>Selecione</option>
-                @foreach ($employeeTypes as $etype)
-                    <option value="{{ $etype->id }}"
-                        {{ ($employee->employeeTypeId ?? old('employeeTypeId')) == $etype->id ? 'selected' : '' }}>
-                        {{ $etype->name }}
+                @foreach ($employeeTypes as $item)
+                    <option value="{{ $item->id }}"
+                        {{ ($employee->employeeTypeId ?? old('employeeTypeId')) == $item->id ? 'selected' : '' }}>
+                        {{ $item->name }}
                     </option>
                 @endforeach
             </select>
@@ -71,10 +86,10 @@
         <div class="form-floating">
             <select name="employeeCategoryId" id="employeeCategoryId" class="form-select" {{-- {{ isset($employee->employeeCategoryId) ? 'disabled' : '' }} --}}>
                 <option value="" selected>Selecione</option>
-                @foreach ($employeeCategories as $category)
-                    <option value="{{ $category->id }}"
-                        {{ ($employee->employeeCategoryId ?? old('employeeCategoryId')) == $category->id ? 'selected' : '' }}>
-                        {{ $category->name }}
+                @foreach ($employeeCategories as $item)
+                    <option value="{{ $item->id }}"
+                        {{ ($employee->employeeCategoryId ?? old('employeeCategoryId')) == $item->id ? 'selected' : '' }}>
+                        {{ $item->name }}
                     </option>
                 @endforeach
             </select>
@@ -86,8 +101,8 @@
         <div class="form-floating">
             <select name="courseId" id="courseId" class="form-select">
                 <option value="" selected>Selecione</option>
-                @foreach ($courses as $course)
-                    <option value="{{ $course->id }}">{{ $course->name }}</option>
+                @foreach ($courses as $item)
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
                 @endforeach
             </select>
             <label for="courseId">Curso</label>

@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\LicenseCategoryController;
 use App\Http\Controllers\Admin\MaintenanceController;
 use App\Http\Controllers\Admin\MobilityController;
 use App\Http\Controllers\Admin\PositionController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SpecialtyController;
 use App\Http\Controllers\Admin\StatuteController;
 use App\Http\Controllers\Admin\VacationRequestController;
@@ -68,6 +69,23 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get("/{positionId}/pdf", [PositionController::class, "pdf"])->name("positions.employeee.pdf");
     });
     // end Cargos (Positions)
+
+    // start funcao (role) 
+    Route::prefix('funcao')->group(function () {
+
+        Route::get('/lista', [RoleController::class, 'index'])->name('roles.index');
+        Route::get('/criar', [RoleController::class, 'create'])->name('roles.create');
+        Route::post('/salvar', [RoleController::class, 'store'])->name('roles.store');
+        Route::get('/editar/{id}', [RoleController::class, 'edit'])->name('roles.edit');
+        Route::put('/atualizar/{id}', [RoleController::class, 'update'])->name('roles.update');
+        Route::get('/detalhes/{id}', [RoleController::class, 'show'])->name('roles.show');
+        Route::get("/{id}/delete", [RoleController::class, "destroy"])->name("roles.destroy");
+
+        //filtros
+        Route::get("/funcionarios", [RoleController::class, "employeee"])->name("roles.employeee.filter");
+        Route::get("/{positionId}/pdf", [RoleController::class, "pdf"])->name("roles.employeee.pdf");
+    });
+    // end funcao (role)
 
     // start Especialidades (Specialties) routes
     Route::prefix('especialidades')->group(function () {

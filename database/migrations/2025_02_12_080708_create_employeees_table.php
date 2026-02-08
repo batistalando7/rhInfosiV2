@@ -28,6 +28,7 @@ class CreateEmployeeesTable extends Migration
             $table->string("photo")->nullable();
             $table->unsignedBigInteger("positionId");
             $table->unsignedBigInteger("specialtyId");
+            $table->unsignedBigInteger('roleId');
             $table->unsignedBigInteger("employeeTypeId")->nullable();
             $table->unsignedBigInteger("employeeCategoryId")->nullable();
             $table->string("academicLevel")->nullable();
@@ -36,6 +37,7 @@ class CreateEmployeeesTable extends Migration
             $table->string('processNumber')->nullable();
             $table->timestamps();
 
+            $table->foreign('roleId')->references('id')->on('roles')->onDelete('cascade');
             $table->foreign("departmentId")->references("id")->on("departments")->onDelete("cascade");
             $table->foreign("positionId")->references("id")->on("positions");
             $table->foreign("specialtyId")->references("id")->on("specialties");

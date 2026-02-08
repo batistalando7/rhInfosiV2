@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Mail\NewEmployeeNotification;
 use App\Models\EmployeeHistory;
+use App\Models\Role;
 use ParagonIE\Sodium\Core\Curve25519\H;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -66,6 +67,7 @@ class EmployeeeController extends Controller
         $response['employeeTypes']      = EmployeeType::all();
         $response['employeeCategories'] = EmployeeCategory::all();
         $response['courses']            = Course::all(); // Adicionado
+        $response['roles'] = Role::all();
 
         return view('admin.employeee.create.index', $response);
     }
@@ -73,42 +75,38 @@ class EmployeeeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'departmentId'             => 'nullable',
-            'fullName'           => [
+            'departmentId' => 'nullable',
+            'fullName' => [
                 'required',
                 'string',
                 'max:255',
                 'regex:/^[\pL\s]+$/u'  // apenas letras 
             ],
-            'address'            => 'required',
-            'mobile'             => 'required',
+            'address' => 'required',
+            'mobile' => 'required',
             'bi' => 'required|string|max:16|unique:employeees',
-            'biPhoto'            => 'nullable|file|mimes:pdf,jpeg,png,jpg',
-            'birth_date'         => [
+            'biPhoto' => 'nullable|file|mimes:pdf,jpeg,png,jpg',
+            'birth_date' => [
                 'required',
                 'date',
                 'date_format:Y-m-d',
                 'before_or_equal:' . Carbon::now()->subYears(18)->format('Y-m-d'),   // ≥18 anos
                 'after_or_equal:'  . Carbon::now()->subYears(120)->format('Y-m-d')  // ≤120 anos
             ],
-            'nationality'        => 'required',
-            'gender'             => 'required',
-            'email'              => 'required|unique:employeees,email|regex:/^[a-zA-Z0-9._%+-]+$/',
-            'iban'               => [
-                'nullable',
-                'string',
-                'max:25',
-                'regex:/^AO06[0-9]{21}$/',
-            ],
-            'employeeTypeId'     => 'required|exists:employee_types,id',
+            'nationality' => 'required',
+            'gender' => 'required',
+            'email' => 'required|unique:employeees,email|regex:/^[a-zA-Z0-9._%+-]+$/',
+            'iban' => ['nullable', 'string', 'max:25', 'regex:/^AO06[0-9]{21}$/',],
+            'employeeTypeId' => 'required|exists:employee_types,id',
             'employeeCategoryId' => 'required|exists:employee_categories,id',
-            'positionId'         => 'required|exists:positions,id',
-            'specialtyId'        => 'required|exists:specialties,id',
-            'academicLevel'      => 'nullable|string|max:255', // Adicionado
-            'courseId'           => 'nullable|exists:courses,id', // Adicionado
-            'photo'              => 'nullable|image',
-            'entry_date'         => 'required|date|date_format:Y-m-d', //adicionado
-            'processNumber'      => 'required|string|unique:employeees',
+            'positionId' => 'required|exists:positions,id',
+            'roleId' => 'required|exists:positions,id',
+            'specialtyId' => 'required|exists:specialties,id',
+            'academicLevel' => 'nullable|string|max:255', // Adicionado
+            'courseId' => 'nullable|exists:courses,id', // Adicionado
+            'photo' => 'nullable|image',
+            'entry_date' => 'required|date|date_format:Y-m-d', //adicionado
+            'processNumber' => 'required|string|unique:employeees',
         ], [
             'fullName.regex'               => 'O nome só pode conter letras e espaços.',
             'birth_date.before_or_equal'   => 'A idade minima permitida é 18 anos.',
@@ -116,28 +114,28 @@ class EmployeeeController extends Controller
             'email.regex'                  => 'O email deve conter apenas o nome e o sobrenome.',
         ]);
 
-
         $data = new Employeee();
-        $data->departmentId    = $request->departmentId;
-        $data->fullName        = $request->fullName;
-        $data->address         = $request->address;
-        $data->mobile          = $request->mobile;
-        $data->phone_code      = $request->phone_code;
-        $data->bi              = $request->bi;
-        $data->birth_date      = $request->birth_date;
-        $data->nationality     = $request->nationality;
-        $data->gender          = $request->gender;
-        $data->email           = $request->email . '@infosi.gov.ao';
-        $data->iban            = $request->iban;
-        $data->employeeTypeId  = $request->employeeTypeId;
+        $data->departmentId = $request->departmentId;
+        $data->fullName = $request->fullName;
+        $data->address = $request->address;
+        $data->mobile = $request->mobile;
+        $data->phone_code = $request->phone_code;
+        $data->bi = $request->bi;
+        $data->birth_date = $request->birth_date;
+        $data->nationality = $request->nationality;
+        $data->gender = $request->gender;
+        $data->email = $request->email . '@infosi.gov.ao';
+        $data->iban = $request->iban;
+        $data->employeeTypeId = $request->employeeTypeId;
         $data->employeeCategoryId = $request->employeeCategoryId;
-        $data->positionId      = $request->positionId;
-        $data->specialtyId     = $request->specialtyId;
-        $data->academicLevel   = $request->academicLevel; // Adicionado
-        $data->courseId        = $request->courseId; // Adicionado
+        $data->positionId = $request->positionId;
+        $data->specialtyId = $request->specialtyId;
+        $data->academicLevel = $request->academicLevel; // Adicionado
+        $data->courseId = $request->courseId; // Adicionado
         $data->employmentStatus = 'active';
-        $data->entry_date     =  $request->entry_date; //adicionado
-        $data->processNumber  =  $request->processNumber; //adicionado
+        $data->entry_date =  $request->entry_date; //adicionado
+        $data->processNumber =  $request->processNumber; //adicionado
+        $data->roleId = $request->roleId;
 
         if ($request->hasFile('photo')) {
             $photoName = time() . '_' . $request->file('photo')->getClientOriginalName();
@@ -155,7 +153,7 @@ class EmployeeeController extends Controller
         Mail::to($data->email)->send(new NewEmployeeNotification($data));
 
         return redirect()->route('admin.employeee.create')
-            ->with('msg', 'Funcionário cadastrado e e-mail enviado!');
+            ->with('success', 'Funcionário cadastrado e e-mail enviado!');
     }
 
     public function show($id)
@@ -198,6 +196,7 @@ class EmployeeeController extends Controller
         $response['employeeTypes']      = EmployeeType::all();
         $response['employeeCategories'] = EmployeeCategory::all();
         $response['courses']            = Course::all(); // Adicionado
+        $response['roles'] = Role::all();
 
         return view('admin.employeee.edit.index', $response);
     }
